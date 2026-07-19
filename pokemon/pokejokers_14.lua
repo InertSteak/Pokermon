@@ -12,7 +12,7 @@ local bidoof={
   pos = {x = 0, y = 0},
   config = {extra = {rerolls = 1, rerolls_to_evolve = 7}, evo_rqmt = 7},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rerolls, center.ability.extra.rerolls_to_evolve}}
   end,
   rarity = 1,
@@ -28,7 +28,7 @@ local bidoof={
     if context.reroll_shop and not context.blueprint and card.ability.extra.rerolls_to_evolve > 0 then
       card.ability.extra.rerolls_to_evolve = card.ability.extra.rerolls_to_evolve - 1
     end
-    return scaling_evo(self, card, context, "j_poke_bibarel", self.config.evo_rqmt - card.ability.extra.rerolls_to_evolve, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_bibarel", self.config.evo_rqmt - card.ability.extra.rerolls_to_evolve, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     SMODS.change_free_rerolls(card.ability.extra.rerolls)
@@ -44,7 +44,7 @@ local bibarel={
   pos = {x = 0, y = 0},
   config = {extra = {rerolls = 1, increase = 1}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rerolls, center.ability.extra.increase, center.ability.extra.rerolls > 1 and localize('poke_reroll_plural') or localize('poke_reroll_singular')}}
   end,
   rarity = "poke_safari",
@@ -81,7 +81,7 @@ local kricketot={
   pos = {x = 0, y = 0},
   config = {extra = {money = 4,rounds = 4,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, center.ability.extra.rounds, }}
   end,
   rarity = 1,
@@ -96,8 +96,8 @@ local kricketot={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and #context.full_hand == 4 then
-        if poke_suit_check(context.full_hand, 4) then
-          local earned = ease_poke_dollars(card, "kriketot", card.ability.extra.money)
+        if pokermon.suit_check(context.full_hand, 4) then
+          local earned = pokermon.ease_poke_dollars(card, "kriketot", card.ability.extra.money)
           return {
             message = '$'..earned,
             colour = G.C.MONEY
@@ -105,7 +105,7 @@ local kricketot={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_kricketune")
+    return pokermon.level_evo(self, card, context, "j_poke_kricketune")
   end,
   attributes = {"economy", "suit", "round_evo"}
 }
@@ -115,7 +115,7 @@ local kricketune={
   pos = {x = 0, y = 0},
   config = {extra = {money = 4,num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'kricketune')
     return {vars = {center.ability.extra.money, num, dem}}
   end,
@@ -131,8 +131,8 @@ local kricketune={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and #context.full_hand == 4 then
-        if poke_suit_check(context.full_hand, 4) then
-          local earned = ease_poke_dollars(card, "kriketune", card.ability.extra.money)
+        if pokermon.suit_check(context.full_hand, 4) then
+          local earned = pokermon.ease_poke_dollars(card, "kriketune", card.ability.extra.money)
           if SMODS.pseudorandom_probability(card, 'kriketune', card.ability.extra.num, card.ability.extra.dem, 'kriketune') then
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
               G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
@@ -181,7 +181,7 @@ local budew={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
@@ -201,7 +201,7 @@ local budew={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        faint_baby_poke(self, card, context) 
+        pokermon.faint_baby_poke(self, card, context) 
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -212,12 +212,12 @@ local budew={
     if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
       G.E_MANAGER:add_event(Event({
         func = function()
-          SMODS.add_card{set = 'Item', key = 'c_poke_miracleseed', edition = 'e_negative'}
+          SMODS.add_card{set = 'poke_item', key = 'c_poke_miracleseed', edition = 'e_negative'}
           return true
         end
       }))
     end
-    return level_evo(self, card, context, "j_poke_roselia")
+    return pokermon.level_evo(self, card, context, "j_poke_roselia")
   end,
   attributes = {"baby", "item", "generation", "round_evo"}
 }
@@ -227,7 +227,7 @@ local roserade={
   pos = {x = 0, y = 0},
   config = {extra = {retriggers = 2,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_flower
     return {vars = {center.ability.extra.retriggers, }}
   end,
@@ -241,7 +241,7 @@ local roserade={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and not context.end_of_round and context.cardarea == G.play and context.other_card == context.scoring_hand[1] and poke_is_odd(context.other_card) then
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and context.other_card == context.scoring_hand[1] and pokermon.is_odd(context.other_card) then
       return {
         repetitions = card.ability.extra.retriggers
       }
@@ -265,7 +265,7 @@ local buizel={
   pos = {x = 3, y = 2}, 
   config = {extra = {chips = 30, rounds = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -288,7 +288,7 @@ local buizel={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_floatzel")
+    return pokermon.level_evo(self, card, context, "j_poke_floatzel")
   end,
   attributes = {"chips", "round_evo"},
 }
@@ -298,7 +298,7 @@ local floatzel={
   pos = {x = 4, y = 2}, 
   config = {extra = {chips = 45}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2, 

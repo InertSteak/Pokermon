@@ -47,8 +47,8 @@ return {
                 name = "Самоцветная колода",
                 text = {
                     "ВСЕ Покемоны создаются",
-                    "со случайным {C:pink}типом{}",
-                    "и {C:attention}+1{} {C:pink}энергией{}"
+                    "со случайным {C:poke_pink}типом{}",
+                    "и {C:attention}+1{} {C:poke_pink}энергией{}"
                 }
             },
         },
@@ -61,7 +61,7 @@ return {
                 }, 
             },
         },
-        Item = {
+        poke_item = {
             c_poke_pokeball = {
                 name = "Покеболл",
                 text = {
@@ -162,15 +162,15 @@ return {
                 name = "Tera Orb",
                 text = {
                     "Даёт случайный",
-                    "стикер {C:pink}типа{}",
+                    "стикер {C:poke_pink}типа{}",
                     "самому левому Джокеру{}", 
-                    "и {C:attention}+1{} {C:pink}Энергию{}"
+                    "и {C:attention}+1{} {C:poke_pink}Энергию{}"
                 },
             },
             c_poke_metalcoat = {
                 name = "Металлический плащ",
                 text = {
-                    "Даёт {C:metal}Металлический{} стикер",
+                    "Даёт {C:poke_metal}Металлический{} стикер",
                     "Самому левому Джокеру",
                     "Создаёт карту {C:attention}Колесница{}",
                     "{C:inactive}(Должно быть место){}"
@@ -179,7 +179,7 @@ return {
             c_poke_dragonscale = {
                 name = "Чешуя Дракона",
                 text = {
-                    "Даёт {C:dragon}Драконий{} стикер",
+                    "Даёт {C:poke_dragon}Драконий{} стикер",
                     "самому левому Джокеру",
                     "Создаёт карту {C:attention}Император{}",
                     "{C:inactive}(Должно быть место){}"
@@ -232,12 +232,12 @@ return {
                 text = {
                     "Создаёт последнюю",
                     "использованную вами карту",
-                    "{C:item}Предмета{} или {C:pink}Энергии{}",
-                    "Кроме {s:0.8,C:item}Согнутой Ложки{s:0.8}"
+                    "{C:poke_item}Предмета{} или {C:poke_pink}Энергии{}",
+                    "Кроме {s:0.8,C:poke_item}Согнутой Ложки{s:0.8}"
                 }
             },
         },
-        Energy = {
+        poke_energy = {
             c_poke_grass_energy = {
                 name = "Энергия Травы",
                 text = {
@@ -952,7 +952,7 @@ return {
                 name = "Кадабра",
                 text = {
                     "{C:green}#1# из #2#{} шанс",
-                    "создать карту {C:attention}Дурак{} или {C:item}Согнутая Ложка{},",
+                    "создать карту {C:attention}Дурак{} или {C:poke_item}Согнутая Ложка{},",
                     "если сыгранная {C:attention}покерная рука{}",
                     "уже игралась в этом раунде",
                     "{C:inactive}(Эволюционирует с картой{} {C:attention}Шнур Связи{}{C:inactive})"
@@ -963,7 +963,7 @@ return {
                 text = {
                     "{C:attention}+#3#{} слот расходуемого",
                     "{C:green}#1# из #2#{} шанс",
-                    "создать карту {C:attention}Дурак{} или {C:item}Согнутая Ложка{},",
+                    "создать карту {C:attention}Дурак{} или {C:poke_item}Согнутая Ложка{},",
                     "если сыгранная {C:attention}покерная рука {}",
                     "уже игралась в этом раунде",
                 } 
@@ -1116,7 +1116,7 @@ return {
                 text = {
                     "Сыгранные {C:attention}стальные{} карты дают {X:red,C:white}X#1#{} множ.",
                     "и {X:red,C:white}X#2#{} множ. за каждого",
-                    "{X:metal,C:white}Металлического{} Джокера рядом с этим Джокером",
+                    "{X:poke_metal,C:white}Металлического{} Джокера рядом с этим Джокером",
                     "{C:inactive}(Сейчас: {X:red,C:white}X#3#{}{C:inactive} множ.){}",
                     "{C:inactive}(Эволюционирует с картой {C:attention}Камень Молнии{}{C:inactive})"
                 } 
@@ -1242,7 +1242,7 @@ return {
                     "Самая левая карта в",
                     "{C:attention}первой руке{} раунда",
                     "становится {C:attention}каменной{} при подсчёте",
-                    "{C:inactive}(Эволюционирует, получив {C:metal}Металлический{} {C:inactive}стикер){}"
+                    "{C:inactive}(Эволюционирует, получив {C:poke_metal}Металлический{} {C:inactive}стикер){}"
                 } 
             },
             j_poke_drowzee = {
@@ -1447,7 +1447,7 @@ return {
                     "Это значение удваивается, если в руке",
                     "есть {C:attention}Король{}",
                     "{C:inactive}(Сейчас: {C:mult}+#1#{C:inactive} множ.)",
-                    "{C:inactive}(Эволюционирует, получив {C:dragon}Драконий{} {C:inactive}стикер){}"
+                    "{C:inactive}(Эволюционирует, получив {C:poke_dragon}Драконий{} {C:inactive}стикер){}"
                 } 
             },
             j_poke_goldeen = {
@@ -1497,7 +1497,7 @@ return {
                     "джокера справа и получает {C:mult}+#2#{} к множ.",
                     "Получает {C:attention}Фольговый{}, {C:attention}Голографический{}, или {C:attention}Полихромный{}",
                     "выпуск, если Джокер был {C:red}Редким{} или выше",
-                    "{C:inactive}(Эволюционирует, получив {C:metal}Металлический{} {C:inactive}стикер){}",
+                    "{C:inactive}(Эволюционирует, получив {C:poke_metal}Металлический{} {C:inactive}стикер){}",
                     "{C:inactive}(Сейчас: {C:mult}+#1#{C:inactive} множ.)"
                 } 
             },
@@ -1623,8 +1623,8 @@ return {
             j_poke_porygon = {
                 name = 'Поригон',
                 text = {
-                    "{C:pink}+1{} к лимиту Энергии",
-                    "Создаёт карту {C:pink}Энергии{}",
+                    "{C:poke_pink}+1{} к лимиту Энергии",
+                    "Создаёт карту {C:poke_pink}Энергии{}",
                     "когда открывается любой",
                     "{C:attention}Набор{}",
                     "{C:inactive}(Эволюционирует с картой{} {C:attention}Улучшение{}{C:inactive})"
@@ -1648,7 +1648,7 @@ return {
                     "{X:attention,C:white}1{} : Получает {C:money}$#2#{} к стоимости продажи",
                     "{X:attention,C:white}2{} : Получите {C:money}$#3#{}",
                     "{X:attention,C:white}3{} : Создаёт случайную карту {C:attention}Таро{}",
-                    "{X:attention,C:white}4+{} : Создаёт случайную карту {C:item}Предмета{}",
+                    "{X:attention,C:white}4+{} : Создаёт случайную карту {C:poke_item}Предмета{}",
                     "{C:inactive}(Должно быть место){}"
                 } 
             },
@@ -1751,7 +1751,7 @@ return {
                 text = {
                     "В конце магазина создайте",
                     "{C:dark_edition}полихромную{} {C:attention}копию{}",
-                    "самого левого {C:attention}Джокера{} с {C:attention}+1{} {C:pink}энергией{},",
+                    "самого левого {C:attention}Джокера{} с {C:attention}+1{} {C:poke_pink}энергией{},",
                     "а затем уничтожьте самого левого {C:attention}Джокера{}",
                     "{C:dark_edition}Полихромные{} Джокеры дают {X:mult,C:white} X#1# {} множ.",
                     "{C:inactive}(Не может уничтожить себя)",
@@ -1762,7 +1762,7 @@ return {
                 text = {
                     "В конце магазина создаёт",
                     "случайную {C:dark_edition}негативную{} карту {C:attention}Таро{},",
-                    "{C:spectral}спектральную{} карту или карту {C:item}предмета{}",
+                    "{C:spectral}спектральную{} карту или карту {C:poke_item}предмета{}",
                     "Иногда создаёт случайного",
                     "{C:dark_edition}негативного{} Джокера {C:attention}вместо этого{}",
                 } 
@@ -1842,7 +1842,7 @@ return {
                     "Сыгранные карты с мастью {V:1}#2#{} дают",
                     "{C:mult}+#1#{} множ. при подсчёте",
                     "Эти карты повторяются ещё раз за каждого",
-                    "{X:water,C:white}Водного{} Джокера у вас",
+                    "{X:poke_water,C:white}Водного{} Джокера у вас",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}#7#{}{C:inactive,s:0.8} повторов разделяются поровну между сыгранными картами){}",
                     "Масть меняется в строгом порядке {C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
                 } 
@@ -1929,9 +1929,9 @@ return {
             j_poke_porygon2 = {
                 name = 'Поригон2',
                 text = {
-                    "{C:pink}+2{} к лимиту Энергии",
-                    "Создайте карту {C:pink}Энергии{}",
-                    "соответствующей {C:pink}Типу{}",
+                    "{C:poke_pink}+2{} к лимиту Энергии",
+                    "Создайте карту {C:poke_pink}Энергии{}",
+                    "соответствующей {C:poke_pink}Типу{}",
                     "самого левого Джокера, когда",
                     "открывается любой {C:attention}Набор{}",
                     "{C:inactive}(Эволюционирует с картой{} {C:attention}Улучшение{}{C:inactive})"
@@ -2014,7 +2014,7 @@ return {
                     "{C:attention}+#3#{} размер руки, {C:attention}Природа{}",
                     "Сыгранные {C:attention}#6#, #7# или #8#{} с шансом",
                     "{C:green}#4# из #5#{} дают {C:money}$#1#{}",
-                    "Шанс гарантирован, если у вас есть другие {X:grass,C:white}Травяные{} карты",
+                    "Шанс гарантирован, если у вас есть другие {X:poke_grass,C:white}Травяные{} карты",
                     "{C:inactive,s:0.8}(Включая карты Джокеров и Энергии){}",
                     "{C:inactive}(Эволюционирует, накопив {C:money}$#2#/16{})"
                 } 
@@ -2025,7 +2025,7 @@ return {
                     "{C:attention}+#3#{} размер руки, {C:attention}Природа{}",
                     "Сыгранные {C:attention}#6#, #7# or #8#{} с шансом",
                     "{C:green}#4# из #5#{} дают {C:money}$#1#{}",
-                    "Шанс гарантирован, если у вас есть другие {X:grass,C:white}Травяные{} карты",
+                    "Шанс гарантирован, если у вас есть другие {X:poke_grass,C:white}Травяные{} карты",
                     "{C:inactive,s:0.8}(Включая карты Джокеров и Энергии){}",
                     "{C:inactive}(Эволюционирует, накопив {C:money}$#2#/32{})"
                 } 
@@ -2036,7 +2036,7 @@ return {
                     "{C:attention}+#3#{} размер руки, {C:attention}Природа{}",
                     "Сыгранные {C:attention}#5#, #6# или #7#{} дают {C:money}$#1#{}",
                     "Получайте {C:money}$#1#{} в конце раунда за",
-                    "каждую другую {X:grass,C:white}Травяную{} карту у вас",
+                    "каждую другую {X:poke_grass,C:white}Травяную{} карту у вас",
                     "{C:inactive,s:0.8}(Включая карты Джокеров и Энергии){}",
                     "{C:inactive}(Сейчас: {C:money}$#4#{}, макс. {C:money}$14{}{C:inactive}){}"
                 } 
@@ -2046,7 +2046,7 @@ return {
                 text = {
                     "{C:mult}+#3#{} сброс, {C:attention}Природа{}",
                     "{C:mult}+#1#{} множ. за каждые {C:attention}#5#, #6# или #7#{} сброшенные в этом раунде",
-                    "Множ. удваивается, если у вас есть другие {X:fire,C:white}Огненные{} или {X:earth,C:white}Боевые{} карты",
+                    "Множ. удваивается, если у вас есть другие {X:poke_fire,C:white}Огненные{} или {X:poke_earth,C:white}Боевые{} карты",
                     "{C:inactive,s:0.8}(Включая карты Джокеров и Энергии){}",
                     "{C:inactive}(Сейчас: {C:mult}#4#{}{C:inactive} множ.){}",
                     "{C:inactive}(Эволюционирует, подсчитав {C:mult}#2#/60{} {C:inactive}множ.)"
@@ -2057,7 +2057,7 @@ return {
                 text = {
                     "{C:mult}+#3#{} сброс, {C:attention}Природа{}",
                     "{C:mult}+#1#{} множ. за каждые {C:attention}#5#, #6# или #7#{} сброшенные в этом раунде",
-                    "Множ. удваивается, если у вас есть другие {X:fire,C:white}Огненные{} или {X:earth,C:white}Боевые{} карты",
+                    "Множ. удваивается, если у вас есть другие {X:poke_fire,C:white}Огненные{} или {X:poke_earth,C:white}Боевые{} карты",
                     "{C:inactive,s:0.8}(Включая карты Джокеров и Энергии){}",
                     "{C:inactive}(Сейчас: {C:mult}#4#{}{C:inactive} множ.){}",
                     "{C:inactive}(Эволюционирует, подсчитав {C:mult}#2#/150{} {C:inactive}множ.)"
@@ -2069,7 +2069,7 @@ return {
                     "{C:mult}+#2#{} сброс, {C:attention}Природа{}",
                     "{C:mult}+#4#{} множ., {X:red,C:white} X#1# {} множ. за каждую {C:attention}#6#, #7# or #8#{}",
                     "сброшенную в этом раунде. {X:red,C:white} X {} Множ. удваивается,",
-                    "если у вас есть другие {X:fire,C:white}Огненные{} или {X:earth,C:white}Боевые{} карты",
+                    "если у вас есть другие {X:poke_fire,C:white}Огненные{} или {X:poke_earth,C:white}Боевые{} карты",
                     "{C:inactive,s:0.8}(Включая карты Джокеров и Энергии){}",
                     "{C:inactive}(Сейчас: {C:mult}+#5#{}{C:inactive} множ., {X:red,C:white} X#3# {}{C:inactive} множ.){}",
                 } 
@@ -2080,7 +2080,7 @@ return {
                     "{C:chips}+#3#{} рука, {C:attention}Природа{}",
                     "Сыгранные {C:attention}#4#, #5# или #6#{} дают {C:chips}+#1#{} шт. фишек",
                     "Значение фишек удваивается, если у вас есть",
-                    "другие {X:water,C:white}Водные{} или {X:earth,C:white}Земляные{}карты",
+                    "другие {X:poke_water,C:white}Водные{} или {X:poke_earth,C:white}Земляные{}карты",
                     "{C:inactive,s:0.8}(Включая карты Джокеров и Энергии){}",
                     "{C:inactive}(Эволюционирует, подсчитав {C:chips}#2#/400{} {C:inactive}шт. фишек)"
                 } 
@@ -2091,7 +2091,7 @@ return {
                     "{C:chips}+#3#{} рука, {C:attention}Природа{}",
                     "Сыгранные {C:attention}#4#, #5# или #6#{} дают {C:chips}+#1#{} шт. фишек",
                     "Значение фишек удваивается, если у вас есть",
-                    "другие {X:water,C:white}Водные{} или {X:earth,C:white}Земляные{}карты",
+                    "другие {X:poke_water,C:white}Водные{} или {X:poke_earth,C:white}Земляные{}карты",
                     "{C:inactive,s:0.8}(Включая карты Джокеров и Энергии){}",
                     "{C:inactive}(Эволюционирует, подсчитав {C:chips}#2#/960{} {C:inactive}шт. фишек)"
                 } 
@@ -2102,7 +2102,7 @@ return {
                     "{C:chips}+#3#{} рука, {C:attention}Природа{}",
                     "Сыгранные {C:attention}#5#, #6# или #7#{} дают {C:chips}+#1#{} шт. фишек",
                     "Дают ещё {C:chips}+#5#{} шт. фишек за каждую",
-                    "другую {X:water,C:white}Водную{} или {X:earth,C:white}Земляную{} карту",
+                    "другую {X:poke_water,C:white}Водную{} или {X:poke_earth,C:white}Земляную{} карту",
                     "{C:inactive,s:0.8}(Включая карты Джокеров и Энергии){}",
                     "{C:inactive}(Сейчас: {C:chips}+#4#{}{C:inactive} в общем)"
                 } 
@@ -2183,7 +2183,7 @@ return {
                 text = {
                     "{C:attention}Малыш{}",
                     "Создайте случайную {C:dark_edition}негативную{}",
-                    "карту {C:item}Предмета{} в конце раунда",
+                    "карту {C:poke_item}Предмета{} в конце раунда",
                     "{X:red,C:white} X#1# {} множ.",
                     "{C:inactive}(Да, он {C:attention}уменьшает{C:inactive} ваш множ.)",
                     "{C:inactive}(Эволюционирует после {C:attention}#2#{}{C:inactive} раундов)"
@@ -2205,7 +2205,7 @@ return {
                 text = {
                     "Сыгранные {C:attention}стальные{} карты дают {X:red,C:white}X#1#{} множ.",
                     "и {X:red,C:white}X#2#{} множ. за каждого",
-                    "{X:metal,C:white}Металлического{} Джокера у вас",
+                    "{X:poke_metal,C:white}Металлического{} Джокера у вас",
                     "{C:inactive}(Сейчас: {X:red,C:white}X#3#{}{C:inactive} множ.){}",
                 } 
             },
@@ -2225,7 +2225,7 @@ return {
                     "навсегда получает",
                     "{C:chips}+#1#{} шт. фишек при подсчёте",
                     "{C:attention}Каменные{} карты повторяются ещё раз за каждого",
-                    "{X:earth,C:white}Земляного{} Джокера у вас",
+                    "{X:poke_earth,C:white}Земляного{} Джокера у вас",
                     "{C:inactive}(Сейчас #2# повторений)"
                 } 
             },
@@ -2284,10 +2284,10 @@ return {
             j_poke_porygonz = {
                 name = 'Поригон-Z',
                 text = {
-                    "{C:pink}+3{} к Лимиту Энергии",
+                    "{C:poke_pink}+3{} к Лимиту Энергии",
                     "Этот Джокер получает",
                     "{X:red,C:white} X#2# {} к множ. за каждую использованную",
-                    "карту {C:pink}Энергии{} в этом {C:attention}забеге{}",
+                    "карту {C:poke_pink}Энергии{} в этом {C:attention}забеге{}",
                     "{C:inactive}(Сейчас: {X:red,C:white} X#1# {}{C:inactive} множ.)"
                 } 
             },
@@ -2328,7 +2328,7 @@ return {
                     "{C:mult}+#1#{} множ.",
                     "Это значение вырастает в {C:attention} 3 раза{},",
                     "если у вас есть",
-                    "{X:lightning, C:black}Электрический{} Джокер",
+                    "{X:poke_lightning, C:black}Электрический{} Джокер",
                     "{C:inactive}(Эволюционирует после {C:attention}#2#{}{C:inactive} раундов)"
                 }  
             },
@@ -2336,7 +2336,7 @@ return {
                 name = 'Чарджабаг',
                 text = {
                     "{C:mult}+#1#{} множ.",
-                    "за каждого {X:lightning, C:black}Электрического{} Джокера",
+                    "за каждого {X:poke_lightning, C:black}Электрического{} Джокера",
                     "у вас {C:inactive}(включая себя){}",
                      "{C:inactive}(Сейчас: {C:mult}#2#{C:inactive} множ.)",
                     "{C:inactive}(Эволюционирует с картой{} {C:attention}Камень Молнии{}{C:inactive})"
@@ -2347,7 +2347,7 @@ return {
                 text = {
                     "{C:mult}+#3#{} множ.",
                     "{X:red,C:white} X#1# {} множ. за каждого",
-                    "другого {X:lightning, C:black}Электрического{} Джокера",
+                    "другого {X:poke_lightning, C:black}Электрического{} Джокера",
                     "у вас{}",
                      "{C:inactive}(Сейчас: {X:red,C:white} X#2# {}{C:inactive} множ.)",
                 }  
@@ -2417,7 +2417,7 @@ return {
                   "Требуемое {C:attention}значение{} повышается с каждым срабатыванием",
                   "{C:inactive,s:0.8}(Если значение было наивысшим, оно становится самым низким)",
                   "{C:inactive}(Сейчас: {C:chips}+#1#{C:inactive} шт. фишек)",
-                  "{C:inactive}(Эволюционирует, если у вас есть {X:fire,C:white}Огненный{}{C:inactive} Джокер)",
+                  "{C:inactive}(Эволюционирует, если у вас есть {X:poke_fire,C:white}Огненный{}{C:inactive} Джокер)",
                 }
             },
             j_poke_dachsbun = {
@@ -2426,7 +2426,7 @@ return {
                   "Получает {C:chips}+#2#{} шт. фишек, если сыгранная рука содержит {C:attention}#3#{}",
                   "Требуемое {C:attention}значение{} повышается с каждым срабатыванием",
                   "Получаемые фишки увеличиваются на {C:chips}+1{} за",
-                  "каждого {X:fire,C:white}Огненного{} Джокера у вас",
+                  "каждого {X:poke_fire,C:white}Огненного{} Джокера у вас",
                   "{C:inactive,s:0.8}(Если значение было наивысшим, оно становится самым низким)",
                   "{C:inactive}(Сейчас: {C:chips}+#1#{C:inactive} шт.фишек)",
                 }
@@ -2483,7 +2483,7 @@ return {
                 name = 'Покедекс',
                 text = {
                     "{C:mult}+#2#{} множ. за каждого",
-                    "Джокера с {C:pink}Типом{}",
+                    "Джокера с {C:poke_pink}Типом{}",
                     "{C:attention}Покемоны{} могут появляться",
                     "многократно",
                     "{C:inactive}(Сейчас: {C:mult}+#1#{C:inactive} множ.)"
@@ -2509,8 +2509,8 @@ return {
             j_poke_jelly_donut = {
                 name = "Мармеладный Пончик",
                 text = {
-                  "Создайте карту {C:colorless}Бесцветной",
-                  "{C:pink}Энергии{}, когда выбирается",
+                  "Создайте карту {C:poke_colorless}Бесцветной",
+                  "{C:poke_pink}Энергии{}, когда выбирается",
                   "блайнд",
                   "{C:inactive}({C:attention}#1#{}{C:inactive} раунда){}"
                 }
@@ -2539,7 +2539,7 @@ return {
                 name = "Luminous Sleeve",
                 text = {
                     "All Jokers are created",
-                    "with random {C:pink}Type{} stickers",
+                    "with random {C:poke_pink}Type{} stickers",
                 },
             },
         },
@@ -2573,7 +2573,7 @@ return {
             c_poke_obituary = {
                 name = "Обряд",
                 text = {
-                    "Добавляет {C:pink}розовую{} печать",
+                    "Добавляет {C:poke_pink}розовую{} печать",
                     "{C:attention}1{} выбранной карте",
                 }
             },
@@ -2582,13 +2582,13 @@ return {
                 text = {
                     "Уничтожает случайного Джокера",
                     "Покемона и создаёт {C:attention}3{}",
-                    "случайные {C:dark_edition}Негативные{} карты {C:pink}Энергии{}"
+                    "случайные {C:dark_edition}Негативные{} карты {C:poke_pink}Энергии{}"
                 },
             },
             c_poke_revenant = {
                 name = "Ревенант",
                 text = {
-                    "Добавляет {C:item}серебряную{} печать",
+                    "Добавляет {C:poke_item}серебряную{} печать",
                     "к {C:attention}1{} выбранной карте",
                 }
             },
@@ -2598,7 +2598,7 @@ return {
                 name = "Поке тэг",
                 text = {
                     "Даёт бесплатный",
-                    "{C:pink}Мега Поке набор",
+                    "{C:poke_pink}Мега Поке набор",
                 }, 
             },
             tag_poke_shiny_tag = {
@@ -2606,7 +2606,7 @@ return {
                 text = {
                     "Следующий Джокер базового выпуска",
                     "из магазина бесплатен",
-                    "и становится {C:colorless}Блестящим{}",
+                    "и становится {C:poke_colorless}Блестящим{}",
                 }, 
             },
             tag_poke_stage_one_tag = {
@@ -2620,7 +2620,7 @@ return {
                 name = "Тэг Сафари",
                 text = {
                     "В магазине есть бесплатный",
-                    "{C:safari}Сафари{} Джокер",
+                    "{C:poke_safari}Сафари{} Джокер",
 
                 }, 
             },
@@ -2632,13 +2632,13 @@ return {
             v_poke_energysearch = {
                 name = "Поиск Энергии",
                 text = {
-                    "{C:pink}+2{} к лимиту энергии"
+                    "{C:poke_pink}+2{} к лимиту энергии"
                 },
             },
             v_poke_energyresearch = {
                 name = "Технология Энергии",
                 text = {
-                    "{C:pink}+3{} к лимиту энергии"
+                    "{C:poke_pink}+3{} к лимиту энергии"
                 },
             },
             v_poke_goodrod = {
@@ -2661,79 +2661,79 @@ return {
             Grass = {
                 name = "Тип",
                 text = {
-                  "{X:grass,C:white}Травяной{}",
+                  "{X:poke_grass,C:white}Травяной{}",
                 }
             },
             Fire = {
                 name = "Тип",
                 text = {
-                  "{X:fire,C:white}Огненный{}",
+                  "{X:poke_fire,C:white}Огненный{}",
                 }
             },
             Water = {
                 name = "Тип",
                 text = {
-                  "{X:water,C:white}Водный{}",
+                  "{X:poke_water,C:white}Водный{}",
                 }
             },
             Lightning = {
                 name = "Тип",
                 text = {
-                  "{X:lightning,C:black}Электрический{}",
+                  "{X:poke_lightning,C:black}Электрический{}",
                 }
             },
             Psychic = {
                 name = "Тип",
                 text = {
-                  "{X:psychic,C:white}Психический{}",
+                  "{X:poke_psychic,C:white}Психический{}",
                 }
             },
             Fighting = {
                 name = "Тип",
                 text = {
-                  "{X:fighting,C:white}Боевой{}",
+                  "{X:poke_fighting,C:white}Боевой{}",
                 }
             },
             Colorless = {
                 name = "Тип",
                 text = {
-                  "{X:colorless,C:white}Бесцветный{}",
+                  "{X:poke_colorless,C:white}Бесцветный{}",
                 }
             },
             Dark = {
                 name = "Тип",
                 text = {
-                  "{X:dark,C:white}Тёмный{}",
+                  "{X:poke_dark,C:white}Тёмный{}",
                 }
             },
             Metal = {
                 name = "Тип",
                 text = {
-                  "{X:metal,C:white}Металлический{}",
+                  "{X:poke_metal,C:white}Металлический{}",
                 }
             },
             Fairy = {
                 name = "Тип",
                 text = {
-                  "{X:fairy,C:white}Волшебный{}",
+                  "{X:poke_fairy,C:white}Волшебный{}",
                 }
             },
             Dragon = {
                 name = "Тип",
                 text = {
-                  "{X:dragon,C:white}Драконий{}",
+                  "{X:poke_dragon,C:white}Драконий{}",
                 }
             },
             Earth = {
                 name = "Тип",
                 text = {
-                  "{X:earth,C:white}Земляной{}",
+                  "{X:poke_earth,C:white}Земляной{}",
                 }
             },
             Bird = {
                 name = "Тип",
                 text = {
-                  "{X:bird,C:white}Летающий{}",
+                  "{X:poke_bird,C:white}Летающий{}",
                 }
             },
             --infoqueue used for things like kabuto and omanyte
@@ -2840,7 +2840,7 @@ return {
                 name = "Подарки",
                 text = {
                     "{C:green}35%{} - {C:money}$8{}",
-                    "{C:green}30%{} - {C:attention}карта {C:item}Предмета{}",
+                    "{C:green}30%{} - {C:attention}карта {C:poke_item}Предмета{}",
                     "{C:green}20%{} - {C:attention}Тэг купона",
                     "{C:green}15%{} - {C:dark_edition}полихромная{} {C:attention}Подарочная Карта",
                 }
@@ -2856,20 +2856,20 @@ return {
             eeveelution = {
                 name = "Эволюции",
                 text = {
-                    "{C:attention}Камень Воды{} - {X:water,C:white}Вапореон{}",
-                    "{C:attention}Камень Молнии{} - {X:lightning,C:black}Джолтеон{}",
-                    "{C:attention}Камень Огня{} - {X:fire,C:white}Флареон{}",
-                    "{C:attention}Камень Солнца{} - {X:psychic,C:white}Эспеон{}",
-                    "{C:attention}Камень Луны{} - {X:dark,C:white}Амбреон{}",
-                    "{C:attention}Камень Листа{} - {X:grass,C:white}Лифион{}",
-                    "{C:attention}Камень Льда{} - {X:water,C:white}Гласеон{}",
-                    "{C:attention}Блестящий Камень{} - {X:fairy,C:white}Сильвеон{}"
+                    "{C:attention}Камень Воды{} - {X:poke_water,C:white}Вапореон{}",
+                    "{C:attention}Камень Молнии{} - {X:poke_lightning,C:black}Джолтеон{}",
+                    "{C:attention}Камень Огня{} - {X:poke_fire,C:white}Флареон{}",
+                    "{C:attention}Камень Солнца{} - {X:poke_psychic,C:white}Эспеон{}",
+                    "{C:attention}Камень Луны{} - {X:poke_dark,C:white}Амбреон{}",
+                    "{C:attention}Камень Листа{} - {X:poke_grass,C:white}Лифион{}",
+                    "{C:attention}Камень Льда{} - {X:poke_water,C:white}Гласеон{}",
+                    "{C:attention}Блестящий Камень{} - {X:poke_fairy,C:white}Сильвеон{}"
                 }
             },
             precise_energy_tooltip = {
                 name = "Точные значения Энергии",
                 text = {
-                    "{s:0.8}Использует {C:attention,s:0.8}дробные{} для всех значений, изменяемых {C:pink,s:0.8}Энергией{}",
+                    "{s:0.8}Использует {C:attention,s:0.8}дробные{} для всех значений, изменяемых {C:poke_pink,s:0.8}Энергией{}",
                     "{s:0.8}Если галочка будет {C:attention,s:0.8}снята{}{s:0.8}, бонусы Энергии изменятся следующим образом:{}",
                     "{C:attenion}1. {X:mult,C:white,s:0.8}X{} {s:0.8}Mult - использует дробные",
                     "{C:attenion}2. {s:0.8}Прямые значения {C:mult,s:0.8}множ.{}{s:0.8} и {C:chips,s:0.8}фишек{}{s:0.8} - округляются до ближайшего полного значения",
@@ -2909,7 +2909,7 @@ return {
             poke_pink_seal_seal = {
                 name = "Розовая печать",
                 text = {
-                    "Создаёт карту {C:pink}Энергии{}",
+                    "Создаёт карту {C:poke_pink}Энергии{}",
                     "если засчитывается в",
                     "{C:attention}первой руке{} раунда"
                 },
@@ -2917,7 +2917,7 @@ return {
             poke_silver_seal = {
                 name = "Серебряная печать",
                 text = {
-                  "Создаёт карту {C:item}Предмета{},",
+                  "Создаёт карту {C:poke_item}Предмета{},",
                   "но{C:attention}сбрасывается{}, если осталась {C:attention}в руке{},",
                   "когда подсчитываются карты"
                 }
@@ -2925,73 +2925,73 @@ return {
             grass_sticker = {
                 name = "Тип",
                 text = {
-                    "{X:grass,C:white}Травяной{}"
+                    "{X:poke_grass,C:white}Травяной{}"
                 } 
             },
             fire_sticker = {
                 name = "Тип",
                 text = {
-                    "{X:fire,C:white}Огненный{}"
+                    "{X:poke_fire,C:white}Огненный{}"
                 } 
             },
             water_sticker = {
                 name = "Тип",
                 text = {
-                    "{X:water,C:white}Водный{}"
+                    "{X:poke_water,C:white}Водный{}"
                 } 
             },
             lightning_sticker = {
                 name = "Тип",
                 text = {
-                    "{X:lightning,C:white}Электрический{}"
+                    "{X:poke_lightning,C:white}Электрический{}"
                 } 
             },
             psychic_sticker = {
                 name = "Тип",
                 text = {
-                    "{X:psychic,C:white}Психический{}"
+                    "{X:poke_psychic,C:white}Психический{}"
                 } 
             },
             fighting_sticker = {
                 name = "Тип",
                 text = {
-                    "{X:fighting,C:white}Боевой{}"
+                    "{X:poke_fighting,C:white}Боевой{}"
                 } 
             },
             colorless_sticker = {
                 name = "Тип",
                 text = {
-                    "{X:colorless,C:white}Бесцветный{}"
+                    "{X:poke_colorless,C:white}Бесцветный{}"
                 } 
             },
             dark_sticker = {
                 name = "Тип",
                 text = {
-                    "{X:dark,C:white}Тёмный{}"
+                    "{X:poke_dark,C:white}Тёмный{}"
                 } 
             },
             metal_sticker = {
                 name = "Тип",
                 text = {
-                    "{X:metal,C:white}Металлический{}"
+                    "{X:poke_metal,C:white}Металлический{}"
                 } 
             },
             fairy_sticker = {
                 name = "Тип",
                 text = {
-                    "{X:fairy,C:white}Волшебный{}"
+                    "{X:poke_fairy,C:white}Волшебный{}"
                 } 
             },
             dragon_sticker = {
                 name = "Тип",
                 text = {
-                    "{X:dragon,C:white}Драконий{}"
+                    "{X:poke_dragon,C:white}Драконий{}"
                 } 
             },
             earth_sticker = {
                 name = "Тип",
                 text = {
-                    "{X:earth,C:white}Земляной{}"
+                    "{X:poke_earth,C:white}Земляной{}"
                 } 
             },
             --Since these are normally discovered by default these will probably not matter
@@ -3019,7 +3019,7 @@ return {
                 text = {
                     "Выберите {C:attention}#1#{}",
                     "из {C:attention}#2# карт",
-                    "{C:pink}Энергии{} или {C:item}Предмета{}",
+                    "{C:poke_pink}Энергии{} или {C:poke_item}Предмета{}",
                 },
             },
             p_poke_pokepack_normal_2 = {
@@ -3027,7 +3027,7 @@ return {
                 text = {
                     "Выберите {C:attention}#1#{}",
                     "из {C:attention}#2# карт",
-                    "{C:pink}Энергии{} или {C:item}Предмета{}",
+                    "{C:poke_pink}Энергии{} или {C:poke_item}Предмета{}",
                 },
             },
             p_poke_pokepack_jumbo_1 = {
@@ -3035,7 +3035,7 @@ return {
                 text = {
                     "Выберите {C:attention}#1#{}",
                     "из {C:attention}#2# карт",
-                    "{C:pink}Энергии{} или {C:item}Предмета{}",
+                    "{C:poke_pink}Энергии{} или {C:poke_item}Предмета{}",
                 },
             },
             p_poke_pokepack_mega_1 = {
@@ -3043,7 +3043,7 @@ return {
                 text = {
                     "Выберите {C:attention}#1#{}",
                     "из {C:attention}#2# карт",
-                    "{C:pink}Энергии{} или {C:item}Предмета{}",
+                    "{C:poke_pink}Энергии{} или {C:poke_item}Предмета{}",
                 },
             },
             p_poke_pokepack_normal_3 = {
@@ -3051,7 +3051,7 @@ return {
                 text = {
                     "Выберите {C:attention}#1#{}",
                     "из {C:attention}#2# карт",
-                    "{C:pink}Энергии{} или {C:item}Предмета{}",
+                    "{C:poke_pink}Энергии{} или {C:poke_item}Предмета{}",
                 },
             },
             p_poke_pokepack_normal_4 = {
@@ -3059,7 +3059,7 @@ return {
                 text = {
                     "Выберите {C:attention}#1#{}",
                     "из {C:attention}#2# карт",
-                    "{C:pink}Энергии{} или {C:item}Предмета{}",
+                    "{C:poke_pink}Энергии{} или {C:poke_item}Предмета{}",
                 },
             },
             p_poke_pokepack_jumbo_2 = {
@@ -3067,7 +3067,7 @@ return {
                 text = {
                     "Выберите {C:attention}#1#{}",
                     "из {C:attention}#2# карт",
-                    "{C:pink}Энергии{} или {C:item}Предмета{}",
+                    "{C:poke_pink}Энергии{} или {C:poke_item}Предмета{}",
                 },
             },
             p_poke_pokepack_mega_2 = {
@@ -3075,7 +3075,7 @@ return {
                 text = {
                     "Выберите {C:attention}#1#{}",
                     "из {C:attention}#2# карт",
-                    "{C:pink}Энергии{} или {C:item}Предмета{}",
+                    "{C:poke_pink}Энергии{} или {C:poke_item}Предмета{}",
                 },
             },
         },

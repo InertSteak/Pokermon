@@ -73,7 +73,7 @@ end
     calculate = function(self, sleeve, context)
       if self.get_current_deck_key() ~= 'b_poke_obituarydeck' then return end
       if context.joker_type_destroyed or context.selling_card then
-        local key = matching_energy(context.card, true)
+        local key = pokermon.energy.get_matching_energy(context.card, true)
         if key then
           SMODS.add_card { key = key, edition = 'e_negative' }
         end
@@ -106,10 +106,10 @@ end
       CardSleeves.Sleeve.apply(self)
       G.GAME.modifiers.poke_force_seal = "poke_silver"
       if self.get_current_deck_key() == "b_poke_revenantdeck" then
-        G.GAME.modifiers.no_poke_packs = true
+        G.GAME.modifiers.poke_no_pocket_packs = true
         for k, v in pairs(G.P_CENTER_POOLS["Booster"]) do
-          if v.kind == "Energy" then
-            v.get_weight = function() return G.GAME.modifiers.no_poke_packs and 0 or 1 end
+          if v.kind == "poke_energy" then
+            v.get_weight = function() return G.GAME.modifiers.poke_no_pocket_packs and 0 or 1 end
           end
         end
       end
@@ -152,13 +152,13 @@ end
   end,
 	apply = function(self)
       if self.get_current_deck_key() ~= "b_poke_luminousdeck" then
-	    G.GAME.modifiers.apply_type = true
+	    G.GAME.modifiers.poke_apply_type = true
       end
 	end,
   calculate = function(self, back, context)
     if context.reroll_shop and self.get_current_deck_key() == "b_poke_luminousdeck" then
       if SMODS.pseudorandom_probability(back, 'luminate', self.config.num, self.config.dem, 'luminate') then
-        local temp_card = {set = "Item", area = G.shop_jokers, key = "c_poke_teraorb"}
+        local temp_card = {set = "poke_item", area = G.shop_jokers, key = "c_poke_teraorb"}
         local add_card = SMODS.create_card(temp_card)
         add_shop_card(add_card, card)
       end
@@ -188,7 +188,7 @@ local telekineticsleeve = {
     if self.get_current_deck_key() ~= "b_poke_telekineticdeck" then
       CardSleeves.Sleeve.apply(self)
     else
-      G.GAME.modifiers.spoon_slots = true
+      G.GAME.modifiers.poke_spoon_slots = true
     end
   end,
 }
@@ -206,7 +206,7 @@ local ampedsleeve = {
 
     if self.get_current_deck_key() == "b_poke_ampeddeck" then
       key = self.key.."_alt"
-      vars = {localize{type = 'name_text', key = 'j_poke_jelly_donut', set = 'Joker'}, localize("double_rainbow_energy_variable"), localize{type = 'name_text', key = 'c_poke_colorless_energy', set = 'Energy'}}
+      vars = {localize{type = 'name_text', key = 'j_poke_jelly_donut', set = 'Joker'}, localize("double_rainbow_energy_variable"), localize{type = 'name_text', key = 'c_poke_colorless_energy', set = 'poke_energy'}}
       self.config = {}
     else
       vars = {localize {type = 'name_text', key = 'v_poke_energysearch', set = 'Voucher'}, localize("double_rainbow_energy_variable")}
@@ -218,7 +218,7 @@ local ampedsleeve = {
   apply = function(self)
     CardSleeves.Sleeve.apply(self)
     if self.get_current_deck_key() == "b_poke_ampeddeck" then
-      G.GAME.modifiers.disable_colorless_penalty = true
+      G.GAME.modifiers.poke_disable_colorless_penalty = true
       G.E_MANAGER:add_event(Event({
         func = function()
           SMODS.find_card('c_poke_double_rainbow_energy')[1]:remove()
@@ -251,7 +251,7 @@ local futuresleeve = {
     G.E_MANAGER:add_event(Event({
       func = function()
         if self.get_current_deck_key() ~= 'b_poke_futuredeck' then
-          G.GAME.scry_amount = (G.GAME.scry_amount or 0) + self.config.scry
+          G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + self.config.scry
         end
         return true
       end
@@ -261,13 +261,13 @@ local futuresleeve = {
     if self.get_current_deck_key() == 'b_poke_futuredeck' then
       if context.scoring_hand then
         if context.before then
-          G.GAME.scry_amount = (G.GAME.scry_amount or 0) + self.config.scry_plus
-          G.GAME.scry_added = (G.GAME.scry_added or 0) + self.config.scry_plus
+          G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + self.config.scry_plus
+          G.GAME.poke_scry_added = (G.GAME.poke_scry_added or 0) + self.config.scry_plus
         end
       end
       if context.end_of_round and not context.individual and not context.repetition then
-        G.GAME.scry_amount = math.max(self.config.scry, (G.GAME.scry_amount or 0) - (G.GAME.scry_added or 0))
-        G.GAME.scry_added = 0
+        G.GAME.poke_scry_amount = math.max(self.config.scry, (G.GAME.poke_scry_amount or 0) - (G.GAME.poke_scry_added or 0))
+        G.GAME.poke_scry_added = 0
         return {
           message = localize('k_reset'),
           colour = G.C.PURPLE
@@ -340,7 +340,7 @@ local megasleeve = {
   apply = function(self)
     CardSleeves.Sleeve.apply(self)
     if self.get_current_deck_key() == "b_poke_megadeck" then
-      G.GAME.modifiers.infinite_megastone = true
+      G.GAME.modifiers.poke_infinite_megastone = true
     else
       G.E_MANAGER:add_event(Event({
         func = function()
@@ -401,18 +401,18 @@ local diceysleeve = {
 	atlas = "AtlasDecksBasic",
   apply = function(self)
     if self.get_current_deck_key() == "b_poke_diceydeck" then
-      G.GAME.modifiers.negative_hazards = true
+      G.GAME.modifiers.poke_negative_hazards = true
     else
       G.E_MANAGER:add_event(Event({
         func = function()
-          poke_change_hazard_max(self.config.hazard_layer_max)
-          poke_change_hazard_level(self.config.hazard_layer)
+          pokermon.change_hazard_max(self.config.hazard_layer_max)
+          pokermon.change_hazard_level(self.config.hazard_layer)
           G.hand:change_size(self.config.h_size)
           
-          G.GAME.modifiers.enhance_bonus = 'm_poke_hazard'
-          G.GAME.modifiers.money_per_enhancement = self.config.money
-          G.GAME.modifiers.enhance_bonus_text = localize('poke_hazards_in_deck')
-          G.GAME.modifiers.enhance_bonus_color = G.ARGS.LOC_COLOURS["hazard"]
+          G.GAME.modifiers.poke_enhance_bonus = 'm_poke_hazard'
+          G.GAME.modifiers.poke_money_per_enhancement = self.config.money
+          G.GAME.modifiers.poke_enhance_bonus_text = localize('poke_hazards_in_deck')
+          G.GAME.modifiers.poke_enhance_bonus_color = pokermon.colours.hazard
           return true
         end
       }))

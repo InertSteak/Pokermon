@@ -1,4 +1,4 @@
-pseudorandom_multi = function(args)
+pokermon.pseudorandom_multi = function(args)
   --Args: array(table), amt(num), seed(string), add_con(function), mod_func(function)
   local elements = {}
   local result = {}
@@ -20,7 +20,7 @@ pseudorandom_multi = function(args)
   return result
 end
 
-juice_flip = function(card, second)
+pokermon.juice_flip = function(card, second)
   local sound = 'card1'
   local base_percent = 1.15
   local extra = nil
@@ -43,7 +43,7 @@ juice_flip = function(card, second)
   delay(0.2)
 end
 
-juice_flip_hand = function(card, second)
+pokermon.juice_flip_hand = function(card, second)
   local sound = 'card1'
   local base_percent = 1.15
   local extra = nil
@@ -66,7 +66,7 @@ juice_flip_hand = function(card, second)
   delay(0.2)
 end
 
-juice_flip_table = function(card, targets, second, limit)
+pokermon.juice_flip_table = function(card, targets, second, limit)
   local sound = 'card1'
   local base_percent = 1.15
   local extra = nil
@@ -90,7 +90,7 @@ juice_flip_table = function(card, targets, second, limit)
   delay(0.2)
 end
 
-juice_flip_single = function(card, index)
+pokermon.juice_flip_single = function(card, index)
   G.E_MANAGER:add_event(Event({
       trigger = 'after',
       delay = 0.4,
@@ -110,7 +110,7 @@ juice_flip_single = function(card, index)
   }))
 end
 
-poke_add_card = function(add_card, card, area)
+pokermon.add_card = function(add_card, card, area)
       if not area then area = G.hand end
       add_card:add_to_deck()
       G.deck.config.card_limit = G.deck.config.card_limit + 1
@@ -132,7 +132,7 @@ poke_add_card = function(add_card, card, area)
       }
 end
 
-poke_add_playing_card = function(t, no_joker_effect)
+pokermon.add_playing_card = function(t, no_joker_effect)
   local playing_card = SMODS.add_card(t)
   if not no_joker_effect then
     playing_card_joker_effects({playing_card})
@@ -140,7 +140,7 @@ poke_add_playing_card = function(t, no_joker_effect)
   return playing_card
 end
 
-poke_add_shop_card = function(add_card, card)
+pokermon.add_shop_card = function(add_card, card)
     if G.GAME.shop.joker_max == 1 then
       G.shop_jokers.config.card_limit = G.GAME.shop.joker_max + 1
       G.shop_jokers.T.w = math.min((G.GAME.shop.joker_max + 1)*1.02*G.CARD_W,4.08*G.CARD_W)
@@ -161,7 +161,7 @@ poke_add_shop_card = function(add_card, card)
     card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_plus_shop'), colour = G.C.GREEN})
 end
 
-poke_remove_card = function(target, card, trigger)
+pokermon.remove_card = function(target, card, trigger)
   G.E_MANAGER:add_event(Event({
     trigger = 'after',
     delay = 0.4,
@@ -182,7 +182,7 @@ poke_remove_card = function(target, card, trigger)
   delay(0.3)
 end
 
-poke_debug = function(message, verbose, depth)
+pokermon.debug = function(message, verbose, depth)
   if verbose then
     sendDebugMessage("The type of the message variable is ["..type(message).."]")
   end
@@ -197,7 +197,17 @@ poke_debug = function(message, verbose, depth)
   end
 end
 
-function poke_find_card(key_or_function, use_highlighted)
+pokermon.filter = function(list, func)
+  local new_list = {}
+  for _, v in pairs(list) do
+    if func(v) then
+      new_list[#new_list + 1] = v
+    end
+  end
+  return new_list
+end
+
+pokermon.find_card = function(key_or_function, use_highlighted)
   local is_target = function(card)
     return (type(key_or_function) == "function") and key_or_function(card)
       or card.config.center.key == key_or_function
@@ -214,7 +224,7 @@ function poke_find_card(key_or_function, use_highlighted)
   end
 end
 
-function poke_find_playing_card(findFunc, findArea)
+pokermon.find_playing_card = function(findFunc, findArea)
   local area = findArea or G.deck.cards
   local found = {}
   for k, v in pairs(area) do
@@ -226,14 +236,14 @@ function poke_find_playing_card(findFunc, findArea)
   return found
 end
 
-function poke_find_leftmost_or_highlighted(key_or_function)
+function pokermon.find_leftmost_or_highlighted(key_or_function)
   if not key_or_function then
     return G.jokers.highlighted[1] or G.jokers.cards[1]
   end
-  return poke_find_card(key_or_function, true)
+  return pokermon.find_card(key_or_function, true)
 end
 
-poke_vary_rank = function(card, decrease, seed, immediate)
+pokermon.vary_rank = function(card, decrease, seed, immediate)
   -- if it doesn't have a rank/suit within SMODS, don't do anything
   if not card.base or not card.base.value or not card.base.suit or not SMODS.Ranks[card.base.value] then return end
 
@@ -262,13 +272,7 @@ poke_vary_rank = function(card, decrease, seed, immediate)
   end
 end
 
-poke_create_base_copy = function(selected)
-  for j = 1, 2 do
-    create_playing_card({front = selected.config.card, center = G.P_CENTERS.c_base}, G.hand, nil, nil, {G.C.PURPLE})
-  end
-end
-
-poke_get_adjacent_jokers = function(card)
+pokermon.get_adjacent_jokers = function(card)
   local jokers = {}
   if #G.jokers.cards > 1 then
     local pos = 0
@@ -288,7 +292,7 @@ poke_get_adjacent_jokers = function(card)
   return jokers
 end
 
-poke_next_highest_rank = function(id, rank)
+pokermon.next_owned_rank = function(id, rank)
   local rank_list = {}
   local owned_ranks = {}
   for _, v in pairs(G.playing_cards) do
@@ -327,7 +331,7 @@ poke_next_highest_rank = function(id, rank)
   return SMODS.Ranks[found_next_rank].id, found_next_rank
 end
 
-poke_lowest_rank = function(id, rank)
+pokermon.get_lowest_rank = function(id, rank)
   local cards = {}
   local low_id = id
   local low_rank = rank
@@ -345,14 +349,14 @@ poke_lowest_rank = function(id, rank)
   return low_id, low_rank
 end
 
-set_spoon_item = function(card)
+pokermon.set_spoon_item = function(card)
   G.E_MANAGER:add_event(Event({
     trigger = 'immediate',
     func = function()
       G.E_MANAGER:add_event(Event({
         trigger = 'immediate',
         func = function()
-          G.GAME.last_poke_item = card.config.center_key
+          G.GAME.poke_last_item = card.config.center_key
             return true
         end
       }))
@@ -361,7 +365,7 @@ set_spoon_item = function(card)
   }))
 end
 
-poke_conversion_event_helper = function(func, delay, immediate)
+pokermon.conversion_event_helper = function(func, delay, immediate)
   if immediate then
     func()
   else
@@ -376,62 +380,62 @@ poke_conversion_event_helper = function(func, delay, immediate)
   end
 end
 
-poke_convert_cards_to = function(cards, t, noflip, immediate)
+pokermon.convert_cards = function(cards, t, noflip, immediate)
   if not cards then return end
   if cards and cards.is and cards:is(Card) then cards = {cards} end
   if not t.seal and not noflip then
     for i = 1, #cards do
-      poke_conversion_event_helper(function() cards[i]:flip(); cards[i]:juice_up(0.3, 0.3) end)
+      pokermon.conversion_event_helper(function() cards[i]:flip(); cards[i]:juice_up(0.3, 0.3) end)
     end
     delay(0.2)
   end
   for i = 1, #cards do
     if t.mod_conv then
-      poke_conversion_event_helper(function() cards[i]:set_ability(G.P_CENTERS[t.mod_conv]) end, nil, immediate)
+      pokermon.conversion_event_helper(function() cards[i]:set_ability(G.P_CENTERS[t.mod_conv]) end, nil, immediate)
       if t.mod_conv == 'm_poke_seed' then
         cards[i]:set_sprites(cards[i].config.center)
       end
     end
     if t.edition then
-      poke_conversion_event_helper(function() cards[i]:set_edition(t.edition, true) end, nil, immediate)
+      pokermon.conversion_event_helper(function() cards[i]:set_edition(t.edition, true) end, nil, immediate)
     end
     if t.suit_conv then
-      poke_conversion_event_helper(function() cards[i]:change_suit(t.suit_conv) end, nil, immediate)
+      pokermon.conversion_event_helper(function() cards[i]:change_suit(t.suit_conv) end, nil, immediate)
     end
     if t.seal then
-      poke_conversion_event_helper(function() cards[i]:set_seal(t.seal, nil, true) end, nil, immediate)
+      pokermon.conversion_event_helper(function() cards[i]:set_seal(t.seal, nil, true) end, nil, immediate)
     end
     if t.random then
-      poke_vary_rank(cards[i], nil, nil, immediate)
+      pokermon.vary_rank(cards[i], nil, nil, immediate)
     end
     if t.up or t.down then
-      poke_vary_rank(cards[i], not t.up, nil, immediate)
+      pokermon.vary_rank(cards[i], not t.up, nil, immediate)
     end
     if t.bonus_chips then
       local bonus_add = function()
         cards[i].ability.perma_bonus = cards[i].ability.perma_bonus or 0
         cards[i].ability.perma_bonus = cards[i].ability.perma_bonus + t.bonus_chips
       end
-      poke_conversion_event_helper(bonus_add, nil, immediate)
+      pokermon.conversion_event_helper(bonus_add, nil, immediate)
     end
   end
   if not t.seal and not noflip then
     for i = 1, #cards do
-      poke_conversion_event_helper(function() cards[i]:flip(); cards[i]:juice_up(0.3, 0.3) end, 0.2)
+      pokermon.conversion_event_helper(function() cards[i]:flip(); cards[i]:juice_up(0.3, 0.3) end, 0.2)
     end
   end
   if not noflip then delay(0.3) end
   if noflip then
     for i = 1, #cards do
-      poke_conversion_event_helper(function() cards[i]:juice_up(0.3, 0.3) end, 0.2)
+      pokermon.conversion_event_helper(function() cards[i]:juice_up(0.3, 0.3) end, 0.2)
     end
   end
   if cards == G.hand.highlighted then
-    poke_conversion_event_helper(function() G.hand:unhighlight_all() end)
+    pokermon.conversion_event_helper(function() G.hand:unhighlight_all() end)
   end
 end
 
-poke_unhighlight_cards = function()
+pokermon.unhighlight_cards = function()
   G.E_MANAGER:add_event(Event({
     trigger = 'after',
     delay = 0.2,
@@ -448,7 +452,7 @@ function Game:init_game_object()
   return game
 end
 
-poke_is_in_collection = function(card)
+pokermon.is_in_collection = function(card)
   if not card.area and G.OVERLAY_MENU then return true end
   if card.area and card.area.config.collection then return true end
   if G.your_collection then
@@ -461,7 +465,7 @@ poke_is_in_collection = function(card)
   return false
 end
 
-poke_stabilize_chip_drain = function(card)
+pokermon.stabilize_chip_drain = function(card)
   if not card or not card.ability or not card.base or not card.base.nominal or not card.ability.bonus then return end
   card.ability.nominal_drain = card.ability.nominal_drain or 0
   card.ability.nominal_drain = math.min(card.ability.nominal_drain, card.base.nominal - 1)
@@ -477,7 +481,7 @@ tdmsg = function(tablename)
   end
 end
 
-poke_add_hazards = function(ratio, flat, area)
+pokermon.add_hazards = function(ratio, flat, area)
   local hazards = {}
   flat = flat or 0
   area = area or G.deck
@@ -498,7 +502,7 @@ poke_add_hazards = function(ratio, flat, area)
   playing_card_joker_effects(hazards)
 end
 
-poke_set_hazards = function(amount)
+pokermon.set_hazards = function(amount)
   for i = 1, amount do
     local valid = {}
     for k, v in pairs(G.deck.cards) do
@@ -513,25 +517,30 @@ poke_set_hazards = function(amount)
   end
 end
 
-poke_change_hazard_max = function(mod)
-  G.GAME.hazard_max = G.GAME.hazard_max or 3
-  G.GAME.hazard_max = G.GAME.hazard_max + mod
+pokermon.change_hazard_max = function(mod)
+  G.GAME.poke_hazard_max = G.GAME.poke_hazard_max or 3
+  G.GAME.poke_hazard_max = G.GAME.poke_hazard_max + mod
 end
 
-poke_change_hazard_level = function(mod)
-  local max = G.GAME.hazard_max or 3
-  G.GAME.round_resets.hazard_level = G.GAME.round_resets.hazard_level or 0
-  G.GAME.round_resets.hazard_level = G.GAME.round_resets.hazard_level + mod
+pokermon.change_hazard_level = function(mod)
+  local max = G.GAME.poke_hazard_max or 3
+  G.GAME.poke_hazard_level = G.GAME.poke_hazard_level or 0
+  G.GAME.poke_hazard_level = G.GAME.poke_hazard_level + mod
 end
 
-poke_get_hazard_level_vars = function()
-  local level = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level or 0)
-  local max = G.GAME.hazard_max or 3
+pokermon.change_growth_level = function(mod)
+  G.GAME.poke_growth_level = G.GAME.poke_growth_level or 0
+  G.GAME.poke_growth_level = G.GAME.poke_growth_level + mod
+end
+
+pokermon.get_hazard_level_vars = function()
+  local level = math.min(G.GAME.poke_hazard_max or 3, G.GAME.poke_hazard_level or 0)
+  local max = G.GAME.poke_hazard_max or 3
   local vars = {level, max}
   return vars
 end
 
-function poke_same_suit(hand)
+pokermon.is_same_suit = function(hand)
   local ret = {}
   local suits = SMODS.Suit.obj_buffer
   for j = 1, #suits do
@@ -547,7 +556,7 @@ function poke_same_suit(hand)
   return false
 end
 
-function poke_get_rank(card)
+pokermon.get_rank = function(card)
   local id = card.base.id
   local rank = nil
   if id == 14 then rank = "Ace"
@@ -558,7 +567,7 @@ function poke_get_rank(card)
   return rank
 end
 
-function poke_is_even(card)
+pokermon.is_even = function(card)
   if card:get_id() == 2 or 
    card:get_id() == 4 or 
    card:get_id() == 6 or 
@@ -570,7 +579,7 @@ function poke_is_even(card)
   end
 end
 
-function poke_is_odd(card)
+pokermon.is_odd = function(card)
   if card:get_id() == 3 or 
    card:get_id() == 5 or 
    card:get_id() == 7 or 
@@ -582,7 +591,7 @@ function poke_is_odd(card)
   end
 end
 
-function poke_suit_check(hand, num)
+pokermon.suit_check = function(hand, num)
   local suits = {}
   local suit_count = 0
   
@@ -637,12 +646,6 @@ function Card:is_face(from_boss)
   return is_face_ref(self, from_boss)
 end
 
--- Smeared Check Hook
-local smeared_ref = SMODS.smeared_check
-function SMODS.smeared_check(card, suit)
-  return smeared_ref(card, suit)
-end
-
 -- Ambipom Straight Hand-Part Override
 SMODS.PokerHandPart:take_ownership('_straight',
   {
@@ -656,8 +659,8 @@ SMODS.PokerHandPart:take_ownership('_straight',
 )
 -- Ambipom Flush Check done via lovely patch for the sake of efficiency
 
-set_joker_family_win = function(card)
-  local keys = get_family_keys(card)
+pokermon.set_joker_family_win = function(card)
+  local keys = pokermon.get_family_keys(card)
   for _, v in pairs(keys) do
     -- Since evo lines and aux_poke / auto-sticker can be tracked separately, this only needs to be the latter
     if (G.P_CENTERS[v] and G.P_CENTERS[v].set == 'Joker' and G.P_CENTERS[v].auto_sticker)
@@ -672,11 +675,11 @@ set_joker_family_win = function(card)
     end
   end
   -- This will sticker the previous evo line
-  set_previous_evo_win(card.config.center)
+  pokermon.set_previous_evo_win(card.config.center)
 end
 
-set_previous_evo_win = function(center)
-  local previous = get_previous_evo_from_center(center, true)
+pokermon.set_previous_evo_win = function(center)
+  local previous = pokermon.get_previous_evo_from_center(center, true)
   if previous then
     -- This is the bit that tracks joker wins
     G.PROFILES[G.SETTINGS.profile].joker_usage[previous] = G.PROFILES[G.SETTINGS.profile].joker_usage[previous]
@@ -686,16 +689,16 @@ set_previous_evo_win = function(center)
     joker_usage.wins[G.GAME.stake] = (joker_usage.wins[G.GAME.stake] or 0) + 1
     joker_usage.wins_by_key[SMODS.stake_from_index(G.GAME.stake)] = (joker_usage.wins_by_key[SMODS.stake_from_index(G.GAME.stake)] or 0) + 1
     -- Moves all the way down the family tree recursively (rather than a gigantic if-else block)
-    set_previous_evo_win(G.P_CENTERS[previous])
+    pokermon.set_previous_evo_win(G.P_CENTERS[previous])
   end
 end
 
-poke_can_set_sprite = function(card)
-  if poke_is_in_collection(card) and not card.discovered then return false end
+pokermon.can_set_sprite = function(card)
+  if pokermon.is_in_collection(card) and not card.discovered then return false end
   return true
 end
 
-function table.contains(table, element)
+pokermon.has = function(table, element)
   for _, value in pairs(table) do
     if value == element then
       return true
@@ -704,7 +707,7 @@ function table.contains(table, element)
   return false
 end
 
-table.append = function(t1, t2)
+pokermon.table_append = function(t1, t2)
   for _, v in ipairs(t2) do
     table.insert(t1, v)
   end
@@ -721,13 +724,13 @@ pokermon.get_dex_number = function(name)
 end
 
 --- Creates a Set of all the values in a given list, or a Set with 1 given value. Returns nil in place of empty Sets.
-poke_convert_to_set = function(element_or_list)
+pokermon.convert_to_set = function(element_or_list)
   if element_or_list then
     local set
     if type(element_or_list) == 'table' then
       for k, v in pairs(element_or_list) do
         set = set or {}
-local key = v == true and k or v
+        local key = v == true and k or v
         set[key] = true
       end
     else
@@ -737,23 +740,18 @@ local key = v == true and k or v
   end
 end
 
-poke_get_consumeables = function(set)
+pokermon.get_consumeables = function(set)
   local consumeables = {}
   if G.STAGE ~= G.STAGES.RUN then return consumeables end
-  local count = 0
-  local areas = {G.jokers.cards, G.consumeables.cards}
-  for i = 1, #areas do
-    local area = areas[i]
-    for j = 1, #area do
-      if area[j].ability.consumeable and not (set and area[j].ability.set ~= set) then
-        consumeables[#consumeables + 1] = area[j]
-      end
-    end
+  for _, cardarea in pairs(SMODS.get_card_areas("jokers")) do
+    pokermon.table_append(consumeables, pokermon.filter(cardarea.cards,
+      function(v) return v.ability.consumeable and not (set and v.ability.set ~= set)
+    end))
   end
   return consumeables
 end
 
-poke_ease_hands_played = function(mod, instant)
+pokermon.ease_hands_played = function(mod, instant)
   if mod >= 0 then
     ease_hands_played(mod, instant)
   else
@@ -778,7 +776,66 @@ ease_hands_played = function(mod, instant, ...)
   return ease_hands_played_ref(mod, instant, ...)
 end
 
-poke_nope = function(card)
+-- Drampa pack upgrading functionality
+pokermon.get_upgraded_pack_center = function(center, into, from)
+  if not from then
+    local pack_types = {'normal', 'jumbo', 'mega'}
+    for _, pack_type in ipairs(pack_types) do
+      if pack_type == into then return end -- never downgrade packs
+      if center.key:match(pack_type) then
+        from = pack_type
+        break
+      end
+    end
+    if not from then return end
+  end
+
+  local pack_num = tonumber(center.key:match("_(%d)$")) or 1
+  local upgraded_key = center.key:gsub(from, into)
+
+  if upgraded_key == center.key then return end
+
+  return G.P_CENTERS[upgraded_key]
+      or G.P_CENTERS[upgraded_key:gsub('_%d$', '_' .. math.ceil(pack_num / 2))] -- prefer to match down evenly
+      or G.P_CENTERS[upgraded_key:gsub('_%d$', '_1')]
+end
+
+local get_pack_ref = get_pack
+function get_pack(_key, _type)
+  local center = get_pack_ref(_key, _type)
+  if _key == 'shop_pack' then
+    if next(SMODS.find_card('j_poke_mega_drampa')) then
+      center = pokermon.get_upgraded_pack_center(center, 'mega') or center
+    elseif next(SMODS.find_card('j_poke_drampa')) then
+      center = pokermon.get_upgraded_pack_center(center, 'jumbo') or center
+    end
+  end
+  return center
+end
+
+pokermon.upgrade_shop_pack = function(pack, into)
+  local old_center = pack.config.center
+  local new_center = pokermon.get_upgraded_pack_center(old_center, into)
+  if new_center and new_center ~= old_center then
+    pack:set_ability(new_center, true)
+    -- `set_ability` overrides these with `self.original_T`, which is *sometimes* erroneously the size of a regular playing card
+    pack.T.w = G.CARD_W * 1.27
+    pack.T.h = G.CARD_H * 1.27
+    pack:set_cost()
+    pack:juice_up()
+    create_shop_card_ui(pack)
+  end
+end
+
+pokermon.upgrade_all_shop_packs = function(into)
+  if G.shop_booster and G.shop_booster.cards then
+    for _, pack in ipairs(G.shop_booster.cards) do
+      pokermon.upgrade_shop_pack(pack, into)
+    end
+  end
+end
+
+pokermon.nope = function(card)
   G.E_MANAGER:add_event(Event({
     trigger = 'after',
     delay = 0.4,
@@ -815,7 +872,7 @@ end
 
 --- Checks whether two sprites are equal.
 --- Also accepts card centers (uses `atlas` and `pos`)
-poke_compare_sprites = function(a, b)
+pokermon.compare_sprites = function(a, b)
   a = a or {}
   b = b or {}
   local a_atlas = type(a.atlas) == 'table' and a.atlas.name or a.atlas
@@ -826,8 +883,8 @@ poke_compare_sprites = function(a, b)
 end
 
 --- Copies the sprite at `from.children[sprite_index]` to `card.children[sprite_index]`
-poke_copy_sprite = function(card, from, sprite_index)
-  if poke_compare_sprites(card.children[sprite_index], from.children[sprite_index]) then
+pokermon.copy_sprite = function(card, from, sprite_index)
+  if pokermon.compare_sprites(card.children[sprite_index], from.children[sprite_index]) then
     return
   end
 
@@ -860,19 +917,19 @@ poke_copy_sprite = function(card, from, sprite_index)
   card.children[sprite_index] = copy
 end
 
-poke_copy_joker_sprites = function(card, from)
-  poke_copy_sprite(card, from, 'center')
-  poke_copy_sprite(card, from, 'floating_sprite')
+pokermon.copy_joker_sprites = function(card, from)
+  pokermon.copy_sprite(card, from, 'center')
+  pokermon.copy_sprite(card, from, 'floating_sprite')
 end
 
 --- Resets the card back to its original sprite, while keeping states/roles intact
-poke_reset_sprite = function(card, center)
+pokermon.reset_sprite = function(card, center)
   center = center or card.config.center
 
   local sprite = card.children.center
   local soul = card.children.floating_sprite
 
-  if poke_compare_sprites(sprite, center) then return end
+  if pokermon.compare_sprites(sprite, center) then return end
 
   card.children.center = nil
   card.children.floating_sprite = nil
@@ -901,4 +958,31 @@ poke_reset_sprite = function(card, center)
 
   if sprite then sprite:remove() end
   if soul then soul:remove() end
+end
+
+pokermon.get_depleted = function(find_func)
+  if not G.deck or not G.deck.cards then return false end
+  
+  local depleted = true
+  
+  for k, v in ipairs(G.deck.cards) do
+    if find_func(v) then 
+      depleted = false
+      break
+    end
+  end
+  
+  return depleted
+end
+
+pokermon.sort_hands = function(sort_func)
+  local temp_hands = {}
+  for k, v in pairs(G.GAME.hands) do
+    if v.visible then
+      table.insert(temp_hands, v)
+    end
+  end
+  table.sort(temp_hands, sort_func)
+  
+  return temp_hands
 end

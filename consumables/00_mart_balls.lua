@@ -1,7 +1,7 @@
 local pokeball = {
   name = "pokeball",
   key = "pokeball",
-  set = "Item",
+  set = "poke_item",
   loc_vars = function(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
   end,
@@ -19,10 +19,10 @@ local pokeball = {
     end
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
-        local _card = create_random_poke_joker("pokeball", "Basic")
+        local _card = pokermon.create_random_poke_joker("pokeball", "Basic")
         _card:add_to_deck()
         G.jokers:emplace(_card)
         return true end }))
@@ -33,7 +33,7 @@ local pokeball = {
 local greatball = {
   name = "greatball",
   key = "greatball",
-  set = "Item",
+  set = "poke_item",
   loc_vars = function(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'stage1'}
   end,
@@ -54,10 +54,10 @@ local greatball = {
     end
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
-        local _card = create_random_poke_joker("greatball", "One")
+        local _card = pokermon.create_random_poke_joker("greatball", "One")
         _card:add_to_deck()
         G.jokers:emplace(_card)
         return true end }))
@@ -77,7 +77,7 @@ local ultraball = {
   cost = 4,
   pokeball = true,
   hidden = true,
-  soul_set = "Item",
+  soul_set = "poke_item",
   soul_rate = .01,
   unlocked = true,
   discovered = true,
@@ -91,7 +91,7 @@ local ultraball = {
   use = function(self, card, area, copier)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
-        local _card = create_random_poke_joker("ultraball", "Two")
+        local _card = pokermon.create_random_poke_joker("ultraball", "Two")
         _card:add_to_deck()
         G.jokers:emplace(_card)
         return true end }))
@@ -109,7 +109,7 @@ local masterball = {
   cost = 4,
   pokeball = true,
   hidden = true,
-  soul_set = "Item",
+  soul_set = "poke_item",
   soul_rate = .003,
   unlocked = true,
   discovered = true,
@@ -123,7 +123,7 @@ local masterball = {
   use = function(self, card, area, copier)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
-        local _card = create_random_poke_joker("masterball", "Legendary")
+        local _card = pokermon.create_random_poke_joker("masterball", "Legendary")
         _card:add_to_deck()
         G.jokers:emplace(_card)
         return true end }))

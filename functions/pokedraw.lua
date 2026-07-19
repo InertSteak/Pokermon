@@ -5,7 +5,7 @@ SMODS.DrawStep({
    key = 'zorua_shadow',
    order = 69,
    func = function(card, layer)
-    if card.debuff or poke_is_in_collection(card) or not card.ability then return end
+    if card.debuff or pokermon.is_in_collection(card) or not card.ability then return end
     if not ((card.config.center.key == 'j_poke_zorua' and card.ability.extra.active) or card.config.center.key == 'j_poke_zoroark') then return end
     if card.area and card.area == G.jokers then
       local other_joker = G.jokers.cards[#G.jokers.cards]
@@ -26,12 +26,12 @@ SMODS.DrawStep({
    key = 'evolution',
    order = 71,
    func = function(card, layer)
-      if not card.evolution_timer then return end
+      if not card.poke_evolution_timer then return end
 
       card.ARGS.send_to_shader = card.ARGS.send_to_shader or {}
       card.ARGS.send_to_shader[1] = math.min(card.VT.r*3, 1) + math.sin(G.TIMERS.REAL/28) + 1 + (card.juice and card.juice.r*20 or 0) + card.tilt_var.amt
       card.ARGS.send_to_shader[2] = G.TIMERS.REAL
-      card.ARGS.send_to_shader[3] = card.evolution_timer
+      card.ARGS.send_to_shader[3] = card.poke_evolution_timer
       -- Evolution States:
       --   0.0 to 1.0 == Initial Shine
       --   1.0 to 2.0 == Complete coverage with sphere in center
@@ -140,4 +140,12 @@ function poke_set_mystery_dungeon_back_sprites()
   for _, card in ipairs(G.I.CARD) do
     handle_mystery_dungeon_sprites(card)
   end
+end
+
+-- Pumpkaboo and Gourgeist small form juice fix
+local juiceupref = Card.juice_up
+function Card:juice_up(scale, rot_amount)
+  juiceupref(self, scale, rot_amount)
+  if not scale then scale = 0.11 end
+  if self.T.scale < 0.9 then self.VT.scale = self.T.scale - 0.6 * scale end
 end

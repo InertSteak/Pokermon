@@ -15,7 +15,7 @@ local pink_seal = {
             local energy_types = {}
             local energy_key = nil
             for l, v in pairs(G.jokers.cards) do
-              local match = matching_energy(v, true)
+              local match = pokermon.energy.get_matching_energy(v, true)
               if match then
                 table.insert(energy_types, match)
               end
@@ -26,7 +26,7 @@ local pink_seal = {
                 card:set_seal(nil)
               end
             end
-            SMODS.add_card({ set = 'Energy', key = energy_key })
+            SMODS.add_card({ set = 'poke_energy', key = energy_key })
             G.GAME.consumeable_buffer = 0
             if G.GAME.modifiers.poke_pink_seal_selfdestruct
                 and SMODS.pseudorandom_probability(card, 'poke_pink_seal_selfdestruct', card.ability.seal.num, card.ability.seal.dem, 'poke_pink_seal_selfdestruct') then
@@ -35,7 +35,7 @@ local pink_seal = {
             return true
           end,
         }))
-        return { message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"] }
+        return { message = localize("poke_plus_energy"), colour = pokermon.colours.pink }
       end
 		end
 	end,
@@ -55,14 +55,18 @@ local silver = {
 	calculate = function(self, card, context)
 		if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand and not card.ability.discarded and context.main_scoring and not card.destroyed then
         card.ability.discarded = true
+        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              SMODS.add_card({ set = 'poke_item'})
+              G.GAME.consumeable_buffer = 0
+              return true
+            end
+          }))
+        end
         G.E_MANAGER:add_event(Event({
           func = function()
-            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-              local _card = create_card("Item", G.consumeables, nil, nil, nil, nil, nil, nil)
-              _card:add_to_deck()
-              G.consumeables:emplace(_card)
-              card:juice_up()
-            end
             G.hand:add_to_highlighted(card, true)
             play_sound('card1', 1)
             local removed = false
@@ -116,6 +120,7 @@ local dna_seal = {
 	badge_colour = HEX("f81020"), --fire
 	atlas = "AtlasStickersBasic",
   pos = {x = 6, y = 1},
+  artist = "CBMX",
   config = {},
   loc_vars = function(self, info_queue, center)    
     return {vars = {}}

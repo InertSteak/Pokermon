@@ -77,11 +77,13 @@ local default_family_list = {
   { "tyrogue", "hitmonlee", "hitmonchan", "hitmontop" },
   { "poochyena", "mightyena" },
   { "wurmple", "silcoon", "beautifly", "cascoon", "dustox" },
+  { "seedot", "nuzleaf", "shiftry" },
   { "taillow", "swellow"},
   { "wingull", "pelipper"},
   { "ralts", "kirlia", "gardevoir", "gallade"},
   { "surskit", "masquerain"},
   { "numel", "camerupt", "mega_camerupt" },
+  { "trapinch", "vibrava", "flygon"},
   { "cacnea", "cacturne"},
   { "swablu", "altaria"},
   {"corphish", "crawdaunt"},
@@ -138,6 +140,7 @@ local default_family_list = {
   { "aron", "lairon", "aggron" },
   { "meditite", "medicham"},
   { "budew", "roselia", "roserade" },
+  { "gulpin", "swalot"},
   { "carvanha", "sharpedo"},
   { "duskull", "dusclops", "dusknoir" },
   {"clamperl", "huntail", "gorebyss"},
@@ -149,6 +152,7 @@ local default_family_list = {
   { "kricketot", "kricketune" },
   { "buizel", "floatzel" },
   { "buneary", "lopunny", "mega_lopunny" },
+  { "bronzor", "bronzong"},
   { "riolu", "lucario", "mega_lucario" },
   { "rotom", "rotomh", "rotomw", "rotomf", "rotomfan", "rotomm" },
   { "shaymin", "shaymin_sky" },
@@ -156,6 +160,7 @@ local default_family_list = {
   { "gothita", "gothorita", "gothitelle" },
   { "vanillite", "vanillish", "vanilluxe" },
   { "frillish", "jellicent" },
+  { "klink", "klang", "klinklang"},
   { "elgyem", "beheeyem" },
   { "trubbish", "garbodor" },
   { "litwick", "lampent", "chandelure" },
@@ -163,6 +168,7 @@ local default_family_list = {
   { "pansage", "simisage" },
   { "pansear", "simisear" },
   { "panpour", "simipour" },
+  { "axew", "fraxure", "haxorus"},
   { "golett", "golurk" },
   { "pawniard", "bisharp", "kingambit" },
   { "roggenrola", "boldore", "gigalith" },
@@ -176,6 +182,7 @@ local default_family_list = {
   },
   { "grubbin", "charjabug", "vikavolt" },
   { "rockruff", "lycanroc_day", "lycanroc_night", "lycanroc_dusk" },
+  { "drampa", "mega_drampa" },
   { "dreepy", "drakloak", "dragapult", "dreepy_dart" },
   { "hisuian_qwilfish", "overqwil" },
   { "nickit", "thievul" },
@@ -229,7 +236,7 @@ end
 
 local get_existing_family = function(family_or_member)
   for _, v in ipairs(pfm_to_family(family_or_member)) do
-    local existing_family = poke_get_family_list(pfm_to_name(v))
+    local existing_family = pokermon.get_family_list(pfm_to_name(v))
     if existing_family then return existing_family end
   end
 end
@@ -258,7 +265,7 @@ end
 -- API Functions
 
 --- Extends an existing family, or creates a new one if none exists
-poke_add_to_family = function(insert_after, new_family_or_member, allow_duplicates)
+pokermon.add_to_family = function(insert_after, new_family_or_member, allow_duplicates)
   local new_family = pfm_to_family(new_family_or_member)
 
   local family = (insert_after and get_existing_family { insert_after }) or get_existing_family(new_family) or {}
@@ -267,14 +274,14 @@ poke_add_to_family = function(insert_after, new_family_or_member, allow_duplicat
 end
 
 --- Returns the family list associated with the provided name
-poke_get_family_list = function(name)
+pokermon.get_family_list = function(name)
   return pokermon_family_map[name] or {}
 end
 
 --- Returns whether any cards present share a family with the provided center
-poke_family_present = function(center)
+pokermon.family_present = function(center)
   if SMODS.showman(center.key) or next(find_joker("pokedex")) then return false end
-  local family_list = poke_get_family_list(center.name)
+  local family_list = pokermon.get_family_list(center.name)
   local prefix = center.poke_custom_prefix or 'poke'
   for _, fam in pairs(family_list) do
     if G.GAME.used_jokers['j_' .. prefix .. '_' .. ((type(fam) == "table" and fam.key) or fam)] then

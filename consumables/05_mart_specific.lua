@@ -1,7 +1,7 @@
 local leek = {
   name = "leek",
   key = "leek",
-  set = "Item",
+  set = "poke_item",
   helditem = true,
   config = {extra = {num = 1, dem = 2, usable = true}},
   loc_vars = function(self, info_queue, center)
@@ -40,7 +40,7 @@ local leek = {
       local edition = poll_edition('wheel_of_fortune', nil, true, true)
       card:set_edition(edition, true)
     else
-      poke_nope(card)
+      pokermon.nope(card)
     end
     card.ability.extra.usable = false
     card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
@@ -77,7 +77,7 @@ local leek = {
 local dubious_disc = {
   name = "dubious_disc",
   key = "dubious_disc",
-  set = "Item",
+  set = "poke_item",
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
   end,
@@ -88,23 +88,23 @@ local dubious_disc = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     return G.hand.cards and #G.hand.cards > 0
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if G.hand.cards and #G.hand.cards > 0 then
-      juice_flip_hand(card)
+      pokermon.juice_flip_hand(card)
       for i = 1, #G.hand.cards do
         local enhancement = SMODS.poll_enhancement({guaranteed = true})
         G.hand.cards[i]:set_ability(enhancement, nil, true)
       end
-      juice_flip_hand(card, true)
-      evo_item_use_total(self, card, area, copier)
+      pokermon.juice_flip_hand(card, true)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -115,7 +115,7 @@ local dubious_disc = {
 local heartscale = {
   name = "heartscale",
   key = "heartscale",
-  set = "Item",
+  set = "poke_item",
   config = {max_highlighted = 2, min_highlighted = 2, suit = "Hearts"},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.max_highlighted, localize(self.config.suit, 'suits_plural')}}
@@ -127,8 +127,8 @@ local heartscale = {
   unlocked = true,
   discovered = true,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
-    juice_flip(card)
+    pokermon.set_spoon_item(card)
+    pokermon.juice_flip(card)
     local rightmost = G.hand.highlighted[1]
     for i = 1, #G.hand.highlighted do
       if G.hand.highlighted[i].T.x > rightmost.T.x then
@@ -157,9 +157,9 @@ local heartscale = {
           end
       }))
     end
-    juice_flip(card, true)
+    pokermon.juice_flip(card, true)
     delay(0.5)
-    poke_unhighlight_cards()
+    pokermon.unhighlight_cards()
   end,
   in_pool = function(self)
     return false
@@ -217,9 +217,9 @@ local meteorite = {
     }))
     SMODS.destroy_cards(destroyed_cards)
         
-    local deoxys = poke_find_card("j_poke_deoxys", true)
+    local deoxys = pokermon.find_card("j_poke_deoxys", true)
     if not deoxys then
-      deoxys = poke_find_card("j_poke_deoxys")
+      deoxys = pokermon.find_card("j_poke_deoxys")
     end
     if deoxys then
       local forme_list = {"Attack", "Defense", "Speed", "Normal"}
@@ -232,7 +232,11 @@ local meteorite = {
       end
       if deoxys.ability.extra.form ~= curr_index then
         deoxys.ability.extra.form = curr_index
-        poke_fake_evolve(deoxys, localize("poke_transform_success"), true)
+
+        pokermon.do_evolution_anim(
+          deoxys,
+          function(c) c:set_sprites(c.config.center) end,
+          localize("poke_transform_success"))
       end
     end
   end,

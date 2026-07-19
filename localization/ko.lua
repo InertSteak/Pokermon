@@ -42,7 +42,7 @@ return {
                 name = "염동력 덱",
                 text = {
                     "{C:tarot,T:v_crystal_ball}#1#{} 바우처와",
-                    "{C:item,T:c_poke_twisted_spoon}#2#{} 카드를",
+                    "{C:poke_item,T:c_poke_twisted_spoon}#2#{} 카드를",
                     "{C:attention}2{}장 보유하고 시작합니다",
                 } 
             },
@@ -62,8 +62,8 @@ return {
             b_poke_luminousdeck = {
                 name = "루미너스 덱",
                 text = {
-                    "모든 조커가 {C:pink}에너지화{}된 상태로,",
-                    "무작위 {C:pink}타입{} 스티커가 붙어서",
+                    "모든 조커가 {C:poke_pink}에너지화{}된 상태로,",
+                    "무작위 {C:poke_pink}타입{} 스티커가 붙어서",
                     "생성됩니다"
                 }
             },
@@ -71,7 +71,7 @@ return {
                 name = "증폭 덱",
                 text = {
                     "{C:tarot,T:v_poke_energysearch}#1#{} 바우처와",
-                    "{C:pink,T:c_poke_double_rainbow_energy}#2#{} 카드를",
+                    "{C:poke_pink,T:c_poke_double_rainbow_energy}#2#{} 카드를",
                     "보유하고 시작합니다",
                 } 
             },
@@ -110,7 +110,7 @@ return {
 			b_poke_diceydeck = {
                 name = "잔해 덱",
                 text = {
-                    "{C:hazard}+#1#{} 위험 수치 및 한도, {C:attention}+#1#{} 손 크기",
+                    "{C:poke_hazard}+#1#{} 위험 수치 및 한도, {C:attention}+#1#{} 손 크기",
                     "매 라운드 종료 시:",
                     "{C:attention}전체 덱{}에 있는 각 {C:attention}위험{}",
                     "카드 한 장당 {C:money}$#4#{} 획득",
@@ -185,7 +185,7 @@ return {
                 },
             },
         },
-        Item = {
+        poke_item = {
             c_poke_pokeball = {
                 name = "몬스터볼",
                 text = {
@@ -311,17 +311,17 @@ return {
                 name = "테라오브",
                 text = {
                     "{C:attention}타입 변경:{} {B:1,V:2}#1#{}",
-                    "{C:inactive,s:0.8}({C:pink,s:0.8}타입{C:inactive,s:0.8}은 핸드를 낼 때마다 변경됩니다){}",
+                    "{C:inactive,s:0.8}({C:poke_pink,s:0.8}타입{C:inactive,s:0.8}은 핸드를 낼 때마다 변경됩니다){}",
                     "{br:2}오류 - STEAK에게 문의바람",
                     "가장 왼쪽 또는 선택한 조커가",
-                    "이미 {B:1,V:2}#1#{} {C:pink}타입{}이라면",
-                    "{C:pink}에너지화{}합니다",
+                    "이미 {B:1,V:2}#1#{} {C:poke_pink}타입{}이라면",
+                    "{C:poke_pink}에너지화{}합니다",
                 },
             },
             c_poke_metalcoat = {
                 name = "금속코트",
                 text = {
-                    "{C:attention}타입 변경:{} {X:metal,C:white}강철{}",
+                    "{C:attention}타입 변경:{} {X:poke_metal,C:white}강철{}",
                     "{br:2}오류 - STEAK에게 문의바람",
                     "선택한 카드 {C:attention}1{}장의",
                     "{C:attention}스틸{} 복제본을 생성합니다",
@@ -330,9 +330,9 @@ return {
             c_poke_dragonscale = {
                 name = "용의비늘",
                 text = {
-                    "{C:attention}타입 변경:{} {X:dragon,C:white}드래곤{}",
+                    "{C:attention}타입 변경:{} {X:poke_dragon,C:white}드래곤{}",
                     "{br:2}오류 - STEAK에게 문의바람",
-                    "무작위 {C:item}아이템{} 또는 {C:pink}에너지{} 카드를",
+                    "무작위 {C:poke_item}아이템{} 또는 {C:poke_pink}에너지{} 카드를",
                     "최대 {C:attention}3{}장 생성합니다",
                     "{C:inactive}(공간이 있어야 함){}"
                 },
@@ -389,9 +389,9 @@ return {
                 name = "휘어진스푼",
                 text = {
                     "이번 런에서 마지막으로 사용한",
-                    "{C:item}아이템{} 카드 또는 {C:pink}에너지{} 카드를 생성합니다",
-                    "{s:0.8,C:item}휘어진스푼, 재사용 가능 아이템,",
-                    "{s:0.8,C:item}나무열매 주스는 제외됩니다{s:0.8}"
+                    "{C:poke_item}아이템{} 카드 또는 {C:poke_pink}에너지{} 카드를 생성합니다",
+                    "{s:0.8,C:poke_item}휘어진스푼, 재사용 가능 아이템,",
+                    "{s:0.8,C:poke_item}나무열매 주스는 제외됩니다{s:0.8}"
                 }
             },
             c_poke_prismscale = {
@@ -434,7 +434,7 @@ return {
                     "{C:attention}진화 카드{}",
                     "{br:2}오류 - STEAK에게 문의바람",
                     "선택한 카드 {C:attention}1{}장을 {C:attention}석재{} 카드로 강화하며,",
-                    "보유한 {X:earth,C:white}땅{} 조커 하나당",
+                    "보유한 {X:poke_earth,C:white}땅{} 조커 하나당",
                     "{C:chips}+#2#{} 칩을 추가합니다"
                 }
             },
@@ -465,8 +465,8 @@ return {
             c_poke_berry_juice_energy = {
                 name = "에너지화된 나무열매 주스",
                 text = {
-                    "아무 {C:pink}타입{}의 가장 왼쪽 또는 선택한",
-                    "조커를 {C:pink}에너지화{}합니다",
+                    "아무 {C:poke_pink}타입{}의 가장 왼쪽 또는 선택한",
+                    "조커를 {C:poke_pink}에너지화{}합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
                 },
             },
@@ -488,7 +488,7 @@ return {
             c_poke_berry_juice_item = {
                 name = "아이템 나무열매 주스",
                 text = {
-                    "{C:item}휘어진스푼{} 카드를 생성합니다",
+                    "{C:poke_item}휘어진스푼{} 카드를 생성합니다",
                     "{C:green}#1# / #2#{} 확률로",
                     "대신 {C:attention}2{}장을 생성합니다",
                     "{C:inactive}(공간이 있어야 함){}"
@@ -504,7 +504,7 @@ return {
             c_poke_berry_juice_mystery = {
                 name = "의문의 나무열매 주스",
                 text = {
-                    "무작위 {C:item}나무열매 주스{} 카드를",
+                    "무작위 {C:poke_item}나무열매 주스{} 카드를",
                     "생성합니다"
                 }
             },
@@ -560,12 +560,12 @@ return {
                 }
             },
         },
-        Energy = {
+        poke_energy = {
             c_poke_grass_energy = {
                 name = "풀 에너지",
                 text = {
                     "가능하다면 가장 왼쪽 또는 선택한",
-                    "{X:grass,C:white}풀{} 조커를 {C:pink}에너지화{}합니다",
+                    "{X:poke_grass,C:white}풀{} 조커를 {C:poke_pink}에너지화{}합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
                 },
             },
@@ -573,7 +573,7 @@ return {
                 name = "불꽃 에너지",
                 text = {
                     "가능하다면 가장 왼쪽 또는 선택한",
-                    "{X:fire,C:white}불꽃{} 조커를 {C:pink}에너지화{}합니다",
+                    "{X:poke_fire,C:white}불꽃{} 조커를 {C:poke_pink}에너지화{}합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
                 },
             },
@@ -581,7 +581,7 @@ return {
                 name = "물 에너지",
                 text = {
                     "가능하다면 가장 왼쪽 또는 선택한",
-                    "{X:water,C:white}물{} 조커를 {C:pink}에너지화{}합니다",
+                    "{X:poke_water,C:white}물{} 조커를 {C:poke_pink}에너지화{}합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
                 },
             },
@@ -589,7 +589,7 @@ return {
                 name = "전기 에너지",
                 text = {
                     "가능하다면 가장 왼쪽 또는 선택한",
-                    "{X:lightning,C:black}전기{} 조커를 {C:pink}에너지화{}합니다",
+                    "{X:poke_lightning,C:black}전기{} 조커를 {C:poke_pink}에너지화{}합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
                 },
             },
@@ -597,7 +597,7 @@ return {
                 name = "에스퍼 에너지",
                 text = {
                     "가능하다면 가장 왼쪽 또는 선택한",
-                    "{X:psychic,C:white}에스퍼{} 조커를 {C:pink}에너지화{}합니다",
+                    "{X:poke_psychic,C:white}에스퍼{} 조커를 {C:poke_pink}에너지화{}합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
                 },
             },
@@ -605,7 +605,7 @@ return {
                 name = "격투 에너지",
                 text = {
                     "가능하다면 가장 왼쪽 또는 선택한",
-                    "{X:fighting,C:white}격투{} 조커를 {C:pink}에너지화{}합니다",
+                    "{X:poke_fighting,C:white}격투{} 조커를 {C:poke_pink}에너지화{}합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
                 },
             },
@@ -613,8 +613,8 @@ return {
                 name = "노말 에너지",
                 text = {
                     "가능하다면 가장 왼쪽 또는 선택한",
-                    "{X:colorless,C:white}노말{} 조커를 {C:pink}에너지화{}합니다",
-                    "{X:colorless,C:white}노말{}이 아닌 조커에게는",
+                    "{X:poke_colorless,C:white}노말{} 조커를 {C:poke_pink}에너지화{}합니다",
+                    "{X:poke_colorless,C:white}노말{}이 아닌 조커에게는",
                     "효과가 절반입니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)"
                 },
@@ -623,7 +623,7 @@ return {
                 name = "악 에너지",
                 text = {
                     "가능하다면 가장 왼쪽 또는 선택한",
-                    "{X:dark,C:white}악{} 조커를 {C:pink}에너지화{}합니다",
+                    "{X:poke_dark,C:white}악{} 조커를 {C:poke_pink}에너지화{}합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
                 },
             },
@@ -631,7 +631,7 @@ return {
                 name = "강철 에너지",
                 text = {
                     "가능하다면 가장 왼쪽 또는 선택한",
-                    "{X:Metal,C:white}강철{} 조커를 {C:pink}에너지화{}합니다",
+                    "{X:poke_metal,C:white}강철{} 조커를 {C:poke_pink}에너지화{}합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
                 },
             },
@@ -639,7 +639,7 @@ return {
                 name = "페어리 에너지",
                 text = {
                     "가능하다면 가장 왼쪽 또는 선택한",
-                    "{X:fairy,C:white}페어리{} 조커를 {C:pink}에너지화{}합니다",
+                    "{X:poke_fairy,C:white}페어리{} 조커를 {C:poke_pink}에너지화{}합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
                 },
             },
@@ -648,7 +648,7 @@ return {
                 name = "드래곤 에너지",
                 text = {
                     "가능하다면 가장 왼쪽 또는 선택한",
-                    "{X:dragon,C:white}드래곤{} 조커를 {C:pink}에너지화{}합니다",
+                    "{X:poke_dragon,C:white}드래곤{} 조커를 {C:poke_pink}에너지화{}합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
                 },
             },
@@ -656,7 +656,7 @@ return {
                 name = "땅 에너지",
                 text = {
                     "가능하다면 가장 왼쪽 또는 선택한",
-                    "{X:earth,C:white}땅{} 조커를 {C:pink}에너지화{}합니다",
+                    "{X:poke_earth,C:white}땅{} 조커를 {C:poke_pink}에너지화{}합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
                 },
             },
@@ -1316,7 +1316,7 @@ return {
                 name = "캐이시",
                 text = {
                     "{C:green}#1# / #2#{} 확률로 {C:tarot}타로{}",
-                    "또는 {C:item}아이템{} 카드를 생성합니다.",
+                    "또는 {C:poke_item}아이템{} 카드를 생성합니다.",
                     "단, 플레이한 {C:attention}포커 핸드{}가",
                     "이번 라운드에 이미 플레이된 경우여야 합니다",
                     "{C:inactive,s:0.8}(#3# 라운드 후 진화){}",
@@ -1326,7 +1326,7 @@ return {
                 name = "윤겔라",
                 text = {
                     "{C:green}#1# / #2#{} 확률로 {C:tarot}타로{} 또는",
-                    "{C:item}휘어진스푼{} 카드를 생성합니다.",
+                    "{C:poke_item}휘어진스푼{} 카드를 생성합니다.",
                     "단, 플레이한 {C:attention}포커 핸드{}가",
                     "이번 라운드에 이미 플레이된 경우여야 합니다",
                     "{C:inactive,s:0.8}(연결의끈으로 진화){}"
@@ -1337,7 +1337,7 @@ return {
                 text = {
                     "{C:attention}+#3#{} 소모품 슬롯",
                     "{C:green}#1# / #2#{} 확률로 {C:attention}광대{} 또는",
-                    "{C:item}휘어진스푼{} 카드를 생성합니다.",
+                    "{C:poke_item}휘어진스푼{} 카드를 생성합니다.",
                     "단, 플레이한 {C:attention}포커 핸드{}가",
                     "이번 라운드에 이미 플레이된 경우여야 합니다",
                 } 
@@ -1347,7 +1347,7 @@ return {
                 text = {
                     "{C:attention}+#3#{} 소모품 슬롯",
                     "보유한 {C:attention}소모품{}마다 {X:mult,C:white}X#1#{} 배수",
-                    "{C:item}휘어진스푼{}은 {X:mult,C:white}X#2#{} 배수",
+                    "{C:poke_item}휘어진스푼{}은 {X:mult,C:white}X#2#{} 배수",
                 } 
             },
             j_poke_machop = {
@@ -1512,7 +1512,7 @@ return {
                 name = "레어코일",
                 text = {
                     "플레이한 {C:attention}스틸{} 카드가 {X:mult,C:white}X#1#{} 배수 제공",
-                    "추가로 인접한 {X:metal,C:white}강철{} 조커마다",
+                    "추가로 인접한 {X:poke_metal,C:white}강철{} 조커마다",
                     "{X:mult,C:white}X#2#{} 배수를 제공합니다",
                     "{C:inactive}(현재 {X:mult,C:white}X#3#{C:inactive} 배수)",
                     "{C:inactive,s:0.8}(천둥의돌로 진화){}"
@@ -1521,10 +1521,10 @@ return {
             j_poke_farfetchd = {
                 name = '파오리',      
                 text = {
-                    "{C:item}대파{} 보유 시",
+                    "{C:poke_item}대파{} 보유 시",
                     "{C:attention}소모품{} 사용 시 {C:green}#2# / #3#{} 확률로",
                     "{C:money}$#1#{}를 획득합니다,",
-                    "{C:item}대파{} 사용 시에는 {C:money}${} 획득 보장",
+                    "{C:poke_item}대파{} 사용 시에는 {C:money}${} 획득 보장",
                 } 
             },
             j_poke_doduo = {
@@ -1641,7 +1641,7 @@ return {
                     "라운드의 {C:attention}첫 핸드{}에서",
                     "가장 왼쪽 득점 카드가",
                     "{C:attention}석재{} 카드가 됩니다",
-                    "{C:inactive,s:0.8}({C:metal,s:0.8}강철{C:inactive,s:0.8} 스티커로 진화)"
+                    "{C:inactive,s:0.8}({C:poke_metal,s:0.8}강철{C:inactive,s:0.8} 스티커로 진화)"
                 } 
             },
             j_poke_drowzee = {
@@ -1717,10 +1717,10 @@ return {
             j_poke_cubone = {
                 name = '탕구리',
                 text = {
-                    "{C:item}굵은뼈{} 보유 시",
+                    "{C:poke_item}굵은뼈{} 보유 시",
                     "{C:attention}보유한 소모품{}마다",
                     "{C:mult}+#1#{} 배수를 제공합니다",
-                    "{C:inactive,s:0.8}({C:item,s:0.8}굵은뼈{C:inactive,s:0.8}는 2배로 계산){}",
+                    "{C:inactive,s:0.8}({C:poke_item,s:0.8}굵은뼈{C:inactive,s:0.8}는 2배로 계산){}",
                     "{C:inactive}(현재 {C:mult}+#2#{C:inactive} 배수)",
                     "{C:inactive,s:0.8}(소모품 {C:attention,s:0.8}#3#{C:inactive,s:0.8}개 사용 후 진화)",
                 } 
@@ -1847,7 +1847,7 @@ return {
                     "득점한 {C:attention}6{}마다 {C:mult}+#2#{} 배수 증가",
                     "핸드에 {C:attention}킹{}을 보유하고 있다면 2배로 증가",
                     "{C:inactive}(현재 {C:mult}+#1#{C:inactive} 배수)",
-                    "{C:inactive,s:0.8}({C:dragon,s:0.8}드래곤{C:inactive,s:0.8} 스티커로 진화)"
+                    "{C:inactive,s:0.8}({C:poke_dragon,s:0.8}드래곤{C:inactive,s:0.8} 스티커로 진화)"
                 } 
             },
             j_poke_goldeen = {
@@ -1895,7 +1895,7 @@ return {
                     "파괴된 조커가 {C:rare}레어{} 등급 이상이었다면",
                     "{C:dark_edition}포일{}, {C:dark_edition}홀로그램{}, 또는 {C:dark_edition}폴리크롬{}을 얻습니다",
                     "{C:inactive}(현재 {C:mult}+#1#{C:inactive} 배수)",
-                    "{C:inactive,s:0.8}({C:metal,s:0.8}강철{C:inactive,s:0.8} 스티커 또는 {C:attention,s:0.8}딱딱한돌{C:inactive,s:0.8}로 진화)",
+                    "{C:inactive,s:0.8}({C:poke_metal,s:0.8}강철{C:inactive,s:0.8} 스티커 또는 {C:attention,s:0.8}딱딱한돌{C:inactive,s:0.8}로 진화)",
                 } 
             },
             j_poke_jynx = {
@@ -2001,7 +2001,7 @@ return {
                     "{C:attention}오른쪽 불안정{}",
                     "상점 이용 종료 시,",
                     "가장 왼쪽의 조커로 {C:attention}변신{}하며",
-                    "{C:attention}부패{} 속성과 {X:colorless,C:white}노말{} 스티커를 가집니다",
+                    "{C:attention}부패{} 속성과 {X:poke_colorless,C:white}노말{} 스티커를 가집니다",
                     "{C:inactive,s:0.8}(메타몽 제외){}",
                 } 
             },
@@ -2038,10 +2038,10 @@ return {
             j_poke_porygon = {
                 name = '폴리곤',
                 text = {
-                    "{C:pink}+1{} 에너지 한도",
+                    "{C:poke_pink}+1{} 에너지 한도",
                     "아무 {C:attention}부스터 팩{}을 개봉하면",
-                    "{C:pink}에너지{} 카드를 생성합니다",
-                    "{C:inactive,s:0.8}({C:item,s:0.8}업그레이드{C:inactive,s:0.8}로 진화){}",
+                    "{C:poke_pink}에너지{} 카드를 생성합니다",
+                    "{C:inactive,s:0.8}({C:poke_item,s:0.8}업그레이드{C:inactive,s:0.8}로 진화){}",
                 } 
             },
             j_poke_omanyte = {
@@ -2050,7 +2050,7 @@ return {
                     "{C:attention}고대 #1#{}",
                     "{X:attention,C:white}1+{} : {C:tarot}타로{} 카드 생성",
                     "{X:attention,C:white}2+{} : {C:money}$#2#{} 획득",
-                    "{X:attention,C:white}3+{} : {C:item}아이템{} 카드 생성 {C:inactive,s:0.7}({C:attention,s:0.7}#3#{C:inactive,s:0.7}회 발동 시 진화)",
+                    "{X:attention,C:white}3+{} : {C:poke_item}아이템{} 카드 생성 {C:inactive,s:0.7}({C:attention,s:0.7}#3#{C:inactive,s:0.7}회 발동 시 진화)",
                     "{C:inactive,s:0.8}(공간이 있어야 함)",
                 } 
             },
@@ -2060,7 +2060,7 @@ return {
                     "{C:attention}고대 #1#{}",
                     "{X:attention,C:white}1+{} : {C:tarot}타로{} 카드 생성",
                     "{X:attention,C:white}2+{} : {C:money}$#2#{} 획득",
-                    "{X:attention,C:white}3+{} : {C:item}아이템{} 카드 생성",
+                    "{X:attention,C:white}3+{} : {C:poke_item}아이템{} 카드 생성",
                     "{C:inactive,s:0.8}(공간이 있어야 함)",
                     "{X:attention,C:white}4+{} : 라운드당 1회 {C:attention}태그{} 생성{C:inactive}#3#{}",
                 } 
@@ -2110,8 +2110,8 @@ return {
             j_poke_snorlax = {
                 name = '잠만보',
                 text = {
-                    "{C:item}먹다남은음식{} 보유 시",
-                    "라운드 종료 시 보유한 {C:item}먹다남은음식{}마다",
+                    "{C:poke_item}먹다남은음식{} 보유 시",
+                    "라운드 종료 시 보유한 {C:poke_item}먹다남은음식{}마다",
                     "{X:mult,C:white}X#1#{} 배수를 얻습니다",
                     "{C:inactive}(현재 {X:mult,C:white} X#2# {C:inactive} 배수)"
                 } 
@@ -2170,7 +2170,7 @@ return {
                 text = {
                     "{C:attention}보스 블라인드{} 격파 시,",
                     "가장 왼쪽 {C:attention}조커{}의 {C:dark_edition}폴리크롬{} {C:attention}복제본{}을 생성하고",
-                    "그 {C:attention}복제본{}을 {C:pink}에너지화{}한 뒤,",
+                    "그 {C:attention}복제본{}을 {C:poke_pink}에너지화{}한 뒤,",
                     "가장 왼쪽 {C:attention}조커{}를 파괴합니다",
                     "{br:3}오류 - STEAK에게 문의바람",
                     "{C:dark_edition}폴리크롬{} 조커는 {X:mult,C:white} X#1# {} 배수를 제공합니다",
@@ -2187,11 +2187,11 @@ return {
                 name = "메가뮤츠Y",
                 text = {
                     "상점 이용 종료 시",
-                    "가장 왼쪽 {C:attention}조커{}를 {C:attention}2회{} {C:pink}에너지화{}합니다",
+                    "가장 왼쪽 {C:attention}조커{}를 {C:attention}2회{} {C:poke_pink}에너지화{}합니다",
                     "{br:2}오류 - STEAK에게 문의바람",
                     "{C:attention}보스 블라인드{} 격파 시",
-                    "{C:pink}+1{} 에너지 한도",
-                    "{C:inactive}(자신을 {C:pink}에너지화{C:inactive}할 수 없음)",
+                    "{C:poke_pink}+1{} 에너지 한도",
+                    "{C:inactive}(자신을 {C:poke_pink}에너지화{C:inactive}할 수 없음)",
                 } 
             },
             j_poke_mew = {
@@ -2199,7 +2199,7 @@ return {
                 text = {
                     "{C:attention}상점{} 이용 종료 시,",
                     "{C:dark_edition}네거티브{} {C:tarot}타로{},",
-                    "{C:spectral}유령{} 또는 {C:item}아이템{} 카드를 생성합니다",
+                    "{C:spectral}유령{} 또는 {C:poke_item}아이템{} 카드를 생성합니다",
                     "{br:3}오류 - STEAK에게 문의바람",
                     "{C:green}#1#%{} 확률로 대신",
                     "{C:dark_edition}네거티브{} 조커를 생성합니다",
@@ -2384,8 +2384,8 @@ return {
                   "플레이한 핸드에 {C:attention}페어{}가 포함되면",
                   "{C:chips}+#1#{} 칩을 제공하고 {C:money}$#2#{}를 획득합니다",
                   "{br:3}오류 - STEAK에게 문의바람",
-                  "{X:water,C:white}물{} 조커당 추가 {C:chips}+#3#{} 칩",
-                  "{X:lightning,C:black}전기{} 조커당 추가 {C:money}$#4#{}",
+                  "{X:poke_water,C:white}물{} 조커당 추가 {C:chips}+#3#{} 칩",
+                  "{X:poke_lightning,C:black}전기{} 조커당 추가 {C:money}$#4#{}",
                   "{C:inactive}(현재 {C:chips}+#6#{C:inactive} 칩 및 {C:money}$#5#{C:inactive})"
                 }
             },
@@ -2508,9 +2508,9 @@ return {
             j_poke_weird_tree = {
                 name = "이상한 나무",
                 text = {
-                  "{C:attention}타입 변경: {X:grass,C:white}풀{}",
-                  "이 조커가 {X:grass,C:white}풀{} 타입이 아니거나",
-                  "{X:water,C:white}물{} 타입을 보유하고 있다면",
+                  "{C:attention}타입 변경: {X:poke_grass,C:white}풀{}",
+                  "이 조커가 {X:poke_grass,C:white}풀{} 타입이 아니거나",
+                  "{X:poke_water,C:white}물{} 타입을 보유하고 있다면",
                   "라운드 종료 시 {C:}변신{}합니다"
                 }
             },
@@ -2529,7 +2529,7 @@ return {
                 text = {
                     "플레이한 {V:1}#2#{} 카드가 득점 시 {C:mult}+#1#{} 배수",
                     "{br:5}오류 - STEAK에게 문의바람",
-                    "보유한 {X:water,C:white}물{} 조커 수에 따라",
+                    "보유한 {X:poke_water,C:white}물{} 조커 수에 따라",
                     "{V:1}#2#{} 카드를 재트리거합니다",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}#7#{C:inactive,s:0.8}회 재트리거를 득점 카드에 균등 분배){}",
                     "{s:0.8}득점 후 수트가 순환됩니다 {C:inactive,s:0.8}(#3#, #4#, #5#, #6#)",
@@ -2639,7 +2639,7 @@ return {
             j_poke_murkrow = {
               name = "니로우",
               text = {
-                "보유한 {X:dark,C:white}악{} 조커마다 {X:mult,C:white} X#1# {} 배수",
+                "보유한 {X:poke_dark,C:white}악{} 조커마다 {X:mult,C:white} X#1# {} 배수",
                 "{C:inactive}(현재 {X:mult,C:white} X#2#{C:inactive} 배수)",
                 "{C:inactive,s:0.8}(어둠의돌로 진화){}"
               }
@@ -2801,8 +2801,8 @@ return {
                 text = {
                   "블라인드 선택 시, 가장 왼쪽의",
                   "{C:attention}소모품{}을 파괴하고",
-                  "{C:item}나무열매 주스{} 카드를 생성합니다",
-                  "{C:inactive}({C:item}나무열매 주스{C:inactive}는 파괴할 수 없음)"
+                  "{C:poke_item}나무열매 주스{} 카드를 생성합니다",
+                  "{C:inactive}({C:poke_item}나무열매 주스{C:inactive}는 파괴할 수 없음)"
                 }
             },
             j_poke_sneasel = {
@@ -2828,7 +2828,7 @@ return {
               name = "링곰",
               text = {
                 "아무 {C:attention}부스터 팩{}을 스킵할 때마다",
-                "{C:mult}+#2#{} 배수를 얻고 {C:item}아이템{}을 생성합니다",
+                "{C:mult}+#2#{} 배수를 얻고 {C:poke_item}아이템{}을 생성합니다",
                 "{C:inactive,s:0.8}(공간이 있어야 함)",
                 "{C:inactive}(현재 {C:mult}+#1#{C:inactive} 배수)",
                 "{C:inactive,s:0.8}(달의돌로 진화){}",
@@ -2900,7 +2900,7 @@ return {
                 "{C:mult}+#1#{} 배수",
                 "{br:2}오류 - STEAK에게 문의바람",
                 "포커 핸드에 {C:attention}5장의 강화된{} 카드가 포함되면",
-                "{C:attention}기본{} {X:water,C:white}물{} 조커를 생성합니다",
+                "{C:attention}기본{} {X:poke_water,C:white}물{} 조커를 생성합니다",
                 "{C:inactive,s:0.8}(공간이 있어야 함)",
                 "{C:inactive}(현재 {C:mult}+#2#{C:inactive} 배수)",
               }
@@ -2976,10 +2976,10 @@ return {
             j_poke_porygon2 = {
                 name = '폴리곤2',
                 text = {
-                    "{C:pink}+2{} 에너지 한도",
+                    "{C:poke_pink}+2{} 에너지 한도",
                     "아무 {C:attention}부스터 팩{}을 개봉하면",
-                    "가장 왼쪽 조커와 같은 {C:pink}타입{}의",
-                    "{C:pink}에너지{} 카드를 생성합니다",
+                    "가장 왼쪽 조커와 같은 {C:poke_pink}타입{}의",
+                    "{C:poke_pink}에너지{} 카드를 생성합니다",
                     "{C:inactive,s:0.8}(괴상한패치로 진화){}",
                 } 
             },
@@ -3080,7 +3080,7 @@ return {
                 name = "밀탱크",
                 text = {
                   "라운드 종료 시 보유한", 
-                  "{X:colorless,C:white}노말{} 조커마다 {C:money}$#1#{} 획득",
+                  "{X:poke_colorless,C:white}노말{} 조커마다 {C:money}$#1#{} 획득",
                   "{C:inactive}(현재 {C:money}$#2#{C:inactive}){}"
                 }
             },
@@ -3203,7 +3203,7 @@ return {
                 text = {
                     "{C:attention}+#3#{} 핸드 크기, {C:attention}네이처: {C:inactive}({C:attention}#6#, #7#, #8#{C:inactive}){}",
                     "플레이한 {C:attention}네이처{} 카드가 득점 시 {C:money}$#1#{}를 획득하며,",
-                    "다른 {X:grass,C:white}풀{} 조커 하나당",
+                    "다른 {X:poke_grass,C:white}풀{} 조커 하나당",
                     "{C:money}$#5#{}를 추가로 획득합니다",
                     "{C:inactive}(현재 총 {C:money}$#4#{C:inactive} 획득){}"
                 } 
@@ -3234,7 +3234,7 @@ return {
                     "{C:mult}+#1#{} 배수를 제공합니다",
                     "{br:2}오류 - STEAK에게 문의바람",
                     "이번 라운드에 {C:attention}네이처{} 카드를 {C:attention}#4# {C:inactive}[#5#]장",
-                    "버렸다면, 각 {X:fire,C:white}불꽃{} 또는 {X:fighting,C:white}격투{} 조커가",
+                    "버렸다면, 각 {X:poke_fire,C:white}불꽃{} 또는 {X:poke_fighting,C:white}격투{} 조커가",
                     "{X:mult,C:white} X#2# {} 배수를 제공합니다"
                 } 
             },
@@ -3264,7 +3264,7 @@ return {
                     "{C:chips}+#1#{} 칩을 제공합니다",
                     "{br:2}오류 - STEAK에게 문의바람",
                     "포커 핸드에 {C:attention}#3#장의 네이처{} 카드가 포함되어 있다면",
-                    "보유한 {X:water,C:white}물{} 또는 {X:earth,C:white}땅{} 조커 {C:attention}2{}개당",
+                    "보유한 {X:poke_water,C:white}물{} 또는 {X:poke_earth,C:white}땅{} 조커 {C:attention}2{}개당",
                     "{C:tarot}타로{} 카드를 1장 생성합니다 {C:inactive}(공간이 있어야 함){}"
                 } 
             },
@@ -3283,7 +3283,7 @@ return {
                 "{C:attention}플레잉 카드{}가 파괴될 때마다",
                 "{C:mult}+#2#{} 배수를 얻습니다",
                 "{br:2}오류 - STEAK에게 문의바람",
-                "보유한 {X:dark,C:white}악{} 조커마다",
+                "보유한 {X:poke_dark,C:white}악{} 조커마다",
                 "획득량이 {C:mult}+#3#{} 배수 증가합니다",
                 "{C:inactive}(현재 {C:mult}+#1#{C:inactive} 배수)",
               }
@@ -3292,7 +3292,7 @@ return {
               name = "지그제구리",
               text = {
                 "핸드를 플레이할 때 {C:green}#1# / #2#{} 확률로",
-                "{C:attention}줍기{} {C:item}아이템{}을 생성합니다",
+                "{C:attention}줍기{} {C:poke_item}아이템{}을 생성합니다",
                 "{C:inactive}(공간이 있어야 함)",
                 "{C:inactive,s:0.8}(#3# 라운드 후 진화){}",
               }
@@ -3301,7 +3301,7 @@ return {
               name = "직구리",
               text = {
                 "핸드를 플레이할 때 {C:green}#1# / #2#{} 확률로",
-                "{C:attention}줍기{} {C:item}아이템{}을 생성합니다",
+                "{C:attention}줍기{} {C:poke_item}아이템{}을 생성합니다",
                 "핸드에 {C:attention}스트레이트{}가 포함되어 있다면",
                 "확정적으로 생성합니다",
                 "{C:inactive}(공간이 있어야 함)"
@@ -3453,7 +3453,7 @@ return {
             j_poke_cacnea = {
             name = "선인왕",
             text = {
-                "{C:hazard}+#1#{} 위험 레이어",
+                "{C:poke_hazard}+#1#{} 위험 레이어",
                 "카드가 파괴될 때마다",
                 "{C:money}$#2#{} 획득",
                 "{C:inactive}({C:attention}#3#{C:inactive} 라운드 후 진화)",
@@ -3462,7 +3462,7 @@ return {
             j_poke_cacturne = {
             name = "밤선인",
             text = {
-                "{C:hazard}+#1#{} 위험 레이어",
+                "{C:poke_hazard}+#1#{} 위험 레이어",
                 "카드가 파괴될 때마다",
                 "{C:money}$#2#{} 획득",
                 "{br:2}ERROR - CONTACT STEAK",
@@ -3609,7 +3609,7 @@ return {
                     "{C:attention}부스터 팩{}을 개봉하면",
                     "핸드 크기 {C:attention}+#1#{}",
                     "{br:2}오류 - STEAK에게 문의바람",
-                    "{C:tarot}타로{} 또는 {C:item}아이템{} 카드가",
+                    "{C:tarot}타로{} 또는 {C:poke_item}아이템{} 카드가",
                     "{C:attention}판매{}되면",
                     "{X:mult,C:white} X#2# {} 배수를 획득하고",
                     "손패에 있는 무작위 카드 {C:attention}1{}장을 파괴합니다",
@@ -3622,7 +3622,7 @@ return {
                     "{C:attention}부스터 팩{}을 개봉하면",
                     "핸드 크기 {C:attention}+#1#{}",
                     "{br:2}오류 - STEAK에게 문의바람",
-                    "{C:tarot}타로{} 또는 {C:item}아이템{} 카드가",
+                    "{C:tarot}타로{} 또는 {C:poke_item}아이템{} 카드가",
                     "{C:attention}사용{}되면",
                     "{X:mult,C:white} X#2# {} 배수를 획득합니다",
                     "{C:inactive}(현재 {X:mult,C:white} X#3# {C:inactive} 배수)"
@@ -3724,7 +3724,7 @@ return {
                 name = '지라치',
                 text = {
                     "오른쪽 {C:attention}조커{}의 능력을 복사하되,",
-                    "추가로 한 번 더 {C:pink}에너지화{}된 것처럼 적용합니다",
+                    "추가로 한 번 더 {C:poke_pink}에너지화{}된 것처럼 적용합니다",
                 }
             },
             j_poke_jirachi_fixer = {
@@ -3825,7 +3825,7 @@ return {
             j_poke_honchkrow = {
                 name = "돈크로우",
                 text = {
-                  "각 {X:dark,C:white}악{} 조커가 {X:mult,C:white}X#1#{} 배수를 제공합니다",
+                  "각 {X:poke_dark,C:white}악{} 조커가 {X:mult,C:white}X#1#{} 배수를 제공합니다",
                 }
             },
             j_poke_bonsly = {
@@ -3860,7 +3860,7 @@ return {
                 name = '먹고자',
                 text = {
                     "{C:attention}아기 포켓몬{}, {X:mult,C:white} X#1# {} 배수",
-                    "라운드 종료 시 {C:dark_edition}네거티브 {C:item}아이템{}을",
+                    "라운드 종료 시 {C:dark_edition}네거티브 {C:poke_item}아이템{}을",
                     "생성합니다",
                     "{C:inactive,s:0.8}(#2# 라운드 후 진화){}",
                 }
@@ -3887,7 +3887,7 @@ return {
                 name = "타만타",
                 text = {
                   "{C:attention}아기 포켓몬{}, {X:mult,C:white}X#2#{} 배수",
-                  "라운드 종료 시 {C:dark_edition}네거티브{} {C:item}악마{} 카드의",
+                  "라운드 종료 시 {C:dark_edition}네거티브{} {C:poke_item}악마{} 카드의",
                   "복제본을 생성합니다",
                   "{C:inactive,s:0.8}(#3# 라운드 후 진화){}",
                 }
@@ -3906,7 +3906,7 @@ return {
                 name = '자포코일',
                 text = {
                     "플레이한 {C:attention}스틸{} 카드가 {X:mult,C:white}X#1#{} 배수를 제공하며,",
-                    "보유한 {X:metal,C:white}강철{} 조커마다 {X:mult,C:white}X#2#{} 배수를",
+                    "보유한 {X:poke_metal,C:white}강철{} 조커마다 {X:mult,C:white}X#2#{} 배수를",
                     "추가로 제공합니다",
                     "{C:inactive}(현재 {X:mult,C:white}X#3#{C:inactive} 배수){}",
                 } 
@@ -3928,7 +3928,7 @@ return {
                     "영구적으로 {C:chips}+#1#{} 칩을 얻고",
                     "득점 시 재발동합니다",
                     "{br:3}오류 - 제작자(STEAK)에게 문의하세요",
-                    "보유한 {C:attention}3{}개의 {X:earth,C:white}땅{} 속성 조커당",
+                    "보유한 {C:attention}3{}개의 {X:poke_earth,C:white}땅{} 속성 조커당",
                     "{C:attention}스톤{} 카드가 추가로 한 번 더 재발동합니다",
                     "{C:inactive}(현재 #2#번 재발동)"
                 } 
@@ -4025,11 +4025,11 @@ return {
             j_poke_porygonz = {
                 name = '폴리곤Z',
                 text = {
-                    "{C:pink}에너지{} 한도 +#3#",
-                    "이번 런에서 사용한 {C:pink}에너지{} 카드당",
+                    "{C:poke_pink}에너지{} 한도 +#3#",
+                    "이번 런에서 사용한 {C:poke_pink}에너지{} 카드당",
                     "{X:mult,C:white} X#2# {} 배수",
                     "{br:2}텍스트가 여기에 있어야 작동합니다",
-                    "{C:pink}에너지{} 사용 시 새로운 {C:pink}에너지{}를 생성합니다",
+                    "{C:poke_pink}에너지{} 사용 시 새로운 {C:poke_pink}에너지{}를 생성합니다",
                     "{C:inactive}(빈 슬롯이 있어야 함)",
                     "{C:inactive}(현재 {X:mult,C:white} X#1# {C:inactive} 배수)"
                 } 
@@ -4059,7 +4059,7 @@ return {
                     "최대 {C:mult}-$#1#{}까지 빚을 질 수 있습니다",
                     "{br:2.5}오류 - 제작자(STEAK)에게 문의하세요",
                     "빚이 있는 상태에서 핸드를 플레이하면",
-                    "{C:item}아이템{} 카드를 생성합니다",
+                    "{C:poke_item}아이템{} 카드를 생성합니다",
                     "{C:inactive,s:0.8}(빈 슬롯이 있어야 함)"
                 }
             },
@@ -4067,7 +4067,7 @@ return {
                 name = "로토무",
                 text = {
                     "아무 {C:attention}부스터 팩{}을 열 때 {C:green}#2#분의 #1#{} 확률로",
-                    "{C:item}아이템{} 카드를 생성합니다 {C:inactive}(빈 슬롯 필요){}",
+                    "{C:poke_item}아이템{} 카드를 생성합니다 {C:inactive}(빈 슬롯 필요){}",
                     "{br:2}오류 - 제작자(STEAK)에게 문의하세요",
                     "{C:attention}부스터 팩{}의 가격이 {C:money}$1{} 저렴해집니다",
                     "{C:inactive}({C:attention}가전제품{C:inactive} 사용 시 폼체인지){}"
@@ -4077,7 +4077,7 @@ return {
                 name = "로토무 (히트)",
                 text = {
                     "아무 {C:attention}부스터 팩{}을 열 때 {C:green}#2#분의 #1#{} 확률로",
-                    "{C:item}아이템{} 카드를 생성합니다 {C:inactive}(빈 슬롯 필요){}",
+                    "{C:poke_item}아이템{} 카드를 생성합니다 {C:inactive}(빈 슬롯 필요){}",
                     "{br:2}오류 - 제작자(STEAK)에게 문의하세요",
                     "첫 버리기가 정확히 {C:attention}2{}장이라면,",
                     "두 카드 모두 {C:attention}배수{} 카드로 {C:attention}강화{}합니다",
@@ -4088,7 +4088,7 @@ return {
                 name = "로토무 (워시)",
                 text = {
                     "아무 {C:attention}부스터 팩{}을 열 때 {C:green}#2#분의 #1#{} 확률로",
-                    "{C:item}아이템{} 카드를 생성합니다 {C:inactive}(빈 슬롯 필요){}",
+                    "{C:poke_item}아이템{} 카드를 생성합니다 {C:inactive}(빈 슬롯 필요){}",
                     "{br:2}오류 - 제작자(STEAK)에게 문의하세요",
                     "플레이된 각 {C:attention}강화{} 카드가 득점 시 {C:money}$#3#{}를 벌지만,",
                     "해당 카드의 {C:attention}강화{}가 제거됩니다",
@@ -4099,7 +4099,7 @@ return {
               name = "로토무 (프로스트)",
               text = {
                 "아무 {C:attention}부스터 팩{}을 열 때 {C:green}#2#분의 #1#{} 확률로",
-                "{C:item}아이템{} 카드를 생성합니다 {C:inactive}(빈 슬롯 필요){}",
+                "{C:poke_item}아이템{} 카드를 생성합니다 {C:inactive}(빈 슬롯 필요){}",
                 "{br:2}오류 - 제작자(STEAK)에게 문의하세요",
                 "{C:attention}블라인드{} 선택 시, {C:dark_edition}포일{}, {C:dark_edition}홀로그램{},",
                 "또는 {C:dark_edition}폴리크롬{} 에디션이 부여된 무작위 {C:attention}소모품{}을 생성합니다",
@@ -4110,7 +4110,7 @@ return {
                 name = "로토무 (스핀)",
                 text = {
                     "아무 {C:attention}부스터 팩{}을 열 때 {C:green}#2#분의 #1#{} 확률로",
-                    "{C:item}아이템{} 카드를 생성합니다 {C:inactive}(빈 슬롯 필요){}",
+                    "{C:poke_item}아이템{} 카드를 생성합니다 {C:inactive}(빈 슬롯 필요){}",
                     "{br:2}오류 - 제작자(STEAK)에게 문의하세요",
                     "{C:attention}블라인드{} 선택 시, 오른쪽에 있는 조커를",
                     "파괴하고 {C:attention}태그{}를 생성합니다",
@@ -4121,7 +4121,7 @@ return {
                 name = "로토무 (커트)",
                 text = {
                     "아무 {C:attention}부스터 팩{}을 열 때 {C:green}#2#분의 #1#{} 확률로",
-                    "{C:item}아이템{} 카드를 생성합니다 {C:inactive}(빈 슬롯 필요){}",
+                    "{C:poke_item}아이템{} 카드를 생성합니다 {C:inactive}(빈 슬롯 필요){}",
                     "{br:2}오류 - 제작자(STEAK)에게 문의하세요",
                     "라운드 종료 시 핸드에 {C:attention}들고 있는{}",
                     "첫 {C:attention}2{}장의 카드의 랭크(숫자)를 {C:attention}감소{}시킵니다",
@@ -4192,7 +4192,7 @@ return {
             j_poke_roggenrola = {
                 name = "단굴",
                 text = {
-                    "{C:hazard}+#1#{} 위험 레이어",
+                    "{C:poke_hazard}+#1#{} 위험 레이어",
                     "핸드에 {C:attention}랭크가 없는{} 카드를 들고 있을 때마다",
                     "{C:mult}+#2#{} 배수를 부여합니다",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}#3#{C:inactive,s:0.8}번 발동 후 진화합니다)"
@@ -4201,7 +4201,7 @@ return {
             j_poke_boldore = {
                 name = "암트르",
                 text = {
-                    "{C:hazard}+#1#{} 위험 레이어",
+                    "{C:poke_hazard}+#1#{} 위험 레이어",
                     "핸드에 {C:attention}랭크가 없는{} 카드를 들고 있을 때마다",
                     "{C:mult}+#2#{} 배수를 부여합니다",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}연결끈{C:inactive,s:0.8}으로 진화합니다)"
@@ -4210,7 +4210,7 @@ return {
             j_poke_gigalith = {
                 name = "기가이어스",
                 text = {
-                    "{C:hazard}+#1#{} 위험 레이어",
+                    "{C:poke_hazard}+#1#{} 위험 레이어",
                     "핸드에 {C:attention}랭크가 없는{} 카드를 들고 있을 때마다",
                     "{C:mult}+#2#{} 배수를 부여하고 재발동합니다"
                 }
@@ -4343,7 +4343,7 @@ return {
             j_poke_ferroseed = {
                 name = "철시드",
                 text = {
-                  "{C:hazard}+#2#{} 위험 레이어",
+                  "{C:poke_hazard}+#2#{} 위험 레이어",
                   "{C:attention}와일드{} 카드와 {C:attention}위험{} 카드는",
                   "{C:attention}스틸{} 카드이기도 합니다",
                   "{C:inactive,s:0.8}({C:attention,s:0.8}#1#{C:inactive,s:0.8} 라운드 후 진화합니다)"
@@ -4352,7 +4352,7 @@ return {
             j_poke_ferrothorn = {
               name = "너트령",
               text = {
-                "{C:hazard}+#1#{} 위험 레이어",
+                "{C:poke_hazard}+#1#{} 위험 레이어",
                 "{C:attention}와일드{} 카드와 {C:attention}위험{} 카드는",
                 "{C:attention}스틸{} 카드이기도 합니다",
                 "{br:2}오류 - 제작자(STEAK)에게 문의하세요",
@@ -4411,7 +4411,7 @@ return {
             j_poke_golett = {
                 name = "골비람",
                 text = {
-                  "{C:hazard}+#1#{} 위험 레이어",
+                  "{C:poke_hazard}+#1#{} 위험 레이어",
                   "핸드에 든 카드가 {C:green}#5#분의 #4#{} 확률로 {X:mult,C:white}X#2#{} 배수를 부여합니다",
                   "{C:attention}위험{} 카드는 확률이 확정적으로 적용됩니다",
                   "{C:inactive,s:0.8}({C:attention,s:0.8}#3#{C:inactive,s:0.8} 라운드 후 진화합니다)"
@@ -4420,7 +4420,7 @@ return {
             j_poke_golurk = {
                 name = "골루그",
                 text = {
-                  "{C:hazard}+#1#{} 위험 레이어",
+                  "{C:poke_hazard}+#1#{} 위험 레이어",
                   "핸드에 든 카드가 {C:green}#4#분의 #3#{} 확률로 {X:mult,C:white}X#2#{} 배수를 부여합니다",
                   "{C:attention}위험{} 카드는 확률이 확정적으로 적용됩니다"
                 }
@@ -4477,7 +4477,7 @@ return {
                 text = {
                     "플레이 핸드에 {C:attention}플러시{}가 포함되어 있으면 {C:chips}+#1#{} 칩",
                     "{br:2}오류 - 제작자(STEAK)에게 문의하세요",
-                    "{C:attention}K{} 또는 {C:attention}Q{}도 포함되어 있다면 {C:pink}에너지{} 카드를 생성합니다"
+                    "{C:attention}K{} 또는 {C:attention}Q{}도 포함되어 있다면 {C:poke_pink}에너지{} 카드를 생성합니다"
                 } 
             },
             j_poke_sylveon = {
@@ -4532,7 +4532,7 @@ return {
                   "{C:inactive}(빈 슬롯 필요)",
                   "{br:2}오류 - 제작자(STEAK)에게 문의하세요",
                   "{C:spectral}스펙트럼{} 카드 사용 시 {C:money}$#3#{}를 벌고,",
-                  "가장 왼쪽 {C:attention}조커{}에 {X:psychic,C:white}에스퍼{} 스티커를 부착합니다"
+                  "가장 왼쪽 {C:attention}조커{}에 {X:poke_psychic,C:white}에스퍼{} 스티커를 부착합니다"
                 }
             },
             j_poke_gourgeist_average = {
@@ -4543,7 +4543,7 @@ return {
                   "{C:inactive}(빈 슬롯 필요)",
                   "{br:2}오류 - 제작자(STEAK)에게 문의하세요",
                   "{C:spectral}스펙트럼{} 카드 사용 시 {C:money}$#3#{}를 벌고,",
-                  "가장 왼쪽 {C:attention}조커{}에 {X:psychic,C:white}에스퍼{} 스티커를 부착합니다"
+                  "가장 왼쪽 {C:attention}조커{}에 {X:poke_psychic,C:white}에스퍼{} 스티커를 부착합니다"
                 }
             },
             j_poke_gourgeist_large = {
@@ -4554,7 +4554,7 @@ return {
                   "{C:inactive}(빈 슬롯 필요)",
                   "{br:2}오류 - 제작자(STEAK)에게 문의하세요",
                   "{C:spectral}스펙트럼{} 카드 사용 시 {C:money}$#3#{}를 벌고,",
-                  "가장 왼쪽 {C:attention}조커{}에 {X:psychic,C:white}에스퍼{} 스티커를 부착합니다"
+                  "가장 왼쪽 {C:attention}조커{}에 {X:poke_psychic,C:white}에스퍼{} 스티커를 부착합니다"
                 }
             },
 			j_poke_gourgeist_super = {
@@ -4565,7 +4565,7 @@ return {
                   "{C:inactive}(공간이 있어야 함)",
                   "{br:2}오류 - STEAK에게 문의바람",
                   "{C:spectral}스펙트럴{} 카드 사용 시 {C:money}$#3#{}를 획득하고",
-                  "가장 왼쪽 {C:attention}조커{}에 {X:psychic,C:white}사이코{}",
+                  "가장 왼쪽 {C:attention}조커{}에 {X:poke_psychic,C:white}사이코{}",
                   "스티커를 부착합니다"
                 }
             },
@@ -4573,14 +4573,14 @@ return {
                 name = '턱지충이',
                 text = {
                     "{C:mult}+#1#{} 배수",
-                    "{X:lightning, C:black}전기{} 타입 조커 보유 시 {C:attention}3배{}가 됩니다",
+                    "{X:poke_lightning, C:black}전기{} 타입 조커 보유 시 {C:attention}3배{}가 됩니다",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}#2#{C:inactive,s:0.8} 라운드 후 진화)",
                 }  
             },
             j_poke_charjabug = {
                 name = '전지충이',
                 text = {
-                    "보유한 {X:lightning, C:black}전기{} 타입 조커",
+                    "보유한 {X:poke_lightning, C:black}전기{} 타입 조커",
                     "하나당 {C:mult}+#1#{} 배수",
                     "{C:inactive}(현재 {C:mult}+#2#{C:inactive} 배수)",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}천둥의돌{C:inactive,s:0.8} 사용 시 진화)"
@@ -4590,7 +4590,7 @@ return {
                 name = '투구뿌논',
                 text = {
                     "{C:mult}+#3#{} 배수",
-                    "다른 {X:lightning, C:black}전기{} 타입 조커 하나당",
+                    "다른 {X:poke_lightning, C:black}전기{} 타입 조커 하나당",
                     "{X:mult,C:white} X#1# {} 배수",
                     "{C:inactive}(현재 {X:mult,C:white} X#2# {C:inactive} 배수)",
                 }
@@ -4766,21 +4766,21 @@ return {
               text = {
                 "{C:attention}부스터 팩{}을 건너뛸 때마다 {C:mult}+#2#{} 배수를 얻고",
                 "{C:dark_edition}포일{}, {C:dark_edition}홀로그램{}, 또는 {C:dark_edition}폴리크롬{} 효과가",
-                "부여된 무작위 {C:item}아이템{}을 생성합니다",
+                "부여된 무작위 {C:poke_item}아이템{}을 생성합니다",
                 "{C:inactive}(공간이 있어야 하며, 현재 {C:mult}+#1#{C:inactive} 배수)",
               }
             },
             j_poke_tarountula = {
                 name = "타랜툴라",
                 text = {
-                    "{C:hazard}+#1#{} 해저드 레이어, {C:attention}+#3#{} 핸드 크기",
+                    "{C:poke_hazard}+#1#{} 해저드 레이어, {C:attention}+#3#{} 핸드 크기",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}#2#{C:inactive,s:0.8} 라운드 후 진화)",
                 }
             },
             j_poke_spidops = {
                 name = "트래피더",
                 text = {
-                    "{C:hazard}+#1#{} 해저드 레이어, {C:attention}+#2#{} 핸드 크기",
+                    "{C:poke_hazard}+#1#{} 해저드 레이어, {C:attention}+#2#{} 핸드 크기",
                     "덱에 추가되는 매 {C:attention}#3#번째 {C:inactive}[#4#]{}",
                     "{C:attention}플레잉 카드{}에 무작위 {C:attention}인장{}을 부여합니다"
                 }
@@ -4792,7 +4792,7 @@ return {
                   "발동할 때마다 요구되는 {C:attention}랭크{}가 상승합니다",
                   "{C:inactive,s:0.8}(가장 높은 랭크일 경우 다시 가장 낮게 돌아감)",
                   "{C:inactive}(현재 {C:chips}+#1#{C:inactive} 칩)",
-                  "{C:inactive,s:0.8}({X:fire,C:white,s:0.8}불꽃{C:inactive,s:0.8} 타입 조커 보유 시 진화)",
+                  "{C:inactive,s:0.8}({X:poke_fire,C:white,s:0.8}불꽃{C:inactive,s:0.8} 타입 조커 보유 시 진화)",
                 }
             },
             j_poke_dachsbun = {
@@ -4801,7 +4801,7 @@ return {
                   "포커 핸드에 {C:attention}#3#{} 랭크가 포함되면 {C:chips}+#2#{} 칩을 얻습니다",
                   "발동할 때마다 요구되는 {C:attention}랭크{}가 상승합니다",
                   "{br:4}오류 - STEAK에게 문의바람",
-                  "보유한 {X:fire,C:white}불꽃{} 타입 조커 하나당 칩 상승량이",
+                  "보유한 {X:poke_fire,C:white}불꽃{} 타입 조커 하나당 칩 상승량이",
                   "{C:chips}+2{}만큼 증가합니다",
                   "{C:inactive,s:0.8}(가장 높은 랭크일 경우 다시 가장 낮게 돌아감)",
                   "{C:inactive}(현재 {C:chips}+#1#{C:inactive} 칩)",
@@ -5000,7 +5000,7 @@ return {
             j_poke_rotomdex = {
                 name = '로토무도감',
                 text = {
-                    "보유한 조커의 서로 다른 {C:pink}타입{}",
+                    "보유한 조커의 서로 다른 {C:poke_pink}타입{}",
                     "하나당 {C:attention}부스터 팩{} 비용 {C:money}$1{} 감소",
                     "{C:inactive}(현재 {C:money}$#1#{C:inactive} 할인)"
                 } 
@@ -5027,7 +5027,7 @@ return {
                 name = "젤리 도넛",
                 text = {
                   "{C:attention}블라인드{} 선택 시",
-                  "{X:colorless,C:white}노말{C:pink} 에너지{} 생성",
+                  "{X:poke_colorless,C:white}노말{C:poke_pink} 에너지{} 생성",
                   "{C:inactive}({C:attention}#1#{C:inactive} 라운드 남음){}"
                 }
             },
@@ -5056,8 +5056,8 @@ return {
                 name = "보물 식당",
                 text = {
                   "{C:attention}타입 체인저{}",
-                  "가장 왼쪽에 있는 조커의 {C:pink}타입{}을",
-                  "가장 오른쪽에 있는 조커의 {C:pink}타입{}으로 변경",
+                  "가장 왼쪽에 있는 조커의 {C:poke_pink}타입{}을",
+                  "가장 오른쪽에 있는 조커의 {C:poke_pink}타입{}으로 변경",
                   "{C:attention}블라인드{} 선택 시 발동",
                   "{C:inactive}({C:attention}#1#{C:inactive} 라운드 남음){}"
                 }
@@ -5109,7 +5109,7 @@ return {
                 text = {
                   "{C:attention}#1#{} 라운드 후 {C:attention}기본{} 또는",
                   "{C:attention}아기{} 포켓몬 조커로 변신",
-                  "변신 시 가능한 경우 {C:pink}에너자이징{} 상태가 됨"
+                  "변신 시 가능한 경우 {C:poke_pink}에너자이징{} 상태가 됨"
                 }
             },
             j_poke_daycare = {
@@ -5124,7 +5124,7 @@ return {
                 name = '10억 마리의 사자',
                 text = {
                     "{C:attention}블라인드{} 선택 시 보유한 모든",
-                    "{C:pink}타입{} 조커를 파괴하고 마리당 {X:mult,C:white}X#2#{} 배수 획득",
+                    "{C:poke_pink}타입{} 조커를 파괴하고 마리당 {X:mult,C:white}X#2#{} 배수 획득",
                     "사자가 모두 소진되면 {S:1.1,C:red,E:2}자폭{}합니다",
                     "{C:inactive}(현재 {X:mult,C:white}X#1#{C:inactive} 배수, {C:attention}#3#{C:inactive}마리 남음)"
                 } 
@@ -5174,10 +5174,10 @@ return {
 			            sleeve_poke_obituarysleeve_alt = {
                 name = "부고 슬리브",
                 text = {
-                    "{C:pink}핑크 인장{}은 발동 후 {C:green}#1# / #2#{} 확률로",
+                    "{C:poke_pink}핑크 인장{}은 발동 후 {C:green}#1# / #2#{} 확률로",
                     "제거됩니다",
                     "조커가 판매되거나 파괴될 때 해당 타입의",
-                    "{C:dark_edition}네거티브 {C:pink}에너지{}를 생성합니다",
+                    "{C:dark_edition}네거티브 {C:poke_pink}에너지{}를 생성합니다",
                 },
             },
             sleeve_poke_revenantsleeve = {
@@ -5190,7 +5190,7 @@ return {
               name = "망령 슬리브",
               text = {
                   "{C:blue}+#1#{} 소모품 슬롯",
-                  "{C:pink}포켓 팩{}이 상점에",
+                  "{C:poke_pink}포켓 팩{}이 상점에",
                   "등장하지 않습니다",
               },
             },
@@ -5198,16 +5198,16 @@ return {
             sleeve_poke_luminoussleeve = {
                 name = "루미너스 슬리브",
                 text = {
-                    "모든 조커가 무작위 {C:pink}타입{} 스티커를",
+                    "모든 조커가 무작위 {C:poke_pink}타입{} 스티커를",
                     "가지고 생성되며,",
-                    "한 번 {C:pink}에너지화{}됩니다",
+                    "한 번 {C:poke_pink}에너지화{}됩니다",
                 },
             },
             sleeve_poke_luminoussleeve_alt = {
                 name = "루미너스 슬리브",
                 text = {
                     "리롤 시 {C:green}#1# / #2#{} 확률로",
-                    "{C:item}테라오브{}를 생성합니다",
+                    "{C:poke_item}테라오브{}를 생성합니다",
 
                 },
             },
@@ -5215,7 +5215,7 @@ return {
                 name = "염동력 슬리브",
                 text = {
                     "{C:tarot,T:v_crystal_ball}#1#{} 바우처와",
-                                        "{C:item,T:c_poke_twisted_spoon}#2#{} 카드를",
+                                        "{C:poke_item,T:c_poke_twisted_spoon}#2#{} 카드를",
                     "{C:attention}2{}장 보유하고 시작합니다"
                 } 
             },
@@ -5223,7 +5223,7 @@ return {
                 name = "염동력 슬리브",
                 text = {
                     "{C:attention}소모품{} 슬롯에 있는",
-                    "{C:item,T:c_poke_twisted_spoon}#2#{}마다",
+                    "{C:poke_item,T:c_poke_twisted_spoon}#2#{}마다",
                     "{C:blue}+1{} 소모품 슬롯을 얻습니다",
                 }
             },
@@ -5231,16 +5231,16 @@ return {
                 name = "증폭 슬리브",
                 text = {
                     "{C:tarot,T:v_poke_energysearch}#1#{} 바우처와",
-                    "{C:pink,T:c_poke_double_rainbow_energy}#2#{} 카드를",
+                    "{C:poke_pink,T:c_poke_double_rainbow_energy}#2#{} 카드를",
                     "보유하고 시작합니다"
                 } 
             },
             sleeve_poke_ampedsleeve_alt = {
                 name = "증폭 슬리브",
                 text = {
-                    "{C:pink,T:c_poke_double_rainbow_energy}#2#{} 대신",
+                    "{C:poke_pink,T:c_poke_double_rainbow_energy}#2#{} 대신",
                     "{C:dark_edition}네거티브 {C:attention,T:j_poke_jelly_donut}#1#{}를 보유하고 시작합니다",
-                    "{C:pink,T:c_poke_colorless_energy}#3#{}가 더 이상 {X:colorless,C:white}노말{}이 아닌",
+                    "{C:poke_pink,T:c_poke_colorless_energy}#3#{}가 더 이상 {X:poke_colorless,C:white}노말{}이 아닌",
                     "조커에게 효과가 절반이 되지 않습니다",
 
                 } 
@@ -5333,7 +5333,7 @@ return {
                 name = "변신",
                 text = {
                     "가장 왼쪽 또는 선택한 포켓몬을",
-                    "가장 높은 {C:attention}단계{}로 진화시키고 {C:pink}에너지화{}합니다", 
+                    "가장 높은 {C:attention}단계{}로 진화시키고 {C:poke_pink}에너지화{}합니다", 
 
                 },
             },
@@ -5352,16 +5352,16 @@ return {
                 name = "부고",
                 text = {
                     "선택한 카드 {C:attention}1{}장에",
-                    "{C:pink}분홍색 인장{}을 추가합니다",
+                    "{C:poke_pink}분홍색 인장{}을 추가합니다",
                 }
             },
             c_poke_nightmare = {
                 name = "악몽",
                 text = {
                     "가장 왼쪽 또는 선택한 조커를 파괴하고",
-                    "해당 조커의 {C:pink}타입{}에 맞는 {C:attention}2{}장의 {C:dark_edition}네거티브{}",
-                    "{C:pink}에너지{} 카드를 생성합니다",
-                    "{C:inactive}(타입이 없는 조커는 {X:colorless,C:white}노말{C:inactive} 에너지를 생성합니다)"
+                    "해당 조커의 {C:poke_pink}타입{}에 맞는 {C:attention}2{}장의 {C:dark_edition}네거티브{}",
+                    "{C:poke_pink}에너지{} 카드를 생성합니다",
+                    "{C:inactive}(타입이 없는 조커는 {X:poke_colorless,C:white}노말{C:inactive} 에너지를 생성합니다)"
 
                 },
             },
@@ -5369,14 +5369,14 @@ return {
                 name = "망령",
                 text = {
                     "선택한 카드 {C:attention}1{}장에",
-                    "{C:item}실버 인장{}을 추가합니다",
+                    "{C:poke_item}실버 인장{}을 추가합니다",
                 }
             },
             c_poke_double_rainbow_energy = {
                 name = "더블 레인보우 에너지",
                 text = {
-                    "가장 왼쪽 또는 선택한 아무 {C:pink}타입{}의",
-                    "조커를 {C:red}2{C:attention}회{C:green} {C:blue}연{C:purple}속 {C:pink}에너지화{}합니다",
+                    "가장 왼쪽 또는 선택한 아무 {C:poke_pink}타입{}의",
+                    "조커를 {C:red}2{C:attention}회{C:green} {C:blue}연{C:purple}속 {C:poke_pink}에너지화{}합니다",
                     "이번 라운드에 이자를 획득하지 못합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
 
@@ -5398,7 +5398,7 @@ return {
             tag_poke_pocket_tag = {
                 name = "포켓 태그",
                 text = {
-                    "무료 {C:pink}메가 포켓 팩{}을 지급합니다",
+                    "무료 {C:poke_pink}메가 포켓 팩{}을 지급합니다",
                     "{C:attention}앤티 5{} 이상에서 팩에 {C:attention}메가스톤{}이",
                     "포함될 확률 {C:green}#1#%{}",
                     "{C:inactive,s:0.8}(확률을 높일 수 없음){}",
@@ -5408,7 +5408,7 @@ return {
                 name = "이로치 태그",
                 text = {
                     "다음 상점의 기본 에디션 조커가",
-                    "무료가 되며 {C:colorless}이로치(Shiny){}가 됩니다",
+                    "무료가 되며 {C:poke_colorless}이로치(Shiny){}가 됩니다",
                 }, 
             },
             tag_poke_stage_one_tag = {
@@ -5420,7 +5420,7 @@ return {
             tag_poke_safari_tag = {
                 name = "사파리 태그",
                 text = {
-                    "상점에 무료 {C:safari}사파리{} 조커가 나타납니다",
+                    "상점에 무료 {C:poke_safari}사파리{} 조커가 나타납니다",
                 }, 
             },
             tag_poke_starter_tag = {
@@ -5449,11 +5449,11 @@ return {
         Voucher = {
             v_poke_energysearch = {
                 name = "에너지 서치",
-                text = { "{C:pink}에너지 한도 +2{}" },
+                text = { "{C:poke_pink}에너지 한도 +2{}" },
             },
             v_poke_energyresearch = {
                 name = "에너지 리서치",
-                text = { "{C:pink}에너지 한도 +3{}" },
+                text = { "{C:poke_pink}에너지 한도 +3{}" },
             },
             v_poke_goodrod = {
                 name = "좋은 낚시대",
@@ -5461,24 +5461,24 @@ return {
             },
             v_poke_superrod = {
                 name = "대단한 낚시대",
-                text = { "모든 {C:attention}소모품 팩{}에서 카드를 {C:pink}보관{}할 수 있습니다" },
+                text = { "모든 {C:attention}소모품 팩{}에서 카드를 {C:poke_pink}보관{}할 수 있습니다" },
             },
         },
         Other = {
             -- 타입 설명 (Type)
-            Grass = { name = "타입", text = { "{X:grass,C:white}풀{}" } },
-            Fire = { name = "타입", text = { "{X:fire,C:white}불꽃{}" } },
-            Water = { name = "타입", text = { "{X:water,C:white}물{}" } },
-            Lightning = { name = "타입", text = { "{X:lightning,C:black}전기{}" } },
-            Psychic = { name = "타입", text = { "{X:psychic,C:white}에스퍼{}" } },
-            Fighting = { name = "타입", text = { "{X:fighting,C:white}격투{}" } },
-            Colorless = { name = "타입", text = { "{X:colorless,C:white}노말{}" } },
-            Dark = { name = "타입", text = { "{X:dark,C:white}악{}" } },
-            Metal = { name = "타입", text = { "{X:metal,C:white}강철{}" } },
-            Fairy = { name = "타입", text = { "{X:fairy,C:white}페어리{}" } },
-            Dragon = { name = "타입", text = { "{X:dragon,C:white}드래곤{}" } },
-            Earth = { name = "타입", text = { "{X:earth,C:white}땅{}" } },
-            Bird = { name = "타입", text = { "{X:bird,C:white}비행{}" } },
+            Grass = { name = "타입", text = { "{X:poke_grass,C:white}풀{}" } },
+            Fire = { name = "타입", text = { "{X:poke_fire,C:white}불꽃{}" } },
+            Water = { name = "타입", text = { "{X:poke_water,C:white}물{}" } },
+            Lightning = { name = "타입", text = { "{X:poke_lightning,C:black}전기{}" } },
+            Psychic = { name = "타입", text = { "{X:poke_psychic,C:white}에스퍼{}" } },
+            Fighting = { name = "타입", text = { "{X:poke_fighting,C:white}격투{}" } },
+            Colorless = { name = "타입", text = { "{X:poke_colorless,C:white}노말{}" } },
+            Dark = { name = "타입", text = { "{X:poke_dark,C:white}악{}" } },
+            Metal = { name = "타입", text = { "{X:poke_metal,C:white}강철{}" } },
+            Fairy = { name = "타입", text = { "{X:poke_fairy,C:white}페어리{}" } },
+            Dragon = { name = "타입", text = { "{X:poke_dragon,C:white}드래곤{}" } },
+            Earth = { name = "타입", text = { "{X:poke_earth,C:white}땅{}" } },
+            Bird = { name = "타입", text = { "{X:poke_bird,C:white}비행{}" } },
 
             ancient = {
                 name = "고대",
@@ -5692,7 +5692,7 @@ return {
                 name = "선물",
                 text = {
                     "{C:green}35%{} - {C:money}$8{}",
-                    "{C:green}30%{} - {C:item}아이템{} 카드",
+                    "{C:green}30%{} - {C:poke_item}아이템{} 카드",
                     "{C:green}20%{} - {C:attention}쿠폰 태그",
                     "{C:green}15%{} - {C:dark_edition}폴리크롬{} {C:attention}기프트 카드",
                 }
@@ -5721,10 +5721,10 @@ return {
             pickup = {
               name = "픽업",
               text = {
-                "{C:green}34%{} - {C:item}아이템{}",
-                "{C:green}25%{} - {C:item}진화 아이템",
-                "{C:green}20%{} - {C:item}먹다남은음식",
-                "{C:green}20%{} - {C:item}휘어진스푼",
+                "{C:green}34%{} - {C:poke_item}아이템{}",
+                "{C:green}25%{} - {C:poke_item}진화 아이템",
+                "{C:green}20%{} - {C:poke_item}먹다남은음식",
+                "{C:green}20%{} - {C:poke_item}휘어진스푼",
                 "{C:green}1%{} - {C:spectral}변화",
               }
             },
@@ -5768,14 +5768,14 @@ return {
             eeveelution = {
                 name = "진화",
                 text = {
-                    "{C:attention}물의돌{} - {X:water,C:white}샤미드{}",
-                    "{C:attention}천둥의돌{} - {X:lightning,C:black}쥬피썬더{}",
-                    "{C:attention}불꽃의돌{} - {X:fire,C:white}부스터{}",
-                    "{C:attention}태양의돌{} - {X:psychic,C:white}에브이{}",
-                    "{C:attention}달의돌{} - {X:dark,C:white}블래키{}",
-                    "{C:attention}리프의돌{} - {X:grass,C:white}리피아{}",
-                    "{C:attention}얼음의돌{} - {X:water,C:white}글레이시아{}",
-                    "{C:attention}빛의돌{} - {X:fairy,C:white}님피아{}"
+                    "{C:attention}물의돌{} - {X:poke_water,C:white}샤미드{}",
+                    "{C:attention}천둥의돌{} - {X:poke_lightning,C:black}쥬피썬더{}",
+                    "{C:attention}불꽃의돌{} - {X:poke_fire,C:white}부스터{}",
+                    "{C:attention}태양의돌{} - {X:poke_psychic,C:white}에브이{}",
+                    "{C:attention}달의돌{} - {X:poke_dark,C:white}블래키{}",
+                    "{C:attention}리프의돌{} - {X:poke_grass,C:white}리피아{}",
+                    "{C:attention}얼음의돌{} - {X:poke_water,C:white}글레이시아{}",
+                    "{C:attention}빛의돌{} - {X:poke_fairy,C:white}님피아{}"
                 }
             },
             poke_egg_tip = {
@@ -5833,14 +5833,14 @@ return {
             unlimited_energy_tooltip = {
               name = "무한 에너지",
               text = {
-                "조커에게 {C:pink}에너지{}를",
+                "조커에게 {C:poke_pink}에너지{}를",
                 "횟수 제한 없이 사용할 수 있습니다"
               }
             },
             precise_energy_tooltip = {
                 name = "정밀 에너지 스케일링",
                 text = {
-                    "{s:0.8}{C:pink,s:0.8}에너지{}{s:0.8} 보너스 적용 시 모든 값에 {C:attention,s:0.8}소수점{}을 사용합니다{}",
+                    "{s:0.8}{C:poke_pink,s:0.8}에너지{}{s:0.8} 보너스 적용 시 모든 값에 {C:attention,s:0.8}소수점{}을 사용합니다{}",
                     "{s:0.8}이 옵션이 {C:attention,s:0.8}꺼져 있으면{}{s:0.8} 보너스에 다음이 적용됩니다:{}",
 
                     "{C:attenion}1. {X:mult,C:white,s:0.8}X{} {s:0.8}배수 - 소수점 사용",
@@ -6015,7 +6015,7 @@ return {
             allowpokeballs_tooltip = {
               name = "몬스터볼 허용",
               text = {
-                "몬스터볼 {C:item}아이템{}이 등장하도록 합니다.",
+                "몬스터볼 {C:poke_item}아이템{}이 등장하도록 합니다.",
               }
             },
             pokemaster_tooltip = {
@@ -6068,7 +6068,7 @@ return {
                 name = "핑크 실",
                 text = {
                     "라운드의 {C:attention}첫 번째 핸드{}로 득점 시,",
-                    "소유한 조커의 {C:pink}타입{}과 일치하는 {C:pink}에너지{} 카드 생성",
+                    "소유한 조커의 {C:poke_pink}타입{}과 일치하는 {C:poke_pink}에너지{} 카드 생성",
                     "{C:inactive}(공간이 있어야 함){}"
                 },
             },
@@ -6077,7 +6077,7 @@ return {
                 name = "실버 실",
                 text = {
                   "카드가 득점할 때 손에 {C:attention}들고 있다면{}",
-                  "{C:item}아이템{} 카드를 생성하고 {C:attention}버려집니다{}"
+                  "{C:poke_item}아이템{} 카드를 생성하고 {C:attention}버려집니다{}"
                 }
             },
 
@@ -6092,64 +6092,64 @@ return {
 				p_poke_pokepack_normal_1 = {
                 name = "포켓 팩",
                 text = {
-                    "{C:attention}#2#{}장의 {C:item}아이템{} 카드와",
-                    "{C:attention}#3#{}장의 {C:pink}에너지{} 카드 중",
+                    "{C:attention}#2#{}장의 {C:poke_item}아이템{} 카드와",
+                    "{C:attention}#3#{}장의 {C:poke_pink}에너지{} 카드 중",
                     "{C:attention}#1#{}장을 선택하세요",
                 },
             },
             p_poke_pokepack_normal_2 = {
                 name = "포켓 팩",
                 text = {
-                    "{C:attention}#2#{}장의 {C:item}아이템{} 카드와",
-                    "{C:attention}#3#{}장의 {C:pink}에너지{} 카드 중",
+                    "{C:attention}#2#{}장의 {C:poke_item}아이템{} 카드와",
+                    "{C:attention}#3#{}장의 {C:poke_pink}에너지{} 카드 중",
                     "{C:attention}#1#{}장을 선택하세요",
                 },
             },
             p_poke_pokepack_jumbo_1 = {
                 name = "점보 포켓 팩",
                 text = {
-                    "{C:attention}#2#{}장의 {C:item}아이템{} 카드와",
-                    "{C:attention}#3#{}장의 {C:pink}에너지{} 카드 중",
+                    "{C:attention}#2#{}장의 {C:poke_item}아이템{} 카드와",
+                    "{C:attention}#3#{}장의 {C:poke_pink}에너지{} 카드 중",
                     "{C:attention}#1#{}장을 선택하세요",
                 },
             },
             p_poke_pokepack_mega_1 = {
                 name = "메가 포켓 팩",
                 text = {
-                    "{C:attention}#2#{}장의 {C:item}아이템{} 카드와",
-                    "{C:attention}#3#{}장의 {C:pink}에너지{} 카드 중",
+                    "{C:attention}#2#{}장의 {C:poke_item}아이템{} 카드와",
+                    "{C:attention}#3#{}장의 {C:poke_pink}에너지{} 카드 중",
                     "{C:attention}#1#{}장을 선택하세요",
                 },
             },
             p_poke_pokepack_normal_3 = {
                 name = "포켓 팩",
                 text = {
-                    "{C:attention}#2#{}장의 {C:item}아이템{} 카드와",
-                    "{C:attention}#3#{}장의 {C:pink}에너지{} 카드 중",
+                    "{C:attention}#2#{}장의 {C:poke_item}아이템{} 카드와",
+                    "{C:attention}#3#{}장의 {C:poke_pink}에너지{} 카드 중",
                     "{C:attention}#1#{}장을 선택하세요",
                 },
             },
             p_poke_pokepack_normal_4 = {
                 name = "포켓 팩",
                 text = {
-                    "{C:attention}#2#{}장의 {C:item}아이템{} 카드와",
-                    "{C:attention}#3#{}장의 {C:pink}에너지{} 카드 중",
+                    "{C:attention}#2#{}장의 {C:poke_item}아이템{} 카드와",
+                    "{C:attention}#3#{}장의 {C:poke_pink}에너지{} 카드 중",
                     "{C:attention}#1#{}장을 선택하세요",
                 },
             },
             p_poke_pokepack_jumbo_2 = {
                 name = "점보 포켓 팩",
                 text = {
-                    "{C:attention}#2#{}장의 {C:item}아이템{} 카드와",
-                    "{C:attention}#3#{}장의 {C:pink}에너지{} 카드 중",
+                    "{C:attention}#2#{}장의 {C:poke_item}아이템{} 카드와",
+                    "{C:attention}#3#{}장의 {C:poke_pink}에너지{} 카드 중",
                     "{C:attention}#1#{}장을 선택하세요",
                 },
             },
             p_poke_pokepack_mega_2 = {
                 name = "메가 포켓 팩",
                 text = {
-                    "{C:attention}#2#{}장의 {C:item}아이템{} 카드와",
-                    "{C:attention}#3#{}장의 {C:pink}에너지{} 카드 중",
+                    "{C:attention}#2#{}장의 {C:poke_item}아이템{} 카드와",
+                    "{C:attention}#3#{}장의 {C:poke_pink}에너지{} 카드 중",
                     "{C:attention}#1#{}장을 선택하세요",
                 },
             },

@@ -4,7 +4,7 @@ local wugtrio={
   pos = {x = 4, y = 4},
   config = {extra = {chips = 120, Xmult = 1.5}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.Xmult, center.ability.extra.chips}}
   end,
   rarity = 2, 
@@ -77,7 +77,7 @@ local annihilape={
   pos = {x = 2, y = 6}, 
   config = {extra = {mult_mod = 5, chip_mod = 7}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult_mod, center.ability.extra.chip_mod, center.ability.extra.mult_mod * (1 + G.GAME.current_round.hands_played), 
                     center.ability.extra.chip_mod * (1 + G.GAME.current_round.hands_played)}}
   end,
@@ -111,7 +111,7 @@ local farigiraf={
   pos = {x = 4, y = 6},
   config = {extra = {Xmult_multi = 2.2, score = false}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Cryptid"}}
       info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_cryptid', vars = {2}}
@@ -162,12 +162,7 @@ local farigiraf={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_cryptid')
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
-        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
-      end
+      pokermon.create_held_item("c_cryptid")
     end
   end,
   attributes = {"holding", "face", "xmult", "hand_type"},
@@ -178,7 +173,7 @@ local dudunsparce={
   pos = {x = 5, y = 6},
   config = {extra = {card_slots = 1, pack_slots = 1, voucher_slots = 1, form = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local alt_key = nil
     if center.ability.extra.form == 1 then
       alt_key = "j_poke_dudunsparce2"
@@ -245,7 +240,7 @@ local kingambit={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 2,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, }}
   end,
   rarity = "poke_safari",

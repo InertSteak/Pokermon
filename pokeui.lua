@@ -1,3 +1,5 @@
+local mod_dir = ''..SMODS.current_mod.path
+
 --Config UI
 local energy_toggles = {
   {ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy", tooltip = {set = 'Other', key = 'unlimited_energy_tooltip'}}, 
@@ -20,7 +22,7 @@ local joker_pool_toggles = {
 
 local misc_no_restart_toggles = {
   {ref_value = "shiny_playing_cards", label = "poke_settings_shiny_playing_cards", tooltip = {set = 'Other', key = 'shinyplayingcard_tooltip'}},
-  {ref_value = "stake_skins", label = "poke_settings_stake_skins", tooltip = {set = 'Other', key = 'stake_skins_tooltip'}, callback = G.FUNCS.toggle_pokermon_skins},
+  {ref_value = "stake_skins", label = "poke_settings_stake_skins", tooltip = {set = 'Other', key = 'stake_skins_tooltip'}, callback = G.FUNCS.poke_toggle_pokermon_skins},
   {ref_value = "detailed_tooltips", label = "poke_settings_pokemon_detailed_tooltips", tooltip = {set = 'Other', key = 'detailed_tooltips_tooltip'}},
   {ref_value = "previous_evo_stickers", label = "poke_settings_previous_evo_stickers", tooltip = {set = 'Other', key = 'previous_evo_stickers_tooltip'}},
   {ref_value = "order_jokers", label = "poke_settings_order_jokers", tooltip = {set = 'Other', key = 'order_jokers_tooltip'}},
@@ -235,7 +237,7 @@ local pokermon_actual_credits = function()
     { localize("poke_credits_sound"), "Dread" },
     { localize("poke_credits_developer"), "SDM0, Jevonnissocoolman, Ishtech, Fem," },
     { localize("poke_credits_developer"), "MathIsFun_, Kek, Eternalnacho, Emma" },
-    { localize("poke_credits_designer"), "Xilande, Lemmanade, PrincessRoxie, Catzzadilla" },
+    { localize("poke_credits_designer"), "Xilande, Lemmanade, PrincessRoxie, Catzzadilla", "bt", "Emma" },
     { localize("poke_credits_localization"), "Rafael, PainKiller, FlamingRok, Mr. Onyx" },
     { localize("poke_credits_localization"), "PIPIKAI, PanbimboGD, HuyCorn, IlPastaio, heyctf" },
     { localize("poke_credits_community_manager"), "Astra, Kaethela" },
@@ -307,7 +309,7 @@ end
 local pokermon_actual_credits_artists_create_grid = function()
   local page = G.pokermon_actual_credits_artists_grid_page or 1
   local rows, cols = 4, 5
-  local artist_list = poke_get_artist_list()
+  local artist_list = pokermon.sprites.get_artist_list()
   local row_nodes = {}
       
   local marker = 1 + rows * cols * (page - 1)
@@ -317,7 +319,7 @@ local pokermon_actual_credits_artists_create_grid = function()
     for j = marker, row_end do
       local artist = artist_list[j]
       if not artist then break end
-      local info = poke_get_artist_info(artist)
+      local info = pokermon.sprites.get_artist_info(artist)
       local button = {
         n = G.UIT.C,
         config = { align = "tm", padding = 0.1 },
@@ -418,15 +420,15 @@ G.FUNCS.pokermon_sprite_resource = function()
         { n = G.UIT.C, config = { align = "cm" }, nodes = {
           { n = G.UIT.R, config = { minh = 0.2 }},
           { n = G.UIT.R, config = { align = "cl", padding = 0.1, }, nodes = {
-            poke_UIBox_link_button({ label = { "Gen I-V" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/the-ds-style-64x64-pok%C3%A9mon-sprite-resource-completed.267728/" }),
+            pokermon.ui.UIBox_link_button({ label = { "Gen I-V" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/the-ds-style-64x64-pok%C3%A9mon-sprite-resource-completed.267728/" }),
             { n = G.UIT.T, config = { text = "by Chaos Rush", scale = 0.6, colour = G.C.UI.TEXT_LIGHT }}
           }},
           { n = G.UIT.R, config = { align = "cl", padding = 0.1, }, nodes = {
-            poke_UIBox_link_button({ label = { "Gen VI" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/gen-vi-ds-style-64x64-pokemon-sprite-resource.314422/" }),
+            pokermon.ui.UIBox_link_button({ label = { "Gen VI" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/gen-vi-ds-style-64x64-pokemon-sprite-resource.314422/" }),
             { n = G.UIT.T, config = { text = "by MrDollSteak", scale = 0.6, colour = G.C.UI.TEXT_LIGHT }}
           }},
           { n = G.UIT.R, config = { align = "cl", padding = 0.1, }, nodes = {
-            poke_UIBox_link_button({ label = { "Gen VII+" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/ds-style-gen-vii-and-beyond-pok%C3%A9mon-sprite-repository-in-64x64.368703/" }),
+            pokermon.ui.UIBox_link_button({ label = { "Gen VII+" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/ds-style-gen-vii-and-beyond-pok%C3%A9mon-sprite-repository-in-64x64.368703/" }),
             { n = G.UIT.T, config = { text = "by thedarkdragon11", scale = 0.6, colour = G.C.UI.TEXT_LIGHT }}
           }},
         }}
@@ -478,7 +480,7 @@ end
 local function get_sprite_keys_by_artist(artist)
   local keys = {}
 
-  for _, sprite in ipairs(poke_get_artist_sprites(artist)) do
+  for _, sprite in ipairs(pokermon.sprites.get_artist_sprites(artist)) do
     local key = {}
 
     key.display_text = sprite.display_text or localize(get_series_localize_key(sprite.atlas_prefix))
@@ -489,7 +491,7 @@ local function get_sprite_keys_by_artist(artist)
       key.atlas = 'poke_'..sprite.anim_atlas
       key.pos = { x = 0, y = 0 }
     else
-      key.atlas = 'poke_'..poke_get_atlas_string(sprite.atlas_prefix, sprite.gen_atlas, sprite.others_atlas)
+      key.atlas = 'poke_'..pokermon.sprites.get_atlas_string(sprite.atlas_prefix, sprite.gen_atlas, sprite.others_atlas)
       key.pos = sprite.pos
       key.soul_pos = sprite.soul_pos
     end
@@ -499,7 +501,7 @@ local function get_sprite_keys_by_artist(artist)
 
   -- Jokers get special treatment because we only want jokers without alts
   for _, joker in ipairs(G.P_CENTER_POOLS["Joker"]) do
-    local layer = poke_get_artist_layer(joker, artist)
+    local layer = pokermon.sprites.get_artist_layer(joker, artist)
     if layer and joker.stage == 'Other' then
       keys[#keys+1] = { existing_key = joker.key, set = "Joker", layer = layer }
     end
@@ -507,7 +509,7 @@ local function get_sprite_keys_by_artist(artist)
 
   local add_pool_to_keys = function(pool)
     for _, item in pairs(pool) do
-      local layer = poke_get_artist_layer(item, artist)
+      local layer = pokermon.sprites.get_artist_layer(item, artist)
       if layer then
         keys[#keys+1] = { existing_key = item.key, set = item.set, layer = layer }
       end
@@ -534,7 +536,7 @@ local function get_sprite_keys_by_artist(artist)
 end
 
 local function pokermon_show_artist_info(artist)
-  local artist_info = poke_get_artist_info(artist)
+  local artist_info = pokermon.sprites.get_artist_info(artist)
   local display_name = artist_info.display_name
   local text_colour = artist_info.artist_colour
   local colour = artist_info.highlight_colour
@@ -552,7 +554,7 @@ local function pokermon_show_artist_info(artist)
         local link = links[j]
         if not link then break end
         col_nodes[#col_nodes+1] = {n=G.UIT.C, config={align="cm", padding=0.1}, nodes = {
-          poke_UIBox_link_button {
+          pokermon.ui.UIBox_link_button {
             url = link.url,
             colour = link.colour,
             site_text = link.site,
@@ -585,9 +587,9 @@ local function pokermon_show_artist_jokers(artist)
   local keys = get_sprite_keys_by_artist(artist)
 
   return { n = G.UIT.ROOT, config = { align = "cm", colour = G.C.CLEAR },
-    nodes = poke_create_UIBox_your_collection {
+    nodes = pokermon.ui.create_UIBox_your_collection {
       keys = keys,
-      create_card_func = poke_create_art_display_card,
+      create_card_func = pokermon.ui.create_art_display_card,
     }
   }
 end
@@ -634,7 +636,7 @@ poke_joker_page = 1
 local function create_UIBox_pokedex_jokers(keys, previous_menu)
   return create_UIBox_generic_options {
     back_func = previous_menu or 'exit_overlay_menu',
-    contents = poke_create_UIBox_your_collection {
+    contents = pokermon.ui.create_UIBox_your_collection {
       keys = keys,
       cols = 4,
       dynamic_sizing = true
@@ -651,7 +653,7 @@ local function open_pokedex(target)
     if menu and target.config.center.poke_multi_item then menu = 'your_collection_consumables' end
     G.SETTINGS.paused = true
     G.FUNCS.overlay_menu {
-      definition = create_UIBox_pokedex_jokers(get_family_keys(target), menu),
+      definition = create_UIBox_pokedex_jokers(pokermon.get_family_keys(target), menu),
     }
     G.CONTROLLER:update_focus()
   end
@@ -680,80 +682,80 @@ SMODS.Keybind({ key = "openPokedex", key_pressed = "p", action = open_pokedex_fr
 
 --Reserve Area for Pocket packs (adapted from betmma)
 local G_UIDEF_use_and_sell_buttons_ref=G.UIDEF.use_and_sell_buttons
-    function G.UIDEF.use_and_sell_buttons(card)
-        if (card.area == G.pack_cards and G.pack_cards) and card.ability.consumeable then --Add a use button
-            if poke_can_save_consumable(card) then
-                return {
-                    n=G.UIT.ROOT, config = {padding = -0.1,  colour = G.C.CLEAR}, nodes={
-                      {n=G.UIT.R, config={ref_table = card, r = 0.08, padding = 0.1, align = "bm", minw = 0.5*card.T.w - 0.15, minh = 0.7*card.T.h, maxw = 0.7*card.T.w - 0.15, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'use_card', func = 'can_use_consumeable'}, nodes={
-                        {n=G.UIT.T, config={text = localize('b_use'),colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true}}
-                      }},
-                      {n=G.UIT.R, config={ref_table = card, r = 0.08, padding = 0.1, align = "bm", minw = 0.5*card.T.w - 0.15, maxw = 0.9*card.T.w - 0.15, minh = 0.1*card.T.h, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'Can Reserve', func = 'can_reserve_card'}, nodes={
-                        {n=G.UIT.T, config={text = localize('b_save'),colour = G.C.UI.TEXT_LIGHT, scale = 0.45, shadow = true}}
-                      }},
-                      {n=G.UIT.R, config = {align = "bm", w=7.7*card.T.w}},
-                      {n=G.UIT.R, config = {align = "bm", w=7.7*card.T.w}},
-                      {n=G.UIT.R, config = {align = "bm", w=7.7*card.T.w}},
-                      {n=G.UIT.R, config = {align = "bm", w=7.7*card.T.w}},
-                      -- I can't explain it
-                  }}
-            end
-        end
-        return G_UIDEF_use_and_sell_buttons_ref(card)
-    end
-    G.FUNCS.can_reserve_card = function(e)
-        if #G.consumeables.cards < G.consumeables.config.card_limit then 
-            e.config.colour = G.ARGS.LOC_COLOURS.pink
-            e.config.button = 'reserve_card' 
-        else
-          e.config.colour = G.C.UI.BACKGROUND_INACTIVE
-          e.config.button = nil
+function G.UIDEF.use_and_sell_buttons(card)
+    if (card.area == G.pack_cards and G.pack_cards) and card.ability.consumeable then --Add a use button
+        if pokermon.can_save_consumable(card) then
+            return {
+                n=G.UIT.ROOT, config = {padding = -0.1,  colour = G.C.CLEAR}, nodes={
+                  {n=G.UIT.R, config={ref_table = card, r = 0.08, padding = 0.1, align = "bm", minw = 0.5*card.T.w - 0.15, minh = 0.7*card.T.h, maxw = 0.7*card.T.w - 0.15, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'use_card', func = 'can_use_consumeable'}, nodes={
+                    {n=G.UIT.T, config={text = localize('b_use'),colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true}}
+                  }},
+                  {n=G.UIT.R, config={ref_table = card, r = 0.08, padding = 0.1, align = "bm", minw = 0.5*card.T.w - 0.15, maxw = 0.9*card.T.w - 0.15, minh = 0.1*card.T.h, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'Can Reserve', func = 'poke_can_reserve_card'}, nodes={
+                    {n=G.UIT.T, config={text = localize('b_save'),colour = G.C.UI.TEXT_LIGHT, scale = 0.45, shadow = true}}
+                  }},
+                  {n=G.UIT.R, config = {align = "bm", w=7.7*card.T.w}},
+                  {n=G.UIT.R, config = {align = "bm", w=7.7*card.T.w}},
+                  {n=G.UIT.R, config = {align = "bm", w=7.7*card.T.w}},
+                  {n=G.UIT.R, config = {align = "bm", w=7.7*card.T.w}},
+                  -- I can't explain it
+              }}
         end
     end
-    G.FUNCS.reserve_card = function(e) -- only works for consumeables
-        local c1 = e.config.ref_table
-        G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.1,
-            func = function()
-              c1.area:remove_card(c1)
-              c1:add_to_deck()
-              if c1.children.price then c1.children.price:remove() end
-              c1.children.price = nil
-              if c1.children.buy_button then c1.children.buy_button:remove() end
-              c1.children.buy_button = nil
-              remove_nils(c1.children)
-              G.consumeables:emplace(c1)
-              G.GAME.pack_choices = G.GAME.pack_choices - 1
-              if G.GAME.pack_choices <= 0 then
-                G.FUNCS.end_consumeable(nil, delay_fac)
-              end
-              return true
-            end
-        }))
+    return G_UIDEF_use_and_sell_buttons_ref(card)
+end
+G.FUNCS.poke_can_reserve_card = function(e)
+    if #G.consumeables.cards < G.consumeables.config.card_limit then 
+        e.config.colour = pokermon.colours.pink
+        e.config.button = 'poke_reserve_card' 
+    else
+      e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+      e.config.button = nil
     end
-    G.FUNCS.reserve_card_to_joker_slot = function(e) -- only works for consumeables
-        local c1 = e.config.ref_table
-        G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.1,
-            func = function()
-              c1.area:remove_card(c1)
-              c1:add_to_deck()
-              if c1.children.price then c1.children.price:remove() end
-              c1.children.price = nil
-              if c1.children.buy_button then c1.children.buy_button:remove() end
-              c1.children.buy_button = nil
-              remove_nils(c1.children)
-              G.jokers:emplace(c1)
-              G.GAME.pack_choices = G.GAME.pack_choices - 1
-              if G.GAME.pack_choices <= 0 then
-                G.FUNCS.end_consumeable(nil, delay_fac)
-              end
-              return true
-            end
-        }))
-    end
+end
+G.FUNCS.poke_reserve_card = function(e) -- only works for consumeables
+    local c1 = e.config.ref_table
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.1,
+        func = function()
+          c1.area:remove_card(c1)
+          c1:add_to_deck()
+          if c1.children.price then c1.children.price:remove() end
+          c1.children.price = nil
+          if c1.children.buy_button then c1.children.buy_button:remove() end
+          c1.children.buy_button = nil
+          remove_nils(c1.children)
+          G.consumeables:emplace(c1)
+          G.GAME.pack_choices = G.GAME.pack_choices - 1
+          if G.GAME.pack_choices <= 0 then
+            G.FUNCS.end_consumeable(nil, delay_fac)
+          end
+          return true
+        end
+    }))
+end
+G.FUNCS.poke_reserve_card_to_joker_slot = function(e) -- only works for consumeables
+    local c1 = e.config.ref_table
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.1,
+        func = function()
+          c1.area:remove_card(c1)
+          c1:add_to_deck()
+          if c1.children.price then c1.children.price:remove() end
+          c1.children.price = nil
+          if c1.children.buy_button then c1.children.buy_button:remove() end
+          c1.children.buy_button = nil
+          remove_nils(c1.children)
+          G.jokers:emplace(c1)
+          G.GAME.pack_choices = G.GAME.pack_choices - 1
+          if G.GAME.pack_choices <= 0 then
+            G.FUNCS.end_consumeable(nil, delay_fac)
+          end
+          return true
+        end
+    }))
+end
 
 -- Toggle Individual Sprites UI
 G.FUNCS.pokermon_upd_sprite_setting = function(e)
@@ -776,11 +778,11 @@ G.FUNCS.pokermon_individual_sprites = function(e)
   G.FUNCS.overlay_menu{
     definition = create_UIBox_generic_options {
       back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'exit_overlay_menu',
-      contents = poke_create_UIBox_your_collection {
+      contents = pokermon.ui.create_UIBox_your_collection {
         keys = keys,
         cols = 3,
         create_card_func = function(key, x, y)
-          local card = poke_create_your_collection_card(key, x, y, { bypass_discovery_center = true })
+          local card = pokermon.ui.create_your_collection_card(key, x, y, { bypass_discovery_center = true })
           card.poke_change_sprite = true
           return card
         end,
@@ -876,7 +878,7 @@ local divider_text = function(i, limit)
   return div_text
 end
 
-function poke_artist_credit(artists)
+pokermon.ui.poke_artist_credit = function(artists)
   if type(artists) == 'table' and not artists[1] then artists = { artists.name } end
   if type(artists) == 'string' then artists = { artists } end
 
@@ -891,7 +893,7 @@ function poke_artist_credit(artists)
   local outline_nodes = {}
 
   for _, artist in ipairs(artists) do
-    local artist_info = poke_get_artist_info(artist) or {}
+    local artist_info = pokermon.sprites.get_artist_info(artist) or {}
     local artist_name = artist_info.display_name or (type(artist) == 'table' and artist.name) or artist
     local artist_colour = artist_info.artist_colour or G.C.FILTER
     local artist_highlight = artist_info.highlight_colour or G.C.CLEAR
@@ -933,7 +935,7 @@ function poke_artist_credit(artists)
   return artist_credit
 end
 
-function poke_designer_credit(designer_name)
+function pokermon.ui.poke_designer_credit(designer_name)
     local designer_credit = {n=G.UIT.R, config = {align = 'tm'}, nodes = {
         {n=G.UIT.T, config={
             text = localize('poke_credits_designer'),
@@ -982,10 +984,10 @@ function G.UIDEF.card_h_popup(card)
   local ret_val =prev_card_h_popup(card)
   local artist, designer = get_credits(card)
   if artist then
-    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(artist))
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, pokermon.ui.poke_artist_credit(artist))
   end
   if designer then
-    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_designer_credit(designer))
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, pokermon.ui.poke_designer_credit(designer))
   end
   
   return ret_val
@@ -997,10 +999,10 @@ function create_UIBox_blind_popup(blind, discovered, vars)
   if blind.artist or blind.designer then
     local nodes = {}
     if blind.artist then
-      nodes[#nodes+1] = poke_artist_credit(blind.artist)
+      nodes[#nodes+1] = pokermon.ui.poke_artist_credit(blind.artist)
     end
     if blind.designer then
-      nodes[#nodes+1] = poke_designer_credit(blind.designer)
+      nodes[#nodes+1] = pokermon.ui.poke_designer_credit(blind.designer)
     end
     table.insert(ret.nodes,
       {n=G.UIT.R, config = {align = "cm"}, nodes = {
