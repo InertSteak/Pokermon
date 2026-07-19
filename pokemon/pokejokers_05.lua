@@ -655,6 +655,7 @@ local ditto={
     end
   end,
   in_pool = function(self)
+    if SMODS.showman(self.key) then return true end
     if G.jokers and G.jokers.cards and #G.jokers.cards > 0 then
       for k, v in ipairs(G.jokers.cards) do
         if v.ability.perishable then
@@ -662,7 +663,6 @@ local ditto={
         end
       end
     end
-    if next(find_joker("Showman")) then return true end
     return true
   end,
   attributes = {"joker", "volatile"},
