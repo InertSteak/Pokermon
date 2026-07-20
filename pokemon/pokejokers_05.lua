@@ -352,9 +352,7 @@ local pinsir={
           for _,hand_card in pairs(G.hand.cards) do
             if found_ranks[hand_card:get_id()] then
               return {
-                message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-                colour = G.C.XMULT,
-                Xmult_mod = card.ability.extra.Xmult
+                Xmult = card.ability.extra.Xmult
               }
             end
           end
@@ -418,9 +416,7 @@ local tauros={
           end
         })) 
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_multi
+          Xmult = card.ability.extra.Xmult_multi
         }
     end
     if context.reroll_shop and not context.blueprint then
@@ -526,9 +522,7 @@ local gyarados={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult
         }
       end
     end
@@ -557,9 +551,7 @@ local mega_gyarados={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult
         }
       end
     end
@@ -1435,9 +1427,7 @@ local zapdos={
         end
         if can_score then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-            colour = G.C.MULT,
-            Xmult_mod = Xmult
+            Xmult = Xmult
           }
         end
       end
@@ -1635,17 +1625,9 @@ local mewtwo={
       end
     end
     if context.other_joker and context.other_joker.edition and context.other_joker.edition.polychrome then
-        G.E_MANAGER:add_event(Event({
-          func = function()
-              context.other_joker:juice_up(0.5, 0.5)
-              return true
-          end
-        })) 
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_multi
-        }
+      return {
+        Xmult = card.ability.extra.Xmult_multi
+      }
     end
   end,
   megas = {"mega_mewtwo_x", "mega_mewtwo_y"},
@@ -1670,11 +1652,9 @@ local mega_mewtwo_x = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.other_joker then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_multi
-        }
+      return {
+        Xmult = card.ability.extra.Xmult_multi
+      }
     end
   end,
   attributes = {"xmult", "joker"},

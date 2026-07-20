@@ -261,15 +261,14 @@ local typhlosion = {
   gen = 2,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and G.GAME.current_round.discards_left > 0 then
-        return {
-          message = localize("poke_fire_blast_ex"),
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult * G.GAME.current_round.discards_left,
-          Xmult_mod = 1 + (card.ability.extra.Xmult * G.GAME.current_round.discards_left)
-        }
-      end
+    if context.joker_main and G.GAME.current_round.discards_left > 0 then
+      return {
+        message = localize("poke_fire_blast_ex"),
+        colour = G.C.MULT,
+        mult_mod = card.ability.extra.mult * G.GAME.current_round.discards_left,
+        Xmult_mod = 1 + (card.ability.extra.Xmult * G.GAME.current_round.discards_left),
+        sound = 'multhit2'
+      }
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -828,7 +827,8 @@ local crobat={
         colour = G.C.BLACK,
         mult_mod = card.ability.extra.mult,
         chip_mod = card.ability.extra.chips,
-        Xmult_mod = card.ability.extra.Xmult
+        Xmult_mod = card.ability.extra.Xmult,
+        sound = card.ability.extra.Xmult > 1 and 'multhit2'
       }
     end
   end,
@@ -932,9 +932,7 @@ local pichu={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -973,9 +971,7 @@ local cleffa={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -1019,9 +1015,7 @@ local igglybuff={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context) 
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -1059,9 +1053,7 @@ local togepi={
         local xmult = 20 * (card.ability.extra.Xmult1 + pseudorandom('togepi') * (card.ability.extra.Xmult2 - card.ability.extra.Xmult1))
         xmult = math.floor(xmult + 0.5) / 20
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {xmult}},
-          colour = G.C.XMULT,
-          Xmult_mod = xmult
+          Xmult = xmult
         }
       end
     end
@@ -1116,28 +1108,12 @@ local togetic={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card and context.other_card.ability.effect == "Lucky Card" then
-      local ret = nil
-      if SMODS.pseudorandom_probability(card, 'togetic', card.ability.extra.num, card.ability.extra.chip_dem, 'togetic_chips') then
-        ret = {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
-      end
-      if SMODS.pseudorandom_probability(card, 'togetic', card.ability.extra.num, card.ability.extra.Xmult_dem, 'togetic_Xmult') then
-        local temp = {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}},
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_multi
-        }
-        if ret then
-          ret.extra = temp
-        else
-          ret = temp
-        end
-      end
-
-      return ret
+      local score_chips = SMODS.pseudorandom_probability(card, 'togetic', card.ability.extra.num, card.ability.extra.chip_dem, 'togetic_chips')
+      local score_xmult = SMODS.pseudorandom_probability(card, 'togetic', card.ability.extra.num, card.ability.extra.Xmult_dem, 'togetic_Xmult')
+      return {
+        chips = score_chips and card.ability.extra.chips,
+        Xmult = score_xmult and card.ability.extra.Xmult_multi
+      }
     end
     return pokermon.item_evo(self, card, context, "j_poke_togekiss")
   end,

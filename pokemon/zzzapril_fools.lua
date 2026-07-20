@@ -39,9 +39,7 @@ local billion_lions = {
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult
         }
       end
     end

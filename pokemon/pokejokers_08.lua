@@ -163,7 +163,8 @@ local scizor={
         colour = pokermon.colours.metal,
         mult_mod = card.ability.extra.mult,
         chip_mod = card.ability.extra.scizor_chips,
-        Xmult_mod = card.ability.extra.scizor_Xmult
+        Xmult_mod = card.ability.extra.scizor_Xmult,
+        sound = card.ability.extra.scizor_Xmult > 1 and 'multhit2'
       }
     end
   end,
@@ -192,16 +193,8 @@ local mega_scizor={
   poke_custom_values_to_keep = {"mult", "scizor_chips", "scizor_Xmult", "mult_mod"},
   calculate = function(self, card, context)
     if context.other_joker and context.other_joker.config.center.rarity == 1 then
-      G.E_MANAGER:add_event(Event({
-        func = function()
-            context.other_joker:juice_up(0.5, 0.5)
-            return true
-        end
-      })) 
       return {
-        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-        colour = G.C.XMULT,
-        Xmult_mod = card.ability.extra.Xmult_multi
+        Xmult = card.ability.extra.Xmult_multi
       }
     end
     if context.end_of_round and not context.individual and not context.repetition then
@@ -293,9 +286,7 @@ local heracross = {
             if found_ranks[hand_card:get_id()] then return end
           end
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
-            colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult
+            Xmult = card.ability.extra.Xmult
           }
         end
       end
@@ -972,9 +963,7 @@ local skarmory = {
         local Xmult = 1 + card.ability.extra.Xmult_mod * hazard_count
         if Xmult > 1 then
           return{
-            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = Xmult
+            Xmult = Xmult
           }
         end
       end
@@ -1152,9 +1141,9 @@ local kingdra={
     if context.joker_main and (card.ability.extra.mult > 0 or card.ability.extra.Xmult > 1) then
       return {
         message = localize("poke_twister_ex"),
-        colour = G.C.XMULT,
         mult_mod = card.ability.extra.mult,
-        Xmult_mod = card.ability.extra.Xmult
+        Xmult_mod = card.ability.extra.Xmult,
+        sound = card.ability.extra.Xmult > 1 and 'multhit2'
       }
     end
   end,
@@ -1595,9 +1584,7 @@ local smoochum ={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -1643,9 +1630,7 @@ local elekid ={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -1690,9 +1675,7 @@ local magby={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end

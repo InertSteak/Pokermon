@@ -118,9 +118,7 @@ local boltund={
       if context.joker_main and next(context.poker_hands['Straight']) then
         pokermon.ease_poke_dollars(card, "boltund", card.ability.extra.money)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.MULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult
         }
       end
     end
