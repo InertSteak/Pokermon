@@ -1120,6 +1120,15 @@ return {
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)"
                 } 
             },
+            j_poke_mega_clefable = {
+                name = "Mega Clefable",
+                text = {
+                    "Played {C:clubs}Club{} cards give",
+                    "{C:white,X:mult}X#1#{} Mult when scored for",
+                    "each {C:clubs}Club{} card drawn this blind",
+                    "{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult)",
+                }
+            },
             j_poke_vulpix = {
                 name = "Vulpix",
                 text = {
