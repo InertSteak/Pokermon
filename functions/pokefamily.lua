@@ -14,7 +14,7 @@ local default_family_list = {
   { "sandshrew", "sandslash" },
   { "nidoranf", "nidorina", "nidoqueen" },
   { "nidoranm", "nidorino", "nidoking" },
-  { "cleffa", "clefairy", "clefable" },
+  { "cleffa", "clefairy", "clefable", "mega_clefable" },
   { "vulpix", "ninetales" },
   { "igglybuff", "jigglypuff", "wigglytuff" },
   { "zubat", "golbat", "crobat" },
