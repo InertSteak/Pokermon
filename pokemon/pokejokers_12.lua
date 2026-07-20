@@ -785,11 +785,12 @@ local armaldo={
       end
 
       if card.ability.extra.ancient_count > 3 then
+        local total_xmult = self:get_total_Xmult(card)
         return {
           message = localize("poke_x_scissor_ex"),
-          colour = G.C.MULT,
           mult_mod = card.ability.extra.mult,
-          Xmult_mod = self:get_total_Xmult(card),
+          Xmult_mod = total_xmult,
+          sound = total_xmult > 1 and 'multhit2' or nil
         }
       else
         return {
@@ -1208,9 +1209,7 @@ local absol={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult
         }
       end
     end
@@ -1250,9 +1249,7 @@ local wynaut={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end

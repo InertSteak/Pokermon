@@ -34,9 +34,7 @@ local mantyke={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -364,9 +362,9 @@ local magmortar={
     if context.joker_main and (card.ability.extra.mult > 0 or card.ability.extra.Xmult > 1) then
       return {
         message = localize("poke_fire_blast_ex"),
-        colour = G.C.XMULT,
         mult_mod = card.ability.extra.mult,
-        Xmult_mod = card.ability.extra.Xmult
+        Xmult_mod = card.ability.extra.Xmult,
+        sound = card.ability.extra.Xmult > 1 and 'multhit2'
       }
     end
   end,
@@ -394,32 +392,15 @@ local togekiss={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card and context.other_card.ability.effect == "Lucky Card" then
-      local ret = nil
-      if SMODS.pseudorandom_probability(card, 'togekiss', card.ability.extra.num, card.ability.extra.chip_dem, 'togekiss') then
-        ret = {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
-      end
-      if SMODS.pseudorandom_probability(card, 'togekiss', card.ability.extra.num, card.ability.extra.Xmult_dem, 'togekiss') then
-        local temp = {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}},
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_multi
-        }
-        if ret then
-          ret.extra = temp
-        else
-          ret = temp
-        end
-      end
-
-      return ret
+      local score_chips = SMODS.pseudorandom_probability(card, 'togekiss', card.ability.extra.num, card.ability.extra.chip_dem, 'togekiss')
+      local score_xmult = SMODS.pseudorandom_probability(card, 'togekiss', card.ability.extra.num, card.ability.extra.Xmult_dem, 'togekiss')
+      return {
+        chips = score_chips and card.ability.extra.chips,
+        Xmult = score_xmult and card.ability.extra.Xmult_multi
+      }
     end
     if context.mod_probability and not context.blueprint then
-      return 
-      {
+      return {
         numerator = context.numerator + card.ability.extra.plus_odds
       }
     end
@@ -674,9 +655,7 @@ local porygonz={
         local Xmult = 1 + ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_energy or 0) * card.ability.extra.Xmult_mod)
         if Xmult > 1 then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = Xmult
+            Xmult = Xmult
           }
         end
       end

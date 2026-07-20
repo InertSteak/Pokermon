@@ -98,9 +98,7 @@ local everstone={
             end
           })) 
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = Xmult
+            Xmult = Xmult
           }
         end
     end
@@ -617,10 +615,10 @@ local unown_swarm={
         end
       })) 
       return {
-        message = localize('poke_hidden_power_ex'), 
-        colour = G.C.XMULT,
+        message = localize('poke_hidden_power_ex'),
         Xmult_mod = card.ability.extra.Xmult_multi,
-        mult_mod = card.ability.extra.mult
+        mult_mod = card.ability.extra.mult,
+        sound = 'multhit2'
       }
     end
   end,

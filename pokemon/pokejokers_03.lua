@@ -250,17 +250,11 @@ local mega_alakazam={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.other_consumeable then
-        local Xmult = nil
-        if context.other_consumeable.ability.name == "twisted_spoon" then
-          Xmult = card.ability.extra.Xmult_multi2
-        else
-          Xmult = card.ability.extra.Xmult_multi
-        end
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = Xmult
-        }
+      return {
+        Xmult = context.other_consumeable.config.center.key == "c_poke_twisted_spoon"
+            and card.ability.extra.Xmult_multi2
+            or card.ability.extra.Xmult_multi
+      }
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -790,9 +784,7 @@ local slowpoke={
           card.ability.extra.last_counter = card.ability.extra.last_counter + 1
         end
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult
         }
       end
     end
@@ -840,9 +832,7 @@ local slowbro={
       if context.joker_main then
         local xmult_total = card.ability.extra.Xmult + (1+G.GAME.current_round.hands_played) * card.ability.extra.Xmult_mod
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {xmult_total}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = xmult_total
+          Xmult = xmult_total
         }
       end
     elseif not context.repetition and not context.individual and context.end_of_round and not context.blueprint then

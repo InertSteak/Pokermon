@@ -82,7 +82,7 @@ local lopunny={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Mult = card.ability.extra.mult * math.abs(#context.scoring_hand - #context.full_hand)
+        local mult = card.ability.extra.mult * math.abs(#context.scoring_hand - #context.full_hand)
         local score_xmult = nil
         local found_ranks = {}
         for _,unscored_card in pairs(context.full_hand) do
@@ -96,19 +96,17 @@ local lopunny={
             break
           end
         end
-        if Mult > 0 then
+        if mult > 0 then
           if score_xmult then
             return {
-              message = localize("poke_highjumpkick_ex"), 
-              colour = G.C.XMULT,
-              mult_mod = Mult,
-              Xmult_mod = card.ability.extra.Xmult
+              message = localize("poke_highjumpkick_ex"),
+              mult_mod = mult,
+              Xmult_mod = card.ability.extra.Xmult,
+              sound = 'multhit2'
             }
           else
             return {
-              message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
-              colour = G.C.MULT,
-              mult_mod = Mult
+              mult = mult
             }
           end
         end
@@ -161,9 +159,7 @@ local mega_lopunny={
           Xmult = G.GAME.hands[text].level
         end
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = Xmult
+          Xmult = Xmult
         }
       end
     end
@@ -259,9 +255,7 @@ local honchkrow={
         end
       })) 
       return {
-        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-        colour = G.C.XMULT,
-        Xmult_mod = card.ability.extra.Xmult_multi
+        Xmult = card.ability.extra.Xmult_multi
       }
     end
   end,
@@ -297,9 +291,7 @@ local chingling={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context) 
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -413,9 +405,7 @@ local bonsly={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -458,9 +448,7 @@ local mimejr={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -505,9 +493,7 @@ local happiny={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -562,9 +548,7 @@ local munchlax={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -607,9 +591,7 @@ local riolu={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end

@@ -669,9 +669,7 @@ local numel={
       if context.joker_main and card.ability.extra.active then
         card.ability.extra.active = false
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult
         }
       end
       if context.after and card.ability.extra.cards_scored >= card.ability.extra.score_goal then
@@ -717,9 +715,7 @@ local camerupt={
       if context.joker_main and card.ability.extra.active then
         card.ability.extra.active = false
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult
         }
       end
       if context.after and card.ability.extra.cards_scored >= card.ability.extra.score_goal then

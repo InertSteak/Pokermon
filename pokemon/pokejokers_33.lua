@@ -28,25 +28,18 @@ local wugtrio={
         end
         if score_mult and score_chips then
           return {
-            message = localize('poke_dig_ex'), 
-            colour = G.C.MULT,
+            message = localize('poke_dig_ex'),
             chip_mod = card.ability.extra.chips,
             Xmult_mod = card.ability.extra.Xmult,
-            card = card
+            sound = 'multhit2'
           }
         elseif score_chips then
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
-            chip_mod = card.ability.extra.chips,
-            card = card
+            chips = card.ability.extra.chips,
           }
         elseif score_mult then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-            colour = G.C.MULT,
-            Xmult_mod = card.ability.extra.Xmult,
-            card = card
+            Xmult = card.ability.extra.Xmult,
           }
         end
       end
@@ -256,9 +249,7 @@ local kingambit={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult
         }
       end
     end

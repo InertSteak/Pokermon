@@ -302,9 +302,9 @@ local charizard={
       if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
         return {
           message = "Fire Blast!",
-          colour = G.C.XMULT,
           mult_mod = card.ability.extra.mult,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult_mod = card.ability.extra.Xmult,
+          sound = 'multhit2'
         }
       else
         return {
@@ -345,8 +345,7 @@ local mega_charizard_x = {
     if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
       if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
         return {
-          message = "Fire Blast!", 
-          colour = G.C.XMULT,
+          message = "Fire Blast!",
           Xmult_mod = card.ability.extra.Xmult
         }
       end
@@ -948,9 +947,7 @@ local mega_pidgeot = {
         end
         if (ranks + suits) > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {1 + card.ability.extra.Xmult_multi * (ranks + suits)}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = 1 + card.ability.extra.Xmult_multi * (ranks + suits)
+            Xmult = 1 + card.ability.extra.Xmult_multi * (ranks + suits)
           }
         end
       end

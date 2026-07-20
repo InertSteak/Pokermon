@@ -64,9 +64,7 @@ local mega_ampharos={
     end
     if context.joker_main and card.ability.extra.Xmult > 0 and card.ability.extra.Xmult ~= 1  then
       return {
-        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-        colour = G.C.XMULT,
-        Xmult_mod = card.ability.extra.Xmult
+        Xmult = card.ability.extra.Xmult
       }
     end
   end,
@@ -195,9 +193,7 @@ local marill={
         end
         if enhanced and unenhanced then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult
+            Xmult = card.ability.extra.Xmult
           }
         end
       end
@@ -242,9 +238,7 @@ local azumarill={
           Xmult = Xmult * 2
         end
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = Xmult
+          Xmult = Xmult
         }
       end
     end
@@ -857,9 +851,7 @@ local murkrow={
         local Xmult = math.max(1, 1 + card.ability.extra.Xmult * #pokermon.find_pokemon_type("Dark"))
         if Xmult > 1 then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = Xmult
+            Xmult = Xmult
           }
         end
       end

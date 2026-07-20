@@ -525,9 +525,7 @@ local celebi = {
       if context.joker_main then
         local Xmult = 1 + (G.GAME.round * card.ability.extra.Xmult_mod)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = Xmult
+          Xmult = Xmult
         }
       end
     end
@@ -897,22 +895,13 @@ local blaziken={
         end
       end
     end
-    
+
     if context.other_joker and (pokermon.is_type(context.other_joker, "Fire") or pokermon.is_type(context.other_joker, "Fighting")) and card.ability.extra.cards_discarded >= card.ability.extra.discard_target then
-      G.E_MANAGER:add_event(Event({
-        func = function()
-            context.other_joker:juice_up(0.5, 0.5)
-            return true
-        end
-      })) 
       return {
-        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-        colour = G.C.XMULT,
-        Xmult_mod = card.ability.extra.Xmult_multi, 
-        card = context.other_joker
+        Xmult = card.ability.extra.Xmult_multi,
       }
     end
-    
+
     if context.end_of_round and not context.individual and not context.repetition then
       card.ability.extra.cards_discarded = 0
       card:juice_up()
@@ -1569,16 +1558,14 @@ local dustox={
         end
         if all_nature then
           return {
-            message = localize('poke_bug_buzz_ex'), 
-            colour = G.C.XMULT,
+            message = localize('poke_bug_buzz_ex'),
             chip_mod = card.ability.extra.chips,
             Xmult_mod = card.ability.extra.Xmult,
+            sound = 'multhit2'
           }
         else
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
-            chip_mod = card.ability.extra.chips
+            chips = card.ability.extra.chips
           }
         end
       end
