@@ -1343,7 +1343,7 @@ local mega_raichu_x={
     G.GAME.interest_cap = G.GAME.interest_cap + 25
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.interest_cap = G.GAME.interest_cap + 25
+    G.GAME.interest_cap = G.GAME.interest_cap - 25
   end,
   attributes = {"economy"},
 }
