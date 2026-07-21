@@ -45,7 +45,7 @@ local get_default_args_from_existing = function(key, set)
   return args
 end
 
-function PokeDisplayCard:init(args, x, y, w, h)
+function PokeDisplayCard:init(args, x, y, w, h, params)
   if args.existing_key then
     local default_args = get_default_args_from_existing(args.existing_key, args.set)
     args = SMODS.merge_defaults(args, default_args)
@@ -83,7 +83,7 @@ function PokeDisplayCard:init(args, x, y, w, h)
     self.components[#self.components+1] = v
   end
 
-  Card.init(self, x, y, w, h, nil, fake_center)
+  Card.init(self, x, y, w, h, nil, fake_center, params)
 end
 
 function PokeDisplayCard:remove()
