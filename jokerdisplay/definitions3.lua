@@ -1845,18 +1845,15 @@ jd_def["j_poke_relicanth"] = {
     if four_count >= 4 then
       local depleted_count = 0
     
-      for k, v in pairs(SMODS.Ranks) do
+      for _, rank in pairs(SMODS.Ranks) do
+        if rank.in_pool and not rank:in_pool({}) then goto continue end
         local is_rank = function(deck_card)
-          if deck_card:get_id() == v.id then
-            return true
-          else
-            return false
-          end
+          return deck_card:get_id() == rank.id
         end
-        
         if pokermon.get_depleted(is_rank) then
           depleted_count = depleted_count + 1
         end
+        ::continue::
       end
       Xmult = 1 + card.ability.extra.Xmult_mod * depleted_count
     end
