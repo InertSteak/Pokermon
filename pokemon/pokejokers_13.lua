@@ -284,14 +284,15 @@ local relicanth={
     local depleted_count = 0
     
     for _, rank in pairs(SMODS.Ranks) do
-      if rank.in_pool and not rank:in_pool({}) then goto continue end
-      local is_rank = function(deck_card)
-        return deck_card:get_id() == rank.id
+      if rank.in_pool and not rank:in_pool({}) then
+      else
+        local is_rank = function(deck_card)
+          return deck_card:get_id() == rank.id
+        end
+        if pokermon.get_depleted(is_rank) then
+          depleted_count = depleted_count + 1
+        end
       end
-      if pokermon.get_depleted(is_rank) then
-        depleted_count = depleted_count + 1
-      end
-      ::continue::
     end
     return {vars = {localize(abbr.rank, 'ranks'), abbr.chips, abbr.money_mod, abbr.Xmult_mod, math.max(1, 1 + abbr.Xmult_mod * depleted_count)}}
   end,
@@ -334,14 +335,15 @@ local relicanth={
       local depleted_count = 0
     
       for _, rank in pairs(SMODS.Ranks) do
-        if rank.in_pool and not rank:in_pool({}) then goto continue end
-        local is_rank = function(deck_card)
-          return deck_card:get_id() == rank.id
+        if rank.in_pool and not rank:in_pool({}) then
+        else
+          local is_rank = function(deck_card)
+            return deck_card:get_id() == rank.id
+          end
+          if pokermon.get_depleted(is_rank) then
+            depleted_count = depleted_count + 1
+          end
         end
-        if pokermon.get_depleted(is_rank) then
-          depleted_count = depleted_count + 1
-        end
-        ::continue::
       end
       
       if depleted_count > 0 then
