@@ -283,17 +283,15 @@ local relicanth={
     local abbr = center.ability.extra
     local depleted_count = 0
     
-    for k, v in pairs(SMODS.Ranks) do
-      local is_rank = function(deck_card)
-        if deck_card:get_id() == v.id then
-          return true
-        else
-          return false
+    for _, rank in pairs(SMODS.Ranks) do
+      if rank.in_pool and not rank:in_pool({}) then
+      else
+        local is_rank = function(deck_card)
+          return deck_card:get_id() == rank.id
         end
-      end
-      
-      if pokermon.get_depleted(is_rank) then
-        depleted_count = depleted_count + 1
+        if pokermon.get_depleted(is_rank) then
+          depleted_count = depleted_count + 1
+        end
       end
     end
     return {vars = {localize(abbr.rank, 'ranks'), abbr.chips, abbr.money_mod, abbr.Xmult_mod, math.max(1, 1 + abbr.Xmult_mod * depleted_count)}}
@@ -336,17 +334,15 @@ local relicanth={
     if context.joker_main and card.ability.extra.ancient_count > 3 then
       local depleted_count = 0
     
-      for k, v in pairs(SMODS.Ranks) do
-        local is_rank = function(deck_card)
-          if deck_card:get_id() == v.id then
-            return true
-          else
-            return false
+      for _, rank in pairs(SMODS.Ranks) do
+        if rank.in_pool and not rank:in_pool({}) then
+        else
+          local is_rank = function(deck_card)
+            return deck_card:get_id() == rank.id
           end
-        end
-        
-        if pokermon.get_depleted(is_rank) then
-          depleted_count = depleted_count + 1
+          if pokermon.get_depleted(is_rank) then
+            depleted_count = depleted_count + 1
+          end
         end
       end
       
