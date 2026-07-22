@@ -1354,8 +1354,6 @@ local smeargle={
   pos = {x = 3, y = 8},
   config = {extra = {copy_val = nil, copy_val__ID = nil}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
-
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'sketch'}
     end
@@ -1368,7 +1366,7 @@ local smeargle={
       local other_center = copy.config.center
       local new_config = copy_table(copy.ability)
       local other_vars
-      if type(other_center.loc_vars) == 'function' then
+      if type(other_center.loc_vars) == 'function' and other_center.key ~= 'j_poke_smeargle' then
         other_vars = other_center:loc_vars({}, copy)
         if other_vars and other_vars.vars then
           new_config.loc_vars_replacement = other_vars.vars
@@ -1395,7 +1393,7 @@ local smeargle={
   atlas = "Pokedex2",
   gen = 2,
   perishable_compat = true,
-  blueprint_compat = false,
+  blueprint_compat = true,
   eternal_compat = true,
   get_copy = function(self, card)
     if card.sketched_joker and not card.sketched_joker.removed then return card.sketched_joker end
@@ -1412,7 +1410,7 @@ local smeargle={
     end
   end,
   calculate = function(self, card, context)
-    if context.setting_blind and not card.getting_sliced then
+    if context.setting_blind and not context.blueprint and not card.getting_sliced then
       local found_pos = get_index(G.jokers.cards, card)
       -- fix for multiplayer not removing cards from `G.jokers` properly
       if found_pos then
