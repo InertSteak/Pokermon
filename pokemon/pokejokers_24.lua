@@ -84,7 +84,12 @@ local pumpkaboo = {
     if self.discovered then
       local form = card.ability.extra.form
       local scale = form and ({ 0.7, 1, 1.1, 1.2 })[form + 1] or 1
-      card.T.scale = card.children.center.original_T.scale * scale * 0.95
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          card.T.scale = card.children.center.original_T.scale * scale * 0.95
+          return true
+        end
+      }))
       self:set_sprites(card)
     end
   end,
@@ -100,12 +105,11 @@ local pumpkaboo = {
   calculate = function(self, card, context)
     if context.pre_discard and not context.blueprint then
       local jacks = pokermon.filter(context.full_hand, function(v) return v:get_id() == 11 and not v.debuff end)
-      local discarded, target = card.ability.extra.jacks_discarded, card.ability.extra.jack_target
       for _, v in ipairs(jacks) do
-        discarded = discarded + 1
-        if discarded == target then
+        card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
+        if card.ability.extra.jacks_discarded == card.ability.extra.jack_target then
           v['pumpkaboo_trigger'..card.unique_val] = true
-          discarded = 0
+          card.ability.extra.jacks_discarded = 0
         end
       end
     end
@@ -155,7 +159,12 @@ local gourgeist = {
     if self.discovered then
       local form = card.ability.extra.form
       local scale = form and ({ 0.7, 1, 1.1, 1.2 })[form + 1] or 1
-      card.T.scale = card.children.center.original_T.scale * scale * 0.95
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          card.T.scale = card.children.center.original_T.scale * scale * 0.95
+          return true
+        end
+      }))
       self:set_sprites(card)
     end
   end,
@@ -172,12 +181,11 @@ local gourgeist = {
   calculate = function(self, card, context)
     if context.pre_discard and not context.blueprint then
       local jacks = pokermon.filter(context.full_hand, function(v) return v:get_id() == 11 and not v.debuff end)
-      local discarded, target = card.ability.extra.jacks_discarded, card.ability.extra.jack_target
       for _, v in ipairs(jacks) do
-        discarded = discarded + 1
-        if discarded == target then
+        card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
+        if card.ability.extra.jacks_discarded == card.ability.extra.jack_target then
           v['gourgeist_trigger'..card.unique_val] = true
-          discarded = 0
+          card.ability.extra.jacks_discarded = 0
         end
       end
     end
