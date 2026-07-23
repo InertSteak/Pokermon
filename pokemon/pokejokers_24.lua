@@ -100,10 +100,9 @@ local pumpkaboo = {
   calculate = function(self, card, context)
     if context.pre_discard and not context.blueprint then
       local jacks = pokermon.filter(context.full_hand, function(v) return v:get_id() == 11 and not v.debuff end)
-      local target = card.ability.extra.jack_target
       for _, v in ipairs(jacks) do
         card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
-        if card.ability.extra.jacks_discarded == target then
+        if card.ability.extra.jacks_discarded == card.ability.extra.jack_target then
           v['pumpkaboo_trigger'..card.unique_val] = true
           card.ability.extra.jacks_discarded = 0
         end
