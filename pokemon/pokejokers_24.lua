@@ -84,7 +84,12 @@ local pumpkaboo = {
     if self.discovered then
       local form = card.ability.extra.form
       local scale = form and ({ 0.7, 1, 1.1, 1.2 })[form + 1] or 1
-      card.T.scale = card.children.center.original_T.scale * scale * 0.95
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          card.T.scale = card.children.center.original_T.scale * scale * 0.95
+          return true
+        end
+      }))
       self:set_sprites(card)
     end
   end,
@@ -154,7 +159,12 @@ local gourgeist = {
     if self.discovered then
       local form = card.ability.extra.form
       local scale = form and ({ 0.7, 1, 1.1, 1.2 })[form + 1] or 1
-      card.T.scale = card.children.center.original_T.scale * scale * 0.95
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          card.T.scale = card.children.center.original_T.scale * scale * 0.95
+          return true
+        end
+      }))
       self:set_sprites(card)
     end
   end,
