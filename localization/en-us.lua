@@ -1473,6 +1473,17 @@ return {
                     "rank each round"
                 } 
             },
+            j_poke_mega_victreebel = {
+                name = "Mega Victreebel",
+                text = {
+                  "{C:attention}Holding {C:spectral}Medium{}",
+                  "Played cards with {C:attention}even{} rank",
+                  "retrigger {C:attention}#1#{} additional time",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Played cards with a {C:attention}Purple Seal{}",
+                  "retrigger {C:attention}#1#{} additional time",
+                } 
+            },
             j_poke_tentacool = {
                 name = "Tentacool",
                 text = {
@@ -2259,6 +2270,17 @@ return {
                     "If played hand contains",
                     "exactly {C:attention}1{} card, retrigger",
                     "it {C:attention}#2#{} additional times"
+                } 
+            },
+            j_poke_mega_dragonite = {
+                name = 'Mega Dragonite',
+                text = {
+                    "{C:mult}+#1#{} Mult",
+                    "{br:1.6}ERROR - CONTACT STEAK",
+                    "If {C:attention}final hand{} contains",
+                    "exactly {C:attention}1{} card, retrigger",
+                    "it {C:attention}#2#{} additional time for",
+                    "each card {C:attention}held{} in hand"
                 } 
             },
             j_poke_mewtwo = {

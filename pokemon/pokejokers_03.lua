@@ -501,27 +501,71 @@ local victreebel={
       end
     end
     if context.repetition and context.cardarea == G.play and not context.other_card.debuff and card.ability.extra.round_retriggers < card.ability.extra.retrigger_max then
-      if context.other_card:get_id() == 2 or 
-         context.other_card:get_id() == 4 or 
-         context.other_card:get_id() == 6 or 
-         context.other_card:get_id() == 8 or 
-         context.other_card:get_id() == 10 then
-          if not context.blueprint then
-           card.ability.extra.round_retriggers = card.ability.extra.round_retriggers + 1
-          end
-          return {
-            message = localize('k_again_ex'),
-            repetitions = card.ability.extra.retriggers,
-            card = card
-          }
+      if pokermon.is_even(context.other_card) then
+        if not context.blueprint then
+         card.ability.extra.round_retriggers = card.ability.extra.round_retriggers + 1
+        end
+        return {
+          message = localize('k_again_ex'),
+          repetitions = card.ability.extra.retriggers,
+          card = card
+        }
       end
     end
     if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
       card.ability.extra.round_retriggers = 0
     end
   end,
-  --megas = { "mega_victreebel" },
+  megas = { "mega_victreebel" },
   attributes = {"chips", "rank", "two", "four", "six", "eight", "ten", "retrigger"},
+}
+
+local mega_victreebel={
+  name = "mega_victreebel", 
+  pos = {x = 5, y = 5},
+  config = {extra = {retriggers = 1}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Medium"}}
+      info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_medium'}
+      info_queue[#info_queue+1] = {key = 'purple_seal', set = 'Other'}
+    end
+		return {vars = {center.ability.extra.retriggers}}
+  end,
+  rarity = "poke_mega", 
+  cost = 12, 
+  stage = "Mega", 
+  ptype = "Grass",
+  atlas = "Pokedex1",
+  gen = 1,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.repetition and context.cardarea == G.play and not context.other_card.debuff then
+      local retriggers = 0
+      if pokermon.is_even(context.other_card) then
+        retriggers = retriggers + card.ability.extra.retriggers
+      end
+      
+      if context.other_card.seal and context.other_card.seal == "Purple" then
+        retriggers = retriggers + card.ability.extra.retriggers
+      end
+      
+      if retriggers > 0 then
+        return {
+          message = localize('k_again_ex'),
+          repetitions = retriggers,
+          card = card
+        }
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      pokermon.create_consumeable('c_medium')
+    end
+  end,
+  attributes = {"rank", "two", "four", "six", "eight", "ten", "retrigger"},
 }
 
 -- Tentacool 072
@@ -1326,6 +1370,5 @@ local shellder={
 }
 
 return {name = "Pokemon Jokers 61-90", 
-        list = { poliwhirl, poliwrath, abra, kadabra, alakazam, mega_alakazam, machop, machoke, machamp, bellsprout, weepinbell, victreebel, tentacool, tentacruel, geodude, graveler, 
-                 golem, ponyta, rapidash, slowpoke, slowbro, mega_slowbro, shell, magnemite, magneton, farfetchd, doduo, dodrio, seel, dewgong, grimer, muk, shellder, },
+        list = { poliwhirl, poliwrath, abra, kadabra, alakazam, mega_alakazam, machop, machoke, machamp, bellsprout, weepinbell, victreebel, mega_victreebel, tentacool, tentacruel, geodude,                 graveler, golem, ponyta, rapidash, slowpoke, slowbro, mega_slowbro, shell, magnemite, magneton, farfetchd, doduo, dodrio, seel, dewgong, grimer, muk, shellder, },
 }

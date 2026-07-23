@@ -1562,8 +1562,40 @@ local dragonite={
       }
     end
   end,
+  megas = { "mega_dragonite" },
   attributes = {"mult", "scaling", "retrigger"},
 }
+
+local mega_dragonite={
+  name = "mega_dragonite", 
+  pos = {x = 9, y = 11},
+  config = {extra = {mult = 55, retriggers = 1}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.retriggers}} 
+  end,
+  rarity = "poke_mega", 
+  cost = 12, 
+  stage = "Mega", 
+  ptype = "Dragon",
+  atlas = "Pokedex1",
+  gen = 1,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
+    end
+    if context.repetition and context.cardarea == G.play and #context.full_hand == 1 and G.GAME.current_round.hands_left == 0 then
+      return {
+        repetitions = #G.hand.cards
+      }
+    end
+  end,
+  attributes = {"mult", "retrigger"},
+}
+
 -- Mewtwo 150
 local mewtwo={
   name = "mewtwo", 
@@ -1710,5 +1742,5 @@ local mega_mewtwo_y = {
 return {name = "Pokemon Jokers 121-150", 
         list = { starmie, mega_starmie, mrmime, scyther, jynx, electabuzz, magmar, pinsir, mega_pinsir, tauros, taurosh, magikarp, gyarados, mega_gyarados, lapras, ditto, eevee, 
                  vaporeon, jolteon, flareon, porygon, omanyte, omastar, kabuto, kabutops, aerodactyl, mega_aerodactyl, snorlax, articuno, zapdos, moltres, dratini, dragonair, 
-                 dragonite, mewtwo, mega_mewtwo_x, mega_mewtwo_y},
+                 dragonite, mega_dragonite, mewtwo, mega_mewtwo_x, mega_mewtwo_y},
 }
