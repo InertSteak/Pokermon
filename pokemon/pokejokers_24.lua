@@ -171,12 +171,11 @@ local gourgeist = {
   calculate = function(self, card, context)
     if context.pre_discard and not context.blueprint then
       local jacks = pokermon.filter(context.full_hand, function(v) return v:get_id() == 11 and not v.debuff end)
-      local discarded, target = card.ability.extra.jacks_discarded, card.ability.extra.jack_target
       for _, v in ipairs(jacks) do
-        discarded = discarded + 1
-        if discarded == target then
+        card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
+        if card.ability.extra.jacks_discarded == card.ability.extra.jack_target then
           v['gourgeist_trigger'..card.unique_val] = true
-          discarded = 0
+          card.ability.extra.jacks_discarded = 0
         end
       end
     end
