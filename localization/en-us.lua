@@ -1143,7 +1143,7 @@ return {
                 text = {
                     "Played {C:clubs}Club{} cards give",
                     "{C:white,X:mult}X#1#{} Mult when scored for",
-                    "each {C:clubs}Club{} card drawn this blind",
+                    "each {C:clubs}Club{} card drawn this {C:attention}Blind",
                     "{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult)",
                 }
             },
@@ -1564,16 +1564,16 @@ return {
             j_poke_slowbro = {
                 name = "Slowbro",
                 text = {
-                    "{X:mult,C:white} X#1# {} Mult per hand played",
-                    "{C:inactive,s:0.8}(Resets at end of round)",
+                    "{X:mult,C:white} X#1# {} Mult per hand",
+                    "played this round",
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
                 } 
             },
             j_poke_mega_slowbro = {
                 name = "Mega Slowbro",
                 text = {
-                    "{X:mult,C:white} X#1# {} Mult per hand played",
-                    "{C:inactive,s:0.8}(Resets when {C:attention,s:0.8}Boss Blind{C:inactive,s:0.8} is defeated)",
+                    "{X:mult,C:white} X#1# {} Mult per hand",
+                    "played this {C:attention}ante",
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
                 } 
             },
@@ -2833,7 +2833,7 @@ return {
                 "{C:attention}Volatile Left{}",
                 "{C:chips}+#1#{} Chips then",
                 "debuff self this round",
-                "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds not debuffed)",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds not debuffed)",
               }
             },
             j_poke_forretress = {
