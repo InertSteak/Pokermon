@@ -1457,11 +1457,10 @@ end
 
 pokermon.create_consumeable = function(args, in_event, message_card)
   if type(args) == 'string' then args = { key = args } end
-  if not G.GAME.banned_keys[args.key]
-      and (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit or args.edition == 'e_negative') then
+  if (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit or args.edition == 'e_negative') then
+    args.set = G.P_CENTERS[args.key] and G.P_CENTERS[args.key].set
     args.skip_materialize = true
     local card = SMODS.create_card(args)
-    local set = card.ability.set
     local loc_keys = {
       ['Tarot'] = 'k_plus_tarot',
       ['Planet'] = 'k_plus_planet',
@@ -1485,8 +1484,8 @@ pokermon.create_consumeable = function(args, in_event, message_card)
       card:start_materialize()
     end
     SMODS.calculate_effect({
-      message = loc_keys[set] and localize(loc_keys[set]) or "+1 " .. card.ability.set,
-      colour = G.C.SECONDARY_SET[set]
+      message = loc_keys[args.set] and localize(loc_keys[args.set]) or "+1 " .. card.ability.set,
+      colour = G.C.SECONDARY_SET[args.set]
     }, message_card or card)
   end
 end
