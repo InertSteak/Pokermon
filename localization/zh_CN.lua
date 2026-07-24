@@ -641,7 +641,7 @@ return {
             c_poke_metal_energy = {
                 name = "钢能量",
                 text = {
-                    "为最左边或选定的{X:Metal,C:white}钢{}属性小丑牌",
+                    "为最左边或选定的{X:poke_metal,C:white}钢{}属性小丑牌",
                     "{C:poke_pink}注入能量{}（若可）",
                     "{C:inactive}(每张小丑牌可增强{C:attention}#1#{}{C:inactive}次)",
                 },

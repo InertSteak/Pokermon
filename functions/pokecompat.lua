@@ -232,6 +232,9 @@ energize = pokermon.energy.energize
 ---@deprecated use `pokermon.energy.get_total_energy` instead
 get_total_energy = pokermon.energy.get_total_energy
 
+---@deprecated use `pokermon.create_consumeable` instead
+pokermon.create_held_item = pokermon.create_consumeable
+
 -- pokeutils.lua
 
 ---@deprecated use `pokermon.pseudorandom_multi` instead

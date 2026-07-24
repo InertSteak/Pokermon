@@ -102,13 +102,13 @@ local vikavolt={
 		return {vars = {center.ability.extra.Xmult, math.max(1, 1 + center.ability.extra.Xmult * count)}}
   end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local count = #pokermon.find_pokemon_type("Lightning")
+    if context.joker_main then
+      local count = #pokermon.find_pokemon_type("Lightning")
+      local xmult = 1 + card.ability.extra.Xmult * count
+      if xmult > 1 then
         return {
           message = localize("poke_thunder_ex"),
-          colour = G.C.XMULT,
-          Xmult_mod = math.max(1, 1 + card.ability.extra.Xmult * count),
+          Xmult_mod = xmult,
         }
       end
     end

@@ -1,8 +1,131 @@
 -- Lombre 271
 -- Ludicolo 272
 -- Seedot 273
+local seedot={
+  name = "seedot",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 40, rounds=5}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
+    return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
+  end,
+  designer = "Catzzadilla",
+  rarity = 1,
+  cost = 4,
+  enhancement_gate = 'm_poke_seed',
+  gen = 3,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_poke_seed') then
+      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        return {
+          chips = card.ability.extra.chips
+        }
+      end
+    end
+    return pokermon.level_evo(self, card, context, "j_poke_nuzleaf")
+  end,
+  attributes = {"enhancements", "chips", "round_evo"},
+}
 -- Nuzleaf 274
+local nuzleaf={
+  name = "nuzleaf",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 50}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
+    return {vars = {center.ability.extra.chips}}
+  end,
+  designer = "Catzzadilla",
+  rarity = "poke_safari",
+  cost = 6,
+  enhancement_gate = 'm_poke_seed',
+  gen = 3,
+  stage = "One",
+  ptype = "Dark",
+  atlas = "Pokedex3",
+  item_req = "leafstone",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        local fscard = SMODS.drawn_cards[i]
+        if SMODS.has_enhancement(fscard, 'm_poke_flower') then
+          fscard:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
+          fscard.ability.extra.level = 0
+        end
+      end
+    end
+    
+    if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_poke_seed') then
+      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        return {
+          chips = card.ability.extra.chips
+        }
+      end
+    end
+    return pokermon.item_evo(self, card, context, "j_poke_shiftry")
+  end,
+  attributes = {"enhancements", "modify_card", "chips", "item_evo"},
+}
 -- Shiftry 275
+local shiftry={
+  name = "shiftry",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 60, growth = 1}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
+    info_queue[#info_queue+1] = {set = 'Other', key = 'growth_level'}
+    return {vars = {center.ability.extra.chips, center.ability.extra.growth}}
+  end,
+  designer = "Catzzadilla",
+  rarity = "poke_safari",
+  cost = 8,
+  enhancement_gate = 'm_poke_seed',
+  gen = 3,
+  stage = "Two",
+  ptype = "Dark",
+  atlas = "Pokedex3",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        local fscard = SMODS.drawn_cards[i]
+        if SMODS.has_enhancement(fscard, 'm_poke_flower') then
+          fscard:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
+          fscard.ability.extra.level = 0
+        end
+      end
+    end
+    
+    if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_poke_seed') then
+      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        return {
+          chips = card.ability.extra.chips
+        }
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    pokermon.change_growth_level(card.ability.extra.growth)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    pokermon.change_growth_level(-card.ability.extra.growth)
+  end,
+  attributes = {"enhancements", "modify_card", "generation", "item", "chance", "chips", "mult", "scaling", "perma_bonus"},
+}
 -- Taillow 276
 local taillow={
   name = "taillow",
@@ -712,9 +835,7 @@ local shedinja={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and card.ability.extra.Xmult > 1 then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult
         }
       end
     end
@@ -823,9 +944,7 @@ local azurill ={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}},
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -942,6 +1061,6 @@ local skitty={
   attributes = {"copying", "types", "item_evo"},
 }
 return {name = "Pokemon Jokers 271-300", 
-        list = {taillow, swellow, wingull, pelipper, ralts, kirlia, gardevoir, shroomish, breloom, slakoth, vigoroth, slaking, nincada, ninjask, shedinja, 
+        list = {seedot, nuzleaf, shiftry, taillow, swellow, wingull, pelipper, ralts, kirlia, gardevoir, shroomish, breloom, slakoth, vigoroth, slaking, nincada, ninjask, shedinja, 
                 makuhita, hariyama, azurill, nosepass, skitty},
 }

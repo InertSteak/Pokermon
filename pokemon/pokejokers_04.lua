@@ -281,9 +281,11 @@ local onix={
   calculate = function(self, card, context)
     if context.remove_playing_cards then
       for _, removed_card in ipairs(context.removed) do
-         local stone_card = SMODS.add_card { set = "Base", enhancement = "m_stone", area = G.deck }
-         SMODS.calculate_context({ playing_card_added = true, cards = { stone_card } })
-         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_stone'), colour = G.C.SECONDARY_SET.Enhanced})
+        if not SMODS.has_enhancement(removed_card, 'm_stone') then
+          local stone_card = SMODS.add_card { set = "Base", enhancement = "m_stone", area = G.deck }
+          SMODS.calculate_context({ playing_card_added = true, cards = { stone_card } })
+          card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_stone'), colour = G.C.SECONDARY_SET.Enhanced})
+        end
       end
     end
     return pokermon.type_evo (self, card, context, "j_poke_steelix", "metal")
@@ -313,9 +315,7 @@ local drowzee={
       if context.joker_main and card.ability.extra.planets_used > 0 then
         local Xmult = 1 + card.ability.extra.planets_used * card.ability.extra.Xmult_mod
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-          colour = G.C.MULT,
-          Xmult_mod = Xmult
+          Xmult = Xmult
         }
       end
     end
@@ -359,9 +359,7 @@ local hypno={
       if context.joker_main and card.ability.extra.planets_used > 0 then
         local Xmult = 1 + card.ability.extra.planets_used * card.ability.extra.Xmult_mod
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-          colour = G.C.MULT,
-          Xmult_mod = Xmult
+          Xmult = Xmult
         }
       end
     end
@@ -501,7 +499,6 @@ local voltorb={
         end
         return {
           message = localize("poke_explosion_ex"),
-          colour = G.C.XMULT,
           Xmult_mod = card.ability.extra.Xmult
         }
       end
@@ -546,8 +543,7 @@ local electrode={
         
         return {
           message = localize("poke_explosion_ex"),
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult,
+          Xmult_mod = card.ability.extra.Xmult
         }
       end
     end
@@ -706,9 +702,7 @@ local marowak={
         local count = #pokermon.get_consumeables() + #SMODS.find_card('c_poke_thickclub')
         if count > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {1 + (card.ability.extra.Xmult_mod * count)}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = 1 + (card.ability.extra.Xmult_mod * count)
+            Xmult = 1 + (card.ability.extra.Xmult_mod * count)
           }
         end
       end
@@ -756,9 +750,7 @@ local hitmonlee={
         local Xmult = 1 + ((G.GAME.starting_deck_size - #G.playing_cards) * card.ability.extra.Xmult_mod)
         if Xmult > 1 then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-            colour = G.C.MULT,
-            Xmult_mod = Xmult
+            Xmult = Xmult
           }
         end
       end
@@ -788,9 +780,7 @@ local hitmonchan={
         local Xmult = 1 + ((#G.playing_cards - G.GAME.starting_deck_size) * card.ability.extra.Xmult_mod)
         if Xmult > 1 then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-            colour = G.C.MULT,
-            Xmult_mod = Xmult
+            Xmult = Xmult
           }
         end
       end

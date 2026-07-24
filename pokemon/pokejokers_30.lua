@@ -99,10 +99,7 @@ local drakloak={
         end
         
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {1 + card.ability.extra.total_sell_value * card.ability.extra.Xmult}}, 
-          colour = G.C.MULT,
-          Xmult_mod = 1 + card.ability.extra.total_sell_value * card.ability.extra.Xmult, 
-          card = card
+          Xmult = 1 + card.ability.extra.total_sell_value * card.ability.extra.Xmult
         }
       end
     end
@@ -162,10 +159,7 @@ local dragapult={
           card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_darts_ex'), colour = G.C.MULT})
         end
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {1 + card.ability.extra.total_sell_value * card.ability.extra.Xmult}}, 
-          colour = G.C.MULT,
-          Xmult_mod = 1 + card.ability.extra.total_sell_value * card.ability.extra.Xmult, 
-          card = card
+          Xmult = 1 + card.ability.extra.total_sell_value * card.ability.extra.Xmult
         }
       end
     end

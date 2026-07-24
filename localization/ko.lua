@@ -631,7 +631,7 @@ return {
                 name = "강철 에너지",
                 text = {
                     "가능하다면 가장 왼쪽 또는 선택한",
-                    "{X:Metal,C:white}강철{} 조커를 {C:poke_pink}에너지화{}합니다",
+                    "{X:poke_metal,C:white}강철{} 조커를 {C:poke_pink}에너지화{}합니다",
                     "{C:inactive}(조커당 최대 {C:attention}#1#{C:inactive}회 증가)",
                 },
             },

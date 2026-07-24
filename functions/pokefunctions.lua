@@ -262,7 +262,7 @@ end
 
 pokermon.can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
   if not G.P_CENTERS[forced_key] then return false end
-  if next(find_joker("everstone")) and not allow_level then return false end
+  if next(SMODS.find_card("j_poke_everstone")) and not allow_level then return false end
   if (context.evolution or ignore_step) and not context.blueprint and not card.gone then
     return true
   else
@@ -292,7 +292,7 @@ pokermon.level_evo = function(self, card, context, forced_key)
     end
     if pokermon.can_evolve(self, card, context, forced_key, true) and card.ability.extra.rounds <= 1 and not card.ability.extra.juiced then
       card.ability.extra.juiced = true
-      local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(find_joker("everstone")) and card.ability.extra.juiced end
+      local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(SMODS.find_card("j_poke_everstone")) and card.ability.extra.juiced end
       juice_card_until(card, eval, true)
     end
 end
@@ -698,7 +698,8 @@ pokermon.add_frac_tooltip = function(info_queue, card, frac_var, loc_key)
 end
 
 pokermon.add_energy_tooltip = function(info_queue, card)
-  if card.ability and type(card.ability.extra) == 'table' and pokermon.energy.get_total_energy(card) ~= 0 then
+  if card.ability and type(card.ability.extra) == 'table' and ( pokermon.energy.get_total_energy(card) ~= 0
+      or card.ability.extra.e_limit_up and card.ability.extra.e_limit_up > 0 ) then
     local energy = pokermon.energy.get_total_energy(card)
     local energy_max = pokermon.energy.max + (G.GAME.poke_energy_plus or 0) + (card.ability.extra.e_limit_up or 0)
 
@@ -1179,34 +1180,48 @@ pokermon.fossil_generate_ui = function(self, info_queue, card, desc_nodes, speci
 end
 
 pokermon.generate_pickup_item_key = function(seed)
-  local item_key = 'c_poke_transformation'
+  local item_key
   local item_chance = pseudorandom(seed)
+
   if item_chance < .34 then item_key = nil
-  elseif item_chance < .59 then item_key = 'evo'
+  elseif item_chance < .59 then item_key = pokermon.poll_evo_item(seed)
   elseif item_chance < .79 then item_key = 'c_poke_leftovers'
   elseif item_chance < .99 then item_key = 'c_poke_twisted_spoon'
+  else item_key = 'c_poke_transformation'
   end
-  
-  if item_key == "evo" then
-    local evo_item_keys = {}
-    for k, v in pairs(G.jokers.cards) do
-      if v.config.center.item_req then
-        if type(v.config.center.item_req) == "table" then
-          item_key = "c_poke_"..pseudorandom_element(v.config.center.item_req, pseudoseed(seed))
-        else
-          item_key = "c_poke_"..v.config.center.item_req
-        end
-        table.insert(evo_item_keys, item_key)
-      end
-    end
-    if #evo_item_keys > 0 then
-      item_key = pseudorandom_element(evo_item_keys, pseudoseed(seed))
-    else
-      item_key = nil
-    end
-  end
-  
+
   return item_key
+end
+
+pokermon.poll_evo_item = function(seed)
+  local evo_item_key_set = {}
+  for _, v in pairs(G.jokers.cards) do
+    if v.config.center.item_req then
+      local item_req = type(v.config.center.item_req) == 'table'
+          and pseudorandom_element(v.config.center.item_req, pseudoseed(seed))
+          or v.config.center.item_req
+
+      local prefix = pokermon.has(POKE_NATIVE_EVO_ITEMS, item_req)
+          and 'poke'
+          or v.config.center.poke_custom_prefix
+
+      local item_key = 'c_' .. prefix .. '_' .. item_req
+
+      evo_item_key_set[item_key] = true
+    end
+  end
+
+  local evo_item_key_list = {}
+  for key, _ in pairs(evo_item_key_set) do
+    if G.P_CENTERS[key] and not G.GAME.used_jokers[key] and not G.GAME.banned_keys[key]
+        and (not type(G.P_CENTERS[key].in_pool) == 'function' or G.P_CENTERS[key]:in_pool()) then
+      evo_item_key_list[#evo_item_key_list+1] = key
+    end
+  end
+  if #evo_item_key_list > 1 then
+    return pseudorandom_element(evo_item_key_list, pseudoseed(seed))
+  end
+  return evo_item_key_list[1]
 end
 
 pokermon.set_sprites = function(self, card, front)
@@ -1279,20 +1294,31 @@ pokermon.reset_type = function(name, exclude_names)
   end
 end
 
-pokermon.reset_espeon_card = function()
-  G.GAME.current_round.espeon_rank = 'Ace'
-  G.GAME.current_round.espeon_id = 14
-  
-  local valid_espeon_cards = {}
+pokermon.reset_espeon_suit = function()
+  local espeon_suits = {}
+  for k, v in ipairs({'Spades','Hearts','Clubs','Diamonds'}) do
+      if v ~= G.GAME.current_round.espeon_suit then espeon_suits[#espeon_suits + 1] = v end
+  end
+  local espeon_card = pseudorandom_element(espeon_suits, pseudoseed('espeon'..G.GAME.round_resets.ante))
+  G.GAME.current_round.espeon_suit = espeon_card
+end
+
+pokermon.reset_bronzo_card = function()
+  G.GAME.current_round.bronzo_rank = 'Ace'
+  G.GAME.current_round.bronzo_id = 14
+  G.GAME.current_round.bronzo_suit = 'Spades'
+
+  local valid_bronzo_cards = {}
   for _, playing_card in ipairs(G.playing_cards) do
     if not SMODS.has_no_suit(playing_card) and not SMODS.has_no_rank(playing_card) then
-      valid_espeon_cards[#valid_espeon_cards + 1] = playing_card
+      valid_bronzo_cards[#valid_bronzo_cards + 1] = playing_card
     end
   end
-  local espeon_card = pseudorandom_element(valid_espeon_cards, 'espeon' .. G.GAME.round_resets.ante)
-  if espeon_card then
-    G.GAME.current_round.espeon_rank = espeon_card.base.value
-    G.GAME.current_round.espeon_id = espeon_card.base.id
+  local bronzo_card = pseudorandom_element(valid_bronzo_cards, 'bronzo' .. G.GAME.round_resets.ante)
+  if bronzo_card then
+    G.GAME.current_round.bronzo_rank = bronzo_card.base.value
+    G.GAME.current_round.bronzo_id = bronzo_card.base.id
+    G.GAME.current_round.bronzo_suit = bronzo_card.base.suit
   end
 end
 
@@ -1429,11 +1455,12 @@ pokermon.get_available_planet_cards = function()
   return planets
 end
 
-pokermon.create_held_item = function(args)
+pokermon.create_consumeable = function(args, in_event, message_card)
   if type(args) == 'string' then args = { key = args } end
   if not G.GAME.banned_keys[args.key]
       and (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit or args.edition == 'e_negative') then
-    local card = SMODS.add_card(args)
+    args.skip_materialize = true
+    local card = SMODS.create_card(args)
     local set = card.ability.set
     local loc_keys = {
       ['Tarot'] = 'k_plus_tarot',
@@ -1442,9 +1469,24 @@ pokermon.create_held_item = function(args)
       ['poke_item'] = 'poke_plus_pokeitem',
       ['poke_energy'] = 'poke_plus_pokeitem',
     }
+    card.states.visible = nil
+    if in_event then
+      G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+      G.E_MANAGER:add_event(Event({
+        func = (function()
+          SMODS.add_to_deck(card, args)
+          card:start_materialize()
+          G.GAME.consumeable_buffer = 0
+          return true
+        end)
+      }))
+    else
+      SMODS.add_to_deck(card, args)
+      card:start_materialize()
+    end
     SMODS.calculate_effect({
-      message = localize(loc_keys[set]),
+      message = loc_keys[set] and localize(loc_keys[set]) or "+1 " .. card.ability.set,
       colour = G.C.SECONDARY_SET[set]
-    }, card)
+    }, message_card or card)
   end
 end

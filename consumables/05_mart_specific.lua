@@ -108,7 +108,7 @@ local dubious_disc = {
     end
   end,
   in_pool = function(self)
-    return next(find_joker("porygon2"))
+    return next(SMODS.find_card("j_poke_porygon2"))
   end
 }
 

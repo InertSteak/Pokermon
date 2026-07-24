@@ -374,7 +374,7 @@ local safety_first = {
     rules = {
         custom = {
             { id = 'no_shop_jokers' },
-            { id = 'no_energy'}
+            { id = 'poke_no_energy'}
         },
         modifiers = {
             { id = 'joker_slots', value = 3 },
@@ -383,7 +383,7 @@ local safety_first = {
     jokers = {
         { id = 'j_poke_mudkip', eternal = true},
         { id = 'j_poke_roggenrola', eternal = true},
-        { id = 'j_poke_espeon', eternal = true},
+        { id = 'j_poke_bronzor', eternal = true},
 	},
     restrictions = {
         banned_cards = {
