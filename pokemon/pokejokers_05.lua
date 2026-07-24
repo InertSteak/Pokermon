@@ -224,7 +224,7 @@ local jynx={
             end
           end
         end
-        if cards_added then playing_card_joker_effects(cards_added) end
+        if cards_added and #cards_added > 0 then playing_card_joker_effects(cards_added) end
       end
     end
     if context.setting_blind then
