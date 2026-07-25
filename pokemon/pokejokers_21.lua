@@ -393,35 +393,17 @@ local axew={
     end
   end,
   set_nature = function(self,card)
-    local hands = pokermon.sort_hands(function(hand1, hand2) return hand1.played > hand2.played end)
-    local first = {}
-    local highest = hands[1].played
-    
-    for k, v in ipairs(hands) do
-      if v.played == highest then
-        first[#first + 1] = v
+    local visible_hands = {}
+    for k, v in pairs(G.GAME.hands) do
+      if v.visible then
+        table.insert(visible_hands, v)
       end
     end
     
-    if #first >= 2 then
-      pseudoshuffle(first, pseudoseed('axew'))
-      card.ability.extra.targets[1] = first[1].key
-      card.ability.extra.targets[2] = first[2].key
-    else
-      card.ability.extra.targets[1] = first[1].key
-      
-      local second = {}
-      local second_highest = hands[2].played
-      
-      for k, v in ipairs(hands) do
-        if v.played == second_highest then
-          second[#second + 1] = v
-        end
-      end
-      
-      pseudoshuffle(second, pseudoseed('axew'))
-      card.ability.extra.targets[2] = second[1].key
-    end
+    pseudoshuffle(visible_hands, pseudoseed('axew'))
+    
+    if visible_hands[1] then card.ability.extra.targets[1] = visible_hands[1].key end
+    if visible_hands[2] then card.ability.extra.targets[2] = visible_hands[2].key end
   end,
 }
 -- Fraxure 611
@@ -464,35 +446,17 @@ local fraxure={
     end
   end,
   set_nature = function(self,card)
-    local hands = pokermon.sort_hands(function(hand1, hand2) return hand1.played > hand2.played end)
-    local first = {}
-    local highest = hands[1].played
-    
-    for k, v in ipairs(hands) do
-      if v.played == highest then
-        first[#first + 1] = v
+    local visible_hands = {}
+    for k, v in pairs(G.GAME.hands) do
+      if v.visible then
+        table.insert(visible_hands, v)
       end
     end
     
-    if #first >= 2 then
-      pseudoshuffle(first, pseudoseed('fraxure'))
-      card.ability.extra.targets[1] = first[1].key
-      card.ability.extra.targets[2] = first[2].key
-    else
-      card.ability.extra.targets[1] = first[1].key
-      
-      local second = {}
-      local second_highest = hands[2].played
-      
-      for k, v in ipairs(hands) do
-        if v.played == second_highest then
-          second[#second + 1] = v
-        end
-      end
-      
-      pseudoshuffle(second, pseudoseed('fraxure'))
-      card.ability.extra.targets[2] = second[1].key
-    end
+    pseudoshuffle(visible_hands, pseudoseed('fraxure'))
+    
+    if visible_hands[1] then card.ability.extra.targets[1] = visible_hands[1].key end
+    if visible_hands[2] then card.ability.extra.targets[2] = visible_hands[2].key end
   end,
 }
 -- Haxorus 612
@@ -529,35 +493,17 @@ local haxorus={
     end
   end,
   set_nature = function(self,card)
-    local hands = pokermon.sort_hands(function(hand1, hand2) return hand1.played > hand2.played end)
-    local first = {}
-    local highest = hands[1].played
-    
-    for k, v in ipairs(hands) do
-      if v.played == highest then
-        first[#first + 1] = v
+    local visible_hands = {}
+    for k, v in pairs(G.GAME.hands) do
+      if v.visible then
+        table.insert(visible_hands, v)
       end
     end
     
-    if #first >= 2 then
-      pseudoshuffle(first, pseudoseed('haxorus'))
-      card.ability.extra.targets[1] = first[1].key
-      card.ability.extra.targets[2] = first[2].key
-    else
-      card.ability.extra.targets[1] = first[1].key
-      
-      local second = {}
-      local second_highest = hands[2].played
-      
-      for k, v in ipairs(hands) do
-        if v.played == second_highest then
-          second[#second + 1] = v
-        end
-      end
-      
-      pseudoshuffle(second, pseudoseed('haxorus'))
-      card.ability.extra.targets[2] = second[1].key
-    end
+    pseudoshuffle(visible_hands, pseudoseed('haxorus'))
+    
+    if visible_hands[1] then card.ability.extra.targets[1] = visible_hands[1].key end
+    if visible_hands[2] then card.ability.extra.targets[2] = visible_hands[2].key end
   end,
 }
 -- Cubchoo 613
