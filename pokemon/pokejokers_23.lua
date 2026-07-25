@@ -68,7 +68,7 @@ local pyroar={
           return {
             message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
             colour = G.C.CHIPS,
-            extra = {focus = card, message = localize('poke_plus_energy'), colour = G.ARGS.LOC_COLOURS.pink, func = function()
+            extra = {focus = card, message = localize('poke_plus_energy'), colour = pokermon.colours.pink, func = function()
               G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.0,

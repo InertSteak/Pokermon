@@ -212,12 +212,13 @@ local bramblin={
 local brambleghast={
   name = "brambleghast",
   pos = {x = 0, y = 0},
-  config = {extra = {chip_mod = 2, seed_added = 0, rank_scored = 0}},
+  config = {extra = {chip_mod = 2, seed_added = 0, rank_scored = 0, growth = 1}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
+    info_queue[#info_queue+1] = {set = 'Other', key = 'growth_level'}
     return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * math.max(0, (G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)),
-        localize(G.GAME.current_round.bramblincard and G.GAME.current_round.bramblincard.rank or "Ace", 'ranks')}}
+        localize(G.GAME.current_round.bramblincard and G.GAME.current_round.bramblincard.rank or "Ace", 'ranks'), center.ability.extra.growth}}
   end,
   rarity = "poke_safari",
   cost = 8,
@@ -241,7 +242,7 @@ local brambleghast={
           card.ability.extra.rank_scored = card.ability.extra.rank_scored + 1
           if card.ability.extra.rank_scored == 2 then
             context.scoring_hand[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
-            context.scoring_hand[i].ability.extra.level = 2
+            context.scoring_hand[i].ability.extra.level = 0
             G.E_MANAGER:add_event(Event({
               func = function()
                 context.scoring_hand[i]:juice_up()
@@ -258,6 +259,12 @@ local brambleghast={
       card.ability.extra.rank_scored = 0
       card.ability.extra.seed_added = 0
     end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    pokermon.change_growth_level(card.ability.extra.growth)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    pokermon.change_growth_level(-card.ability.extra.growth)
   end,
   attributes = {"rank", "modify_card", "enhancements", "chips"},
 }

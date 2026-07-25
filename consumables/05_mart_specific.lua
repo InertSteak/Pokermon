@@ -108,7 +108,7 @@ local dubious_disc = {
     end
   end,
   in_pool = function(self)
-    return next(find_joker("porygon2"))
+    return next(SMODS.find_card("j_poke_porygon2"))
   end
 }
 
@@ -232,7 +232,11 @@ local meteorite = {
       end
       if deoxys.ability.extra.form ~= curr_index then
         deoxys.ability.extra.form = curr_index
-        pokermon.fake_evolve(deoxys, localize("poke_transform_success"), true)
+
+        pokermon.do_evolution_anim(
+          deoxys,
+          function(c) c:set_sprites(c.config.center) end,
+          localize("poke_transform_success"))
       end
     end
   end,

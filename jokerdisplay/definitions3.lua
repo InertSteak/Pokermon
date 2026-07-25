@@ -534,8 +534,65 @@ jd_def["j_poke_dustox"] = {
 --	Lombre
 --	Ludicolo
 --	Seedot
+jd_def["j_poke_seedot"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+  },
+  calc_function = function(card)
+    local count = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if SMODS.has_enhancement(scoring_card, 'm_poke_seed') then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+        end
+      end
+    end
+    card.joker_display_values.chips = count * card.ability.extra.chips
+  end
+}
+
 --	Nuzleaf
+jd_def["j_poke_nuzleaf"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+  },
+  calc_function = function(card)
+    local count = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if SMODS.has_enhancement(scoring_card, 'm_poke_seed') then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+        end
+      end
+    end
+    card.joker_display_values.chips = count * card.ability.extra.chips
+  end
+}
+
 --	Shiftry
+jd_def["j_poke_shiftry"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+  },
+  calc_function = function(card)
+    local count = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if SMODS.has_enhancement(scoring_card, 'm_poke_seed') then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+        end
+      end
+    end
+    card.joker_display_values.chips = count * card.ability.extra.chips
+  end
+}
+
 --	Taillow
 jd_def["j_poke_taillow"] = {
   text = {
@@ -1579,6 +1636,24 @@ jd_def["j_poke_milotic"] = {
 
 --	Castform
 --	Kecleon
+jd_def["j_poke_kecleon"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    },
+  },
+  calc_function = function(card)
+    if #pokermon.find_pokemon_type(pokermon.get_type(card)) >= 3 then
+      card.joker_display_values.Xmult = card.ability.extra.Xmult
+    else
+      card.joker_display_values.Xmult = 1
+    end
+  end
+}
+
 --	Shuppet
 --	Banette
 --	Duskull
@@ -1770,17 +1845,15 @@ jd_def["j_poke_relicanth"] = {
     if four_count >= 4 then
       local depleted_count = 0
     
-      for k, v in pairs(SMODS.Ranks) do
-        local is_rank = function(deck_card)
-          if deck_card:get_id() == v.id then
-            return true
-          else
-            return false
+      for _, rank in pairs(SMODS.Ranks) do
+        if rank.in_pool and not rank:in_pool({}) then
+        else
+          local is_rank = function(deck_card)
+            return deck_card:get_id() == rank.id
           end
-        end
-        
-        if pokermon.get_depleted(is_rank) then
-          depleted_count = depleted_count + 1
+          if pokermon.get_depleted(is_rank) then
+            depleted_count = depleted_count + 1
+          end
         end
       end
       Xmult = 1 + card.ability.extra.Xmult_mod * depleted_count

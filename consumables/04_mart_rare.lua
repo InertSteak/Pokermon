@@ -148,9 +148,9 @@ local teraorb = {
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     local info = center.ability.extra or self.config.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {info.change_to_type, colours = {G.ARGS.LOC_COLOURS[string.lower(info.change_to_type)]}}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {info.change_to_type, colours = {pokermon.colours[string.lower(info.change_to_type)]}}}
     local highlight_colour = info.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
-    return {vars = {info.change_to_type, colours = {G.ARGS.LOC_COLOURS[string.lower(info.change_to_type)], highlight_colour}}}
+    return {vars = {info.change_to_type, colours = {pokermon.colours[string.lower(info.change_to_type)], highlight_colour}}}
   end,
   pos = { x = 2, y = 9 },
   soul_pos = { x = 3, y = 9 },
@@ -190,7 +190,7 @@ local teraorb = {
       }))
       return {
         message = card.ability.extra.change_to_type,
-        colour = G.ARGS.LOC_COLOURS[string.lower(card.ability.extra.change_to_type)]
+        colour = pokermon.colours[string.lower(card.ability.extra.change_to_type)]
       }
     end
   end,

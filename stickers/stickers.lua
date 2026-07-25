@@ -12,7 +12,7 @@ for i = 1, #poketype_list do
   local poke_type = string.lower(poketype_list[i])
   local type_sticker = copy_table(type_sticker_template)
   type_sticker.key = poke_type..'_sticker'
-  type_sticker.badge_colour = G.ARGS.LOC_COLOURS[poke_type]
+  type_sticker.badge_colour = pokermon.colours[poke_type]
   type_sticker.pos = {x = i % 10, y = math.floor(i/10) }
   table.insert(type_stickers, type_sticker)
 end

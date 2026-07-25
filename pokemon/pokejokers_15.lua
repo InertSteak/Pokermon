@@ -82,7 +82,7 @@ local lopunny={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Mult = card.ability.extra.mult * math.abs(#context.scoring_hand - #context.full_hand)
+        local mult = card.ability.extra.mult * math.abs(#context.scoring_hand - #context.full_hand)
         local score_xmult = nil
         local found_ranks = {}
         for _,unscored_card in pairs(context.full_hand) do
@@ -96,19 +96,17 @@ local lopunny={
             break
           end
         end
-        if Mult > 0 then
+        if mult > 0 then
           if score_xmult then
             return {
-              message = localize("poke_highjumpkick_ex"), 
-              colour = G.C.XMULT,
-              mult_mod = Mult,
-              Xmult_mod = card.ability.extra.Xmult
+              message = localize("poke_highjumpkick_ex"),
+              mult_mod = mult,
+              Xmult_mod = card.ability.extra.Xmult,
+              sound = 'multhit2'
             }
           else
             return {
-              message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
-              colour = G.C.MULT,
-              mult_mod = Mult
+              mult = mult
             }
           end
         end
@@ -161,9 +159,7 @@ local mega_lopunny={
           Xmult = G.GAME.hands[text].level
         end
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = Xmult
+          Xmult = Xmult
         }
       end
     end
@@ -259,9 +255,7 @@ local honchkrow={
         end
       })) 
       return {
-        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-        colour = G.C.XMULT,
-        Xmult_mod = card.ability.extra.Xmult_multi
+        Xmult = card.ability.extra.Xmult_multi
       }
     end
   end,
@@ -297,9 +291,7 @@ local chingling={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context) 
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -318,7 +310,75 @@ local chingling={
 -- Stunky 434
 -- Skuntank 435
 -- Bronzor 436
+local bronzor={
+  name = "bronzor", 
+  pos = {x = 4, y = 4},
+  config = {extra = {Xmult_multi = 1.3, scored = 0}, evo_rqmt = 10},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    local abbr = center.ability.extra
+    return {vars = {abbr.Xmult_multi, localize(G.GAME.current_round.bronzo_rank or "Ace", 'ranks'), localize(G.GAME.current_round.bronzo_suit or "Spades", 'suits_singular'), 
+                    math.max(0, self.config.evo_rqmt - abbr.scored), colours = {G.C.SUITS[G.GAME.current_round.bronzo_suit or "Spades"]}}}
+  end,
+  rarity = 3, 
+  cost = 6, 
+  stage = "Basic",
+  ptype = "Metal",
+  atlas = "Pokedex4",
+  gen = 4,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and not context.end_of_round then
+      if context.other_card:get_id() == G.GAME.current_round.bronzo_id then
+        card.ability.extra.scored = card.ability.extra.scored + 1
+      end
+      
+      if context.other_card:is_suit(G.GAME.current_round.bronzo_suit) then
+        return {
+          x_mult = card.ability.extra.Xmult_multi,
+          card = card
+        }
+      end
+    end
+    
+    return pokermon.scaling_evo(self, card, context, "j_poke_bronzong", card.ability.extra.scored, self.config.evo_rqmt)
+  end,
+  attributes = {"retrigger", "rank", "xmult", "suit"},
+}
 -- Bronzong 437
+local bronzong={
+  name = "bronzong", 
+  pos = {x = 4, y = 4},
+  config = {extra = {retriggers = 1, Xmult_multi = 1.3}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.retriggers, center.ability.extra.Xmult_multi, localize(G.GAME.current_round.bronzo_rank or "Ace", 'ranks'),
+                localize(G.GAME.current_round.bronzo_suit or "Spades", 'suits_singular'), colours = {G.C.SUITS[G.GAME.current_round.bronzo_suit or "Spades"]}}}
+  end,
+  rarity = "poke_safari", 
+  cost = 8, 
+  stage = "One",
+  ptype = "Metal",
+  atlas = "Pokedex4",
+  gen = 4,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:is_suit(G.GAME.current_round.bronzo_suit) then
+      return {
+        x_mult = card.ability.extra.Xmult_multi,
+        card = card
+      }
+    end
+    if context.repetition and context.cardarea == G.play and not context.end_of_round and context.other_card:get_id() == G.GAME.current_round.bronzo_id then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
+    end
+  end,
+  attributes = {"retrigger", "rank", "xmult", "suit"},
+}
 -- Bonsly 438
 local bonsly={
   name = "bonsly",
@@ -345,9 +405,7 @@ local bonsly={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -390,9 +448,7 @@ local mimejr={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -437,9 +493,7 @@ local happiny={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -494,9 +548,7 @@ local munchlax={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -539,9 +591,7 @@ local riolu={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -659,5 +709,5 @@ local mega_lucario={
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {ambipom, buneary, lopunny, mega_lopunny, mismagius, honchkrow, chingling, bonsly, mimejr, happiny, munchlax, riolu, lucario, mega_lucario},
+        list = {ambipom, buneary, lopunny, mega_lopunny, mismagius, honchkrow, chingling, bronzor, bronzong, bonsly, mimejr, happiny, munchlax, riolu, lucario, mega_lucario},
 }

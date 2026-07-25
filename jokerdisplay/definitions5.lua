@@ -530,8 +530,65 @@ jd_def["j_poke_chandelure"] = {
 }
 
 --	Axew
+jd_def["j_poke_axew"] = {
+  extra = {
+    {
+      { text = "(", scale = 0.3, colour = G.C.UI.BACKGROUND_INACTIVE },
+      { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+      { text = ")", scale = 0.3, colour = G.C.UI.BACKGROUND_INACTIVE },
+    }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text_2", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.localized_text = localize(card.ability.extra.targets[1], 'poker_hands')
+    card.joker_display_values.localized_text_2 = localize(card.ability.extra.targets[2], 'poker_hands')
+  end
+}
+
 --	Fraxure
+jd_def["j_poke_fraxure"] = {
+  extra = {
+    {
+      { text = "(", scale = 0.3, colour = G.C.UI.BACKGROUND_INACTIVE },
+      { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+      { text = ")", scale = 0.3, colour = G.C.UI.BACKGROUND_INACTIVE },
+    }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text_2", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.localized_text = localize(card.ability.extra.targets[1], 'poker_hands')
+    card.joker_display_values.localized_text_2 = localize(card.ability.extra.targets[2], 'poker_hands')
+  end
+}
+
 --	Haxorus
+jd_def["j_poke_haxorus"] = {
+  extra = {
+    {
+      { text = "(", scale = 0.3, colour = G.C.UI.BACKGROUND_INACTIVE },
+      { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+      { text = ")", scale = 0.3, colour = G.C.UI.BACKGROUND_INACTIVE },
+    }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text_2", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.localized_text = localize(card.ability.extra.targets[1], 'poker_hands')
+    card.joker_display_values.localized_text_2 = localize(card.ability.extra.targets[2], 'poker_hands')
+  end
+}
+
 --	Cubchoo
 --	Beartic
 --	Cryogonal

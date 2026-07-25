@@ -55,15 +55,19 @@ local sylveon={
 -- Phantump 708
 -- Trevenant 709
 -- Pumpkaboo 710
-local pumpkaboo={
+local pumpkaboo = {
   name = "pumpkaboo",
-  pos = {x = 0, y = 0},
-  config = {extra = {jack_target = 5, jacks_discarded = 0, form = 0}},
-  loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
-    local forms = {'j_poke_pumpkaboo_small', 'j_poke_pumpkaboo_average', 'j_poke_pumpkaboo_large', 'j_poke_pumpkaboo_super'}
-    local display_jacks = math.max(0, center.ability.extra.jack_target - center.ability.extra.jacks_discarded)
-    return {vars = {center.ability.extra.jack_target, display_jacks}, key = forms[center.ability.extra.form + 1]}
+  pos = { x = 4, y = 9 },
+  config = { extra = { jack_target = 5, jacks_discarded = 0, form = 0 } },
+  loc_vars = function(self, info_queue, card)
+    local extra = card.ability.extra or self.config.extra
+    local key = extra.form and ({'small', 'average', 'large', 'super'})[extra.form + 1]
+
+    local display_jacks = math.max(0, extra.jack_target - extra.jacks_discarded)
+    return {
+      vars = { extra.jack_target, display_jacks },
+      key = 'j_poke_pumpkaboo_' .. key
+    }
   end,
   rarity = 2,
   cost = 6,
@@ -72,111 +76,75 @@ local pumpkaboo={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex6",
-  perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
   poke_custom_values_to_keep = { "jack_target", "jacks_discarded" },
   set_ability = function(self, card, initial, delay_sprites)
-    if initial then
-      card.ability.extra.form = pseudorandom_element({0, 1, 2, 3}, pseudoseed('pumpkaboo'))
-    end
+    if initial then card.ability.extra.form = pseudorandom_element({0, 1, 2, 3}, pseudoseed('pumpkaboo')) end
     card.ability.extra.jack_target = 4 + card.ability.extra.form
     if self.discovered then
-      local scale = 1
-      if card.ability.extra.form == 0 then
-        scale = 0.7
-      elseif card.ability.extra.form == 1 then
-        scale = 1
-      elseif card.ability.extra.form == 2 then
-        scale = 1.1
-      elseif card.ability.extra.form == 3 then
-        scale = 1.2
-      end
-      card.T.w = card.children.center.original_T.w * scale
-      card.T.h = card.children.center.original_T.h * scale
+      local form = card.ability.extra.form
+      local scale = form and ({ 0.7, 1, 1.1, 1.2 })[form + 1] or 1
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          card.T.scale = card.children.center.original_T.scale * scale * 0.95
+          return true
+        end
+      }))
       self:set_sprites(card)
     end
   end,
   set_sprites = function(self, card, front)
     if pokermon.can_set_sprite(card) then
-      if card.loaded then
-        card.loaded = nil
-        self:set_ability(card)
-      end
-      if card.ability and card.ability.extra and card.ability.extra.form == 1 then
-        card.children.center:set_sprite_pos({x = 4, y = 9})
-      elseif card.ability and card.ability.extra and card.ability.extra.form == 2 then
-        card.children.center:set_sprite_pos({x = 6, y = 9})
-      elseif card.ability and card.ability.extra and card.ability.extra.form == 3 then  
-        card.children.center:set_sprite_pos({x = 8, y = 9})
-      else
-        card.children.center:set_sprite_pos({x = 2, y = 9})
-      end
+      if card.loaded then card.loaded = nil; self:set_ability(card) end
+
+      local form = card.ability and card.ability.extra and card.ability.extra.form
+      local x_pos = form and ({ 2, 4, 6, 8 })[form + 1] or 4
+      card.children.center:set_sprite_pos({ x = x_pos, y = 9 })
     end
   end,
   calculate = function(self, card, context)
     if context.pre_discard and not context.blueprint then
-      for k, v in ipairs(context.full_hand) do
-        if v:get_id() == 11 and not v.debuff then
-          card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
-          if card.ability.extra.jacks_discarded == card.ability.extra.jack_target then
-            v['pumpkaboo_trigger'..card.unique_val] = true
-            card.ability.extra.jacks_discarded = 0
-          end
+      local jacks = pokermon.filter(context.full_hand, function(v) return v:get_id() == 11 and not v.debuff end)
+      for _, v in ipairs(jacks) do
+        card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
+        if card.ability.extra.jacks_discarded == card.ability.extra.jack_target then
+          v['pumpkaboo_trigger'..card.unique_val] = true
+          card.ability.extra.jacks_discarded = 0
         end
       end
     end
     if context.discard then
       if context.other_card['pumpkaboo_trigger'..card.unique_val] then
-        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-          G.E_MANAGER:add_event(Event({
-            func = (function()
-                SMODS.add_card {
-                    set = 'Spectral'
-                }
-                G.GAME.consumeable_buffer = 0
-                context.other_card['pumpkaboo_trigger'..card.unique_val] = nil
-                return true
-            end)
-          }))
-          return {
-              message = localize('k_plus_spectral'),
-              colour = G.C.SECONDARY_SET.Spectral,
-          }
-        end
-      elseif context.other_card:get_id() == 11 then
-        if not context.blueprint then
-          return {
-              message = localize('poke_boo_ex'),
-              colour = G.C.RED
-          }
-        end
+        pokermon.create_consumeable({ set = 'Spectral' }, true, card)
+      elseif context.other_card:get_id() == 11 and not context.other_card.debuff and not context.blueprint then
+        return {
+          message = localize('poke_boo_ex'),
+          colour = G.C.RED
+        }
       end
     end
     return pokermon.item_evo(self, card, context, "j_poke_gourgeist")
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      self:set_ability(card)
-    end
+    if not from_debuff then self:set_ability(card) end
   end,
-  load = function(self, card, card_table, other_card)
-    card.loaded = true
-  end,
+  load = function(self, card, card_table, other_card) card.loaded = true end,
   attributes = {"discard", "rank", "jack", "spectral", "generation", "item_evo"},
 }
 -- Gourgeist 711
-local gourgeist={
+local gourgeist = {
   name = "gourgeist",
-  pos = {x = 0, y = 0},
-  config = {extra = {jack_target = 5, jacks_discarded = 0, form = -1, money = 6}},
-  loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
-    local forms = {'j_poke_gourgeist_small', 'j_poke_gourgeist_average', 'j_poke_gourgeist_large', 'j_poke_gourgeist_super'}
-    local display_jacks = math.max(0, center.ability.extra.jack_target - center.ability.extra.jacks_discarded)
-    return {vars = {center.ability.extra.jack_target, display_jacks, center.ability.extra.money}, 
-            key = forms[center.ability.extra.form + 1]}
+  pos = { x = 0, y = 10 },
+  config = { extra = { jack_target = 5, jacks_discarded = 0, form = -1, money = 6 } },
+  loc_vars = function(self, info_queue, card)
+    local extra = card.ability.extra or self.config.extra
+    local key = extra.form and ({'small', 'average', 'large', 'super'})[extra.form + 1]
+
+    local display_jacks = math.max(0, extra.jack_target - extra.jacks_discarded)
+    return {
+      vars = { extra.jack_target, display_jacks, extra.money },
+      key = 'j_poke_gourgeist_' .. key
+    }
   end,
   rarity = "poke_safari",
   cost = 9,
@@ -184,107 +152,67 @@ local gourgeist={
   stage = "One",
   ptype = "Psychic",
   atlas = "Pokedex6",
-  perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
   set_ability = function(self, card, initial, delay_sprites)
-    if initial then
-      card.ability.extra.form = pseudorandom_element({0, 1, 2, 3}, pseudoseed('gourgeist'))
-    end
+    if initial then card.ability.extra.form = pseudorandom_element({0, 1, 2, 3}, pseudoseed('gourgeist')) end
     card.ability.extra.jack_target = 4 + card.ability.extra.form
-    
     if self.discovered then
-      local scale = 1
-      if card.ability.extra.form == 0 then
-        card.ability.extra.money = 2
-        scale = 0.7
-      elseif card.ability.extra.form == 1 then
-        card.ability.extra.money = 5
-        scale = 1
-      elseif card.ability.extra.form == 2 then
-        card.ability.extra.money = 8
-        scale = 1.1
-      elseif card.ability.extra.form == 3 then
-        card.ability.extra.money = 11
-        scale = 1.2
-      end
-      card.T.w = card.children.center.original_T.w * scale
-      card.T.h = card.children.center.original_T.h * scale
+      local form = card.ability.extra.form
+      local scale = form and ({ 0.7, 1, 1.1, 1.2 })[form + 1] or 1
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          card.T.scale = card.children.center.original_T.scale * scale * 0.95
+          return true
+        end
+      }))
       self:set_sprites(card)
     end
   end,
   set_sprites = function(self, card, front)
     if pokermon.can_set_sprite(card) then
-      if card.loaded then
-        card.loaded = nil
-        self:set_ability(card)
-      end
-      if card.ability and card.ability.extra and card.ability.extra.form == 1 then
-        card.children.center:set_sprite_pos({x = 0, y = 10})
-      elseif card.ability and card.ability.extra and card.ability.extra.form == 2 then
-        card.children.center:set_sprite_pos({x = 2, y = 10})
-      elseif card.ability and card.ability.extra and card.ability.extra.form == 3 then  
-        card.children.center:set_sprite_pos({x = 4, y = 10})
-      else
-        card.children.center:set_sprite_pos({x = 10, y = 9})
-      end
+      if card.loaded then card.loaded = nil; self:set_ability(card) end
+
+      local form = card.ability and card.ability.extra and card.ability.extra.form
+      local x_pos = form and ({ 10, 0, 2, 4 })[form + 1] or 0
+      local y_pos = form == 0 and 9 or 10
+      card.children.center:set_sprite_pos({ x = x_pos, y = y_pos })
     end
   end,
   calculate = function(self, card, context)
     if context.pre_discard and not context.blueprint then
-      for k, v in ipairs(context.full_hand) do
-        if v:get_id() == 11 and not v.debuff then
-          card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
-          if card.ability.extra.jacks_discarded == card.ability.extra.jack_target then
-            v['gourgeist_trigger'..card.unique_val] = true
-            card.ability.extra.jacks_discarded = 0
-          end
+      local jacks = pokermon.filter(context.full_hand, function(v) return v:get_id() == 11 and not v.debuff end)
+      for _, v in ipairs(jacks) do
+        card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
+        if card.ability.extra.jacks_discarded == card.ability.extra.jack_target then
+          v['gourgeist_trigger'..card.unique_val] = true
+          card.ability.extra.jacks_discarded = 0
         end
       end
     end
     if context.discard then
       if context.other_card['gourgeist_trigger'..card.unique_val]  then
-        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-          G.E_MANAGER:add_event(Event({
-            func = (function()
-                SMODS.add_card {
-                    set = 'Spectral'
-                }
-                G.GAME.consumeable_buffer = 0
-                context.other_card['gourgeist_trigger'..card.unique_val] = nil
-                return true
-            end)
-          }))
-          return {
-              message = localize('k_plus_spectral'),
-              colour = G.C.SECONDARY_SET.Spectral,
-          }
-        end
-      elseif context.other_card:get_id() == 11 then
-        if not context.blueprint then
-          return {
-              message = localize('poke_boo_ex'),
-              colour = G.C.RED
-          }
-        end
+        pokermon.create_consumeable({ set = 'Spectral' }, true, card)
+      elseif context.other_card:get_id() == 11 and not context.other_card.debuff and not context.blueprint then
+        return {
+          message = localize('poke_boo_ex'),
+          colour = G.C.RED
+        }
       end
     end
     if context.using_consumeable and context.consumeable.ability.set == 'Spectral' then
       pokermon.ease_poke_dollars(card, "gourgeist", card.ability.extra.money)
       pokermon.apply_type_sticker(G.jokers.cards[1], "Psychic")
       card:juice_up()
-      card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})
+      SMODS.calculate_effect({
+        message = localize("poke_tera_ex"),
+        colour = G.C.SECONDARY_SET.Spectral
+      }, G.jokers.cards[1])
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      self:set_ability(card)
-    end
+    if not from_debuff then self:set_ability(card) end
   end,
-  load = function(self, card, card_table, other_card)
-    card.loaded = true
-  end,
+  load = function(self, card, card_table, other_card) card.loaded = true end,
   attributes = {"discard", "rank", "jack", "spectral", "generation", "economy"},
 }
 -- Bergmite 712

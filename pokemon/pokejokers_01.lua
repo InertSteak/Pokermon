@@ -302,9 +302,9 @@ local charizard={
       if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
         return {
           message = "Fire Blast!",
-          colour = G.C.XMULT,
           mult_mod = card.ability.extra.mult,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult_mod = card.ability.extra.Xmult,
+          sound = 'multhit2'
         }
       else
         return {
@@ -345,8 +345,7 @@ local mega_charizard_x = {
     if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
       if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
         return {
-          message = "Fire Blast!", 
-          colour = G.C.XMULT,
+          message = "Fire Blast!",
           Xmult_mod = card.ability.extra.Xmult
         }
       end
@@ -948,9 +947,7 @@ local mega_pidgeot = {
         end
         if (ranks + suits) > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {1 + card.ability.extra.Xmult_multi * (ranks + suits)}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = 1 + card.ability.extra.Xmult_multi * (ranks + suits)
+            Xmult = 1 + card.ability.extra.Xmult_multi * (ranks + suits)
           }
         end
       end
@@ -1309,8 +1306,79 @@ local raichu={
       end
     end
   end,
+  megas = {"mega_raichu_x", "mega_raichu_y"},
   attributes = {"mult", "economy"},
 }
+
+local mega_raichu_x={
+  name = "mega_raichu_x", 
+  pos = {x = 12, y = 1}, 
+  config = {extra={interest_cap = 25}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    local info = center.ability.extra
+    return { vars = { info.interest_cap/5}}
+  end,
+  rarity = "poke_mega", 
+  cost = 10, 
+  stage = "Mega", 
+  ptype = "Lightning",
+  atlas = "Pokedex1",
+  gen = 1, 
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      local earned = pokermon.ease_poke_dollars(card, "raichu", G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5), true)
+      
+      return{
+        card = card,
+        dollars = earned
+      }
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.interest_cap = G.GAME.interest_cap + 25
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.interest_cap = G.GAME.interest_cap - 25
+  end,
+  attributes = {"economy"},
+}
+
+local mega_raichu_y={
+  name = "mega_raichu_y", 
+  pos = {x = 12, y = 1}, 
+  config = {extra={mult_mod = 1, money_count = 1, }},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    local info = center.ability.extra
+    return { vars = { info.mult_mod, info.money_count, info.mult_mod * math.floor(((G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)) / info.money_count)}}
+  end,
+  rarity = "poke_mega", 
+  cost = 10, 
+  stage = "Mega", 
+  ptype = "Lightning",
+  atlas = "Pokedex1",
+  gen = 1, 
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      local Mult = card.ability.extra.mult_mod * math.floor(((G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)) / card.ability.extra.money_count)
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        Mult = to_number(Mult)
+      end
+      if Mult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
+          colour = G.C.MULT,
+          mult_mod = Mult
+        }
+      end
+    end
+  end,
+  attributes = {"mult"},
+}
+
 -- Sandshrew 027
 local sandshrew={
   name = "sandshrew", 
@@ -1481,5 +1549,7 @@ local nidorina={
 }
 
 return {name = "Pokemon Jokers 01-30",
-        list = { bulbasaur, ivysaur, venusaur, mega_venusaur, charmander, charmeleon, charizard, mega_charizard_x, mega_charizard_y, squirtle, wartortle, blastoise, mega_blastoise, caterpie, metapod, butterfree, weedle, kakuna, beedrill, mega_beedrill, pidgey, pidgeotto, pidgeot, mega_pidgeot, rattata, raticate, spearow, fearow, ekans, arbok, pikachu, raichu, sandshrew, sandslash, nidoranf, nidorina, },
+        list = { bulbasaur, ivysaur, venusaur, mega_venusaur, charmander, charmeleon, charizard, mega_charizard_x, mega_charizard_y, squirtle, wartortle, blastoise, mega_blastoise, 
+                 caterpie, metapod, butterfree, weedle, kakuna, beedrill, mega_beedrill, pidgey, pidgeotto, pidgeot, mega_pidgeot, rattata, raticate, spearow, fearow, ekans, arbok, 
+                 pikachu, raichu, mega_raichu_x, mega_raichu_y, sandshrew, sandslash, nidoranf, nidorina, },
 }

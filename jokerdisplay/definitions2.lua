@@ -745,35 +745,15 @@ jd_def["j_poke_espeon"] = {
             },
         },
     },
-    reminder_text = {
-        {ref_table = "card.joker_display_values", ref_value = "rank"},
-    },
     calc_function = function(card)
-        local rank = G.GAME.current_round.espeon_rank
-        local count = 0
-        if G.play then
-            local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-            if text ~= 'Unknown' then
-                for _, scoring_card in pairs(scoring_hand) do
-                    if SMODS.has_enhancement(scoring_card, 'm_wild') then
-                        count = count +
-                            JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-                    end
-                end
-            end
-        else
-            count = 3
-        end
-        card.joker_display_values.Xmult = 1 * (card.ability.extra.Xmult_multi^count)
-        card.joker_display_values.rank = localize(rank or "2", 'ranks')
+      if #G.deck.cards > 0 and G.deck.cards[#G.deck.cards]:is_suit(G.GAME.current_round.espeon_suit) then
+        card.joker_display_values.Xmult = card.ability.extra.Xmult
+      else
+        card.joker_display_values.Xmult = 1
+      end
     end,
-        retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
-            local rank = G.GAME.current_round.espeon_rank
-            if held_in_hand then return 0 end
-            return (playing_card:get_id() == rank) and
-                joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 1
-        end
 }
+
 
 --	Umbreon
 jd_def["j_poke_umbreon"] = { 

@@ -283,17 +283,15 @@ local relicanth={
     local abbr = center.ability.extra
     local depleted_count = 0
     
-    for k, v in pairs(SMODS.Ranks) do
-      local is_rank = function(deck_card)
-        if deck_card:get_id() == v.id then
-          return true
-        else
-          return false
+    for _, rank in pairs(SMODS.Ranks) do
+      if rank.in_pool and not rank:in_pool({}) then
+      else
+        local is_rank = function(deck_card)
+          return deck_card:get_id() == rank.id
         end
-      end
-      
-      if pokermon.get_depleted(is_rank) then
-        depleted_count = depleted_count + 1
+        if pokermon.get_depleted(is_rank) then
+          depleted_count = depleted_count + 1
+        end
       end
     end
     return {vars = {localize(abbr.rank, 'ranks'), abbr.chips, abbr.money_mod, abbr.Xmult_mod, math.max(1, 1 + abbr.Xmult_mod * depleted_count)}}
@@ -336,17 +334,15 @@ local relicanth={
     if context.joker_main and card.ability.extra.ancient_count > 3 then
       local depleted_count = 0
     
-      for k, v in pairs(SMODS.Ranks) do
-        local is_rank = function(deck_card)
-          if deck_card:get_id() == v.id then
-            return true
-          else
-            return false
+      for _, rank in pairs(SMODS.Ranks) do
+        if rank.in_pool and not rank:in_pool({}) then
+        else
+          local is_rank = function(deck_card)
+            return deck_card:get_id() == rank.id
           end
-        end
-        
-        if pokermon.get_depleted(is_rank) then
-          depleted_count = depleted_count + 1
+          if pokermon.get_depleted(is_rank) then
+            depleted_count = depleted_count + 1
+          end
         end
       end
       
@@ -728,6 +724,13 @@ local jirachi_banker = {
   perishable_compat = false,
   blueprint_compat = false,
   custom_pool_func = true,
+  calculate = function(self, card, context)
+    if context.modify_final_cashout and not context.blueprint then
+      return {
+        modify = context.amount * 2
+      }
+    end
+  end,
   in_pool = function(self)
     return false
   end,
@@ -824,7 +827,7 @@ local jirachi_invis = {
   atlas = pokermon_config.pokemon_altart and "jirachi" or "altjirachi",
   gen = 3,
   perishable_compat = false,
-  blueprint_compat = false,
+  blueprint_compat = true,
   no_collection = true,
   aux_poke = true,
   calculate = function(self, card, context)
@@ -1074,7 +1077,7 @@ local jirachi_fixer = {
               local cons = {
                 {set = "Tarot", message = localize('k_plus_tarot'), colour = G.C.PURPLE, key = 'c_death'},
                 {set = "Spectral", message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral, key = 'c_cryptid'},
-                {set = "poke_item", message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item, key = 'c_poke_metalcoat'},
+                {set = "poke_item", message = localize('poke_plus_pokeitem'), colour = G.C.SECONDARY_SET.poke_item, key = 'c_poke_metalcoat'},
                }
               local con = pseudorandom_element(cons, pseudoseed('jirachi_fixer'))
               local added = SMODS.add_card{set = con.set, key = con.key, key_append = 'jirachi_fixer'}

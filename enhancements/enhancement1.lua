@@ -33,22 +33,23 @@ local seed = {
    config = {extra = {level = 0, level_max = 5, money = 15}},
    loc_vars = function(self, info_queue, center)
      info_queue[#info_queue+1] = G.P_CENTERS.m_poke_flower
-     return {vars = {center.ability.extra.level_max, math.max(0, center.ability.extra.level_max - center.ability.extra.level), center.ability.extra.money}}
+     return {vars = {center.ability.extra.level_max, math.max(0, center.ability.extra.level_max - center.ability.extra.level), center.ability.extra.money, 
+         1 + (G.GAME.poke_growth_level or 0), (G.GAME.poke_growth_level or 0) > 0 and localize('k_poke_times') or localize('k_poke_time')}}
    end,
    weight = 5,
    calculate = function(self, card, context)
      if context.main_scoring and context.cardarea == G.play and card.ability and card.ability.extra and type(card.ability.extra) == 'table' then
       card.temp_level = card.temp_level or card.ability.extra.level -- If this card has yet to score this hand, snapshot the starting level to handle delayed set_sprites calls
-      card.ability.extra.level = card.ability.extra.level + 1
+      card.ability.extra.level = card.ability.extra.level + 1 + (G.GAME.poke_growth_level or 0)
 
       local level, level_max = card.ability.extra.level, card.ability.extra.level_max
 
-      if level and level > 0 and level <= level_max then
-        if level == level_max then
+      if level and level > 0 then
+        if level >= level_max then
           return {
             extra = {
               message = localize('k_upgrade_ex'),
-              sound = 'poke_seed_'..level,
+              sound = 'poke_seed_'..math.min(level_max, level),
             },
             func = function()
               ease_dollars(card.ability.extra.money);
@@ -78,8 +79,9 @@ local seed = {
    set_sprites = function(self, card, front)
     local level = card.temp_level
         or card and card.ability and type(card.ability.extra) == 'table' and card.ability.extra.level
+    local level_max = 5 or card and card.ability and type(card.ability.extra) == 'table' and card.ability.extra.level_max
      if level then
-       local x_pos = level + 1
+       local x_pos = math.min(level_max, level) + 1
        card.children.center:set_sprite_pos({x = x_pos, y = 0})
      end
    end

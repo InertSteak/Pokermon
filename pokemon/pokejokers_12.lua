@@ -326,7 +326,7 @@ local baltoy={
             colour = G.C.CLEAR,
           },
           nodes = {
-            { n = G.UIT.T, config = { text = '+'..center.ability.extra.hazard_level, colour = G.ARGS.LOC_COLOURS.hazard, scale = 0.32 } },
+            { n = G.UIT.T, config = { text = '+'..center.ability.extra.hazard_level, colour = pokermon.colours.hazard, scale = 0.32 } },
               { n = G.UIT.T, config = { text = ' '..localize('k_poke_hazard_layer'), colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
             }
         },
@@ -422,7 +422,7 @@ local claydol={
             colour = G.C.CLEAR,
           },
           nodes = {
-            { n = G.UIT.T, config = { text = '+'..center.ability.extra.hazard_level, colour = G.ARGS.LOC_COLOURS.hazard, scale = 0.32 } },
+            { n = G.UIT.T, config = { text = '+'..center.ability.extra.hazard_level, colour = pokermon.colours.hazard, scale = 0.32 } },
               { n = G.UIT.T, config = { text = ' '..localize('k_poke_hazard_layer'), colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
             }
         },
@@ -543,14 +543,14 @@ local lileep={
         pokermon.get_ancient_amount(context.scoring_hand, 8, card)
       end
       if context.joker_main and card.ability.extra.ancient_count > 0 then
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={card.ability.extra.h_size}}})
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={card.ability.extra.h_size}}})
         G.hand:change_size(card.ability.extra.h_size)
         G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
         
         if card.ability.extra.ancient_count > 1 then
           card.ability.extra_value = (card.ability.extra_value or 0) + card.ability.extra.money_mod
           card:set_cost()
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
+          card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
           for k, v in ipairs(G.consumeables.cards) do
             v.ability.extra_value = (v.ability.extra_value or 0) + card.ability.extra.money_mod
             v:set_cost()
@@ -615,14 +615,14 @@ local cradily={
         pokermon.get_ancient_amount(context.scoring_hand, 8, card)
       end
       if context.joker_main and card.ability.extra.ancient_count > 0 then
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={card.ability.extra.h_size}}})
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={card.ability.extra.h_size}}})
         G.hand:change_size(card.ability.extra.h_size)
         G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
         
         if card.ability.extra.ancient_count > 1 then
           card.ability.extra_value = (card.ability.extra_value or 0) + card.ability.extra.money_mod
           card:set_cost()
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
+          card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
           for k, v in ipairs(G.consumeables.cards) do
             v.ability.extra_value = (v.ability.extra_value or 0) + card.ability.extra.money_mod
             v:set_cost()
@@ -785,11 +785,12 @@ local armaldo={
       end
 
       if card.ability.extra.ancient_count > 3 then
+        local total_xmult = self:get_total_Xmult(card)
         return {
           message = localize("poke_x_scissor_ex"),
-          colour = G.C.MULT,
           mult_mod = card.ability.extra.mult,
-          Xmult_mod = self:get_total_Xmult(card),
+          Xmult_mod = total_xmult,
+          sound = total_xmult > 1 and 'multhit2' or nil
         }
       else
         return {
@@ -881,95 +882,77 @@ local milotic={
 }
 -- Castform 351
 -- Kecleon 352
--- Minor bug causes Kecleon to proc automatically the first time when you start with it.
--- Minor timing delay when certain effects give you a Joker, like using a Poke Ball in the store. Causes potential issue with timing if you move the Joker and sell it, causing the effect to trigger.
-local kecleon={
+local kecleon = {
   name = "kecleon",
-  pos = {x = 12, y = 23},
-  config = {extra = {mult_mod = 2, mult = 0, joker_tally = (G.jokers and #G.jokers or 0), latest_type = "Colorless"}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult_mod, center.ability.extra.mult}}
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 2}},
+  loc_vars = function(self, info_queue, card)
+    local ptype = pokermon.get_type(card) or 'Colorless'
+    local colour = pokermon.colours[string.lower(ptype)]
+    local text_colour = ptype ~= 'Lightning' and G.C.WHITE or G.C.BLACK
+
+    return {vars = {card.ability.extra.Xmult, ptype, colours = {colour, text_colour}}}
   end,
-  rarity = 3,
-  cost = 8,
+  rarity = 2,
+  cost = 6,
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex3",
-  perishable_compat = true,
-  blueprint_compat = false,
-  eternal_compat = true,
+  gen = 3,
+  blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+    if context.joker_main and #pokermon.find_pokemon_type(pokermon.get_type(card)) >= 3 then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
+  end,
+  set_sprites = function(self, card)
+    local ptype = pokermon.get_type(card)
+    local sprite_pos = ({
+      ['Dark'] = {x = 6, y = 0},
+      ['Dragon'] = {x = 8, y = 0},
+      ['Earth'] = {x = 10, y = 0},
+      ['Fairy'] = {x = 0, y = 1},
+      ['Fighting'] = {x = 2, y = 1},
+      ['Fire'] = {x = 4, y = 1},
+      ['Grass'] = {x = 6, y = 1},
+      ['Lightning'] = {x = 8, y = 1},
+      ['Metal'] = {x = 10, y = 1},
+      ['Psychic'] = {x = 0, y = 2},
+      ['Water'] = {x = 2, y = 2},
+    })[ptype]
 
-	--Update Kecleon if a new Joker is obtained for any reason
-	if #G.jokers.cards > card.ability.extra.joker_tally then
-		local newest_joker = G.jokers.cards[#G.jokers.cards]
-		if has_type(newest_joker) and not is_type(card, newest_joker.ability.extra.ptype) then
-			apply_type_sticker(card, newest_joker.ability.extra.ptype)
-			card.ability.extra.joker_tally = #G.jokers.cards
-		end
-	elseif #G.jokers.cards < card.ability.extra.joker_tally then
-		card.ability.extra.joker_tally = #G.jokers.cards
-	end
-	  
-	  
-  -- --Increase Kecleon's mult if it changes type for any reason
-  if not is_type(card, card.ability.extra.latest_type) then
-	card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-	card.ability.extra.latest_type = get_type(card)
-	card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_kecleon_ex'), colour = G.C.FILTER})
-	card:juice_up()
-	--Set sprite depending on type
-		if is_type(card, "Dark") then
-		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
-		  card.children.center:set_sprite_pos({x = 6, y = 0})
-		elseif is_type(card, "Dragon") then
-		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
-		  card.children.center:set_sprite_pos({x = 8, y = 0})
-		elseif is_type(card, "Earth") then
-		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
-		  card.children.center:set_sprite_pos({x = 10, y = 0})
-		elseif is_type(card, "Fairy") then
-		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
-		  card.children.center:set_sprite_pos({x = 0, y = 1})
-		elseif is_type(card, "Fighting") then
-		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
-		  card.children.center:set_sprite_pos({x = 2, y = 1})
-		elseif is_type(card, "Fire") then
-		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
-		  card.children.center:set_sprite_pos({x = 4, y = 1})
-		elseif is_type(card, "Grass") then
-		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
-		  card.children.center:set_sprite_pos({x = 6, y = 1})
-		elseif is_type(card, "Lightning") then
-		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
-		  card.children.center:set_sprite_pos({x = 8, y = 1})
-		elseif is_type(card, "Metal") then
-		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
-		  card.children.center:set_sprite_pos({x = 10, y = 1})
-		elseif is_type(card, "Psychic") then
-		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
-		  card.children.center:set_sprite_pos({x = 0, y = 2})
-		elseif is_type(card, "Water") then
-		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
-		  card.children.center:set_sprite_pos({x = 2, y = 2})
-		else
-		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicNatdex")
-		  card.children.center:set_sprite_pos({x = 12, y = 23})
-		end
-	end
-  end
+    if sprite_pos then
+      card.children.center.atlas = SMODS.get_atlas('poke_'..card.config.center.poke_lookup_atlas)
+      card.children.center:set_sprite_pos(sprite_pos)
+    else
+      card.children.center.atlas = SMODS.get_atlas(card.config.center.atlas)
+      card.children.center:set_sprite_pos(card.config.center.pos)
+    end
+  end,
+  set_type = function(self, card, ptype)
+    pokermon.apply_type_sticker(card, ptype)
+    self:set_sprites(card)
+    SMODS.recalc_debuff(card)
+  end,
+  update = function(self, card, dt)
+    if not (card.area and card.area == G.jokers) then return end
+    local other_joker
+    for k, v in ipairs(G.jokers.cards) do
+      if v == card then other_joker = G.jokers.cards[k+1] break end
+    end
+    if other_joker then
+      local other_type = pokermon.get_type(other_joker) or 'Colorless'
+      if pokermon.get_type(card) ~= other_type then
+        self:set_type(card, other_type)
+      end
+    elseif not is_type(card, 'Colorless') then
+      self:set_type(card, 'Colorless')
+    end
+  end,
+  attributes = {"types", "joker", "xmult"},
 }
-
 -- Shuppet 353
 -- Banette 354
 -- Duskull 355
@@ -1226,9 +1209,7 @@ local absol={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult
         }
       end
     end
@@ -1268,9 +1249,7 @@ local wynaut={
       if context.joker_main then
         pokermon.faint_baby_poke(self, card, context)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
+          Xmult = card.ability.extra.Xmult_minus
         }
       end
     end
@@ -1287,6 +1266,5 @@ local wynaut={
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 return {name = "Pokemon Jokers 331-360", 
-      list = {cacnea, cacturne, swablu, altaria, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, kecleon, duskull, dusclops, tropius, chimecho, absol, wynaut},
-
+        list = {cacnea, cacturne, swablu, altaria, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, tropius, chimecho, absol, wynaut},
 }

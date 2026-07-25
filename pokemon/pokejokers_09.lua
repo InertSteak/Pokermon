@@ -525,9 +525,7 @@ local celebi = {
       if context.joker_main then
         local Xmult = 1 + (G.GAME.round * card.ability.extra.Xmult_mod)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = Xmult
+          Xmult = Xmult
         }
       end
     end
@@ -897,22 +895,13 @@ local blaziken={
         end
       end
     end
-    
+
     if context.other_joker and (pokermon.is_type(context.other_joker, "Fire") or pokermon.is_type(context.other_joker, "Fighting")) and card.ability.extra.cards_discarded >= card.ability.extra.discard_target then
-      G.E_MANAGER:add_event(Event({
-        func = function()
-            context.other_joker:juice_up(0.5, 0.5)
-            return true
-        end
-      })) 
       return {
-        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-        colour = G.C.XMULT,
-        Xmult_mod = card.ability.extra.Xmult_multi, 
-        card = context.other_joker
+        Xmult = card.ability.extra.Xmult_multi,
       }
     end
-    
+
     if context.end_of_round and not context.individual and not context.repetition then
       card.ability.extra.cards_discarded = 0
       card:juice_up()
@@ -1252,7 +1241,7 @@ local zigzagoon={
         if SMODS.pseudorandom_probability(card, 'zigzagoon', card.ability.extra.num, card.ability.extra.dem, 'zigzagoon') then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
           return {
-            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.pink, func = function()
+            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = pokermon.colours.pink, func = function()
               G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.0,
@@ -1299,7 +1288,7 @@ local linoone={
         if next(context.poker_hands['Straight']) or SMODS.pseudorandom_probability(card, 'linoone', card.ability.extra.num, card.ability.extra.dem, 'linoone') then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
           return {
-            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.pink, func = function()
+            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = pokermon.colours.pink, func = function()
               G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.0,
@@ -1461,7 +1450,13 @@ local beautifly={
           end
         end
         if has_nature and SMODS.pseudorandom_probability(card, 'beautifly', card.ability.extra.num, card.ability.extra.dem, 'beautifly') then
-          SMODS.smart_level_up_hand(context.blueprint_card or card, 'Flush')
+          local instant = (context.scoring_name ~= 'Flush')
+          SMODS.upgrade_poker_hands{hands = 'Flush', from = context.blueprint_card or card, instant = instant}
+          if instant then 
+            return {
+              message = localize('k_upgrade_ex')
+            }
+          end
         end
       end
       if context.joker_main then
@@ -1563,16 +1558,14 @@ local dustox={
         end
         if all_nature then
           return {
-            message = localize('poke_bug_buzz_ex'), 
-            colour = G.C.XMULT,
+            message = localize('poke_bug_buzz_ex'),
             chip_mod = card.ability.extra.chips,
             Xmult_mod = card.ability.extra.Xmult,
+            sound = 'multhit2'
           }
         else
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
-            chip_mod = card.ability.extra.chips
+            chips = card.ability.extra.chips
           }
         end
       end

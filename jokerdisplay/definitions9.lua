@@ -163,7 +163,7 @@ jd_def["j_poke_rellor"] = {
     { ref_table = "card.joker_display_values", ref_value = "mult", colour = G.C.MULT },
   },
   calc_function = function(card)
-    card.joker_display_values.mult = (G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.item or 0) * card.ability.extra.mult_mod
+    card.joker_display_values.mult = (G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_item or 0) * card.ability.extra.mult_mod
   end
 }
 
@@ -174,7 +174,7 @@ jd_def["j_poke_rabsca"] = {
     { ref_table = "card.joker_display_values", ref_value = "mult", colour = G.C.MULT },
   },
   calc_function = function(card)
-    card.joker_display_values.mult = (G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.item or 0) * card.ability.extra.mult_mod
+    card.joker_display_values.mult = (G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_item or 0) * card.ability.extra.mult_mod
   end
 }
 

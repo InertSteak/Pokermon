@@ -45,7 +45,7 @@ local get_default_args_from_existing = function(key, set)
   return args
 end
 
-function PokeDisplayCard:init(args, x, y, w, h)
+function PokeDisplayCard:init(args, x, y, w, h, params)
   if args.existing_key then
     local default_args = get_default_args_from_existing(args.existing_key, args.set)
     args = SMODS.merge_defaults(args, default_args)
@@ -61,6 +61,7 @@ function PokeDisplayCard:init(args, x, y, w, h)
   self.display_text = args.display_text
   self.shader = args.shader
   self.soul_shader = args.soul_shader
+  self.glossary_ignore = args.glossary_ignore
 
   -- To disable automatic `no_ui` while using vanilla tooltip functionality, set `display_text` to false
   if self.display_text == nil then self.no_ui = true end
@@ -83,7 +84,7 @@ function PokeDisplayCard:init(args, x, y, w, h)
     self.components[#self.components+1] = v
   end
 
-  Card.init(self, x, y, w, h, nil, fake_center)
+  Card.init(self, x, y, w, h, nil, fake_center, params)
 end
 
 function PokeDisplayCard:remove()
@@ -325,6 +326,8 @@ function pokermon.ui.create_art_display_card(args, ...)
   if args.soul_pos then
     args.components[#args.components+1] = LayerToggleComponent(args.layer)
   end
+
+  args.glossary_ignore = true
 
   return PokeDisplayCard(args, ...)
 end

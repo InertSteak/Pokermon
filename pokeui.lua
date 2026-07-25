@@ -1,3 +1,5 @@
+local mod_dir = ''..SMODS.current_mod.path
+
 --Config UI
 local energy_toggles = {
   {ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy", tooltip = {set = 'Other', key = 'unlimited_energy_tooltip'}}, 
@@ -235,7 +237,7 @@ local pokermon_actual_credits = function()
     { localize("poke_credits_sound"), "Dread" },
     { localize("poke_credits_developer"), "SDM0, Jevonnissocoolman, Ishtech, Fem," },
     { localize("poke_credits_developer"), "MathIsFun_, Kek, Eternalnacho, Emma" },
-    { localize("poke_credits_designer"), "Xilande, Lemmanade, PrincessRoxie, Catzzadilla" },
+    { localize("poke_credits_designer"), "Xilande, Lemmanade, PrincessRoxie, Catzzadilla", "bt", "Emma" },
     { localize("poke_credits_localization"), "Rafael, PainKiller, FlamingRok, Mr. Onyx" },
     { localize("poke_credits_localization"), "PIPIKAI, PanbimboGD, HuyCorn, IlPastaio, heyctf" },
     { localize("poke_credits_community_manager"), "Astra, Kaethela" },
@@ -703,7 +705,7 @@ function G.UIDEF.use_and_sell_buttons(card)
 end
 G.FUNCS.poke_can_reserve_card = function(e)
     if #G.consumeables.cards < G.consumeables.config.card_limit then 
-        e.config.colour = G.ARGS.LOC_COLOURS.pink
+        e.config.colour = pokermon.colours.pink
         e.config.button = 'poke_reserve_card' 
     else
       e.config.colour = G.C.UI.BACKGROUND_INACTIVE

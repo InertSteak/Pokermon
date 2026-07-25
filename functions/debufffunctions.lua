@@ -8,8 +8,8 @@ SMODS.current_mod.set_debuff = function(card)
 
    -- prevent debuffs
    if card.ability.name == "gholdengo" then return 'prevent_debuff' end
-   if SMODS.has_enhancement(card, 'm_wild') and next(find_joker("tangrowth")) then return 'prevent_debuff' end
-   if card:get_id() == 10 and next(find_joker("tentacruel")) then return 'prevent_debuff' end
+   if SMODS.has_enhancement(card, 'm_wild') and next(SMODS.find_card("j_poke_tangrowth")) then return 'prevent_debuff' end
+   if card:get_id() == 10 and next(SMODS.find_card("j_poke_tentacruel")) then return 'prevent_debuff' end
 
    return false
 end

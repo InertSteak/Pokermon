@@ -228,93 +228,84 @@ pokermon.copy_scaled_values = function(card)
   end
 end
 
+---@deprecated use pokermon.do_evolution_anim instead
 pokermon.fake_evolve = function(card, evolve_message, set_sprites)
-    G.E_MANAGER:add_event(Event({
-      func = function()
-        if card.poke_evolution_timer then return true end
-        card.poke_evolution_timer = 0
-        G.E_MANAGER:add_event(Event({
-            trigger = 'ease',
-            ref_table = card,
-            ref_value = 'poke_evolution_timer',
-            ease_to = 1.5,
-            delay = 2.0,
-            func = (function(t) return t end)
-        }))
-        if set_sprites then
-          G.E_MANAGER:add_event(Event({
-            func = function()
-              card:set_sprites(card.config.center)
-              return true
-            end
-          }))
-        end
-        G.E_MANAGER:add_event(Event({
-            trigger = 'ease',
-            ref_table = card,
-            ref_value = 'poke_evolution_timer',
-            ease_to = 2.25,
-            delay = 1.0,
-            func = (function(t) return t end)
-        }))
+  local on_complete = function()
+    if set_sprites then
+      card:set_sprites(card.config.center)
+    end
+  end
+
+  pokermon.do_evolution_anim(card, on_complete, evolve_message)
+end
+
+pokermon.do_evolution_anim = function(card, on_complete, evo_message)
+  G.E_MANAGER:add_event(Event({
+    func = function()
+      if card.poke_evolution_timer then return true end
+      card.poke_evolution_timer = 0
+      G.E_MANAGER:add_event(Event({
+        trigger = 'ease',
+        ref_table = card,
+        ref_value = 'poke_evolution_timer',
+        ease_to = 1.5,
+        delay = 2.0,
+        func = (function(t) return t end)
+      }))
+      if type(on_complete) == 'function' then
         G.E_MANAGER:add_event(Event({
           func = function()
-            card.poke_evolution_timer = nil
-            play_sound('tarot1')
-            card_eval_status_text(card, 'extra', nil, nil, nil, { message = evolve_message or localize("poke_evolve_success"), colour = G.C.FILTER, instant = true})
+            on_complete(card)
             return true
           end
         }))
-        return true
       end
-    }))
+      G.E_MANAGER:add_event(Event({
+        trigger = 'ease',
+        ref_table = card,
+        ref_value = 'poke_evolution_timer',
+        ease_to = 2.25,
+        delay = 1.0,
+        func = (function(t) return t end)
+      }))
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          card.poke_evolution_timer = nil
+          play_sound('tarot1')
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = evo_message or localize("poke_evolve_success"), colour = G.C.FILTER, instant = true})
+          return true
+        end
+      }))
+      return true
+    end
+  }))
+end
+
+local call_backend_evolve = function(card, to_key, immediate, message, energize_amount)
+  if immediate then
+    pokermon.backend_evolve(card, to_key, energize_amount)
+  elseif G.P_CENTERS[to_key] ~= card.config.center then
+    pokermon.do_evolution_anim(
+      card,
+      function() pokermon.backend_evolve(card, to_key, energize_amount) end,
+      message)
+  end
 end
 
 pokermon.evolve = function(card, to_key, immediate, evolve_message, transformation, energize_amount)
   if G.GAME.modifiers.poke_apply_randomizer and not transformation then
     to_key = pokermon.get_random_poke_key('randomizer')
   end
-  if immediate then
-    pokermon.backend_evolve(card, to_key, energize_amount)
-  else
-    G.E_MANAGER:add_event(Event({
-      func = function()
-        if card.poke_evolution_timer or G.P_CENTERS[to_key] == card.config.center then return true end
-        card.poke_evolution_timer = 0
-        G.E_MANAGER:add_event(Event({
-            trigger = 'ease',
-            ref_table = card,
-            ref_value = 'poke_evolution_timer',
-            ease_to = 1.5,
-            delay = 2.0,
-            func = (function(t) return t end)
-        }))
-        G.E_MANAGER:add_event(Event({
-          func = function()
-            pokermon.backend_evolve(card, to_key, energize_amount)
-            return true
-          end
-        }))
-        G.E_MANAGER:add_event(Event({
-            trigger = 'ease',
-            ref_table = card,
-            ref_value = 'poke_evolution_timer',
-            ease_to = 2.25,
-            delay = 1.0,
-            func = (function(t) return t end)
-        }))
-        G.E_MANAGER:add_event(Event({
-          func = function()
-            card.poke_evolution_timer = nil
-            play_sound('tarot1')
-            card_eval_status_text(card, 'extra', nil, nil, nil, { message = evolve_message or localize("poke_evolve_success"), colour = G.C.FILTER, instant = true})
-            return true
-          end
-        }))
-        return true
-      end
-    }))
-  end
+
+  call_backend_evolve(card, to_key, immediate, evolve_message, energize_amount)
+end
+
+pokermon.devolve = function(card, to_key, immediate, devolve_message)
+  call_backend_evolve(card, to_key, immediate, devolve_message or localize('poke_devolve_success'))
+end
+
+pokermon.change_form = function(card, to_key, immediate, transform_message)
+  call_backend_evolve(card, to_key, immediate, transform_message or localize('poke_transform_success'))
 end
 
 -- Stolen from Cardsauce
@@ -438,7 +429,7 @@ end
 
 pokermon.can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
   if not G.P_CENTERS[forced_key] then return false end
-  if next(find_joker("everstone")) and not allow_level then return false end
+  if next(SMODS.find_card("j_poke_everstone")) and not allow_level then return false end
   if (context.evolution or ignore_step) and not context.blueprint and not card.gone then
     return true
   else
@@ -468,7 +459,7 @@ pokermon.level_evo = function(self, card, context, forced_key)
     end
     if pokermon.can_evolve(self, card, context, forced_key, true) and card.ability.extra.rounds <= 1 and not card.ability.extra.juiced then
       card.ability.extra.juiced = true
-      local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(find_joker("everstone")) and card.ability.extra.juiced end
+      local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(SMODS.find_card("j_poke_everstone")) and card.ability.extra.juiced end
       juice_card_until(card, eval, true)
     end
 end
@@ -914,56 +905,63 @@ pokermon.evo_item_in_pool = function(self)
     return false
 end
 
-pokermon.type_tooltip = function(self, info_queue, center)
-  local percent
-  if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and (pokermon.energy.get_total_energy(center) ~= 0)) then
-      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {pokermon.energy.get_total_energy(center), pokermon.energy.max + (G.GAME.poke_energy_plus or 0) + (center.ability.extra.e_limit_up or 0)}}
-      if center.ability.money_frac and center.ability.money_frac > 0 then
-        percent = tonumber(string.format('%.3f', center.ability.money_frac)) * 100
-        if percent ~= 100 and percent ~= 0 then
-          info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
-        end
-      end
-      if center.ability.money_mod_frac and center.ability.money_mod_frac > 0 then
-        percent = tonumber(string.format('%.3f', center.ability.money_mod_frac)) * 100
-        if percent ~= 100 and percent ~= 0 then
-          info_queue[#info_queue+1] = {set = 'Other', key = "money_progress", vars = {percent}}
-        end
-      end
-      if center.ability.mult_mod_frac and center.ability.mult_mod_frac > 0 then
-        percent = tonumber(string.format('%.3f', center.ability.mult_mod_frac)) * 100
-        if percent ~= 100 and percent ~= 0 then
-          info_queue[#info_queue+1] = {set = 'Other', key = "mult_progress", vars = {percent}}
-        end
-      end
-      if center.ability.chip_mod_frac and center.ability.chip_mod_frac > 0 then
-        percent = tonumber(string.format('%.3f', center.ability.chip_mod_frac)) * 100
-        if percent ~= 100 and percent ~= 0 then
-          info_queue[#info_queue+1] = {set = 'Other', key = "chip_progress", vars = {percent}}
-        end
-      end
-  elseif (center.ability and (pokermon.energy.get_total_energy(center) > 0)) then
-      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {pokermon.energy.get_total_energy(center), pokermon.energy.max + (G.GAME.poke_energy_plus or 0)}}
-      if center.ability.money_frac then
-        percent = tonumber(string.format('%.3f', center.ability.money_frac)) * 100
-        if percent ~= 100 and percent ~= 0 then
-          info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
-        end
-      end
+pokermon.add_frac_tooltip = function(info_queue, card, frac_var, loc_key)
+  if card.ability[frac_var] and card.ability[frac_var] > 0 then
+    local percent = tonumber(string.format('%.3f', card.ability[frac_var])) * 100
+    if percent ~= 100 and percent ~= 0 then
+      info_queue[#info_queue + 1] = {set = 'Other', key = loc_key, vars = {percent}}
+    end
   end
-  if self.megas and pokermon_config.detailed_tooltips then
+end
+
+pokermon.add_energy_tooltip = function(info_queue, card)
+  if card.ability and type(card.ability.extra) == 'table' and ( pokermon.energy.get_total_energy(card) ~= 0
+      or card.ability.extra.e_limit_up and card.ability.extra.e_limit_up > 0 ) then
+    local energy = pokermon.energy.get_total_energy(card)
+    local energy_max = pokermon.energy.max + (G.GAME.poke_energy_plus or 0) + (card.ability.extra.e_limit_up or 0)
+
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energy', vars = {energy, energy_max}}
+
+    pokermon.add_frac_tooltip(info_queue, card, 'money_frac', 'money_chance')
+    pokermon.add_frac_tooltip(info_queue, card, 'money_mod_frac', 'money_progress')
+    pokermon.add_frac_tooltip(info_queue, card, 'mult_mod_frac', 'mult_progress')
+    pokermon.add_frac_tooltip(info_queue, card, 'chip_mod_frac', 'chip_progress')
+  elseif card.ability and pokermon.energy.get_total_energy(card) > 0 then
+    local energy = pokermon.energy.get_total_energy(card)
+    local energy_max = pokermon.energy.max + (G.GAME.poke_energy_plus or 0)
+
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energy', vars = {energy, energy_max}}
+
+    pokermon.add_frac_tooltip(info_queue, card, 'money_frac', 'money_chance')
+  end
+end
+
+pokermon.add_mega_evolution_tooltip = function(center, info_queue)
+  if center.megas and pokermon_config.detailed_tooltips then
     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    if #self.megas > 1 and next(SMODS.find_card('c_poke_megastone')) then
+    if #center.megas > 1 and next(SMODS.find_card('c_poke_megastone')) then
       local mega_names = {}
-      for _, mega in ipairs(self.megas) do
-        local prefix = self.poke_custom_prefix or "poke"
-        local key = "j_"..prefix.."_"..mega
-        mega_names[#mega_names+1] = localize({type = "name_text", set = "Joker", key = key})
+      for _, mega in ipairs(center.megas) do
+        local prefix = center.poke_custom_prefix or 'poke'
+        local key = 'j_' .. prefix .. '_' .. mega
+        mega_names[#mega_names+1] = localize({type = 'name_text', set = 'Joker', key = key})
       end
       info_queue[#info_queue+1] = {set = 'Other', key = 'split_mega', vars = mega_names}
     end
   end
 end
+
+pokermon.add_joker_tooltips = function(self, info_queue, card)
+  if self.stage then
+    if not card then card = self:create_fake_card() end
+
+    pokermon.add_energy_tooltip(info_queue, card)
+    pokermon.add_mega_evolution_tooltip(self, info_queue)
+  end
+end
+
+---@deprecated functionality has been made baseline
+pokermon.type_tooltip = function(self, info_queue, center) end
 
 pokermon.set_type_badge = function(self, card, badges)
   local ptype = pokermon.get_type(card)
@@ -980,7 +978,7 @@ pokermon.set_type_badge = function(self, card, badges)
     if lower_ptype == "bird" then
       if math.random(0,5) == 5 then ptype = nil end
     end
-    badges[#badges+1] = create_badge(ptype, G.ARGS.LOC_COLOURS[lower_ptype], text_colour, 1.2 )
+    badges[#badges+1] = create_badge(ptype, pokermon.colours[lower_ptype], text_colour, 1.2 )
   end
 end
 
@@ -1495,34 +1493,48 @@ pokermon.fossil_generate_ui = function(self, info_queue, card, desc_nodes, speci
 end
 
 pokermon.generate_pickup_item_key = function(seed)
-  local item_key = 'c_poke_transformation'
+  local item_key
   local item_chance = pseudorandom(seed)
+
   if item_chance < .34 then item_key = nil
-  elseif item_chance < .59 then item_key = 'evo'
+  elseif item_chance < .59 then item_key = pokermon.poll_evo_item(seed)
   elseif item_chance < .79 then item_key = 'c_poke_leftovers'
   elseif item_chance < .99 then item_key = 'c_poke_twisted_spoon'
+  else item_key = 'c_poke_transformation'
   end
-  
-  if item_key == "evo" then
-    local evo_item_keys = {}
-    for k, v in pairs(G.jokers.cards) do
-      if v.config.center.item_req then
-        if type(v.config.center.item_req) == "table" then
-          item_key = "c_poke_"..pseudorandom_element(v.config.center.item_req, pseudoseed(seed))
-        else
-          item_key = "c_poke_"..v.config.center.item_req
-        end
-        table.insert(evo_item_keys, item_key)
-      end
-    end
-    if #evo_item_keys > 0 then
-      item_key = pseudorandom_element(evo_item_keys, pseudoseed(seed))
-    else
-      item_key = nil
-    end
-  end
-  
+
   return item_key
+end
+
+pokermon.poll_evo_item = function(seed)
+  local evo_item_key_set = {}
+  for _, v in pairs(G.jokers.cards) do
+    if v.config.center.item_req then
+      local item_req = type(v.config.center.item_req) == 'table'
+          and pseudorandom_element(v.config.center.item_req, pseudoseed(seed))
+          or v.config.center.item_req
+
+      local prefix = pokermon.has(POKE_NATIVE_EVO_ITEMS, item_req)
+          and 'poke'
+          or v.config.center.poke_custom_prefix
+
+      local item_key = 'c_' .. prefix .. '_' .. item_req
+
+      evo_item_key_set[item_key] = true
+    end
+  end
+
+  local evo_item_key_list = {}
+  for key, _ in pairs(evo_item_key_set) do
+    if G.P_CENTERS[key] and not G.GAME.used_jokers[key] and not G.GAME.banned_keys[key]
+        and (not type(G.P_CENTERS[key].in_pool) == 'function' or G.P_CENTERS[key]:in_pool()) then
+      evo_item_key_list[#evo_item_key_list+1] = key
+    end
+  end
+  if #evo_item_key_list > 1 then
+    return pseudorandom_element(evo_item_key_list, pseudoseed(seed))
+  end
+  return evo_item_key_list[1]
 end
 
 pokermon.set_sprites = function(self, card, front)
@@ -1595,20 +1607,31 @@ pokermon.reset_type = function(name, exclude_names)
   end
 end
 
-pokermon.reset_espeon_card = function()
-  G.GAME.current_round.espeon_rank = 'Ace'
-  G.GAME.current_round.espeon_id = 14
-  
-  local valid_espeon_cards = {}
+pokermon.reset_espeon_suit = function()
+  local espeon_suits = {}
+  for k, v in ipairs({'Spades','Hearts','Clubs','Diamonds'}) do
+      if v ~= G.GAME.current_round.espeon_suit then espeon_suits[#espeon_suits + 1] = v end
+  end
+  local espeon_card = pseudorandom_element(espeon_suits, pseudoseed('espeon'..G.GAME.round_resets.ante))
+  G.GAME.current_round.espeon_suit = espeon_card
+end
+
+pokermon.reset_bronzo_card = function()
+  G.GAME.current_round.bronzo_rank = 'Ace'
+  G.GAME.current_round.bronzo_id = 14
+  G.GAME.current_round.bronzo_suit = 'Spades'
+
+  local valid_bronzo_cards = {}
   for _, playing_card in ipairs(G.playing_cards) do
     if not SMODS.has_no_suit(playing_card) and not SMODS.has_no_rank(playing_card) then
-      valid_espeon_cards[#valid_espeon_cards + 1] = playing_card
+      valid_bronzo_cards[#valid_bronzo_cards + 1] = playing_card
     end
   end
-  local espeon_card = pseudorandom_element(valid_espeon_cards, 'espeon' .. G.GAME.round_resets.ante)
-  if espeon_card then
-    G.GAME.current_round.espeon_rank = espeon_card.base.value
-    G.GAME.current_round.espeon_id = espeon_card.base.id
+  local bronzo_card = pseudorandom_element(valid_bronzo_cards, 'bronzo' .. G.GAME.round_resets.ante)
+  if bronzo_card then
+    G.GAME.current_round.bronzo_rank = bronzo_card.base.value
+    G.GAME.current_round.bronzo_id = bronzo_card.base.id
+    G.GAME.current_round.bronzo_suit = bronzo_card.base.suit
   end
 end
 
@@ -1745,12 +1768,12 @@ pokermon.get_available_planet_cards = function()
   return planets
 end
 
-pokermon.create_held_item = function(args)
+pokermon.create_consumeable = function(args, in_event, message_card)
   if type(args) == 'string' then args = { key = args } end
-  if not G.GAME.banned_keys[args.key]
-      and (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit or args.edition == 'e_negative') then
-    local card = SMODS.add_card(args)
-    local set = card.ability.set
+  if (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit or args.edition == 'e_negative') then
+    args.set = args.set or G.P_CENTERS[args.key] and G.P_CENTERS[args.key].set
+    args.skip_materialize = true
+    local card = SMODS.create_card(args)
     local loc_keys = {
       ['Tarot'] = 'k_plus_tarot',
       ['Planet'] = 'k_plus_planet',
@@ -1758,9 +1781,24 @@ pokermon.create_held_item = function(args)
       ['poke_item'] = 'poke_plus_pokeitem',
       ['poke_energy'] = 'poke_plus_pokeitem',
     }
+    card.states.visible = nil
+    if in_event then
+      G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+      G.E_MANAGER:add_event(Event({
+        func = (function()
+          SMODS.add_to_deck(card, args)
+          card:start_materialize()
+          G.GAME.consumeable_buffer = 0
+          return true
+        end)
+      }))
+    else
+      SMODS.add_to_deck(card, args)
+      card:start_materialize()
+    end
     SMODS.calculate_effect({
-      message = localize(loc_keys[set]),
-      colour = G.C.SECONDARY_SET[set]
-    }, card)
+      message = loc_keys[args.set] and localize(loc_keys[args.set]) or "+1 " .. card.ability.set,
+      colour = G.C.SECONDARY_SET[args.set]
+    }, message_card or card)
   end
 end

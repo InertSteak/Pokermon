@@ -141,3 +141,11 @@ function poke_set_mystery_dungeon_back_sprites()
     handle_mystery_dungeon_sprites(card)
   end
 end
+
+-- Pumpkaboo and Gourgeist small form juice fix
+local juiceupref = Card.juice_up
+function Card:juice_up(scale, rot_amount)
+  juiceupref(self, scale, rot_amount)
+  if not scale then scale = 0.11 end
+  if self.T.scale < 0.9 then self.VT.scale = self.T.scale - 0.6 * scale end
+end

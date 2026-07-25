@@ -153,10 +153,9 @@ local gholdengo={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.joker_main then
+    if context.joker_main and card.ability.extra.Xmult > 1 then
       return {
         message = localize('poke_make_it_rain'),
-        colour = G.C.MONEY,
         Xmult_mod = card.ability.extra.Xmult
       }
     end
