@@ -1458,7 +1458,7 @@ end
 pokermon.create_consumeable = function(args, in_event, message_card)
   if type(args) == 'string' then args = { key = args } end
   if (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit or args.edition == 'e_negative') then
-    args.set = G.P_CENTERS[args.key] and G.P_CENTERS[args.key].set
+    args.set = args.set or G.P_CENTERS[args.key] and G.P_CENTERS[args.key].set
     args.skip_materialize = true
     local card = SMODS.create_card(args)
     local loc_keys = {
