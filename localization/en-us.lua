@@ -756,6 +756,14 @@ return {
                     "{s:0.8}Applies all previous Stakes"
                 }
             },
+            stake_poke_elite = {
+              name = "Elite Stake",
+              text = {
+                "{X:gray,C:attention}+2{} Ante win requirement",
+                "Last {C:attention}4{} Antes are {C:attention}Showdown Boss Blinds",
+                "{s:0.8}Applies all previous Stakes"
+              },
+            },
         },
         Joker = {
             j_poke_bulbasaur = {
@@ -4588,6 +4596,13 @@ return {
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
+            j_poke_chatot = {
+                name = 'Chatot',
+                text = {
+                    "If a card is retriggered,",
+                    "retrigger it again {C:inactive,s:0.8}(once per hand)",
+                }
+            },
             j_poke_munchlax = {
                 name = 'Munchlax',
                 text = {
@@ -7914,6 +7929,7 @@ return {
 			c_poke_speed = "Speed",
 			c_poke_deer = "Seasons Greetings",
             c_poke_morpeko = "Feeling Hangry",
+            c_poke_chatot = "Repeat After Me",
             
         },
         dictionary = {

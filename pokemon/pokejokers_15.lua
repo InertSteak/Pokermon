@@ -516,6 +516,79 @@ local happiny={
   attributes = {"baby", "tarot", "generation", "chance", "round_evo"},
 }
 -- Chatot 441
+local chatot={
+  name = "chatot",
+  pos = {x = 12, y = 3},
+  config = {extra = {retriggers = 1}},
+  set_ability = function(self, card, initial, delay_sprites)
+    card.ability.extra = card.ability.extra or {}
+    card.ability.extra.card_triggers = {}
+  end,
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex4",
+  gen = 4,
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    -- Fast exit to prevent infinite loops with multiple Chatots
+    if context.chatot_check then return end
+
+    -- Reset trigger table when scoring hand
+    if context.before then
+        card.ability.extra.card_triggers = {}
+    end
+
+    if context.repetition and context.cardarea == G.play then
+        card.ability.extra.card_triggers = card.ability.extra.card_triggers or {}
+        local id = context.other_card.unique_val or context.other_card.ID
+        
+        -- Red Seal check
+        local has_retrigger = (context.other_card.seal == 'Red')
+        
+        -- If no Red Seal, scan all other Jokers to check for retriggers
+        if not has_retrigger and G.jokers and G.jokers.cards then
+            for _, j in ipairs(G.jokers.cards) do
+                -- Ignore self
+                if j ~= card then
+                    -- Simulate the retrigger
+                    local eval = j:calculate_joker({
+                        repetition = true, 
+                        cardarea = G.play, 
+                        other_card = context.other_card,
+                        scoring_hand = context.scoring_hand,
+                        chatot_check = true
+                    })
+                    if eval and eval.repetitions and eval.repetitions > 0 then
+                        has_retrigger = true
+                        break
+                    end
+                end
+            end
+        end
+        
+        -- If retrigger occurs, apply Chatot's retrigger once
+        if has_retrigger and not card.ability.extra.card_triggers[id .. "_echoed"] then
+            card.ability.extra.card_triggers[id .. "_echoed"] = true
+            return {
+                repetitions = card.ability.extra.retriggers,
+                message = localize('k_again_ex'),
+                card = card
+            }
+        end
+    end
+  end,
+  attributes = {"retrigger"},
+}
+
+
 -- Spiritomb 442
 -- Gible 443
 -- Gabite 444
@@ -709,5 +782,5 @@ local mega_lucario={
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {ambipom, buneary, lopunny, mega_lopunny, mismagius, honchkrow, chingling, bronzor, bronzong, bonsly, mimejr, happiny, munchlax, riolu, lucario, mega_lucario},
+        list = {ambipom, buneary, lopunny, mega_lopunny, mismagius, honchkrow, chingling, bronzor, bronzong, bonsly, mimejr, happiny, chatot, munchlax, riolu, lucario, mega_lucario},
 }
