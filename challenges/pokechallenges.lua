@@ -975,7 +975,38 @@ local clobbopus = {
     text_colour = HEX("338FFF"),
 }
 
+local rookidee = {
+    object_type = "Challenge",
+    key = "rookidee",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+			{id = 'discards', value = 2},
+        }
+    },
+    jokers = {
+      {id = "j_poke_rookidee", eternal = true},
+    },
+    consumeables = {
+        {id = "c_empress"},
+        {id = "c_magician"}
+    },
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
 return {name = "Challenges", 
-        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, bunnelby_test, wailmer_test, kecleon_test, wimpod_test, sawk_throh, furfrou, ruin, no_retreat, speed, deer, chatot, morpeko, squawkabilly, bombirdier, cubchoo, clobbopus, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon}
+        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, bunnelby_test, wailmer_test, kecleon_test, wimpod_test, sawk_throh, furfrou, ruin, no_retreat, speed, deer, chatot, morpeko, squawkabilly, bombirdier, cubchoo, clobbopus, rookidee, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon}
 }
 

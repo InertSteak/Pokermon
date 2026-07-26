@@ -5836,6 +5836,37 @@ return {
                     "in {C:attention}Booster Packs",
                 }
             },
+            j_poke_rookidee = {
+                name = "Rookidee",
+                text = {
+                "When you draw an {C:attention}enhanced card{} during",
+                "the {C:attention}Blind{}, gain {C:mult}+#2#{} Mult",
+                "resets at end of round",
+                "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                "{C:inactive,s:0.8}(Evolves after drawing #3# enhanced cards)"
+                }
+            },
+            j_poke_corvisquire = {
+                name = "Corvisquire",
+                text = {
+                "When you draw an {C:attention}enhanced card{} during",
+                "the {C:attention}Blind{}, gain {C:mult}+#2#{} Mult",
+                "resets at end of round",
+                "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                "{C:inactive,s:0.8}(Evolves after drawing #3# enhanced cards)"
+                }
+            },
+            j_poke_corviknight = {
+                name = "Corviknight",
+                text = {
+                "When you draw an {C:attention}enhanced card{} during",
+                "the {C:attention}Blind{}, gain {C:mult}+#2#{} Mult",
+                "resets at end of round",
+                "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Enhanced cards cannot be debuffed",
+                }
+            },
             j_poke_nickit = {
                 name = "Nickit",
                 text = {
@@ -8034,7 +8065,8 @@ return {
             c_poke_squawkabilly = "Turf War",
             c_poke_bombirdier = "Bombs Away!",
             c_poke_cubchoo = "Bless You!",
-            c_poke_clobbopus = "The Old One-Two"
+            c_poke_clobbopus = "The Old One-Two",
+            c_poke_rookidee = "Mirror Armor",
         },
         dictionary = {
             k_energy = "Energy",

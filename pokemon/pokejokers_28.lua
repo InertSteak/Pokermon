@@ -9,8 +9,197 @@
 -- Skwovet 819
 -- Greedent 820
 -- Rookidee 821
+local rookidee = {
+  name = "rookidee",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0, mult_mod = 1, earned = 0}, evo_rqmt = 18},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    local evo_left = math.max(0, self.config.evo_rqmt - center.ability.extra.earned)
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, evo_left}}
+  end,
+  rarity = 1,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex8", 
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+ 
+    if context.joker_main then
+      return 
+      {
+        mult = card.ability.extra.mult
+      }
+    end
+
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.drawn_cards[i].config.center.set == 'Enhanced' then
+          card.ability.extra.earned = card.ability.extra.earned + 1
+          SMODS.scale_card(card, {
+            ref_value = 'mult',
+            scalar_value = 'mult_mod',
+            message_colour = G.C.MULT
+          })
+        end
+      end
+    end
+
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      card.ability.extra.mult = 0
+      return {
+        message = localize('k_reset'),
+        colour = G.C.CHIPS
+      }
+    end
+
+    return pokermon.scaling_evo(self, card, context, "j_poke_corvisquire", card.ability.extra.earned, self.config.evo_rqmt)
+  end,
+  attributes = {"mult", "reset", "trigger_evo", "enhancements"}
+}
+
+
 -- Corvisquire 822
+local corvisquire = {
+  name = "corvisquire",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0, mult_mod = 2, earned = 0}, evo_rqmt = 20},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    local evo_left = math.max(0, self.config.evo_rqmt - center.ability.extra.earned)
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, evo_left}}
+  end,
+  rarity = "poke_safari",
+  cost = 6,
+  stage = "One",
+  ptype = "Colorless",
+  atlas = "Pokedex8", 
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+ 
+    if context.joker_main then
+      return 
+      {
+        mult = card.ability.extra.mult
+      }
+    end
+
+
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.drawn_cards[i].config.center.set == 'Enhanced' then
+          card.ability.extra.earned = card.ability.extra.earned + 1
+          SMODS.scale_card(card, {
+            ref_value = 'mult',
+            scalar_value = 'mult_mod',
+            message_colour = G.C.MULT
+          })
+        end
+      end
+    end
+
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      card.ability.extra.mult = 0
+      return {
+        message = localize('k_reset'),
+        colour = G.C.CHIPS
+      }
+    end
+
+    return pokermon.scaling_evo(self, card, context, "j_poke_corviknight", card.ability.extra.earned, self.config.evo_rqmt)
+  end,
+  attributes = {"mult", "reset", "trigger_evo", "enhancements"}
+}
+
 -- Corviknight 823
+local corviknight = {
+  name = "corviknight",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0, mult_mod = 4}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
+  end,
+  rarity = "poke_safari", 
+  cost = 9,
+  stage = "Two",
+  ptype = "Metal",
+  atlas = "Pokedex8",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+  
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.drawn_cards[i].config.center.set == 'Enhanced' then
+          SMODS.scale_card(card, {
+            ref_value = 'mult',
+            scalar_value = 'mult_mod',
+            message_colour = G.C.MULT
+          })
+        end
+      end
+    end
+    if context.cardarea == G.jokers and context.joker_main then
+      if card.ability.extra.mult > 0 then
+        return {
+          message = "+" .. card.ability.extra.mult .. " Mult",
+          mult_mod = card.ability.extra.mult,
+          colour = G.C.MULT
+        }
+      end
+    end
+
+    if context.end_of_round and not context.repetition and not context.individual then
+      card.ability.extra.mult = 0
+      return {
+        message = "Reset",
+        colour = G.C.RED
+      }
+    end
+  end,
+  attributes = {"mult", "reset", "enhancements"}
+}
+
+local core_draw_func = G.FUNCS.draw_from_deck_to_hand
+G.FUNCS.draw_from_deck_to_hand = function(e)
+  core_draw_func(e)
+  
+  if G.jokers and G.jokers.cards then
+    for _, joker in ipairs(G.jokers.cards) do
+      if joker.config.center.key == "j_poke_corviknight" and not joker.debuff then
+        
+        if G.hand and G.hand.cards then
+          local drawn_card = G.hand.cards[#G.hand.cards]
+          
+          if drawn_card and drawn_card.config.center and drawn_card.config.center.set == 'Enhanced' then
+            -- Scale up by +3 Mult per draw
+            joker.ability.extra.mult = joker.ability.extra.mult + joker.ability.extra.mult_mod
+            joker:juice_up(0.3, 0.3)
+          end
+        end
+        
+      end
+    end
+  end
+end
+
+local core_set_debuff = Card.set_debuff
+Card.set_debuff = function(self, debuff)
+  if self.config.center and self.config.center.set == 'Enhanced' then
+    if G.jokers and G.jokers.cards then
+      for _, joker in ipairs(G.jokers.cards) do
+        if joker.config.center.key == "j_poke_corviknight" and not joker.debuff then
+          self.debuff = false
+          return
+        end
+      end
+    end
+  end
+  
+  core_set_debuff(self, debuff)
+end
+
 -- Blipbug 824
 -- Dottler 825
 -- Orbeetle 826
@@ -130,5 +319,5 @@ local boltund={
 -- Coalossal 839
 -- Applin 840
 return {name = "Pokemon Jokers 811-840", 
-        list = {nickit, thievul, yamper, boltund},
+        list = {rookidee, corvisquire, corviknight, nickit, thievul, yamper, boltund},
 }

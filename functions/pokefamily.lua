@@ -198,6 +198,7 @@ local default_family_list = {
   { "drampa", "mega_drampa" },
   { "dreepy", "drakloak", "dragapult", "dreepy_dart" },
   { "hisuian_qwilfish", "overqwil" },
+  { "rookidee", "corvisquire", "corviknight"},
   { "nickit", "thievul" },
   { "yamper", "boltund" },
   { "clobbopus", "grapploct"},
