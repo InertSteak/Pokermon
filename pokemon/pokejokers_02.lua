@@ -373,7 +373,7 @@ local ninetales={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      pokermon.create_held_item('c_medium')
+      pokermon.create_consumeable({ key = 'c_medium', edition = 'e_negative' })
     end
   end,
   attributes = {"chance", "rank", "nine", "tarot", "generation", "holding"},
