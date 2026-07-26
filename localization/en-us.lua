@@ -5399,6 +5399,24 @@ return {
 					"{C:inactive,s:0.8}(Current Tag: #2#)"
                 }
             },
+            j_poke_cubchoo = {
+                name = "Cubchoo",
+                text = {
+                  "The first unscored card each",
+                  "round becomes Glass",
+                  "{C:inactive,s:0.7}(Evolves after triggering #1# times)",
+                }
+            },
+            j_poke_beartic = {
+                name = "Beartic",
+                text = {
+                  "When Blind is selected, a random non-Glass",
+                  "card in the deck becomes Glass",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Glass cards give {X:mult,C:white}X#1#{} Mult",
+                  "instead of {X:mult,C:white}X2{} and always shatter",
+                }
+            },
             j_poke_axew = {
                 name = "Axew",
                 text = {
@@ -5851,6 +5869,22 @@ return {
                     "{X:mult,C:white}X#1#{} Mult and earn {C:money}$#2#{}",
                     "if played hand contains",
                     "a {C:attention}Straight{}",
+                } 
+            },
+            j_poke_clobbopus = {
+                name = 'Clobbopus',
+                text = {
+                    "If all scoring cards share a rank",
+                    "adds double the rank as Mult",
+                    "{C:inactive,s:0.8}(Evolves after triggering #1# times in a row)",
+                } 
+            },
+            j_poke_grapploct = {
+                name = 'Grapploct',
+                text = {
+                    "If all scoring cards share a rank",
+                    "adds the rank times the number",
+                    "of scoring cards as Mult",
                 } 
             },
             j_poke_dreepy = {
@@ -7998,7 +8032,9 @@ return {
             c_poke_morpeko = "Feeling Hangry",
             c_poke_chatot = "Repeat After Me",
             c_poke_squawkabilly = "Turf War",
-            c_poke_bombirdier = "Bombs Away!"
+            c_poke_bombirdier = "Bombs Away!",
+            c_poke_cubchoo = "Bless You!",
+            c_poke_clobbopus = "The Old One-Two"
         },
         dictionary = {
             k_energy = "Energy",
@@ -8207,6 +8243,8 @@ return {
             poke_thunder_ex = "Thunder!",
             poke_gift_ex = "Present!",
             poke_drill_ex = "Drill Run!",
+            poke_cubchoo_ex = "Achoo!",
+            poke_beartic_ex = "Slush Rush",
             poke_faint_ex = "Fainted!",
             poke_reveal_ex = "Revealed!",
             poke_nido_ex = "Nido!",

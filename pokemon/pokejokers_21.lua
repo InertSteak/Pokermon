@@ -507,7 +507,116 @@ local haxorus={
   end,
 }
 -- Cubchoo 613
+local cubchoo = {
+	name = "cubchoo",
+	pos = {x = 0, y = 0},
+	config = {extra = {activations = 0, round_triggered = false}, evo_rqmt = 5},
+	loc_vars = function(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
+		return {vars = {math.max(self.config.evo_rqmt - card.ability.extra.activations, 0)}}
+	end,
+	rarity = 2,
+	cost = 5,
+	stage = "Basic",
+	ptype = "Water",
+	gen = 5,
+	perishable_compat = true,
+	blueprint_compat = false,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+		-- Reset the safety lock when a new blind is selected
+		if context.setting_blind and not context.blueprint then
+			card.ability.extra.round_triggered = false
+		end
+
+		if context.cardarea == G.jokers and context.before then
+			if not card.ability.extra.round_triggered then
+				local unscored_card = nil
+	
+				for _, f_card in ipairs(context.full_hand) do
+					local is_scored = false
+					for _, s_card in ipairs(context.scoring_hand) do
+						if f_card == s_card then
+							is_scored = true
+							break
+						end
+					end
+					if not is_scored then
+						unscored_card = f_card
+						break
+					end
+				end
+
+				if unscored_card then
+					if not context.blueprint then
+						card.ability.extra.round_triggered = true
+						card.ability.extra.activations = card.ability.extra.activations + 1
+					end
+					
+					unscored_card:set_ability(G.P_CENTERS.m_glass)
+					
+					card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_cubchoo_ex"), colour = G.C.BLUE})
+				end
+			end
+		end
+
+		return pokermon.scaling_evo(self, card, context, "j_poke_beartic", card.ability.extra.activations, self.config.evo_rqmt)
+	end,
+}
 -- Beartic 614
+local beartic = {
+	name = "beartic",
+	pos = {x = 1, y = 0},
+	config = {extra = {glass_mult = 1.25}},
+	loc_vars = function(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
+		return {vars = {2 * card.ability.extra.glass_mult}} 
+	end,
+	rarity = "poke_safari",
+	cost = 8,
+	stage = "Stage 1",
+	ptype = "Water",
+	gen = 5,
+	perishable_compat = true,
+	blueprint_compat = true,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+		if context.setting_blind and not context.blueprint then
+			local valid_cards = {}
+			
+			for _, deck_card in ipairs(G.deck.cards) do
+				if not SMODS.has_enhancement(deck_card, 'm_glass') then
+					table.insert(valid_cards, deck_card)
+				end
+			end
+			
+			if #valid_cards > 0 then
+				local chosen_card = pseudorandom_element(valid_cards, pseudorandom('beartic_glass'))
+				chosen_card:set_ability(G.P_CENTERS.m_glass, nil, true)
+				
+				card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Slush Rush", colour = G.C.BLUE})
+			end
+		end
+
+		if context.individual and context.cardarea == G.play and not context.other_card.debuff then
+			if SMODS.has_enhancement(context.other_card, 'm_glass') then
+				return {
+					x_mult = card.ability.extra.glass_mult,
+					card = card
+				}
+			end
+		end
+
+		if context.destroying_card and not context.blueprint then
+			if SMODS.has_enhancement(context.destroying_card, 'm_glass') then
+				return true
+			end
+		end
+	end,
+}
+
 -- Cryogonal 615
 -- Shelmet 616
 local shelmet = {
@@ -818,5 +927,5 @@ local bisharp={
 -- Vullaby 629
 -- Mandibuzz 630
 return {name = "Pokemon Jokers 601-630", 
-        list = {klinklang, elgyem, beheeyem, litwick, lampent, chandelure, axew, fraxure, haxorus, shelmet, accelgor, golett, golurk, pawniard, bisharp},
+        list = {klinklang, elgyem, beheeyem, litwick, lampent, chandelure, cubchoo, beartic, axew, fraxure, haxorus, shelmet, accelgor, golett, golurk, pawniard, bisharp},
 }
