@@ -203,6 +203,7 @@ local default_family_list = {
   { "fidough", "dachsbun" },
   { "smoliv", "dolliv", "arboliva" },
   { "charcadet", "armarouge", "ceruledge" },
+  { {key = 'squawkabilly', form = 0}, {key = 'squawkabilly', form = 1}, {key = 'squawkabilly', form = 2}, {key = 'squawkabilly', form = 3} },
   { "bramblin", "brambleghast" },
   { "rellor", "rabsca"},
   { "tinkatink", "tinkatuff", "tinkaton" },

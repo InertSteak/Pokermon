@@ -863,7 +863,65 @@ local chatot = {
     text_colour = HEX("338FFF"),
 }
 
+local squawkabilly = {
+    object_type = "Challenge",
+    key = "squawkabilly",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+			{id = 'discards', value = 2},
+        }
+    },
+    jokers = {
+      {id = "j_poke_squawkabilly", eternal = true},
+    },
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
+local bombirdier = {
+    object_type = "Challenge",
+    key = "bombirdier",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+			{id = 'discards', value = 2},
+        }
+    },
+    consumeables = {
+        {id = "c_tower"},
+        {id = "c_tower"}
+    },
+    jokers = {
+      {id = "j_poke_bombirdier", eternal = true},
+    },
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
 return {name = "Challenges", 
-        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, bunnelby_test, wailmer_test, kecleon_test, wimpod_test, sawk_throh, furfrou, ruin, no_retreat, speed, deer, chatot, morpeko, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon}
+        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, bunnelby_test, wailmer_test, kecleon_test, wimpod_test, sawk_throh, furfrou, ruin, no_retreat, speed, deer, chatot, morpeko, squawkabilly, bombirdier, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon}
 }
 

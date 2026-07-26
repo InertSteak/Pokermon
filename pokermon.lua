@@ -12,7 +12,7 @@ SMODS.current_mod.optional_features = { quantum_enhancements = true }
 --This can probably have a better integration or just be removed altogether since everything is discovered anyways
 -- -Jevonn
 SMODS.UndiscoveredSprite({
-	key = "Energy",
+	key = "poke_energy",
 	atlas = "unergy",
 	path = "unergy.png",
 	pos = { x = 0, y = 0 },
@@ -20,7 +20,7 @@ SMODS.UndiscoveredSprite({
 	py = 95,
 }):register()
 SMODS.UndiscoveredSprite({
-	key = "Item",
+	key = "poke_item",
 	atlas = "unitem",
 	path = "unitem.png",
 	pos = { x = 0, y = 0 },
@@ -158,9 +158,6 @@ end
 
 --Load pokemon file
 load_directory("pokemon", pokermon.load_pokemon)
-
---This is a new comment
-----Don't believe his lies
 
 --Load consumable types
 load_directory("consumable types", SMODS.ConsumableType, true)

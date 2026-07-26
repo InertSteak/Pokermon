@@ -142,6 +142,7 @@ family = {
 	{{key = "furfrou", form = 0},{key = "furfrou", form = 1},{key = "furfrou", form = 2},{key = "furfrou", form = 3},{key = "furfrou", form = 4},{key = "furfrou", form = 5},{key = "furfrou", form = 6},{key = "furfrou", form = 7},{key = "furfrou", form = 8},{key = "furfrou", form = 9}},
 	{{key = "deerling", form = 0},{key = "deerling", form = 1},{key = "deerling", form = 2},{key = "deerling", form = 3}},
 	{{key = "sawsbuck", form = 0},{key = "sawsbuck", form = 1},{key = "sawsbuck", form = 2},{key = "sawsbuck", form = 3}},
+	{{key = "squawkabilly", form = 0},{key = "squawkabilly", form = 1},{key = "squawkabilly", form = 2},{key = "squawkabilly", form = 3}},
 }
 
 pokermon.extended_family = {
