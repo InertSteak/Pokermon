@@ -162,7 +162,8 @@ jd_def["j_poke_sentret"] = {
     },
     text_config = { colour = G.C.MULT },
     calc_function = function(card)
-      card.joker_display_values.hand = G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize("poke_none")
+      local abbr = card.ability.extra
+      card.joker_display_values.hand = abbr.last_hand and localize(abbr.last_hand, 'poker_hands') or localize("poke_none")
     end
 }
 
@@ -178,7 +179,8 @@ jd_def["j_poke_furret"] = {
     },
     text_config = { colour = G.C.MULT },
     calc_function = function(card)
-      card.joker_display_values.hand = G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize("poke_none")
+      local abbr = card.ability.extra
+      card.joker_display_values.hand = abbr.last_hand and localize(abbr.last_hand, 'poker_hands') or localize("poke_none")
     end
 }
 
