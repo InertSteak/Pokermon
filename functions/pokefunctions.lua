@@ -1489,3 +1489,28 @@ pokermon.create_consumeable = function(args, in_event, message_card)
     }, message_card or card)
   end
 end
+
+pokermon.remove_from_pool = function(center)
+  local config = pokermon_config or {}
+
+  if center.set == 'Joker' then
+    if not center.stage then return config.pokemon_only end
+
+    return (not config.hazards_on and center.hazard_poke)
+        or not pokermon.get_gen_allowed(center)
+        or pokermon.family_present(center)
+  end
+
+  return false
+end
+
+pokermon.modify_pool = function(pool)
+  for k, v in pairs(pool) do
+    if type(k) == 'string' then
+      local center = G.P_CENTERS[k]
+      if center and pokermon.remove_from_pool(center) then
+        v.weight = 0
+      end
+    end
+  end
+end

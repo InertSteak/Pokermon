@@ -6,7 +6,7 @@ if SMODS.current_mod then
 end
 
 pokermon = { energy = {}, ui = {}, sprites = {} }
-SMODS.current_mod.optional_features = { quantum_enhancements = true }
+SMODS.current_mod.optional_features = { quantum_enhancements = true, object_weights = true }
 
 --Undiscovered sprites, mostly for testing some localization things since the game crashes without them
 --This can probably have a better integration or just be removed altogether since everything is discovered anyways
@@ -346,6 +346,10 @@ function SMODS.current_mod.calculate(self, context)
         joker.ability.fainted = nil
       end
     end
+  end
+
+  if context.modify_weights then
+    pokermon.modify_pool(context.pool)
   end
 end
 
