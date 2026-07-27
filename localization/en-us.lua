@@ -5918,6 +5918,34 @@ return {
                     "of scoring cards as Mult",
                 } 
             },
+            j_poke_impidimp = {
+                name = 'Impidimp',
+                text = {
+                    "Randomize the ranks of your",
+                    "opening hand and give each",
+                    "card {C:mult}+#1#{} Mult",
+                    "{C:inactive,s:0.8}(Evolves after #2# rounds)"
+                } 
+            },
+            j_poke_morgrem = {
+                name = 'Morgrem',
+                text = {
+                    "{C:attention}+#2#{} hand size",
+                    "Randomize the ranks of your",
+                    "opening hand and give each",
+                    "card {C:mult}+#1#{} Mult",
+                    "{C:inactive,s:0.8}(Evolves after #3# rounds)"
+                } 
+            },
+            j_poke_grimmsnarl = {
+                name = 'Grimmsnarl',
+                text = {
+                    "{C:attention}+#2#{} hand size",
+                    "Randomize the ranks of your",
+                    "opening hand and give each",
+                    "card {X:mult,C:white}X#1# {} Mult",
+                } 
+            },
             j_poke_dreepy = {
                 name = "Dreepy",
                 text = {
@@ -8067,6 +8095,7 @@ return {
             c_poke_cubchoo = "Bless You!",
             c_poke_clobbopus = "The Old One-Two",
             c_poke_rookidee = "Mirror Armor",
+            c_poke_grimmsnarl = "That Darn Imp"
         },
         dictionary = {
             k_energy = "Energy",

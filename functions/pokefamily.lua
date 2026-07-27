@@ -202,6 +202,7 @@ local default_family_list = {
   { "nickit", "thievul" },
   { "yamper", "boltund" },
   { "clobbopus", "grapploct"},
+  {"impidimp", "morgrem", "grimmsnarl"},
   { "tarountula", "spidops" },
   { "fidough", "dachsbun" },
   { "smoliv", "dolliv", "arboliva" },
