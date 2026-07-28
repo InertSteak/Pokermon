@@ -182,21 +182,6 @@ match_indent = true
 ### Game Modifiers
 
 
-# Pokemon only functionality
-[[patches]]
-[patches.pattern]
-target = "functions/common_events.lua"
-pattern = "if v.yes_pool_flag and not G.GAME.pool_flags[v.yes_pool_flag] then add = nil end"
-position = "after"
-payload = '''
-if v.set == 'Joker' and not v.stage and pokermon_config and pokermon_config.pokemon_only then add = nil end
-if v.set == 'Joker' and v.stage and not pokermon.get_gen_allowed(v) then add = nil end
-if v.set == 'Joker' and v.stage and pokermon_config and not pokermon_config.hazards_on and v.hazard_poke then add = nil end
-if add and v.set == 'Joker' and v.stage and pokermon.family_present(v) then add = nil end
-'''
-match_indent = true
-
-
 # Enhance bonus
 [[patches]]
 [patches.pattern]
