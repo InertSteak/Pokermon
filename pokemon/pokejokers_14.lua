@@ -173,8 +173,183 @@ local kricketune={
   attributes = {"economy", "suit", "chance", "tarot", "generation"}
 }
 -- Shinx 403
+local shinx = {
+  name = "shinx",
+  pos = {x = 0, y = 0},
+  config = {extra = {high_score = 0, money_gain = 2, earned = 0, evo_rqmt = 20}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    local money_left = math.max(0, (center.ability.extra.evo_rqmt or 20) - (center.ability.extra.earned or 0))
+    return {vars = {center.ability.extra.high_score or 0, center.ability.extra.money_gain, money_left}}
+  end,
+  rarity = 1,
+  cost = 4,
+  gen = 4,
+  stage = "Base",
+  ptype = "Lightning",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      local calculated_chips = (hand_chips or 0) + (context.chips or 0)
+      local calculated_mult = math.max(1, (mult or 1) + (context.mult or 0))
+      local current_score = calculated_chips * calculated_mult
+      
+      if current_score > (card.ability.extra.high_score or 0) then
+        if not card.ability.extra.high_score then card.ability.extra.high_score = 0 end
+        if not card.ability.extra.earned then card.ability.extra.earned = 0 end
+        
+        card.ability.extra.high_score = current_score
+        card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_gain
+        
+        ease_dollars(card.ability.extra.money_gain)
+        
+        return {
+          message = "+$" .. tostring(card.ability.extra.money_gain),
+          colour = G.C.MONEY,
+          card = card
+        }
+      end
+    end
+
+    return pokermon.scaling_evo(self, card, context, "j_poke_luxio", card.ability.extra.earned, card.ability.extra.evo_rqmt)
+  end,
+  attributes = {"money", "high_score", "trigger_evo"},
+}
+
+
+
 -- Luxio 404
+local luxio = {
+  name = "luxio",
+  pos = {x = 0, y = 0},
+  config = {extra = {high_score = 0, money_gain = 4, earned = 20, mult = 1, evo_rqmt = 40}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    
+    local current_mult = math.floor((G.GAME.dollars or 0) / 5) * (center.ability.extra.mult or 1)
+    local money_left = math.max(0, center.ability.extra.evo_rqmt - center.ability.extra.earned)
+    
+    return {vars = {
+      center.ability.extra.high_score or 0, 
+      center.ability.extra.money_gain, 
+      current_mult,
+      center.ability.extra.mult,
+      money_left
+    }}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 4,
+  stage = "One",
+  ptype = "Lightning",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      local current_mult_bonus = math.floor((G.GAME.dollars or 0) / 5) * (card.ability.extra.mult or 1)
+      
+      local calculated_chips = (hand_chips or 0) + (context.chips or 0)
+      local calculated_mult = math.max(1, (mult or 1) + (context.mult or 0) + current_mult_bonus)
+      local current_score = calculated_chips * calculated_mult
+      
+      -- 3. Run high score check
+      if current_score > (card.ability.extra.high_score or 0) then
+        if not card.ability.extra.high_score then card.ability.extra.high_score = 0 end
+        if not card.ability.extra.earned then card.ability.extra.earned = 0 end
+        
+        card.ability.extra.high_score = current_score
+        card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_gain
+        
+        ease_dollars(card.ability.extra.money_gain)
+        
+        return {
+          mult_mod = current_mult_bonus > 0 and current_mult_bonus or nil,
+          message = "+$" .. tostring(card.ability.extra.money_gain),
+          colour = G.C.MONEY,
+          card = card
+        }
+      elseif current_mult_bonus > 0 then
+        return {
+          mult_mod = current_mult_bonus,
+          message = "+" .. current_mult_bonus .. " Mult",
+          colour = G.C.MULT
+        }
+      end
+    end
+
+    return pokermon.scaling_evo(self, card, context, "j_poke_luxray", card.ability.extra.earned, card.ability.extra.evo_rqmt)
+  end,
+
+  attributes = {"money", "high_score", "mult", "trigger_evo"},
+}
+
 -- Luxray 405
+local luxray = {
+  name = "luxray",
+  pos = {x = 0, y = 0},
+  config = {extra = {high_score = 0, money_gain = 6, xmult = 0.1}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    
+    -- Calculate current X Mult bonus safely
+    local current_xmult = 1 + (math.floor((G.GAME.dollars or 0) / 10) * (center.ability.extra.xmult or 0.1))
+    
+    return {vars = {
+      center.ability.extra.high_score or 0, 
+      center.ability.extra.money_gain, 
+      current_xmult,
+      center.ability.extra.xmult
+    }}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  gen = 4,
+  stage = "Two",
+  ptype = "Lightning",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+
+      local dynamic_xmult = 1 + (math.floor((G.GAME.dollars or 0) / 10) * (card.ability.extra.xmult or 0.1))
+      
+      local calculated_chips = (hand_chips or 0) + (context.chips or 0)
+      local calculated_mult = math.max(1, (mult or 1) + (context.mult or 0)) * (dynamic_xmult > 1 and dynamic_xmult or 1)
+      local current_score = calculated_chips * calculated_mult
+      
+      if current_score > (card.ability.extra.high_score or 0) then
+        if not card.ability.extra.high_score then card.ability.extra.high_score = 0 end
+        
+        card.ability.extra.high_score = current_score
+        
+        ease_dollars(card.ability.extra.money_gain)
+        
+        return {
+          Xmult_mod = dynamic_xmult > 1 and dynamic_xmult or nil,
+          message = "+$" .. tostring(card.ability.extra.money_gain),
+          colour = G.C.MONEY,
+          card = card
+        }
+      elseif dynamic_xmult > 1 then
+        return {
+          Xmult_mod = dynamic_xmult,
+          message = "X" .. dynamic_xmult .. " Mult",
+          colour = G.C.XMULT
+        }
+      end
+    end
+  end,
+
+  attributes = {"money", "high_score", "xmult"},
+}
+
 -- Budew 406
 local budew={
   name = "budew",
@@ -324,5 +499,5 @@ local floatzel={
 }
 -- Cherubi 420
 return {name = "Pokemon Jokers 391-420", 
-        list = {bidoof, bibarel, kricketot, kricketune, budew, roserade, buizel, floatzel},
+        list = {bidoof, bibarel, kricketot, kricketune, shinx, luxio, luxray, budew, roserade, buizel, floatzel},
 }

@@ -1033,7 +1033,36 @@ local grimmsnarl = {
     text_colour = HEX("338FFF"),
 }
 
+local luxray = {
+    object_type = "Challenge",
+    key = "luxray",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+			{id = 'discards', value = 2},
+        }
+    },
+    jokers = {
+      {id = "j_poke_shinx",  eternal = true},
+      {id = "j_poke_luxio",  eternal = true},
+      {id = "j_poke_luxray",  eternal = true},
+    },
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
 return {name = "Challenges", 
-        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, bunnelby_test, wailmer_test, kecleon_test, wimpod_test, sawk_throh, furfrou, ruin, no_retreat, speed, deer, chatot, morpeko, squawkabilly, bombirdier, cubchoo, clobbopus, rookidee, grimmsnarl, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon}
+        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, bunnelby_test, wailmer_test, kecleon_test, wimpod_test, sawk_throh, furfrou, ruin, no_retreat, speed, deer, chatot, morpeko, squawkabilly, bombirdier, cubchoo, clobbopus, rookidee, grimmsnarl, luxray, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon}
 }
 

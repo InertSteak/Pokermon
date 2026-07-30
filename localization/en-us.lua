@@ -4446,6 +4446,39 @@ return {
                 "a {C:tarot}Tarot{} card as well"
               }
             },
+            j_poke_shinx = {
+              name = "Shinx",
+              text = {
+                "Earn {C:money}$#2#{} if you beat",
+                "this Joker's high score, then",
+                "set high score to match",
+                "{C:money}High Score{}: #1#",
+                "{C:inactive}(Evolves after earning $#3#){}",
+              }
+            },
+            j_poke_luxio = {
+              name = "Luxio",
+              text = {
+                "{C:mult} +#3# Mult{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Earn {C:money}$#2#{} if you beat",
+                "this Joker's high score, then",
+                "set high score to match",
+                "{C:money}High Score{}: #1#",
+                "{C:inactive}(Evolves after earning $#5#){}"
+              }
+            },
+            j_poke_luxray = {
+              name = "Luxray",
+              text = {
+                "{X:mult,C:white} X#3# Mult{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Earn {C:money}$#2#{} if you beat",
+                "this Joker's high score, then",
+                "set high score to match",
+                "{C:money}High Score{}: #1#",
+              }
+            },
             j_poke_budew = {
                 name = 'Budew',
                 text = {
@@ -6305,7 +6338,7 @@ return {
             j_poke_bombirdier = {
                 name = "Bombirdier",
                 text = {
-                    "{C:chips}+#3# Chips when a Stone card is played",
+                    "{C:chips}+#3#{} Chips when a Stone card is played",
                     "{br:2}ERROR - CONTACT STEAK",
                     "Gains {C:mult}+#2#{} Mult per",
                     "Stone card in your deck",
@@ -8095,7 +8128,8 @@ return {
             c_poke_cubchoo = "Bless You!",
             c_poke_clobbopus = "The Old One-Two",
             c_poke_rookidee = "Mirror Armor",
-            c_poke_grimmsnarl = "That Darn Imp"
+            c_poke_grimmsnarl = "That Darn Imp",
+            c_poke_luxray = "A Rival Approaches"
         },
         dictionary = {
             k_energy = "Energy",
