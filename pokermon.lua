@@ -371,8 +371,7 @@ local is_showdown_ante_ref = SMODS.is_showdown_ante
 function SMODS.is_showdown_ante(...)
   return (G.GAME.modifiers.poke_elite4
         and G.GAME.round_resets.ante > 0
-        and (G.GAME.round_resets.ante % G.GAME.win_ante >= G.GAME.win_ante - 3
-          or G.GAME.round_resets.ante % G.GAME.win_ante == 0))
+        and G.GAME.round_resets.ante % G.GAME.win_ante >= G.GAME.win_ante - 3)
       or is_showdown_ante_ref(...)
 end
 
