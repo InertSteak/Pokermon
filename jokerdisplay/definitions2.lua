@@ -162,7 +162,8 @@ jd_def["j_poke_sentret"] = {
     },
     text_config = { colour = G.C.MULT },
     calc_function = function(card)
-      card.joker_display_values.hand = G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize("poke_none")
+      local abbr = card.ability.extra
+      card.joker_display_values.hand = abbr.last_hand and localize(abbr.last_hand, 'poker_hands') or localize("poke_none")
     end
 }
 
@@ -178,7 +179,8 @@ jd_def["j_poke_furret"] = {
     },
     text_config = { colour = G.C.MULT },
     calc_function = function(card)
-      card.joker_display_values.hand = G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize("poke_none")
+      local abbr = card.ability.extra
+      card.joker_display_values.hand = abbr.last_hand and localize(abbr.last_hand, 'poker_hands') or localize("poke_none")
     end
 }
 
@@ -1538,6 +1540,17 @@ jd_def["j_poke_stantler"] = {
 }
 
 --	Smeargle
+jd_def["j_poke_smeargle"] = {
+  calc_function = function(card)
+    local copied_joker, copied_debuff = JokerDisplay.calculate_blueprint_copy(card)
+    card.joker_display_values.blueprint_compat = localize('k_incompatible')
+    JokerDisplay.copy_display(card, copied_joker, copied_debuff)
+  end,
+  get_blueprint_joker = function(card)
+    return card.config.center:get_copy(card)
+  end
+}
+
 --	Tyrogue
 jd_def["j_poke_tyrogue"] = {
     text = {

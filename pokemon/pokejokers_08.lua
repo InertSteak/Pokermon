@@ -1364,15 +1364,20 @@ local smeargle={
     if copy then
       -- Display the description of the copy, instead of the center
       local other_center = copy.config.center
+      local other_vars = type(other_center.loc_vars) == 'function'
+        and other_center.key ~= 'j_poke_smeargle'
+        and other_center:loc_vars({}, copy)
+        or {}
       local new_config = copy_table(copy.ability)
-      local other_vars
-      if type(other_center.loc_vars) == 'function' and other_center.key ~= 'j_poke_smeargle' then
-        other_vars = other_center:loc_vars({}, copy)
-        if other_vars and other_vars.vars then
-          new_config.loc_vars_replacement = other_vars.vars
-        end
+      if other_vars.vars then
+        new_config.loc_vars_replacement = other_vars.vars
       end
-      info_queue[#info_queue+1] = {set = 'Joker', key = (other_vars and other_vars.key) or other_center.key, name = other_center.name, config = new_config, vars = other_vars and other_vars.vars or {} }
+      info_queue[#info_queue+1] = {
+        set = 'Joker',
+        key = other_vars.key or other_center.key,
+        config = new_config,
+        vars = other_vars.vars or {}
+      }
     end
 
     -- Add blueprint compatible/incompatible text

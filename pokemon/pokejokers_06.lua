@@ -443,7 +443,7 @@ local feraligatr = {
 -- Sentret 161
 local sentret={
   name = "sentret",
-  config = {extra = {mult = 0, mult_mod = 1, last_hand = 'None'}, evo_rqmt = 15},
+  config = {extra = {mult = 0, mult_mod = 1, }, evo_rqmt = 15},
   pos = {x = 9, y = 0}, 
   rarity = 1, 
   cost = 5, 
@@ -455,7 +455,8 @@ local sentret={
   perishable_compat = false,
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize("poke_none")}}
+    local abbr = center.ability.extra
+		return {vars = {abbr.mult, abbr.mult_mod, abbr.last_hand and localize(abbr.last_hand, 'poker_hands') or localize("poke_none")}}
   end,
   calculate = function(self, card, context)
     if context.before and not context.blueprint then
@@ -489,7 +490,7 @@ local sentret={
 -- Furret 162
 local furret={
   name = "furret",
-  config = {extra = {mult = 0, mult_mod = 1, last_hand = 'None'}},
+  config = {extra = {mult = 0, mult_mod = 1}},
   pos = {x = 0, y = 1}, 
   rarity = 2, 
   cost = 6, 
@@ -501,7 +502,8 @@ local furret={
   perishable_compat = false,
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize("poke_none")}}
+    local abbr = center.ability.extra
+		return {vars = {abbr.mult, abbr.mult_mod, abbr.last_hand and localize(abbr.last_hand, 'poker_hands') or localize("poke_none")}}
   end,
   calculate = function(self, card, context)
     if context.before and not context.blueprint and card.ability.extra.last_hand ~= context.scoring_name then
