@@ -3881,6 +3881,26 @@ return {
                   "already been played this round",
                 }
             },
+            j_poke_wailmer = {
+                name = "Wailmer",
+                text = {
+                  "{C:chips}+#1#{} Chips for each remaining",
+                  "{C:clubs}#4#{} in {C:active}deck",
+                  "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips){}",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_wailord = {
+                name = "Wailord",
+                text = {
+                  "All cards opened in {C:attention}Standard",
+                  "{C:attention}Boosters{} become {C:clubs}#4#{}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "{C:chips}+#1#{} Chips for each remaining",
+                  "{C:clubs}#3#{} in {C:attention}deck",
+                  "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips){}",
+                }
+            },
             j_poke_numel = {
                 name = "Numel",
                 text = {

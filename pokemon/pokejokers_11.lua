@@ -640,7 +640,86 @@ local sharpedo={
   attributes = {"destroy_card", "xmult", "hand_type", "generation", "spectral"},
 }
 -- Wailmer 320
+local wailmer={
+  name = "wailmer",
+  pos = {x = 0, y = 0},
+  config = {extra = {chip_mod = 6,rounds = 5, suit = "Clubs"}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    local abbr = center.ability.extra
+    local clubs = 0
+    if G.deck and G.deck.cards then
+      local findFunc = function(v) return v:is_suit(abbr.suit) end
+      clubs = #pokermon.find_playing_card(findFunc)
+    end
+    
+    return {vars = {abbr.chip_mod, abbr.chip_mod * clubs, abbr.rounds, localize(abbr.suit, 'suits_singular')}}
+  end,
+  rarity = 1,
+  cost = 5,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      local findFunc = function(v) return v:is_suit(card.ability.extra.suit) end
+      local clubs = #pokermon.find_playing_card(findFunc)
+      
+      if clubs > 0 then
+        return {
+          chips = card.ability.extra.chip_mod * clubs
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_wailord")
+  end,
+}
 -- Wailord 321
+local wailord={
+  name = "wailord",
+  pos = {x = 0, y = 0},
+  display_size = { w = 71 * 1.2, h = 95 * 1.2 },
+  config = {extra = {chip_mod = 10, suit = "Clubs"}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    local abbr = center.ability.extra
+    local clubs = 0
+    if G.deck and G.deck.cards then
+      local findFunc = function(v) return v:is_suit(abbr.suit) end
+      clubs = #pokermon.find_playing_card(findFunc)
+    end
+    
+    return {vars = {abbr.chip_mod, abbr.chip_mod * clubs, localize(abbr.suit, 'suits_singular'), localize(abbr.suit, 'suits_plural')}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 3,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.modify_booster_card and string.find(context.booster.ability.name, "Standard") then
+      context.card:change_suit(card.ability.extra.suit)
+    end
+    if context.joker_main then
+      local findFunc = function(v) return v:is_suit(card.ability.extra.suit) end
+      local clubs = #pokermon.find_playing_card(findFunc)
+      
+      if clubs > 0 then
+        return {
+          chips = card.ability.extra.chip_mod * clubs
+        }
+      end
+    end
+  end,
+}
 -- Numel 322
 local numel={
   name = "numel",
@@ -888,5 +967,5 @@ local spinda={
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  list = {delcatty, aron, lairon, aggron, meditite, medicham, plusle, minun, volbeat, illumise, roselia, carvanha, sharpedo, numel, camerupt, mega_camerupt, torkoal, spinda},
+  list = {delcatty, aron, lairon, aggron, meditite, medicham, plusle, minun, volbeat, illumise, roselia, carvanha, sharpedo, wailmer, wailord, numel, camerupt, mega_camerupt, torkoal, spinda},
 }
