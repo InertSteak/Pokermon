@@ -640,79 +640,85 @@ local sharpedo={
   attributes = {"destroy_card", "xmult", "hand_type", "generation", "spectral"},
 }
 -- Wailmer 320
-local wailmer = {
+local wailmer={
   name = "wailmer",
-  pos = { x = 8, y = 6 },
-  config = { extra = { mult = 3, exp = 0, largest_hand_name = 'High Card'}, evo_rqmt = 40},
-  rarity = 2,
-  cost = 6,
-  stage = "Basic",
-  atlas = "Pokedex3",
-  ptype = "Water",
-  blueprint_compat = true,
+  pos = {x = 0, y = 0},
+  config = {extra = {chip_mod = 6,rounds = 5, suit = "Clubs"}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-	info_queue[#info_queue+1] = {set = 'Other', key = 'tier'}
-	local tier = get_poker_hand_tier(center.ability.extra.largest_hand_name)
-    return { vars = { center.ability.extra.mult*tier, center.ability.extra.mult, center.ability.extra.largest_hand_name, center.ability.extra.exp, self.config.evo_rqmt} }
-  end,
-  calculate = function(self, card, context)
-    if context.before and not context.blueprint then
-		if get_poker_hand_tier(context.scoring_name) > get_poker_hand_tier(card.ability.extra.largest_hand_name) then
-				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
-				card.ability.extra.largest_hand_name = context.scoring_name
-		end
-	end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      local tier = get_poker_hand_tier(card.ability.extra.largest_hand_name)
-		if context.joker_main and get_poker_hand_tier(context.scoring_name) == tier then 
-			card.ability.extra.exp = card.ability.extra.exp + tier
-			  return {
-				message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult*tier } },
-				colour = G.C.MULT,
-				mult_mod = card.ability.extra.mult*tier
-			  }
-		end
+    pokermon.type_tooltip(self, info_queue, center)
+    local abbr = center.ability.extra
+    local clubs = 0
+    if G.deck and G.deck.cards then
+      local findFunc = function(v) return v:is_suit(abbr.suit) end
+      clubs = #pokermon.find_playing_card(findFunc)
     end
-    return scaling_evo(self, card, context, "j_poke_wailord", card.ability.extra.exp, self.config.evo_rqmt)
-  end
+    
+    return {vars = {abbr.chip_mod, abbr.chip_mod * clubs, abbr.rounds, localize(abbr.suit, 'suits_singular')}}
+  end,
+  rarity = 1,
+  cost = 5,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      local findFunc = function(v) return v:is_suit(card.ability.extra.suit) end
+      local clubs = #pokermon.find_playing_card(findFunc)
+      
+      if clubs > 0 then
+        return {
+          chips = card.ability.extra.chip_mod * clubs
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_wailord")
+  end,
 }
 -- Wailord 321
-local wailord = {
+local wailord={
   name = "wailord",
-  pos = { x = 9, y = 6 },
-  config = { extra = { mult = 4, Xmult = 0.2, largest_hand_name = 'High Card'}},
-  rarity = "poke_safari",
-  cost = 6,
-  stage = "Basic",
-  atlas = "Pokedex3",
-  ptype = "Water",
-  blueprint_compat = true,
+  pos = {x = 0, y = 0},
+  display_size = { w = 71 * 1.2, h = 95 * 1.2 },
+  config = {extra = {chip_mod = 10, suit = "Clubs"}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-	info_queue[#info_queue+1] = {set = 'Other', key = 'tier'}
-	local tier = get_poker_hand_tier(center.ability.extra.largest_hand_name)
-    return { vars = { tier*center.ability.extra.mult, 1+center.ability.extra.Xmult*tier, center.ability.extra.mult, center.ability.extra.Xmult, center.ability.extra.largest_hand_name} }
-  end,
-  calculate = function(self, card, context)
-    if context.before then
-		if get_poker_hand_tier(context.scoring_name) > get_poker_hand_tier(card.ability.extra.largest_hand_name) then
-			card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
-			card.ability.extra.largest_hand_name = context.scoring_name
-		end
-	end
-	if context.cardarea == G.jokers and context.scoring_hand then
-	local tier = get_poker_hand_tier(card.ability.extra.largest_hand_name)
-		if context.joker_main and get_poker_hand_tier(context.scoring_name) == tier then
-			  return {
-				message = localize("poke_wailmer_ex"), 
-				colour = G.C.XMULT,
-				mult_mod = card.ability.extra.mult*tier,
-				Xmult_mod = 1+card.ability.extra.Xmult*tier
-			  }
-		 end
+    pokermon.type_tooltip(self, info_queue, center)
+    local abbr = center.ability.extra
+    local clubs = 0
+    if G.deck and G.deck.cards then
+      local findFunc = function(v) return v:is_suit(abbr.suit) end
+      clubs = #pokermon.find_playing_card(findFunc)
     end
-  end
+    
+    return {vars = {abbr.chip_mod, abbr.chip_mod * clubs, localize(abbr.suit, 'suits_singular'), localize(abbr.suit, 'suits_plural')}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 3,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.modify_booster_card and string.find(context.booster.ability.name, "Standard") then
+      context.card:change_suit(card.ability.extra.suit)
+    end
+    if context.joker_main then
+      local findFunc = function(v) return v:is_suit(card.ability.extra.suit) end
+      local clubs = #pokermon.find_playing_card(findFunc)
+      
+      if clubs > 0 then
+        return {
+          chips = card.ability.extra.chip_mod * clubs
+        }
+      end
+    end
+  end,
 }
 -- Numel 322
 local numel={
@@ -961,6 +967,5 @@ local spinda={
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  
-  list = {delcatty, aron, lairon, aggron, meditite, medicham, plusle, minun, volbeat, illumise, roselia, wailmer, wailord, carvanha, sharpedo, numel, camerupt, mega_camerupt, torkoal, spinda},
+  list = {delcatty, aron, lairon, aggron, meditite, medicham, plusle, minun, volbeat, illumise, roselia, carvanha, sharpedo, wailmer, wailord, numel, camerupt, mega_camerupt, torkoal, spinda},
 }

@@ -82,6 +82,7 @@ local default_family_list = {
   { "wingull", "pelipper"},
   { "ralts", "kirlia", "gardevoir", "gallade"},
   { "surskit", "masquerain"},
+  { "wailmer", "wailord"},
   { "numel", "camerupt", "mega_camerupt" },
   { "trapinch", "vibrava", "flygon"},
   { "cacnea", "cacturne"},

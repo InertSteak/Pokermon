@@ -3882,24 +3882,23 @@ return {
                 }
             },
             j_poke_wailmer = {
-                name = 'Wailmer',
+                name = "Wailmer",
                 text = {
-					"{C:mult}+#1# Mult{} if playing a {C:attention}#3#{}",
-                    "{C:inactive}(+#2# Mult per {C:attention}tier{} {C:inactive}of played hand)",
-					"{br:3.5}ERROR - CONTACT STEAK",
-					"{C:attention}Poker hand{} permanently increases if you play", 
-					"a larger poker hand than the target.",
-					"When triggered, gain {C:attention}+1 EXP{} per {C:attention}tier{}",
-					"{C:inactive}(Evolves at {C:attention}#4#{C:inactive} / #5# EXP)"
+                  "{C:chips}+#1#{} Chips for each remaining",
+                  "{C:clubs}#4#{} in {C:active}deck",
+                  "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips){}",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 }
             },
-			j_poke_wailord = {
-                name = 'Wailord',
+            j_poke_wailord = {
+                name = "Wailord",
                 text = {
-                    "{C:mult}+#1#{} Mult and {X:mult,C:white}X#2#{} Mult if playing a {C:attention}#5#{}",
-					"{C:attention}Poker hand{} permanently increases if you play", 
-					"a larger poker hand than the target.",
-					"{C:inactive}({C:mult}+#3# Mult{} and {C:mult}Xmult{} increased by {C:mult}+#4#{} {C:inactive}per {C:attention}tier{}{C:inactive})"
+                  "All cards opened in {C:attention}Standard",
+                  "{C:attention}Packs{} become {C:clubs}#4#{}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "{C:chips}+#1#{} Chips for each remaining",
+                  "{C:clubs}#3#{} in {C:attention}deck",
+                  "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips){}",
                 }
             },
             j_poke_numel = {
