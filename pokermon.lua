@@ -367,6 +367,14 @@ function end_round()
 
 end
 
+local is_showdown_ante_ref = SMODS.is_showdown_ante
+function SMODS.is_showdown_ante(...)
+  return (G.GAME.modifiers.poke_elite4
+        and G.GAME.round_resets.ante > 0
+        and G.GAME.round_resets.ante % G.GAME.win_ante >= G.GAME.win_ante - 3)
+      or is_showdown_ante_ref(...)
+end
+
 function SMODS.current_mod.menu_cards()
   local shiny = pseudorandom('poke_shiny_menu_card') < 1 / 4096
 
