@@ -3894,7 +3894,7 @@ return {
                 name = "Wailord",
                 text = {
                   "All cards opened in {C:attention}Standard",
-                  "{C:attention}Boosters{} become {C:clubs}#4#{}",
+                  "{C:attention}Packs{} become {C:clubs}#4#{}",
                   "{br:2}ERROR - CONTACT STEAK",
                   "{C:chips}+#1#{} Chips for each remaining",
                   "{C:clubs}#3#{} in {C:attention}deck",
