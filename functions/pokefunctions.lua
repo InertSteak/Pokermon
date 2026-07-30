@@ -143,23 +143,67 @@ pokermon.change_form = function(card, to_key, immediate, transform_message)
   call_backend_evolve(card, to_key, immediate, transform_message or localize('poke_transform_success'))
 end
 
+pokermon.get_values_to_keep = function(card)
+  local names_to_keep = {
+    "targets", "rank", "id", "form",
+    "cards_scored", "cards_drawn",
+    "energy_count", "c_energy_count", "e_limit_up",
+    pokermon.type_sticker_applied(card) and "ptype" or nil
+  }
+  local values_to_keep = pokermon.copy_scaled_values(card)
+  if type(card.ability.extra) == "table" then
+    for _, k in pairs(names_to_keep) do
+      values_to_keep[k] = card.ability.extra[k]
+    end
+  end
+  local custom_values_to_keep
+  if card.config.center.poke_custom_values_to_keep then
+    custom_values_to_keep = {}
+    for _, k in pairs(card.config.center.poke_custom_values_to_keep) do
+      custom_values_to_keep[k] = card.ability.extra[k]
+    end
+  end
+  return values_to_keep, custom_values_to_keep
+end
+
+pokermon.apply_kept_values = function(card, new_center, values, custom_values)
+  if type(card.ability.extra) == "table" and values then
+    for k, v in pairs(values) do
+      if card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" or k == "e_limit_up" then
+        if type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k]) or k == "form" then
+          card.ability.extra[k] = v
+        end
+      end
+    end
+    if values["form"] and type(new_center.set_ability) == 'function' then
+      new_center:set_ability(card)
+    end
+    if card.ability.extra.energy_count or card.ability.extra.c_energy_count then
+      pokermon.energy.energize(card, nil, true, true)
+    end
+  end
+
+  if custom_values and type(custom_values) == 'table' then
+    for k, v in pairs(custom_values) do
+      card.ability.extra[k] = v
+    end
+  end
+end
+
 -- Stolen from Cardsauce
 -- Based on code from Ortalab
 pokermon.backend_evolve = function(card, to_key, energize_amount)
-  local custom_values_to_keep = {}
-  local has_custom_values_to_keep = nil
   local trigger_add = nil
   local new_card = G.P_CENTERS[to_key]
   if card.config.center == new_card then return end
-  
   local old_key = card.config.center.key
-  
+
   --turn off multisprite on evolution
   if card.config.center.poke_multi_sprite and card.ability and card.ability.extra then
     card.ability.extra.loaded_pos = nil
     card.ability.extra.loaded_sprite = nil
   end
-  
+
   -- if it's not a mega and not a devolution and still has rounds left, reset perish tally
   if card.ability.perishable and card.config.center.rarity ~= "poke_mega" then
     if card.ability.perish_tally == 0 then trigger_add = true end
@@ -167,59 +211,14 @@ pokermon.backend_evolve = function(card, to_key, energize_amount)
     card.debuff = false
   end
 
-  local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form"}
-  if pokermon.type_sticker_applied(card) then
-    table.insert(names_to_keep, "ptype")
-  end
-  local values_to_keep = pokermon.copy_scaled_values(card)
-  if type(card.ability.extra) == "table" then
-    for _, k in pairs(names_to_keep) do
-      values_to_keep[k] = card.ability.extra[k]
-    end
-  end
-  
-  -- value filtering
-  if values_to_keep.hazards_drawn then
-    values_to_keep.hazards_drawn = values_to_keep.hazards_drawn % 2
-  end
-  
-  if card.config.center.poke_custom_values_to_keep then
-    for k, v in pairs(card.config.center.poke_custom_values_to_keep) do
-      custom_values_to_keep[v] = card.ability.extra[v]
-    end
-    has_custom_values_to_keep = true
-  end
-  
+  local values_to_keep, custom_values_to_keep = pokermon.get_values_to_keep(card)
+
   card.children.center = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, SMODS.get_atlas(new_card.atlas or "Joker"), new_card.pos)
-  card.children.center.states.hover = card.states.hover
-  card.children.center.states.click = card.states.click
-  card.children.center.states.drag = card.states.drag
-  card.children.center.states.collide.can = false
   card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
   card:set_ability(new_card, true)
   card:set_cost()
 
-  if type(card.ability.extra) == "table" then
-    for k,v in pairs(values_to_keep) do
-      if card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" or k == "e_limit_up" then
-        if type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k]) or k == "form" then
-          card.ability.extra[k] = v
-        end
-      end
-    end
-    if values_to_keep["form"] and type(new_card.set_ability) == 'function' then
-      new_card:set_ability(card)
-    end
-    if card.ability.extra.energy_count or card.ability.extra.c_energy_count then
-      pokermon.energy.energize(card, nil, true, true)
-    end
-  end
-  
-  if has_custom_values_to_keep then
-    for k, v in pairs(custom_values_to_keep) do
-      card.ability.extra[k] = v
-    end
-  end
+  pokermon.apply_kept_values(card, new_card, values_to_keep, custom_values_to_keep)
 
   if new_card.soul_pos then
     card.children.floating_sprite = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, SMODS.get_atlas(new_card.atlas or "Joker"), new_card.soul_pos)
@@ -245,15 +244,15 @@ pokermon.backend_evolve = function(card, to_key, energize_amount)
       G.P_CENTERS.e_poke_shiny.on_load(card)
     end
   end
-  
+
   if trigger_add then
     card:add_to_deck()
   end
-  
+
   if energize_amount then
     pokermon.energy.increase(card, 'Trans', energize_amount)
   end
-  
+
   --Stops pokemon shaking
   if type(card.ability.extra) == "table" then
     card.ability.extra.juiced = nil
