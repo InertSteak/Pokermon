@@ -129,6 +129,7 @@ local default_family_list = {
   { "swinub", "piloswine", "mamoswine" },
   { "snubbull", "granbull" },
   { "mantyke", "mantine" },
+  { "skarmory", "mega_skarmory" },
   { "larvitar", "pupitar", "tyranitar", "mega_tyranitar" },
   { "treecko", "grovyle", "sceptile" },
   { "torchic", "combusken", "blaziken" },
