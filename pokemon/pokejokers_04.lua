@@ -37,54 +37,38 @@ local gastly={
   name = "gastly", 
   pos = {x = 0, y = 7}, 
   config = {extra = {num = 1, dem = 6, rounds = 3}},
-  loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
+  loc_vars = function(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
-      if not center.edition or (center.edition and not center.edition.negative) then
+      if not card.edition or (card.edition and not card.edition.negative) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_negative
       end
     end
-    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'gastly')
-    return {vars = {num, dem, center.ability.extra.rounds}}
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'gastly')
+    return {vars = {num, dem, card.ability.extra.rounds}}
   end,
-  rarity = 2, 
-  cost = 7, 
-  stage = "Basic", 
+  rarity = 2,
+  cost = 7,
+  stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex1",
   gen = 1,
   eternal_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if not card.gone then
-      return pokermon.level_evo(self, card, context, "j_poke_haunter")
-    end
-  end,
-  calc_dollar_bonus = function(self, card)
-    local eligible_card = nil
-    if SMODS.pseudorandom_probability(card, 'gastly', card.ability.extra.num, card.ability.extra.dem, 'gastly') then
-      if #G.jokers.cards > 0 then
-        local eligible_editionless_jokers = {}
-        for k, v in pairs(G.jokers.cards) do
-          if v.ability.set == 'Joker' and v ~= card and not v.gone then
-              table.insert(eligible_editionless_jokers, v)
-          end
-        end
-        if #eligible_editionless_jokers > 0 then
-          eligible_card = pseudorandom_element(eligible_editionless_jokers, pseudoseed('gastly'))
-          local edition = {negative = true}
-          eligible_card:set_edition(edition, true)
-        else
-          eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('gastly'))
-          local edition = {negative = true}
-          eligible_card:set_edition(edition, true)
-        end
+    if context.round_eval and SMODS.pseudorandom_probability(card, 'gastly', card.ability.extra.num, card.ability.extra.dem, 'gastly') then
+      local eligible_jokers = pokermon.filter(G.jokers.cards,
+        function(c) return c.ability.set == 'Joker' and c ~= card and not c.gone end)
+
+      if #eligible_jokers > 0 then
+        local selected_card = pseudorandom_element(eligible_jokers, pseudoseed('gastly'))
+
+        selected_card:set_edition({negative = true}, true)
 
         SMODS.destroy_cards(card, nil, nil, true)
-
-        card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
+        SMODS.calculate_effect({message = localize("poke_lick_ex"), colour = G.C.PURPLE}, selected_card)
       end
     end
+    return pokermon.level_evo(self, card, context, "j_poke_haunter")
   end,
   attributes = {"chance", "editions", "round_evo"},
 }
@@ -93,20 +77,17 @@ local haunter={
   name = "haunter", 
   pos = {x = 1, y = 7}, 
   config = {extra = {num = 1, dem = 4}},
-  loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
+  loc_vars = function(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
-      if not center.edition or (center.edition and not center.edition.negative) then
+      if not card.edition or (card.edition and not card.edition.negative) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_negative
       end
-    end
-    if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     end
-    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'haunter')
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'haunter')
     return {vars = {num, dem}}
   end,
-  rarity = 3, 
+  rarity = 3,
   cost = 9,
   item_req = "linkcable",
   stage = "One", 
@@ -116,35 +97,20 @@ local haunter={
   eternal_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if not card.gone then
-      return pokermon.item_evo(self, card, context, "j_poke_gengar")
-    end
-  end,
-  calc_dollar_bonus = function(self, card)
-    local eligible_card = nil
-    if SMODS.pseudorandom_probability(card, 'haunter', card.ability.extra.num, card.ability.extra.dem, 'haunter') and not card.ability.extra.evolve then
-      if #G.jokers.cards > 0 then
-        local eligible_editionless_jokers = {}
-        for k, v in pairs(G.jokers.cards) do
-          if v.ability.set == 'Joker' and v ~= card and not v.gone then
-              table.insert(eligible_editionless_jokers, v)
-          end
-        end
-        if #eligible_editionless_jokers > 0 then
-          eligible_card = pseudorandom_element(eligible_editionless_jokers, pseudoseed('haunter'))
-          local edition = {negative = true}
-          eligible_card:set_edition(edition, true)
-        else
-          eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('haunter'))
-          local edition = {negative = true}
-          eligible_card:set_edition(edition, true)
-        end
+    if context.round_eval and SMODS.pseudorandom_probability(card, 'haunter', card.ability.extra.num, card.ability.extra.dem, 'haunter') then
+      local eligible_jokers = pokermon.filter(G.jokers.cards,
+        function(c) return c.ability.set == 'Joker' and c ~= card and not c.gone end)
+
+      if #eligible_jokers > 0 then
+        local selected_card = pseudorandom_element(eligible_jokers, pseudoseed('haunter'))
+
+        selected_card:set_edition({negative = true}, true)
 
         SMODS.destroy_cards(card, nil, nil, true)
-
-        card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
+        SMODS.calculate_effect({message = localize("poke_lick_ex"), colour = G.C.PURPLE}, selected_card)
       end
     end
+    return pokermon.item_evo(self, card, context, "j_poke_gengar")
   end,
   attributes = {"chance", "editions", "item_evo"},
 }
