@@ -986,3 +986,38 @@ pokermon.sort_hands = function(sort_func)
   
   return temp_hands
 end
+
+-- Uses the Ford-Fulkerson algorithm
+-- -- For each card, we loop through every applicable suit, and if any
+-- -- of them are already taken by a previous card, we try to reassign it (recursively)
+pokermon.get_first_of_each_suit = function(cards)
+  local claimed_suits = {}
+  local suits_left = #SMODS.Suit.obj_buffer
+
+  local function can_assign_suit(card, checked_suits)
+    for suit, _ in pairs(SMODS.Suits) do
+      if card:is_suit(suit) and not checked_suits[suit] then
+        checked_suits[suit] = true
+
+        if not claimed_suits[suit] or can_assign_suit(claimed_suits[suit], checked_suits) then
+          claimed_suits[suit] = card
+
+          return true
+        end
+      end
+    end
+
+    return false
+  end
+
+  for _, card in ipairs(cards) do
+    local checked_suits = {}
+
+    if can_assign_suit(card, checked_suits) then
+      suits_left = suits_left - 1
+      if suits_left <= 0 then break end
+    end
+  end
+
+  return claimed_suits
+end
