@@ -164,7 +164,46 @@ local meganium = {
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
   end,
+  megas = {"mega_meganium"},
   attributes = {"starter", "hand_size", "passive", "economy"},
+}
+-- Mega Meganium 154-1
+local mega_meganium = {
+  name = "mega_meganium",
+  config = { extra = { money_mod = 2, retriggers = 1 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.money_mod, card.ability.extra.retriggers } }
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Grass",
+  gen = 2,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.hand and not context.end_of_round
+        and pokermon.has(pokermon.get_first_of_each_suit(G.hand.cards), context.other_card) then
+      local earned = pokermon.ease_poke_dollars(card, "mega meganium", card.ability.extra.money_mod, true)
+      G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+      return {
+        dollars = earned,
+        func = function()
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              G.GAME.dollar_buffer = 0
+              return true
+            end
+          }))
+        end
+      }
+    end
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1)
+        and pokermon.has(pokermon.get_first_of_each_suit(G.hand.cards), context.other_card) then
+      return {
+        repetitions = card.ability.extra.retriggers
+      }
+    end
+  end,
+  attributes = {"starter", "economy", "retrigger", "suit"},
 }
 -- Cyndaquil 155
 local cyndaquil = {
@@ -1311,6 +1350,6 @@ local flaaffy={
 }
 
 return {name = "Pokemon Jokers 151-180", 
-        list = { mew, chikorita, bayleef, meganium, cyndaquil, quilava, typhlosion, totodile, croconaw, feraligatr, sentret, furret, hoothoot, noctowl, ledyba, ledian, spinarak, ariados,
+        list = { mew, chikorita, bayleef, meganium, mega_meganium, cyndaquil, quilava, typhlosion, totodile, croconaw, feraligatr, sentret, furret, hoothoot, noctowl, ledyba, ledian, spinarak, ariados,
                  crobat, chinchou, lanturn, pichu, cleffa, igglybuff, togepi, togetic, natu, xatu, mareep,flaaffy},
 }

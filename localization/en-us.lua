@@ -2382,6 +2382,14 @@ return {
                     "earns {C:money}$#2#{} at end of round",
                 }
             },
+            j_poke_mega_meganium = {
+                name = "Mega Meganium",
+                text = {
+                    "First card of each suit",
+                    "held in hand gives {C:money}$#1#{} and",
+                    "retriggers {C:attention}#2#{} additional time",
+                }
+            },
             j_poke_cyndaquil = {
                 name = 'Cyndaquil',
                 text = {

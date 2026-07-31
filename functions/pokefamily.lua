@@ -71,7 +71,7 @@ local default_family_list = {
   { "kabuto", "kabutops" },
   { "dratini", "dragonair", "dragonite", "mega_dragonite" },
   { "mewtwo", "mega_mewtwo_x", "mega_mewtwo_y" },
-  { "chikorita", "bayleef", "meganium" },
+  { "chikorita", "bayleef", "meganium", "mega_meganium" },
   { "cyndaquil", "quilava", "typhlosion" },
   { "totodile", "croconaw", "feraligatr" },
   { "tyrogue", "hitmonlee", "hitmonchan", "hitmontop" },
