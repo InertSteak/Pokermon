@@ -97,7 +97,7 @@ local haunter={
   rarity = 3,
   cost = 9,
   item_req = "linkcable",
-  stage = "One", 
+  stage = "One",
   ptype = "Psychic",
   atlas = "Pokedex1",
   gen = 1,
@@ -130,8 +130,8 @@ local haunter={
 }
 -- Gengar 094
 local gengar={
-  name = "gengar", 
-  pos = {x = 2, y = 7}, 
+  name = "gengar",
+  pos = {x = 2, y = 7},
   config = {extra = {gengar_rounds = 5, trigger = false}},
   loc_vars = function(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -141,66 +141,64 @@ local gengar={
     end
     return {vars = {center.ability.extra.gengar_rounds}}
   end,
-  rarity = "poke_safari", 
-  cost = 10, 
-  stage = "Two", 
+  rarity = "poke_safari",
+  cost = 10,
+  stage = "Two",
   ptype = "Psychic",
   atlas = "Pokedex1",
   gen = 1,
   eternal_compat = true,
   blueprint_compat = false,
+  set_gengar_rounds = function(self, card)
+    local p = pseudorandom('gengar')
+    local ex = card.ability.extra
+
+    if p < .05 then ex.gengar_rounds = 2
+    elseif p < .15 then ex.gengar_rounds = 3
+    elseif p < .35 then ex.gengar_rounds = 4
+    elseif p < .65 then ex.gengar_rounds = 5
+    elseif p < .85 then ex.gengar_rounds = 6
+    elseif p < .95 then ex.gengar_rounds = 7
+    else ex.gengar_rounds = 8 end
+  end,
   calculate = function(self, card, context)
-    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+    if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
       card.ability.extra.gengar_rounds = card.ability.extra.gengar_rounds - 1
-      if card.ability.extra.gengar_rounds ~= 0 then
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_nasty_plot_ex"), colour = G.C.PURPLE})
-      end
-      if card.ability.extra.gengar_rounds == 0 then
+      if card.ability.extra.gengar_rounds > 0 then
+        return {
+          message = localize("poke_nasty_plot_ex"),
+          colour = G.C.PURPLE
+        }
+      else
         card.ability.extra.trigger = true
-        
-        local gengar_chance = pseudorandom('gengar')
-        if gengar_chance < .05 then card.ability.extra.gengar_rounds = 2
-        elseif gengar_chance < .15 then card.ability.extra.gengar_rounds = 3
-        elseif gengar_chance < .35 then card.ability.extra.gengar_rounds = 4
-        elseif gengar_chance < .65 then card.ability.extra.gengar_rounds = 5
-        elseif gengar_chance < .85 then card.ability.extra.gengar_rounds = 6
-        elseif gengar_chance < .95 then card.ability.extra.gengar_rounds = 7
-        else card.ability.extra.gengar_rounds = 8
-        end
+        self:set_gengar_rounds(card)
+      end
+    end
+    if context.round_eval and card.ability.extra.trigger then
+      card.ability.extra.trigger = false
+
+      local eligible_jokers = pokermon.filter(G.jokers.cards,
+        function(c) return c.ability.set == 'Joker' and c.ability.name ~= "gengar" and not c.getting_sliced end)
+
+      if #eligible_jokers > 0 then
+        local selected_card = pseudorandom_element(eligible_jokers, pseudoseed('gengar'))
+
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            -- event to delay the negative shader appearing
+            selected_card:set_edition('e_negative', true)
+            card:juice_up()
+            return true
+          end
+        }))
+
+        SMODS.calculate_effect({message = localize("poke_lick_ex"), colour = G.C.PURPLE}, selected_card)
       end
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      local gengar_chance = pseudorandom('gengar')
-      if gengar_chance < .05 then card.ability.extra.gengar_rounds = 2
-      elseif gengar_chance < .15 then card.ability.extra.gengar_rounds = 3
-      elseif gengar_chance < .35 then card.ability.extra.gengar_rounds = 4
-      elseif gengar_chance < .65 then card.ability.extra.gengar_rounds = 5
-      elseif gengar_chance < .85 then card.ability.extra.gengar_rounds = 6
-      elseif gengar_chance < .95 then card.ability.extra.gengar_rounds = 7
-      else card.ability.extra.gengar_rounds = 8
-      end
-    end
-  end,
-  calc_dollar_bonus = function(self, card)
-    local eligible_card = nil
-    if card.ability.extra.trigger then
-      card.ability.extra.trigger = false
-      if #G.jokers.cards > 0 then
-        local eligible_jokers = {}
-        for k, v in pairs(G.jokers.cards) do
-          if v.ability.set == 'Joker' and v.ability.name ~= "gengar" and not v.gone then
-              table.insert(eligible_jokers, v)
-          end
-        end
-        if #eligible_jokers > 0 then
-          eligible_card = pseudorandom_element(eligible_jokers, pseudoseed('gengar'))
-          local edition = {negative = true}
-          eligible_card:set_edition(edition, true)
-          card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
-        end
-      end
+      self:set_gengar_rounds(card)
     end
   end,
   megas = {"mega_gengar"},
@@ -208,37 +206,35 @@ local gengar={
 }
 -- Mega Gengar 094-1
 local mega_gengar ={
-  name = "mega_gengar", 
+  name = "mega_gengar",
   pos = {x = 1, y = 1},
   soul_pos = { x = 2, y = 1},
-  config = {extra = {xmult = 2, mega_gengar_tally = 0, rounds = 1}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if not center.edition or (center.edition and not center.edition.negative) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     end
   end,
-  rarity = "poke_mega", 
-  cost = 12, 
-  stage = "Mega", 
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
   ptype = "Psychic",
   atlas = "Megas",
   gen = 1,
-  eternal_compat = false,
+  eternal_compat = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind and not context.blind.boss then
       G.E_MANAGER:add_event(Event({
         func = (function()
-            add_tag(Tag('tag_negative'))
-            play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
-            play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
-            return true
+          add_tag(Tag('tag_negative'))
+          play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+          play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+          return true
         end)
       }))
     end
   end,
-  attributes = {"tag"},
+  attributes = {"tag", "generation"},
 }
 -- Onix 095
 local onix={
