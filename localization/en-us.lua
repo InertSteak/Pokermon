@@ -2382,6 +2382,14 @@ return {
                     "earns {C:money}$#2#{} at end of round",
                 }
             },
+            j_poke_mega_meganium = {
+                name = "Mega Meganium",
+                text = {
+                    "First card of each {C:attention}suit",
+                    "held in hand gives {C:money}$#1#{} and",
+                    "retriggers {C:attention}#2#{} additional time",
+                }
+            },
             j_poke_cyndaquil = {
                 name = 'Cyndaquil',
                 text = {
@@ -3115,6 +3123,17 @@ return {
                     "{C:attention}Hazard{} or {C:attention}Steel{} card",
                     "{C:attention}held{} in hand",
                     "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
+                }
+            },
+            j_poke_mega_skarmory = {
+                name = "Mega Skarmory",
+                text = {
+                    "{C:poke_hazard}+#1#{} hazard layer and limit",
+                    "Played {C:attention}Hazard{} cards",
+                    "give {X:mult,C:white}X#2#{} Mult for each",
+                    "{C:attention}Gold{} or {C:attention}Steel{} card {C:attention}held",
+                    "in hand when scored",
+                    "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult){}"
                 }
             },
             j_poke_kingdra = {
