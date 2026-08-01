@@ -926,6 +926,12 @@ end
 pokermon.reset_sprite = function(card, center)
   center = center or card.config.center
 
+  local reset_atlas
+  if card.edition and card.edition.poke_shiny and SMODS.get_atlas(center.atlas .. 'Shiny') then
+    reset_atlas = center.atlas
+    center.atlas = center.atlas .. 'Shiny'
+  end
+
   local sprite = card.children.center
   local soul = card.children.floating_sprite
 
@@ -958,6 +964,10 @@ pokermon.reset_sprite = function(card, center)
 
   if sprite then sprite:remove() end
   if soul then soul:remove() end
+
+  if reset_atlas then
+    center.atlas = reset_atlas
+  end
 end
 
 pokermon.get_depleted = function(find_func)
