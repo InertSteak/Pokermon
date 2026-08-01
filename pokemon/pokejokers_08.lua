@@ -991,7 +991,18 @@ local mega_skarmory = {
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
       info_queue[#info_queue+1] = G.P_CENTERS.m_gold
     end
-    return { vars = { card.ability.extra.hazard_level, card.ability.extra.Xmult_multi } }
+    local gold_or_steel_count = 0
+    if G.hand and G.hand.cards then
+      gold_or_steel_count = #pokermon.filter(
+        G.hand.cards,
+        function(hand_card)
+          return (SMODS.has_enhancement(hand_card, 'm_steel')
+              or SMODS.has_enhancement(hand_card, 'm_gold'))
+              and not hand_card.highlighted
+        end
+      )
+    end
+    return { vars = { card.ability.extra.hazard_level, card.ability.extra.Xmult_multi, 1 + (gold_or_steel_count * card.ability.extra.Xmult_multi)} }
   end,
   rarity = "poke_mega",
   cost = 12,

@@ -2385,7 +2385,7 @@ return {
             j_poke_mega_meganium = {
                 name = "Mega Meganium",
                 text = {
-                    "First card of each suit",
+                    "First card of each {C:attention}suit",
                     "held in hand gives {C:money}$#1#{} and",
                     "retriggers {C:attention}#2#{} additional time",
                 }
@@ -3131,8 +3131,9 @@ return {
                     "{C:poke_hazard}+#1#{} hazard layer and limit",
                     "Played {C:attention}Hazard{} cards",
                     "give {X:mult,C:white}X#2#{} Mult for each",
-                    "{C:attention}Gold{} or {C:attention}Steel{} card",
-                    "held in hand when scored",
+                    "{C:attention}Gold{} or {C:attention}Steel{} card {C:attention}held",
+                    "in hand when scored",
+                    "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult){}"
                 }
             },
             j_poke_kingdra = {
