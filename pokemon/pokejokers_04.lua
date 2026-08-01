@@ -57,14 +57,21 @@ local gastly={
   calculate = function(self, card, context)
     if context.round_eval and SMODS.pseudorandom_probability(card, 'gastly', card.ability.extra.num, card.ability.extra.dem, 'gastly') then
       local eligible_jokers = pokermon.filter(G.jokers.cards,
-        function(c) return c.ability.set == 'Joker' and c ~= card and not c.gone end)
+        function(c) return c.ability.set == 'Joker' and c ~= card and not c.getting_sliced end)
 
       if #eligible_jokers > 0 then
         local selected_card = pseudorandom_element(eligible_jokers, pseudoseed('gastly'))
 
-        selected_card:set_edition({negative = true}, true)
+        SMODS.destroy_cards(card)
 
-        SMODS.destroy_cards(card, nil, nil, true)
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            -- event to delay the negative shader appearing
+            selected_card:set_edition('e_negative', true)
+            return true
+          end
+        }))
+
         SMODS.calculate_effect({message = localize("poke_lick_ex"), colour = G.C.PURPLE}, selected_card)
       end
     end
@@ -99,14 +106,21 @@ local haunter={
   calculate = function(self, card, context)
     if context.round_eval and SMODS.pseudorandom_probability(card, 'haunter', card.ability.extra.num, card.ability.extra.dem, 'haunter') then
       local eligible_jokers = pokermon.filter(G.jokers.cards,
-        function(c) return c.ability.set == 'Joker' and c ~= card and not c.gone end)
+        function(c) return c.ability.set == 'Joker' and c ~= card and not c.getting_sliced end)
 
       if #eligible_jokers > 0 then
         local selected_card = pseudorandom_element(eligible_jokers, pseudoseed('haunter'))
 
-        selected_card:set_edition({negative = true}, true)
+        SMODS.destroy_cards(card)
 
-        SMODS.destroy_cards(card, nil, nil, true)
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            -- event to delay the negative shader appearing
+            selected_card:set_edition('e_negative', true)
+            return true
+          end
+        }))
+
         SMODS.calculate_effect({message = localize("poke_lick_ex"), colour = G.C.PURPLE}, selected_card)
       end
     end
@@ -120,7 +134,6 @@ local gengar={
   pos = {x = 2, y = 7}, 
   config = {extra = {gengar_rounds = 5, trigger = false}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       if not center.edition or (center.edition and not center.edition.negative) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_negative
