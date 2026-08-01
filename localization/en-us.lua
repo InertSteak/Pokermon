@@ -106,7 +106,7 @@ return {
                 text = {
                     "After defeating each",
                     "{C:attention}Odd Boss Blind{}, gain a",
-                    "{C:attention,T:tag_vremade_double}#1#",
+                    "{C:attention,T:tag_voucher}#1#",
                 } 
             },
             b_poke_diceydeck = {
