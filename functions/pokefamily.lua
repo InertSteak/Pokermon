@@ -73,7 +73,7 @@ local default_family_list = {
   { "mewtwo", "mega_mewtwo_x", "mega_mewtwo_y" },
   { "chikorita", "bayleef", "meganium", "mega_meganium" },
   { "cyndaquil", "quilava", "typhlosion" },
-  { "totodile", "croconaw", "feraligatr" },
+  { "totodile", "croconaw", "feraligatr", "mega_feraligatr" },
   { "tyrogue", "hitmonlee", "hitmonchan", "hitmontop" },
   { "poochyena", "mightyena" },
   { "wurmple", "silcoon", "beautifly", "cascoon", "dustox" },

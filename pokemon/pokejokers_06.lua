@@ -477,6 +477,61 @@ local feraligatr = {
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
     pokermon.ease_hands_played(-card.ability.extra.hands)
   end,
+  megas = { "mega_feraligatr" },
+  attributes = {"starter", "hands", "passive", "chips", "scaling", "reset"},
+}
+
+local mega_feraligatr = {
+  name = "mega_feraligatr",
+  pos = {x = 8, y = 0},
+  config = {extra = {chips = 0, chip_mod = 15}},
+  loc_vars = function(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Dragon Scale"}}
+      info_queue[#info_queue+1] = {set = 'poke_item', key = 'c_poke_dragonscale', poke_add_desc = true}
+    end
+    return {vars = {card.ability.extra.chip_mod, card.ability.extra.chips}}
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  gen = 2,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.before and not context.blueprint then
+      card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * #context.full_hand)
+      return {
+        message = localize('k_upgrade_ex'),
+        colour = G.C.CHIPS
+      }
+    end
+    if context.other_joker and pokermon.is_type(context.other_joker, "Dragon") and card.ability.extra.chips > 0 then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+            context.other_joker:juice_up(0.5, 0.5)
+            return true
+        end
+      })) 
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.chips = 0
+      return {
+        message = localize('k_reset'),
+        colour = G.C.CHIPS
+      }
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      pokermon.create_consumeable('c_poke_dragonscale')
+    end
+  end,
   attributes = {"starter", "hands", "passive", "chips", "scaling", "reset"},
 }
 -- Sentret 161
@@ -1350,6 +1405,6 @@ local flaaffy={
 }
 
 return {name = "Pokemon Jokers 151-180", 
-        list = { mew, chikorita, bayleef, meganium, mega_meganium, cyndaquil, quilava, typhlosion, totodile, croconaw, feraligatr, sentret, furret, hoothoot, noctowl, ledyba, ledian, spinarak, ariados,
-                 crobat, chinchou, lanturn, pichu, cleffa, igglybuff, togepi, togetic, natu, xatu, mareep,flaaffy},
+        list = { mew, chikorita, bayleef, meganium, mega_meganium, cyndaquil, quilava, typhlosion, totodile, croconaw, feraligatr, mega_feraligatr, sentret, furret, hoothoot, noctowl, 
+                 ledyba, ledian, spinarak, ariados,crobat, chinchou, lanturn, pichu, cleffa, igglybuff, togepi, togetic, natu, xatu, mareep,flaaffy},
 }

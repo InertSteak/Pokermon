@@ -2448,6 +2448,16 @@ return {
                     "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
                 }
             },
+            j_poke_mega_feraligatr = {
+                name = 'Mega Feraligatr',
+                text = {
+                    "{C:attention}Holding {C:poke_item}Dragon Scale",
+                    "Each {X:poke_dragon,C:white}Dragon{} Joker gives",
+                    "{C:chips}+#1#{} Chips for each card",
+                    "played this round",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+                }
+            },
             j_poke_sentret = {
                 name = 'Sentret',
                 text = {
