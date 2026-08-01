@@ -62,7 +62,7 @@ local gastly={
       if #eligible_jokers > 0 then
         local selected_card = pseudorandom_element(eligible_jokers, pseudoseed('gastly'))
 
-        SMODS.destroy_cards(card)
+        SMODS.destroy_cards(card, {pinch_anim = true})
 
         G.E_MANAGER:add_event(Event({
           func = function()
@@ -111,7 +111,7 @@ local haunter={
       if #eligible_jokers > 0 then
         local selected_card = pseudorandom_element(eligible_jokers, pseudoseed('haunter'))
 
-        SMODS.destroy_cards(card)
+        SMODS.destroy_cards(card, {pinch_anim = true})
 
         G.E_MANAGER:add_event(Event({
           func = function()
