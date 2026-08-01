@@ -923,11 +923,15 @@ local kecleon = {
       ['Water'] = {x = 2, y = 2},
     })[ptype]
 
+    local postfix = card.edition and card.edition.poke_shiny and 'Shiny' or ''
+
     if sprite_pos then
-      card.children.center.atlas = SMODS.get_atlas('poke_'..card.config.center.poke_lookup_atlas)
+      local atlas = SMODS.get_atlas('poke_'..card.config.center.poke_lookup_atlas..postfix)
+      card.children.center.atlas = atlas or card.children.center.atlas
       card.children.center:set_sprite_pos(sprite_pos)
     else
-      card.children.center.atlas = SMODS.get_atlas(card.config.center.atlas)
+      local atlas = SMODS.get_atlas(card.config.center.atlas..postfix)
+      card.children.center.atlas = atlas or card.children.center.atlas
       card.children.center:set_sprite_pos(card.config.center.pos)
     end
   end,
