@@ -170,7 +170,6 @@ local zorua = {
 
       if ret then
         ret.colour = G.C.BLACK
-        SMODS.calculate_effect(ret, card)
         if not context.after then return ret end
       end
 
