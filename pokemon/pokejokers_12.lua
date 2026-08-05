@@ -587,7 +587,7 @@ local lileep={
     return pokermon.scaling_evo(self, card, context, "j_poke_cradily", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
   generate_ui = pokermon.fossil_generate_ui,
-  attributes = {"rank", "eight", "hand_size", "sell_value", "chips", "trigger_evo"},
+  attributes = {"ancient", "rank", "eight", "hand_size", "sell_value", "chips", "trigger_evo"},
 }
 -- Cradily 346
 local cradily={
