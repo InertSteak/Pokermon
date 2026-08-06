@@ -115,9 +115,147 @@ local pyroar={
 -- Slurpuff 685
 -- Inkay 686
 -- Malamar 687
+
 -- Binacle 688
+local binacle={
+  name = "binacle",
+  gen = 6,
+  pos = {x = 24, y = 45},
+  config = {extra = {value = 7, retriggers = 1, retrigger_hand = 2, retrigger_held = 2, retriggered_hand = 0, retriggered_held = 0, retriggered_held_end = 0, rounds = 4}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local abbr = card.ability.extra
+    return {vars = {abbr.value, abbr.retrigger_hand, abbr.retrigger_held, abbr.retriggers, abbr.rounds}}
+  end,
+  rarity = 1,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Earth",
+  atlas = "AtlasJokersBasicNatdex",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+
+    if context.setting_blind then
+      card.ability.extra.retriggered_held_end = 0
+    end
+    if context.before then
+      card.ability.extra.retriggered_hand = 0
+      card.ability.extra.retriggered_held = 0
+    end
+
+    if context.repetition and context.cardarea == G.play and context.other_card:get_id() == card.ability.extra.value and card.ability.extra.retriggered_hand < card.ability.extra.retrigger_hand then
+      if not context.blueprint then
+        card.ability.extra.retriggered_hand = card.ability.extra.retriggered_hand + 1
+      end
+      return {
+          message = localize('k_again_ex'),
+          repetitions = card.ability.extra.retriggers,
+          card = card
+      }
+    end
+
+    if context.repetition and context.cardarea == G.hand and context.other_card:get_id() == card.ability.extra.value then
+      if context.end_of_round then
+        if card.ability.extra.retriggered_held_end < card.ability.extra.retrigger_held then
+          if not context.blueprint then
+            card.ability.extra.retriggered_held_end = card.ability.extra.retriggered_held_end + 1
+          end
+          return {
+            message = localize('k_again_ex'),
+            repetitions = card.ability.extra.retriggers,
+            card = card
+          }
+        end
+        
+      elseif card.ability.extra.retriggered_held < card.ability.extra.retrigger_held then
+        if not context.blueprint then
+          card.ability.extra.retriggered_held = card.ability.extra.retriggered_held + 1
+        end
+        return {
+            message = localize('k_again_ex'),
+            repetitions = card.ability.extra.retriggers,
+            card = card
+        }
+      end
+    end
+
+    return level_evo(self, card, context, "j_poke_barbaracle")
+  end,
+}
+
 -- Barbaracle 689
+local barbaracle={
+  name = "barbaracle",
+  gen = 6,
+  pos = {x = 26, y = 45},
+  config = {extra = {value = 7, retriggers = 1, retrigger_hand = 7, retrigger_held = 7, retriggered_hand = 0, retriggered_held = 0, retriggered_held_end = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local abbr = card.ability.extra
+    return {vars = {abbr.value, abbr.retrigger_hand, abbr.retrigger_held, abbr.retriggers}}
+  end,
+  rarity = "poke_safari",
+  cost = 6,
+  stage = "One",
+  ptype = "Earth",
+  atlas = "AtlasJokersBasicNatdex",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+
+    if context.setting_blind then
+      card.ability.extra.retriggered_held_end = 0
+    end
+    if context.before then
+      card.ability.extra.retriggered_hand = 0
+      card.ability.extra.retriggered_held = 0
+    end
+
+    if context.repetition and context.cardarea == G.play and card.ability.extra.retriggered_hand < card.ability.extra.retrigger_hand then
+      if (context.other_card:get_id() == card.ability.extra.value) then
+        if not context.blueprint then
+          card.ability.extra.retriggered_hand = card.ability.extra.retriggered_hand + 1
+        end
+        return {
+            message = localize('k_again_ex'),
+            repetitions = card.ability.extra.retriggers,
+            card = card
+        }
+      end
+    end
+
+    if context.repetition and context.cardarea == G.hand and context.other_card:get_id() == card.ability.extra.value then
+      if context.end_of_round then
+        if card.ability.extra.retriggered_held_end < card.ability.extra.retrigger_held then
+          if not context.blueprint then
+            card.ability.extra.retriggered_held_end = card.ability.extra.retriggered_held_end + 1
+          end
+          return {
+            message = localize('k_again_ex'),
+            repetitions = card.ability.extra.retriggers,
+            card = card
+          }
+        end
+
+      elseif card.ability.extra.retriggered_held < card.ability.extra.retrigger_held then
+        if not context.blueprint then
+          card.ability.extra.retriggered_held = card.ability.extra.retriggered_held + 1
+        end
+        return {
+            message = localize('k_again_ex'),
+            repetitions = card.ability.extra.retriggers,
+            card = card
+        }
+      end
+    end
+
+  end,
+  --megas = {"mega_barbaracle"}
+}
+
 -- Skrelp 690
 return {name = "Pokemon Jokers 661-690", 
-        list = {litleo, pyroar},
+  list = {
+    litleo, pyroar,
+    binacle, barbaracle,
+  },
 }
