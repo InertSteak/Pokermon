@@ -1,156 +1,300 @@
--- Squawkabilly 931
--- Nacli 932
--- Naclstack 933
--- Garganacl 934
--- Charcadet 935
-local charcadet={
-  name = "charcadet",
-  pos = {x = 0, y = 0},
-  config = {extra = {mult = 0,mult_mod = 5, mult_original = 0}},
-  loc_vars = function(self, info_queue, center)
+local squawkabilly = {
+  name = "squawkabilly",
+  pos = {x = 8, y = 0},
+  config = { extra = { form = math.random(0, 3), mult = 0, chips = 0, money_per_hand = 0, Xmult = 0, money = 0, is_enemy = false, threat = 0 } }, 
+   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_dawnstone
-      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_duskstone
+    
+    local extra = center.ability and center.ability.extra or center.config and center.config.extra
+    local current_form = extra and extra.form or 0
+    local is_enemy = extra and extra.is_enemy or false
+    
+    local alt_key = "j_poke_squawkabilly"
+    if is_enemy then
+        if current_form == 0 then alt_key = "j_poke_squawkabilly_ge"
+        elseif current_form == 1 then alt_key = "j_poke_squawkabilly_be"
+        elseif current_form == 2 then alt_key = "j_poke_squawkabilly_ye"
+        elseif current_form == 3 then alt_key = "j_poke_squawkabilly_we" end
+    else
+        if current_form == 1 then alt_key = "j_poke_squawkabilly_b"
+        elseif current_form == 2 then alt_key = "j_poke_squawkabilly_y"
+        elseif current_form == 3 then alt_key = "j_poke_squawkabilly_w" end
     end
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, }}
+    
+    local val_mult  = extra and extra.mult or 0
+    local val_chips = extra and extra.chips or 0
+    local val_xmult = extra and extra.Xmult or 0.0
+    local val_money = extra and (is_enemy and extra.money_per_hand or extra.money) or 0
+    local val_threat = extra and extra.threat or 0
+    
+    local display_mult, display_chips, display_money, display_xmult
+    if is_enemy then
+        if val_mult == 0 and val_chips == 0 and val_money == 0 and val_xmult == 0.0 then
+            display_mult  = (current_form == 0 and -4 or 0)
+            display_chips = (current_form == 1 and -35 or 0)
+            display_money = (current_form == 2 and -2 or 0)
+            display_xmult = (current_form == 3 and -0.15 or 0)
+        else
+            display_mult  = val_mult
+            display_chips = val_chips
+            display_money = val_money
+            display_xmult = val_xmult
+        end
+      else
+        display_mult  = val_mult  + (current_form == 0 and 3 or 0)
+        display_chips = val_chips + (current_form == 1 and 20 or 0)
+        display_money = val_money + (current_form == 2 and 1 or 0)
+        display_xmult = 1.0 + val_xmult + (current_form == 3 and 0.5 or 0)
+    end
+    
+    return { vars = {display_mult, display_chips, display_money, display_xmult, val_threat}, key = alt_key }
   end,
-  rarity = 2,
+
+  rarity = 3,
   cost = 5,
   gen = 9,
-  item_req = {"dawnstone", "duskstone"},
-  evo_list = {dawnstone = "j_poke_armarouge", duskstone = 'j_poke_ceruledge'},
   stage = "Basic",
-  ptype = "Fire",
+  ptype = "Colorless",
   atlas = "Pokedex9",
   perishable_compat = true,
-  blueprint_compat = true,
+  blueprint_compat = false, 
   eternal_compat = true,
-  calculate = function(self, card, context)
-    if context.joker_main then
-      return {
-        mult = card.ability.extra.mult
-      }
-    end
-    if context.after and not context.blueprint then
-      SMODS.scale_card(card, {
-        ref_value = 'mult',
-        scalar_value = 'mult_mod',
-        message_colour = G.C.MULT
-      })
-    end
-    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      card.ability.extra.mult = card.ability.extra.mult_original
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset'), colour = G.C.RED})
-    end
-    return pokermon.item_evo(self, card, context)
-  end,
-  attributes = {"mult", "scaling", "reset", "item_evo"},
-}
--- Armarouge 936
-local armarouge={
-  name = "armarouge",
-  pos = {x = 0, y = 0},
-  config = {extra = {Xmult = 3, Xmult_mod = 1, Xmult2 = 3}},
-  loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, }}
-  end,
-  rarity = "poke_safari",
-  cost = 7,
-  gen = 9,
-  stage = "One",
-  ptype = "Fire",
-  atlas = "Pokedex9",
-  perishable_compat = true,
-  blueprint_compat = true,
-  eternal_compat = true,
-  calculate = function(self, card, context)
-    if context.joker_main then
-      return {
-        Xmult = card.ability.extra.Xmult
-      }
-    end
-    if context.after and card.ability.extra.Xmult > 1 and not context.blueprint then
-      SMODS.scale_card(card, {
-        ref_value = 'Xmult',
-        scalar_value = 'Xmult_mod',
-        operation = function(ref_table, ref_value, initial, modifier)
-          ref_table[ref_value] = math.max(1, initial - modifier)
-        end,
-        message_key = 'a_xmult_minus',
-        message_colour = G.C.RED
-      })
-    end
-    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      card.ability.extra.Xmult = card.ability.extra.Xmult2
-      return {
-        message = localize('k_reset'),
-        colour = G.C.RED
-      }
-    end
-  end,
-  attributes = {"xmult", "scaling", "reset"},
-}
--- Ceruledge 937
-local ceruledge={
-  name = "ceruledge",
-  pos = {x = 0, y = 0},
-  config = {extra = {Xmult = 1, Xmult_mod = 0.75, Xmult2 = 1, money_minus = 1,}},
-  loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
-    end
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.money_minus}}
-  end,
-  rarity = "poke_safari",
-  cost = 7,
-  gen = 9,
-  stage = "One",
-  ptype = "Fire",
-  atlas = "Pokedex9",
-  perishable_compat = true,
-  blueprint_compat = true,
-  eternal_compat = true,
-  calculate = function(self, card, context)
-    if context.joker_main then
-      return {
-        Xmult = card.ability.extra.Xmult
-      }
-    end
-    if context.after and not context.blueprint then
-      G.E_MANAGER:add_event(Event({
-        func = function()
-          local drain_jokers = {}
-          for i = 1, #G.jokers.cards do
-            if G.jokers.cards[i] ~= card and G.jokers.cards[i].sell_cost > 1 then
-              drain_jokers[#drain_jokers+1] = G.jokers.cards[i]
-            end
-          end
-          if #drain_jokers > 0 then
-            pokermon.drain_value(card, pseudorandom_element(drain_jokers, 'ceruledge'), card.ability.extra.money_minus)
-          end
-          return true
-        end
-      }))
 
-      SMODS.scale_card(card, {
-        ref_value = 'Xmult',
-        scalar_value = 'Xmult_mod',
-        message_colour = G.C.MULT
-      })
+  calculate = function(self, card, context)
+    if not card.ability or not card.ability.extra or card.to_be_destroyed then return end
+    local current_form = card.ability.extra.form or 0
+    local is_enemy = card.ability.extra.is_enemy or false
+
+    if is_enemy then
+        card.cost = 0
+        card.sell_cost = 0
+        card.sell_cost_label = 0
+        
+        -- Prevent the rival Squawkies from having an edition, since it provides positive value.
+        if card.edition then
+            card.edition = nil
+            if card.set_edition then 
+                card:set_edition(nil, true) 
+            end
+        end
     end
-    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      card.ability.extra.Xmult = card.ability.extra.Xmult2
-      return {
-        message = localize('k_reset'),
-        colour = G.C.RED
-      }
+
+    if context.setting_blind and not context.blueprint and not is_enemy then
+        if G.GAME.last_squawk_spawn_round == G.GAME.round then return end
+
+        if G.jokers and G.jokers.cards and #G.jokers.cards >= G.jokers.config.card_limit then
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = "No Room!", colour = G.C.RED})
+            return 
+        end
+        
+        G.GAME.last_squawk_spawn_round = G.GAME.round
+        
+        -- Create am 8% chance for your specific color to appear, weighted based on rarity of the color
+        local spawn_pool = {}
+        local remaining_colors = {}
+        if current_form == 0 then remaining_colors = {1, 2, 3}      
+        elseif current_form == 1 then remaining_colors = {0, 2, 3}  
+        elseif current_form == 2 then remaining_colors = {0, 1, 3}  
+        elseif current_form == 3 then remaining_colors = {0, 1, 2}  
+        end
+        
+        -- The other 92% is distributed based on rarity of other colors
+        for i = 1, 48 do table.insert(spawn_pool, remaining_colors[1]) end 
+        for i = 1, 32 do table.insert(spawn_pool, remaining_colors[2]) end 
+        for i = 1, 12 do table.insert(spawn_pool, remaining_colors[3]) end 
+        
+        for i = 1, 8 do table.insert(spawn_pool, current_form) end
+        
+        local chosen_form = spawn_pool[math.random(#spawn_pool)]
+        
+        -- If color matches yours, it is a friendly Squawkie. Otherwise, it is a rival.
+        local is_spawn_enemy = (chosen_form ~= current_form)
+        pokermon.next_squawk_form = chosen_form
+        pokermon.next_squawk_enemy = is_spawn_enemy
+
+        local temp_card = {set = "Joker", area = G.jokers, key = "j_poke_squawkabilly"}
+        local add_card = SMODS.create_card(temp_card)
+        
+        add_card.ability.extra.form  = chosen_form
+        add_card.ability.extra.mult  = 0
+        add_card.ability.extra.chips = 0
+        add_card.ability.extra.money = 0
+        add_card.ability.extra.Xmult = 0.0
+        local current_ante = G.GAME and G.GAME.round_resets and G.GAME.round_resets.ante or 1
+            
+        if is_spawn_enemy then
+            add_card.ability.extra.is_enemy = true
+            if chosen_form == 0 then 
+                local max_penalty = math.min(15, 3 + (current_ante * 1.5))
+                add_card.ability.extra.mult = -math.random(3, math.floor(max_penalty)) 
+                add_card.ability.extra.threat = math.abs(add_card.ability.extra.mult + 2)
+            elseif chosen_form == 1 then 
+                local max_penalty = math.min(120, 10 + (current_ante * 14))
+                add_card.ability.extra.chips = -math.random(10, math.floor(max_penalty))
+                add_card.ability.extra.threat = math.floor(math.abs(add_card.ability.extra.chips / 10))
+            elseif chosen_form == 2 then 
+                local max_penalty = math.min(4, 1 + math.floor(current_ante / 2.5))
+                add_card.ability.extra.money_per_hand = -math.random(1, math.max(1, max_penalty))
+                add_card.ability.extra.threat = math.abs(add_card.ability.extra.money_per_hand * 3)
+            elseif chosen_form == 3 then 
+                local max_penalty = math.min(50, 10 + (current_ante * 5))
+                add_card.ability.extra.Xmult = -(math.random(10, math.floor(max_penalty)) / 100) 
+                add_card.ability.extra.threat = math.floor(math.abs(24 * add_card.ability.extra.Xmult))
+            end
+        else
+            add_card.ability.extra.is_enemy = false
+            add_card.ability.extra.threat = 0
+            if chosen_form == 0 then add_card.ability.extra.mult = 5
+            elseif chosen_form == 1 then add_card.ability.extra.chips = 20
+            elseif chosen_form == 2 then add_card.ability.extra.money = 1
+            elseif chosen_form == 3 then add_card.ability.extra.Xmult = 1.5 end
+        end
+        
+        -- Set forms for different colors
+        if add_card.children and add_card.children.center then
+            if chosen_form == 0 then  add_card.children.center:set_sprite_pos({x = 8, y = 0}) -- Green
+            elseif chosen_form == 1 then add_card.children.center:set_sprite_pos({x = 0, y = 1}) -- Blue
+            elseif chosen_form == 2 then add_card.children.center:set_sprite_pos({x = 2, y = 1}) -- Yellow
+            elseif chosen_form == 3 then add_card.children.center:set_sprite_pos({x = 4, y = 1}) -- White
+            end
+        end
+        G.jokers:emplace(add_card)
+    end
+
+    -- Destroy rival Squawkies and add value based on "threat" of rivals.
+    if context.end_of_round and not context.repetition and not context.individual and not context.blueprint and not is_enemy then
+        if G.jokers and G.jokers.cards then
+            for _, j in ipairs(G.jokers.cards) do
+                -- Make sure friendly Squawkies are not destroyed
+                if j.config.center.key == "j_poke_squawkabilly" and j.ability.extra.is_enemy == true and not j.to_be_destroyed then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                          local update_message = ""
+                            if current_form == 0 then
+                                card.ability.extra.mult = (card.ability.extra.mult or 0) + j.ability.extra.threat
+                                update_message = "+" .. j.ability.extra.threat .. " Mult"
+                            elseif current_form == 1 then
+                                card.ability.extra.chips = (card.ability.extra.chips or 0) + j.ability.extra.threat * 10
+                                update_message = "+" .. j.ability.extra.threat * 10 .. " Chips"
+                            elseif current_form == 2 then
+                                ease_dollars(j.ability.extra.threat)
+                                update_message = "+$" .. j.ability.extra.threat
+                            elseif current_form == 3 then
+                                card.ability.extra.Xmult = (card.ability.extra.Xmult or 0) + j.ability.extra.threat / 10.0
+                                update_message = string.format("X%0.1f", card.ability.extra.threat * 0.1)
+                            end
+                            card_eval_status_text(card, 'extra', nil, nil, nil, {message = update_message, colour = G.C.MULT})
+                            j:start_dissolve()
+                            return true
+                        end
+                    }))
+                end
+            end
+        end
+    end
+
+    if context.joker_main then
+        if is_enemy then
+            local e_payload = { card = card, colour = G.C.RED }
+            local debuffed = false
+            
+            local total_mult  = card.ability.extra.mult or 0
+            local total_chips = card.ability.extra.chips or 0
+            local total_money  = card.ability.extra.money_per_hand or 0
+            local total_xmult = card.ability.extra.Xmult or 0
+
+            if total_mult < 0 then 
+                e_payload.mult_mod = total_mult 
+                debuffed = true 
+                e_payload.message = tostring(total_mult) .. " Mult"
+            end
+            if total_chips < 0 then 
+                e_payload.chip_mod = total_chips 
+                debuffed = true 
+                e_payload.message = tostring(total_chips) .. " Chips"
+            end
+            if total_xmult < 0 then 
+                e_payload.Xmult_mod = 1.0 + total_xmult 
+                debuffed = true 
+                e_payload.message = "X" .. tostring(1.0 + total_xmult)
+            end
+            
+            if total_money < 0 then
+                ease_dollars(total_money)
+                card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Siphoned! " .. total_money, colour = G.C.MONEY})
+            end
+            
+            if debuffed then return e_payload end
+        
+        else
+            --Sets the starting stats if you start with the Joker, like for challenges
+            local f_payload = {}
+            local has_stats = false
+            
+            local total_mult  = (card.ability.extra.mult or 0) + (current_form == 0 and 1 or 0)
+            local total_chips = (card.ability.extra.chips or 0) + (current_form == 1 and 20 or 0)
+            local total_xmult = 1.0 + (card.ability.extra.Xmult or 0) + (current_form == 3 and 0.2 or 0)
+            
+            if total_mult > 0 then f_payload.mult_mod = total_mult has_stats = true end
+            if total_chips > 0 then f_payload.chip_mod = total_chips has_stats = true end
+            if total_xmult > 1.0 then f_payload.Xmult_mod = total_xmult has_stats = true end
+            
+            if has_stats then
+                f_payload.card = card
+                
+                if current_form == 0 then
+                    f_payload.message = localize{type='variable', key='a_mult', vars={total_mult}}
+                    f_payload.colour = G.C.MULT
+                elseif current_form == 1 then
+                    f_payload.message = localize{type='variable', key='a_chips', vars={total_chips}}
+                    f_payload.colour = G.C.CHIPS
+                elseif current_form == 3 then
+                    f_payload.message = localize{type='variable', key='a_xmult', vars={total_xmult}}
+                    f_payload.colour = G.C.XMULT
+                else
+                    f_payload.message = "+" .. total_mult .. " Mult"
+                    f_payload.colour = G.C.MULT
+                end
+                
+                return f_payload
+            end
+        end
     end
   end,
-  attributes = {"xmult", "scaling", "reset", "drain"},
+
+  set_ability = function(self, card, initial, delay_sprites)
+      card.ability.extra = card.ability.extra or { form = 0, mult = 0, chips = 0, money_per_hand = 0, Xmult = 0.0, money = 0, is_enemy = false }
+      
+      if pokermon.next_squawk_form ~= nil then
+          card.ability.extra.form = pokermon.next_squawk_form
+          card.ability.extra.is_enemy = pokermon.next_squawk_enemy
+          
+          pokermon.next_squawk_form = nil
+          pokermon.next_squawk_enemy = nil
+      end
+      self:set_sprites(card)
+  end,
+
+  calculate_cost = function(self, card, cost)
+      if card.ability and card.ability.extra and card.ability.extra.is_enemy then
+          return 0 -- Forces rivals to sell for $0
+      end
+      return cost
+  end,
+
+  set_sprites = function(self, card, front)
+    if not card.children or not card.children.center then return end
+    local current_form = card.ability and card.ability.extra and card.ability.extra.form or 0
+
+    if current_form == 0 then     card.children.center:set_sprite_pos({x = 8, y = 0}) -- Green Form
+    elseif current_form == 1 then card.children.center:set_sprite_pos({x = 0, y = 1}) -- Blue Form
+    elseif current_form == 2 then card.children.center:set_sprite_pos({x = 2, y = 1}) -- Yellow Form
+    elseif current_form == 3 then card.children.center:set_sprite_pos({x = 4, y = 1}) -- White Form
+    end
+end,
+  attributes = {"mult", "chips", "money", "Xmult", "enhancements"}
 }
+
 -- Tadbulb 938
 -- Bellibolt 939
 -- Wattrel 940
@@ -260,12 +404,7 @@ local brambleghast={
       card.ability.extra.seed_added = 0
     end
   end,
-  add_to_deck = function(self, card, from_debuff)
-    pokermon.change_growth_level(card.ability.extra.growth)
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    pokermon.change_growth_level(-card.ability.extra.growth)
-  end,
+
   attributes = {"rank", "modify_card", "enhancements", "chips"},
 }
 -- Toedscool 948
@@ -579,5 +718,5 @@ local wiglett={
   attributes = {"mult", "chips", "hand_type", "rank", "five", "six", "seven", "round_evo"},
 }
 return {name = "Pokemon Jokers 931-960", 
-        list = {charcadet, armarouge, ceruledge, bramblin, brambleghast, rellor, rabsca, tinkatink, tinkatuff, tinkaton, wiglett},
+        list = {squawkabilly, charcadet, armarouge, ceruledge, bramblin, brambleghast, rellor, rabsca, tinkatink, tinkatuff, tinkaton, wiglett},
 }

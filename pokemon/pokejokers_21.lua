@@ -507,10 +507,211 @@ local haxorus={
   end,
 }
 -- Cubchoo 613
+local cubchoo = {
+	name = "cubchoo",
+	pos = {x = 0, y = 0},
+	config = {extra = {activations = 0, round_triggered = false}, evo_rqmt = 5},
+	loc_vars = function(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
+		return {vars = {math.max(self.config.evo_rqmt - card.ability.extra.activations, 0)}}
+	end,
+	rarity = 2,
+	cost = 5,
+	stage = "Basic",
+	ptype = "Water",
+	gen = 5,
+	perishable_compat = true,
+	blueprint_compat = false,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+		-- Reset the safety lock when a new blind is selected
+		if context.setting_blind and not context.blueprint then
+			card.ability.extra.round_triggered = false
+		end
+
+		if context.cardarea == G.jokers and context.before then
+			if not card.ability.extra.round_triggered then
+				local unscored_card = nil
+	
+				for _, f_card in ipairs(context.full_hand) do
+					local is_scored = false
+					for _, s_card in ipairs(context.scoring_hand) do
+						if f_card == s_card then
+							is_scored = true
+							break
+						end
+					end
+					if not is_scored then
+						unscored_card = f_card
+						break
+					end
+				end
+
+				if unscored_card then
+					if not context.blueprint then
+						card.ability.extra.round_triggered = true
+						card.ability.extra.activations = card.ability.extra.activations + 1
+					end
+					
+					unscored_card:set_ability(G.P_CENTERS.m_glass)
+					
+					card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_cubchoo_ex"), colour = G.C.BLUE})
+				end
+			end
+		end
+
+		return pokermon.scaling_evo(self, card, context, "j_poke_beartic", card.ability.extra.activations, self.config.evo_rqmt)
+	end,
+}
 -- Beartic 614
+local beartic = {
+	name = "beartic",
+	pos = {x = 1, y = 0},
+	config = {extra = {glass_mult = 1.25}},
+	loc_vars = function(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
+		return {vars = {2 * card.ability.extra.glass_mult}} 
+	end,
+	rarity = "poke_safari",
+	cost = 8,
+	stage = "Stage 1",
+	ptype = "Water",
+	gen = 5,
+	perishable_compat = true,
+	blueprint_compat = true,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+		if context.setting_blind and not context.blueprint then
+			local valid_cards = {}
+			
+			for _, deck_card in ipairs(G.deck.cards) do
+				if not SMODS.has_enhancement(deck_card, 'm_glass') then
+					table.insert(valid_cards, deck_card)
+				end
+			end
+			
+			if #valid_cards > 0 then
+				local chosen_card = pseudorandom_element(valid_cards, pseudorandom('beartic_glass'))
+				chosen_card:set_ability(G.P_CENTERS.m_glass, nil, true)
+				
+				card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Slush Rush", colour = G.C.BLUE})
+			end
+		end
+
+		if context.individual and context.cardarea == G.play and not context.other_card.debuff then
+			if SMODS.has_enhancement(context.other_card, 'm_glass') then
+				return {
+					x_mult = card.ability.extra.glass_mult,
+					card = card
+				}
+			end
+		end
+
+		if context.destroying_card and not context.blueprint then
+			if SMODS.has_enhancement(context.destroying_card, 'm_glass') then
+				return true
+			end
+		end
+	end,
+}
+
 -- Cryogonal 615
 -- Shelmet 616
+local shelmet = {
+  name = "shelmet",
+  pos = {x = 0, y = 8},
+  config = { extra = {mult_mod = 12}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return { vars = {card.ability.extra.mult_mod} }
+  end,
+  rarity = 2,
+  cost = 6,
+  item_req = "linkcable",
+  condition = false,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex5",
+  volatile = true,
+  blueprint_compat = true,
+  perishable_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+	if context.cardarea == G.jokers and context.scoring_hand and context.joker_main and G.GAME.current_round.hands_played == 0 then
+		return {
+			  message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod}}, 
+			  colour = G.C.MULT,
+			  mult_mod = card.ability.extra.mult_mod
+			}
+	end
+	return item_evo_with_condition(self, card, context, "j_poke_accelgor", self.meets_condition(card))
+  end,
+  meets_condition = function(card)
+	  local var = find_other_pokemon_type(card, "Grass") > 0
+	  card.config.center.condition = var
+	  return card.config.center.condition
+  end,
+}
 -- Accelgor 617
+local accelgor = {
+  name = "accelgor",
+  pos = {x = 1, y = 8},
+  config = { extra = {Xmult_mod = 2, tag = nil, tag_name = nil}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return { vars = {card.ability.extra.Xmult_mod, card.ability.extra.tag_name or "None"}}
+  end,
+  rarity = "poke_safari",
+  cost = 9,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex5",
+  volatile = true,
+  blueprint_compat = false,
+  perishable_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+		--Orbital tags currently take the largest poker hand instead of the one from the tag. Need to figure out how to grab the existing tag instead of only the key.
+		if G.GAME.blind_on_deck == 'Small' then
+			card.ability.extra.tag = Tag(G.GAME.round_resets.blind_tags.Small)
+			card.ability.extra.tag_name = Tag(G.GAME.round_resets.blind_tags.Small).name
+			if G.GAME.round_resets.blind_tags.Small == 'tag_orbital' then
+				card.ability.extra.tag_name = Tag(G.GAME.round_resets.blind_tags.Small).name .. ": " .. get_largest_poker_hand_name()
+				card.ability.extra.tag.ability.orbital_hand = get_largest_poker_hand_name()
+			end
+		card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Add Tag"})
+		elseif G.GAME.blind_on_deck == 'Big' then
+			card.ability.extra.tag = Tag(G.GAME.round_resets.blind_tags.Big)
+			card.ability.extra.tag_name = Tag(G.GAME.round_resets.blind_tags.Big).name
+			if G.GAME.round_resets.blind_tags.Big == 'tag_orbital' then
+				card.ability.extra.tag_name = Tag(G.GAME.round_resets.blind_tags.Big).name .. ": " .. get_largest_poker_hand_name()
+				card.ability.extra.tag.ability.orbital_hand = get_largest_poker_hand_name()
+			end
+		card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Add Tag"})
+	    end
+	end
+	if context.cardarea == G.jokers and context.scoring_hand and context.joker_main and G.GAME.current_round.hands_played == 0 then
+		return {
+			  message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_mod}}, 
+			  colour = G.C.MULT,
+			  Xmult_mod = card.ability.extra.Xmult_mod
+   			   }
+	 end
+	 if context.end_of_round then
+		if not context.individual and not context.repetition and not context.blueprint and G.GAME.current_round.hands_played == 1 then
+			if card.ability.extra.tag then
+				add_tag(card.ability.extra.tag)
+				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_accelgor_ex'), colour = G.C.FILTER})
+			end
+		end
+		card.ability.extra.tag = nil
+		card.ability.extra.tag_name = nil
+	 end
+  end,
+}
 -- Stunfisk 618
 -- Mienfoo 619
 -- Mienshao 620
@@ -726,5 +927,5 @@ local bisharp={
 -- Vullaby 629
 -- Mandibuzz 630
 return {name = "Pokemon Jokers 601-630", 
-        list = {klinklang, elgyem, beheeyem, litwick, lampent, chandelure, axew, fraxure, haxorus, golett, golurk, pawniard, bisharp},
+        list = {klinklang, elgyem, beheeyem, litwick, lampent, chandelure, cubchoo, beartic, axew, fraxure, haxorus, shelmet, accelgor, golett, golurk, pawniard, bisharp},
 }
