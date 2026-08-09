@@ -813,7 +813,7 @@ local shedinja={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if (context.end_of_round and not G.GAME.blind.boss) and context.game_over and not context.blueprint then
+    if (context.end_of_round and not G.GAME.blind.boss) and context.game_over and G.GAME.current_round.hands_left <= 0 and not context.blueprint then
       G.E_MANAGER:add_event(Event({
           func = function()
               G.hand_text_area.blind_chips:juice_up()
