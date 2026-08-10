@@ -2144,11 +2144,9 @@ return {
             j_poke_vaporeon = {
                 name = 'Vaporeon',
                 text = {
-                    "Every played {C:attention}card{} permanently",
-                    "gains {C:chips}+#1#{} Chips for each {C:attention}Bonus{}",
-                    "card in your {C:attention}full deck{}",
-                    "when scored",
-                    "{C:inactive}(Currrently {C:chips}+#2#{C:inactive} Chips)"
+                    "Every card in {C:attention}poker hand",
+                    "permanently gains {C:chips}+#1#{} Chips",
+                    "when a {C:attention}Bonus{} card scores"
                 } 
             },
             j_poke_jolteon = {
@@ -4773,7 +4771,7 @@ return {
                 text = {
                     "Triples all {C:attention}listed {C:green,E:1,S:1.1}probabilities{} if",
                     "a {C:attention}Lucky{} card {C:green}successfully{}",
-                    "triggered this {C:attention}ante",
+                    "triggered this {C:attention}round",
                     "{C:inactive}(ex: {C:green}1 in 6{C:inactive} -> {C:green}3 in 6{C:inactive})",
                 } 
             },
@@ -5430,9 +5428,10 @@ return {
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
-                    "Gain {C:chips}+#2#{} Chips when each",
-                    "played {C:attention}editioned{} card scores",
-                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+                    "When round begins, add a",
+                    "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or {C:dark_edition}Polychrome{}",
+                    "copy of a random card in",
+                    "your {C:attention}deck{} to your hand",
                 } 
             },
             j_poke_pumpkaboo_small = {

@@ -338,6 +338,9 @@ function SMODS.current_mod.calculate(self, context)
   if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger then
     G.GAME.poke_lucky_triggers = (G.GAME.poke_lucky_triggers or 0) + 1
   end
+  if context.end_of_round and context.main_eval then
+    G.GAME.poke_lucky_triggers = 0
+  end
 
   --Revive fainted Jokers (MP Fix)
   if context.round_eval then

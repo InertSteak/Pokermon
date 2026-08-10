@@ -717,7 +717,7 @@ local eevee={
     end
     return {vars = {center.ability.extra.mult_mod, center.ability.extra.mult_mod * can_evolve}}
   end,
-  rarity = 2, 
+  rarity = 1, 
   cost = 3,
   item_req = {"waterstone", "thunderstone", "firestone", "sunstone", "moonstone", "leafstone", "icestone", "shinystone"},
   evo_list = {waterstone = "j_poke_vaporeon", thunderstone = "j_poke_jolteon", firestone = "j_poke_flareon", sunstone = "j_poke_espeon", moonstone = "j_poke_umbreon", 
@@ -751,21 +751,13 @@ local eevee={
 local vaporeon={
   name = "vaporeon", 
   pos = {x = 4, y = 10},
-  config = {extra = {chip_mod = 1}},
+  config = {extra = {chip_mod = 4}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_bonus
     end
-    local bonus = 0
-    if G.playing_cards then
-      for k, v in pairs(G.playing_cards) do
-        if SMODS.has_enhancement(v, 'm_bonus') then
-          bonus = bonus + 1
-        end
-      end
-    end
-    return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * bonus}}
+    return {vars = {center.ability.extra.chip_mod}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -776,21 +768,12 @@ local vaporeon={
   perishable_compat = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play then
-        local bonus = 0
-        for k, v in pairs(G.playing_cards) do
-          if SMODS.has_enhancement(v, 'm_bonus') then
-            bonus = bonus + 1
-          end
-        end
-        
-        if bonus > 0 then
-          context.other_card.ability.perma_bonus = (context.other_card.ability.perma_bonus or 0) + (card.ability.extra.chip_mod * bonus)
-          return {
-              message = localize('k_upgrade_ex'),
-              colour = G.C.CHIPS
-          }
-        end
+    if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_bonus') then
+      for i = 1, #context.scoring_hand do
+        local scoring_card = context.scoring_hand[i]
+        scoring_card.ability.perma_bonus = (scoring_card.ability.perma_bonus or 0) + card.ability.extra.chip_mod
+        card_eval_status_text(scoring_card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
+      end
     end
   end,
   attributes = {"modify_card", "chips", "perma_bonus", "enhancements"},

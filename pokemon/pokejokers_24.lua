@@ -11,10 +11,16 @@
 local sylveon={
   name = "sylveon", 
   pos = {x = 8, y = 3},
-  config = { extra = { chips = 0, chip_mod = 10} },
+  config = { extra = {} },
   loc_vars = function(self, info_queue, card)
     pokermon.type_tooltip(self, info_queue, card)
-    return { vars = { card.ability.extra.chips, card.ability.extra.chip_mod} }
+    
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+      info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    end
+    return { vars = { } }
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -24,26 +30,22 @@ local sylveon={
   gen = 6,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.edition and not context.blueprint then
-      return {
-        card = context.other_card,
-        func = function()
-          SMODS.scale_card(card, {
-            ref_value = 'chips',
-            scalar_value = 'chip_mod',
-            message_colour = G.C.CHIPS,
-          })
-        end
-      }
-    end
-    
-    if context.joker_main then
-      return {
-        chips = card.ability.extra.chips
-      }
+    if context.first_hand_drawn then
+      local card_to_copy = pseudorandom_element(G.deck.cards, pseudoseed('sylveon'))
+      local copy = SMODS.copy_card(card_to_copy, {area = G.hand})
+      copy.states.visible = nil
+      G.E_MANAGER:add_event(Event({
+          func = function()
+              local edition = poll_edition('aura', nil, true, true)
+              copy:set_edition(edition, true)
+              copy:start_materialize()
+              save_run()
+              return true
+          end
+      }))
     end
   end,
-  attributes = {"chips", "scaling", "editions"},
+  attributes = {"generation", "editions"},
 }
 -- Hawlucha 701
 -- Dedenne 702
