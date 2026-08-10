@@ -63,11 +63,11 @@ match_indent = true
 [patches.pattern]
 target = 'functions/UI_definitions.lua'
 pattern = '''
-focus_args = {button = args.type == 'sell' and 'leftshoulder' or args.type == 'buy_and_use' and 'leftshoulder' or 'rightshoulder', scale = 0.55, orientation = args.type == 'sell' and 'tli' or 'tri', offset = {x = args.type == 'sell' and 0.1 or -0.1, y = 0}, type = 'none'},
+focus_args = {button = args.focus_button or args.type == 'sell' and 'leftshoulder' or args.type == 'buy_and_use' and 'leftshoulder' or 'rightshoulder', scale = 0.55, orientation = args.focus_button_orientation or args.type == 'sell' and 'tli' or 'tri', offset = {x = args.focus_button_x_offset or args.type == 'sell' and 0.1 or -0.1, y = 0}, type = 'none'},
 '''
 position = "at"
 payload = '''
-focus_args = {button = args.type == 'sell' and 'leftshoulder' or args.type == 'buy_and_use' and 'leftshoulder' or args.type == 'poke_reserve' and 'leftshoulder' or 'rightshoulder', scale = 0.55, orientation = args.type == 'sell' and 'tli' or 'tri', offset = {x = args.type == 'sell' and 0.1 or -0.1, y = 0}, type = 'none'},
+focus_args = {button = args.focus_button or args.type == 'sell' and 'leftshoulder' or args.type == 'buy_and_use' and 'leftshoulder' or args.type == 'poke_reserve' and 'leftshoulder' or 'rightshoulder', scale = 0.55, orientation = args.focus_button_orientation or args.type == 'sell' and 'tli' or 'tri', offset = {x = args.focus_button_x_offset or args.type == 'sell' and 0.1 or -0.1, y = 0}, type = 'none'},
 '''
 match_indent = true
 
@@ -75,10 +75,10 @@ match_indent = true
 [patches.pattern]
 target = 'functions/UI_definitions.lua'
 pattern = '''
-offset = {x=(args.type == 'sell' and -1 or 1)*((args.card_width or 0) - 0.17 - args.card.T.w/2),y=args.type == 'buy_and_use' and 0.6 or (args.buy_and_use) and -0.6 or 0}, 
+offset = {x=args.x_offset or (((args.align_left or args.type == 'sell') and -1 or 1)*((args.card_width or 0) - 0.17 - args.card.T.w/2)),y=args.y_offset or (args.type == 'buy_and_use' and 0.6 or (args.buy_and_use) and -0.6 or 0)}, 
 '''
 position = "at"
 payload = '''
-offset = {x=(args.type == 'sell' and -1 or 1)*((args.card_width or 0) - 0.17 - args.card.T.w/2),y=args.type == 'buy_and_use' and 0.6 or (args.buy_and_use) and -0.6 or args.type == 'poke_reserve' and 0.6 or (args.poke_reserve_and_use) and -0.6 or 0}, 
+offset = {x=args.x_offset or (((args.align_left or args.type == 'sell') and -1 or 1)*((args.card_width or 0) - 0.17 - args.card.T.w/2)),y=args.y_offset or (args.type == 'buy_and_use' and 0.6 or (args.buy_and_use) and -0.6 or args.type == 'poke_reserve' and 0.6 or (args.poke_reserve_and_use) and -0.6 or 0)},
 '''
 match_indent = true
