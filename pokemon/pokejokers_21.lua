@@ -353,12 +353,12 @@ local chandelure={
 local axew={
   name = "axew",
   pos = {x = 0, y = 0},
-  config = {extra = {targets = {"High Card", "Pair"}, nature_played = 0, active = true}, evo_rqmt = 7},
+  config = {extra = {targets = {{"High Card"}, {"Pair"}}, nature_played = 0, active = true}, evo_rqmt = 7},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"poker hand"}}
-    return {vars = {center.ability.extra.targets[1] and localize(center.ability.extra.targets[1], 'poker_hands') or localize('poke_none'),
-                    center.ability.extra.targets[2] and localize(center.ability.extra.targets[2], 'poker_hands') or localize('poke_none'), 
+    return {vars = {center.ability.extra.targets[1][1] and localize(center.ability.extra.targets[1][1], 'poker_hands') or localize('poke_none'),
+                    center.ability.extra.targets[2][1] and localize(center.ability.extra.targets[2][1], 'poker_hands') or localize('poke_none'), 
                     math.max(0, self.config.evo_rqmt - center.ability.extra.nature_played), }}
   end,
   rarity = 2,
@@ -371,11 +371,11 @@ local axew={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.joker_main and (context.scoring_name == card.ability.extra.targets[1] or context.scoring_name == card.ability.extra.targets[2]) and not context.blueprint then
+    if context.joker_main and (context.scoring_name == card.ability.extra.targets[1][1] or context.scoring_name == card.ability.extra.targets[2][1]) and not context.blueprint then
       card.ability.extra.nature_played = card.ability.extra.nature_played + 1
     end
     
-    if context.modify_hand and (context.scoring_name == card.ability.extra.targets[1] or context.scoring_name == card.ability.extra.targets[2]) and card.ability.extra.active then
+    if context.modify_hand and (context.scoring_name == card.ability.extra.targets[1][1] or context.scoring_name == card.ability.extra.targets[2][1]) and card.ability.extra.active then
       mult = mod_mult(mult * 2)
       hand_chips = mod_chips(hand_chips * 2)
       update_hand_text({ sound = 'gong'}, { chips = hand_chips, mult = mult })
@@ -402,20 +402,20 @@ local axew={
     
     pseudoshuffle(visible_hands, pseudoseed('axew'))
     
-    if visible_hands[1] then card.ability.extra.targets[1] = visible_hands[1].key end
-    if visible_hands[2] then card.ability.extra.targets[2] = visible_hands[2].key end
+    if visible_hands[1] then card.ability.extra.targets[1][1] = visible_hands[1].key end
+    if visible_hands[2] then card.ability.extra.targets[2][1] = visible_hands[2].key end
   end,
 }
 -- Fraxure 611
 local fraxure={
   name = "fraxure",
   pos = {x = 0, y = 0},
-  config = {extra = {targets = {"High Card", "Pair"}, nature_played = 0,}, evo_rqmt = 7},
+  config = {extra = {targets = {{"High Card"}, {"Pair"}}, nature_played = 0,}, evo_rqmt = 7},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"poker hand"}}
-    return {vars = {center.ability.extra.targets[1] and localize(center.ability.extra.targets[1], 'poker_hands') or localize('poke_none'),
-                    center.ability.extra.targets[2] and localize(center.ability.extra.targets[2], 'poker_hands') or localize('poke_none'), 
+    return {vars = {center.ability.extra.targets[1][1] and localize(center.ability.extra.targets[1][1], 'poker_hands') or localize('poke_none'),
+                    center.ability.extra.targets[2][1] and localize(center.ability.extra.targets[2][1], 'poker_hands') or localize('poke_none'), 
                     math.max(0, self.config.evo_rqmt - center.ability.extra.nature_played), }}
   end,
   rarity = "poke_safari",
@@ -428,11 +428,11 @@ local fraxure={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.joker_main and (context.scoring_name == card.ability.extra.targets[1] or context.scoring_name == card.ability.extra.targets[2]) and not context.blueprint then
+    if context.joker_main and (context.scoring_name == card.ability.extra.targets[1][1] or context.scoring_name == card.ability.extra.targets[2][1]) and not context.blueprint then
       card.ability.extra.nature_played = card.ability.extra.nature_played + 1
     end
     
-    if context.modify_hand and (context.scoring_name == card.ability.extra.targets[1] or context.scoring_name == card.ability.extra.targets[2]) then
+    if context.modify_hand and (context.scoring_name == card.ability.extra.targets[1][1] or context.scoring_name == card.ability.extra.targets[2][1]) then
       mult = mod_mult(mult * 2)
       hand_chips = mod_chips(hand_chips * 2)
       update_hand_text({ sound = 'gong' }, { chips = hand_chips, mult = mult })
@@ -455,20 +455,20 @@ local fraxure={
     
     pseudoshuffle(visible_hands, pseudoseed('fraxure'))
     
-    if visible_hands[1] then card.ability.extra.targets[1] = visible_hands[1].key end
-    if visible_hands[2] then card.ability.extra.targets[2] = visible_hands[2].key end
+    if visible_hands[1] then card.ability.extra.targets[1][1] = visible_hands[1].key end
+    if visible_hands[2] then card.ability.extra.targets[2][1] = visible_hands[2].key end
   end,
 }
 -- Haxorus 612
 local haxorus={
   name = "haxorus",
   pos = {x = 0, y = 0},
-  config = {extra = {targets = {"High Card", "Pair"}, rounds = 5}},
+  config = {extra = {targets = {{"High Card"}, {"Pair"}}, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"poker hand"}}
-    return {vars = {center.ability.extra.targets[1] and localize(center.ability.extra.targets[1], 'poker_hands') or localize('poke_none'), 
-                    center.ability.extra.targets[2] and localize(center.ability.extra.targets[2], 'poker_hands') or localize('poke_none'), }}
+    return {vars = {center.ability.extra.targets[1][1] and localize(center.ability.extra.targets[1][1], 'poker_hands') or localize('poke_none'), 
+                    center.ability.extra.targets[2][1] and localize(center.ability.extra.targets[2][1], 'poker_hands') or localize('poke_none'), }}
   end,
   rarity = "poke_safari",
   cost = 10,
@@ -480,7 +480,7 @@ local haxorus={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.modify_hand and (context.scoring_name == card.ability.extra.targets[1] or context.scoring_name == card.ability.extra.targets[2]) then
+    if context.modify_hand and (context.scoring_name == card.ability.extra.targets[1][1] or context.scoring_name == card.ability.extra.targets[2][1]) then
       mult = mod_mult(mult * 3)
       hand_chips = mod_chips(hand_chips * 3)
       update_hand_text({ sound = 'gong'}, { chips = hand_chips, mult = mult })
@@ -502,8 +502,8 @@ local haxorus={
     
     pseudoshuffle(visible_hands, pseudoseed('haxorus'))
     
-    if visible_hands[1] then card.ability.extra.targets[1] = visible_hands[1].key end
-    if visible_hands[2] then card.ability.extra.targets[2] = visible_hands[2].key end
+    if visible_hands[1] then card.ability.extra.targets[1][1] = visible_hands[1].key end
+    if visible_hands[2] then card.ability.extra.targets[2][1] = visible_hands[2].key end
   end,
 }
 -- Cubchoo 613
