@@ -57,7 +57,6 @@ local weavile = {
   pos = {x = 4, y = 5},
   config = {extra = {Xmult_mod = 1, Xmult = 1, Xmult2 = 1, money = 4}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult, localize(G.GAME.current_round.sneaselcard and G.GAME.current_round.sneaselcard.rank or "Ace", 'ranks'),
                     card.ability.extra.money}}
   end,
@@ -369,7 +368,6 @@ local togekiss={
   pos = {x = 11, y = 5},
   config = {extra = {num = 1, chip_dem = 5, Xmult_dem = 10, chips = 100, Xmult_multi = 1.5, plus_odds = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local num, chip_dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.chip_dem, 'togekiss')
     local _, Xmult_dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.Xmult_dem, 'togekiss')
     return {vars = {num, chip_dem, Xmult_dem, card.ability.extra.chips, card.ability.extra.Xmult_multi, card.ability.extra.plus_odds}}
@@ -505,7 +503,6 @@ local gliscor = {
   pos = {x = 1, y = 6},
   config = {extra = {Xmult_multi = 0.25}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local played_Xmult = 1
     if G.hand then
       local suit_count = 0

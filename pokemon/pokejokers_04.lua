@@ -271,7 +271,6 @@ local drowzee={
   pos = {x = 4, y = 7}, 
   config = {extra = {Xmult_mod = 0.2, planets_used = 0}, evo_rqmt = 7},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local Xmult = 1 + card.ability.extra.planets_used * card.ability.extra.Xmult_mod
     local planets_left = math.max(0, self.config.evo_rqmt - card.ability.extra.planets_used)
     return {vars = {Xmult, card.ability.extra.Xmult_mod, planets_left}}
@@ -311,7 +310,6 @@ local hypno={
   pos = {x = 5, y = 7},  
   config = {extra = {Xmult_mod = 0.25, planets_used = 0}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Trance"}}
       info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_trance'}
@@ -600,7 +598,6 @@ local cubone={
   pos = {x = 12, y = 7},  
   config = {extra = {mult = 5, consumables_used = 0}, evo_rqmt = 20},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Thick Club"}}
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
@@ -758,7 +755,6 @@ local lickitung={
   pos = {x = 3, y = 8}, 
   config = {extra = {Xmult_multi = 1.5, jacks_played = 0}, evo_rqmt = 15},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local jacks_left = math.max(0, self.config.evo_rqmt - card.ability.extra.jacks_played)
     return {vars = {card.ability.extra.Xmult_multi, jacks_left}}
   end,
@@ -1042,7 +1038,6 @@ local tangela={
   pos = {x = 9, y = 8},
   config = {extra = {mult = 10, chips = 50, money_mod = 3, num = 1, dem = 4, wilds_scored = 0}, evo_rqmt = 10},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
     end

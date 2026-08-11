@@ -4,7 +4,6 @@ local qwilfish = {
   pos = {x = 9, y = 5},
   config = {extra = {hazard_level = 1, chips = 0, chip_mod = 15}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
@@ -351,7 +350,6 @@ local sneasel = {
   pos = {x = 3, y = 6},
   config = {extra = {money = 4}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_duskstone
     end
@@ -906,7 +904,6 @@ local skarmory = {
   pos = {x = 5, y = 7},
   config = {extra = {hazard_level = 1, Xmult_mod = 0.4, hazard_max = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}

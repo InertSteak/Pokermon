@@ -60,7 +60,6 @@ local hisuian_qwilfish = {
   pos = {x = 5, y = 4},
   config = {extra = {hazard_ratio = 10, chip_mod = 5, chips = 0}, evo_rqmt = 80},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
@@ -120,7 +119,6 @@ local overqwil = {
   pos = {x = 7, y = 8},
   config = {extra = {hazard_ratio = 5, chip_mod = 20, chips = 0}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
@@ -200,7 +198,6 @@ local tarountula = {
   pos = {x = 12, y = 0},
   config = {extra = {hazard_level = 1, rounds = 4, h_size = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
@@ -235,7 +232,6 @@ local spidops = {
   pos = {x = 13, y = 0},
   config = {extra = {hazard_level = 1, h_size = 2, card_goal = 8, cards_added = 0}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
@@ -386,7 +382,6 @@ local smoliv = {
   pos = {x = 10, y = 1},
   config = { extra = { money_mod = 2}, evo_rqmt = 12 },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.money_mod, self.config.evo_rqmt, card.sell_cost, } }
   end,
   designer = "Eternalnacho",
@@ -419,7 +414,6 @@ local dolliv = {
   pos = {x = 11, y = 1},
   config = { extra = { money_mod = 2}, evo_rqmt = 22 },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local a = card.ability.extra or self.config.extra
     return { vars = { a.money_mod, self.config.evo_rqmt, card.sell_cost } }
   end,
@@ -467,7 +461,6 @@ local arboliva = {
   pos = {x = 12, y = 1},
   config = { extra = { money_mod = 2 } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local a = card.ability.extra or self.config.extra
     return { vars = { a.money_mod } }
   end,

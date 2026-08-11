@@ -175,7 +175,6 @@ local mismagius = {
   pos = {x = 0, y = 3},
   config = {extra = {chip_mod = 5, chips = 0, chips2 = 20, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'mismagius')
     return {vars = {card.ability.extra.chip_mod, card.ability.extra.chips, num, dem, card.ability.extra.chips2, }}
   end,

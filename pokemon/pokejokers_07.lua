@@ -157,7 +157,6 @@ local marill={
   pos = {x = 1, y = 3},
   config = {extra = {bonus_scored = 0, Xmult = 2}, evo_rqmt = 15},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_bonus
     end
@@ -205,7 +204,6 @@ local azumarill={
   pos = {x = 2, y = 3},
   config = {extra = {Xmult = 2}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_bonus
     end
@@ -529,7 +527,6 @@ local sunkern={
   pos = {x = 9, y = 3},
   config = {extra = {money = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_sunstone
     end
@@ -562,7 +559,6 @@ local sunflora={
   pos = {x = 0, y = 4},
   config = {extra = {money = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.money}}
   end,
   rarity = "poke_safari",
@@ -890,7 +886,6 @@ local misdreavus = {
   pos = {x = 8, y = 4},
   config = {extra = {chip_mod = 5, chips = 0}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.chip_mod, card.ability.extra.chips, }}
   end,
   rarity = 2,
@@ -1099,7 +1094,6 @@ local wobbuffet={
     if not card.ability.eternal then
       info_queue[#info_queue+1] = {key = 'eternal', set = 'Other'}
     end
-    pokermon.type_tooltip(self, info_queue, card)
     local _c = card and card.config.center or card
     if not full_UI_table.name then
       full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
@@ -1310,7 +1304,6 @@ local gligar = {
   pos = {x = 5, y = 5},
   config = {extra = {Xmult_multi = 0.15}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local played_Xmult = 1
     if G.hand then
         local suit_count = 0
@@ -1444,7 +1437,6 @@ local snubbull = {
   pos = {x = 7, y = 5},
   config = {extra = {Xmult_multi = 1.75, rounds = 4,}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.rounds}}
   end,
   rarity = 1,
@@ -1481,7 +1473,6 @@ local granbull = {
   pos = {x = 8, y = 5},
   config = {extra = {Xmult_multi = 2.25, Xmult_multi2 = 2.5}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.Xmult_multi2}}
   end,
   rarity = "poke_safari",

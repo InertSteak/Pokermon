@@ -497,7 +497,6 @@ local golbat={
   pos = {x = 2, y = 3},
   config = {extra = {mult = 0, mult_mod = 2, eaten = 0}, evo_rqmt = 16},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local eating_left = math.max(0, self.config.evo_rqmt - card.ability.extra.eaten)
     return {vars = {card.ability.extra.mult, card.ability.extra.mult_mod, eating_left}}
   end,
@@ -1098,7 +1097,6 @@ local primeape={
   pos = {x = 4, y = 4}, 
   config = {extra = {mult_mod = 5, chip_mod = 7, primes_played = 0}, evo_rqmt = 29},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local primes_left = math.max(0, self.config.evo_rqmt - card.ability.extra.primes_played)
     return {vars = {card.ability.extra.mult_mod, card.ability.extra.chip_mod, primes_left}}
   end,

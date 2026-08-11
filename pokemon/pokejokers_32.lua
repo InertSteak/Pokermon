@@ -274,7 +274,6 @@ local rellor = {
 	--pos = {x = 14, y = 63},
 	config = {extra = { items_used = 0, mult_mod = 1 }, evo_rqmt = 5},
 	loc_vars = function(self, info_queue, card)
-		pokermon.type_tooltip(self, info_queue, card)
 		local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_item or 0) * card.ability.extra.mult_mod)
 	    return {vars = {card.ability.extra.mult_mod, mult, math.max(self.config.evo_rqmt - card.ability.extra.items_used, 0 )}}
 	end,
@@ -314,7 +313,6 @@ local rabsca = {
 	--pos = {x = 16, y = 63},
 	config = {extra = { mult_mod = 1, num = 1, dem = 4}},
 	loc_vars = function(self, info_queue, card)
-		pokermon.type_tooltip(self, info_queue, card)
     local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_item or 0) * card.ability.extra.mult_mod)
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'rabsca')
 	  return {vars = {card.ability.extra.mult_mod, mult, num, dem}}

@@ -4,7 +4,6 @@ local delcatty={
   pos = {x = 0, y = 0},
   config = {extra = {energy_buff = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
 
     local cattype = G.GAME.current_round.cattype or "Grass"
 

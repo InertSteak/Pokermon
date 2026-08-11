@@ -909,7 +909,6 @@ local omanyte={
   pos = {x = 8, y = 10},
   config = {extra = {rank = "3", money = 2, third_goal = 5, third_times = 0}, evo_rqmt = 5},
   loc_vars = function(self, info_queue, card)
-     pokermon.type_tooltip(self, info_queue, card)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(card.ability.extra.rank, 'ranks')}}
      local third_left = math.max(0, self.config.evo_rqmt - card.ability.extra.third_times)
      return {vars = {localize(card.ability.extra.rank, 'ranks'), card.ability.extra.money, third_left}}
@@ -967,7 +966,6 @@ local omastar={
   pos = {x = 9, y = 10}, 
   config = {extra = {rank = "3", money = 4, tag_created = false}},
   loc_vars = function(self, info_queue, center)
-   pokermon.type_tooltip(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
    info_queue[#info_queue+1] = {set = 'Other', key = 'omastar_tag_pool', vars = {'Handy', 'Garbage', 'Investment', 'Economy', 'D6'}}
    return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money, not center.ability.extra.tag_created and "("..localize('k_active_ex')..")" or ''}}
@@ -1048,7 +1046,6 @@ local kabuto={
   pos = {x = 10, y = 10}, 
   config = {extra = {rank = "2", chips1 = 50, chips2 = 5, chips3 = 50, third_times = 0}, evo_rqmt = 5},
   loc_vars = function(self, info_queue, card)
-   pokermon.type_tooltip(self, info_queue, card)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(card.ability.extra.rank, 'ranks')}}
    local third_left = math.max(0, self.config.evo_rqmt - card.ability.extra.third_times)
    return {vars = {localize(card.ability.extra.rank, 'ranks'), card.ability.extra.chips1, card.ability.extra.chips2, card.ability.extra.chips3, third_left}}
@@ -1106,7 +1103,6 @@ local kabutops={
   pos = {x = 11, y = 10}, 
   config = {extra = {rank = "2", chips1 = 70, chips2 = 5, chips3 = 70, retriggers = 1}},
   loc_vars = function(self, info_queue, center)
-   pokermon.type_tooltip(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
    return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips1, center.ability.extra.chips2, center.ability.extra.chips3, center.ability.extra.retriggers}}
   end,
@@ -1172,7 +1168,6 @@ local aerodactyl={
   pos = {x = 12, y = 10},
   config = {extra = {rank = "Ace", Xmult = 2, Xmult_mod = .50, Xmult1 = 2}},
   loc_vars = function(self, info_queue, center)
-     pokermon.type_tooltip(self, info_queue, center)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
      if pokermon_config.detailed_tooltips then
        info_queue[#info_queue+1] = G.P_CENTERS.m_glass
@@ -1249,7 +1244,6 @@ local mega_aerodactyl={
   soul_pos = { x = 10, y = 1 },
   config = {extra = {rank = "Ace", Xmult_multi = 1, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
-     pokermon.type_tooltip(self, info_queue, center)
      local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'mega_aerodactyl')
      return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.Xmult_multi, num, dem}}
   end,

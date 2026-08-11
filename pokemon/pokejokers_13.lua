@@ -671,7 +671,6 @@ local jirachi = {
   soul_pos = {x = 5, y = 14},
   config = {extra = {}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
   rarity = 4,
@@ -697,7 +696,6 @@ local jirachi_banker = {
   soul_pos = {x = 1, y = 0},
   config = {extra = {multiply = 3}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.multiply}}
   end,
   rarity = 4,
@@ -730,7 +728,6 @@ local jirachi_booster = {
   soul_pos = { x = 3, y = 0 },
   config = {extra = {reroll_max = 3, rerolls = 0, bonus_choices = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.reroll_max, math.max(card.ability.extra.reroll_max - card.ability.extra.rerolls, 0), card.ability.extra.bonus_choices}}
   end,
   rarity = 4,
@@ -783,7 +780,6 @@ local jirachi_invis = {
   soul_pos = { x = 3, y = 1 },
   config = {extra = {energy_target = 3}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     
     local energized = 0
     local main_end
@@ -850,7 +846,6 @@ local jirachi_copy = {
   soul_pos = { x = 3, y = 1 },
   config = {extra = {energy_buff = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     end
@@ -953,7 +948,6 @@ local jirachi_negging = {
   pos = { x = 0, y = 1 },
   config = {extra = {slots = 2, chance = 2}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
   rarity = 4,
@@ -986,7 +980,6 @@ local jirachi_power = {
   soul_pos = { x = 5, y = 0 },
   config = {extra = {Xmult_multi = 2, every = 2, loyalty_remaining = 2}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.every + 1, 
                     localize{type = 'variable', key = (card.ability.extra.loyalty_remaining == 0 and 'loyalty_active' or 'loyalty_inactive'), vars = {card.ability.extra.loyalty_remaining}}}}
   end,
@@ -1034,7 +1027,6 @@ local jirachi_fixer = {
   soul_pos = { x = 5, y = 1 },
   config = {extra = {}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_death
       info_queue[#info_queue+1] = G.P_CENTERS.c_cryptid

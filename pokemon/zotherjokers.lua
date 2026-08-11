@@ -352,7 +352,6 @@ local rival = {
   artist = "MyDude_YT",
   config = {extra = {money = 15, money_mod = 10}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.money, card.ability.extra.money_mod}}
   end,
   rarity = 1,
@@ -397,7 +396,6 @@ local bitter_rival = {
   artist = "MyDude_YT",
   config = {extra = {money = 25, money_mod = 20}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.money, card.ability.extra.money_mod}}
   end,
   rarity = 1,
@@ -443,7 +441,6 @@ local champion = {
   artist = "MyDude_YT",
   config = {extra = {Xmult_mod = 0.2}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
 
     info_queue[#info_queue+1] = {key = 'tag_skip', set = 'Tag', specific_vars = {5, 5 * G.GAME.skips}}
 
@@ -901,7 +898,6 @@ local daycare={
     end
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-    pokermon.type_tooltip(self, info_queue, card)
     local _c = card and card.config.center or card
     if not full_UI_table.name then
       full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })

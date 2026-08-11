@@ -45,7 +45,6 @@ local chikorita = {
   pos = {x = 0, y = 0},
   config = {extra = {money = 1, h_size = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.money, card.ability.extra.rounds}}
   end,
   rarity = 2,
@@ -91,7 +90,6 @@ local bayleef = {
   pos = {x = 1, y = 0},
   config = {extra = {money = 1, h_size = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.money, card.ability.extra.rounds,}}
   end,
   rarity = "poke_safari",
@@ -136,7 +134,6 @@ local meganium = {
   pos = {x = 2, y = 0},
   config = {extra = {money = 1, h_size = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.money}}
   end,
   rarity = "poke_safari",
@@ -210,7 +207,6 @@ local cyndaquil = {
   pos = {x = 3, y = 0},
   config = {extra = {mult = 4, d_size = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.d_size, card.ability.extra.mult, card.ability.extra.rounds, card.ability.extra.mult * G.GAME.current_round.discards_left}}
   end,
   rarity = 2,
@@ -249,7 +245,6 @@ local quilava = {
   pos = {x = 4, y = 0},
   config = {extra = {mult = 8, d_size = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.d_size, card.ability.extra.mult, card.ability.extra.rounds, card.ability.extra.mult * G.GAME.current_round.discards_left}}
   end,
   rarity = "poke_safari",
@@ -287,7 +282,6 @@ local typhlosion = {
   pos = {x = 5, y = 0},
   config = {extra = {mult = 8, Xmult = 0.3, d_size = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.d_size, card.ability.extra.mult, card.ability.extra.Xmult, card.ability.extra.mult * G.GAME.current_round.discards_left, 
                     1 + (card.ability.extra.Xmult * G.GAME.current_round.discards_left)}}
   end,
@@ -325,7 +319,6 @@ local totodile = {
   pos = {x = 6, y = 0},
   config = {extra = {chips = 0, chip_mod = 4, hands = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chip_mod, card.ability.extra.chips, card.ability.extra.rounds}}
   end,
   rarity = 2,
@@ -379,7 +372,6 @@ local croconaw = {
   pos = {x = 7, y = 0},
   config = {extra = {chips = 0, chip_mod = 7, hands = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chip_mod, card.ability.extra.chips, card.ability.extra.rounds}}
   end,
   rarity = "poke_safari",
@@ -432,7 +424,6 @@ local feraligatr = {
   pos = {x = 8, y = 0},
   config = {extra = {chips = 0, chip_mod = 10, hands = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chip_mod, card.ability.extra.chips}}
   end,
   rarity = "poke_safari",
@@ -485,7 +476,6 @@ local mega_feraligatr = {
   pos = {x = 8, y = 0},
   config = {extra = {chips = 0, chip_mod = 15}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Dragon Scale"}}
       info_queue[#info_queue+1] = {set = 'poke_item', key = 'c_poke_dragonscale', poke_add_desc = true}
@@ -623,7 +613,6 @@ local hoothoot={
   pos = {x = 1, y = 1},
   config = {extra = {scry = 2, rounds = 4}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
 		return {vars = {card.ability.extra.scry, card.ability.extra.rounds}}
   end,
@@ -663,7 +652,6 @@ local noctowl={
   pos = {x = 2, y = 1},
   config = {extra = {scry = 4}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
 		return {vars = {card.ability.extra.scry}}
   end,
@@ -1149,7 +1137,6 @@ local togepi={
 		end
 
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
-    pokermon.type_tooltip(_c, info_queue, card)
 
     local r_mults = {}
     for i = card.ability.extra.Xmult1 * 20, card.ability.extra.Xmult2 * 20 do
@@ -1171,7 +1158,6 @@ local togetic={
   pos = {x = 4, y = 2},
   config = {extra = {num = 1, chip_dem = 5, Xmult_dem = 10, chips = 100, Xmult_multi = 1.5}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_shinystone
     end

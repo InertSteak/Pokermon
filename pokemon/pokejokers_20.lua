@@ -578,7 +578,6 @@ local klang = {
 	--pos = {x = 28, y = 39},
 	config = {extra = {money = 1, drawn = 0, to_draw = 10, totalEarned = 0}, evo_rqmt = 10},
 	loc_vars = function(self, info_queue, card)
-		pokermon.type_tooltip(self, info_queue, card)
 		local abbr = card.ability.extra
 		return {vars = {abbr.money, abbr.to_draw, math.max(0, abbr.to_draw - abbr.drawn), math.max(self.config.evo_rqmt - abbr.totalEarned, 0)}}
 	end,

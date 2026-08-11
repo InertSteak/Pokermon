@@ -4,7 +4,6 @@ local pansage = {
   pos = { x = 3, y = 1 },
   config = { extra = {} },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_shortcut', config = {} }
     info_queue[#info_queue + 1] = G.P_CENTERS.c_poke_leafstone
     return { vars = {} }
@@ -29,7 +28,6 @@ local simisage = {
   pos = { x = 4, y = 1 },
   config = { extra = { num = 1, dem = 3 } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_shortcut', config = {} }
     info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'simisage')
@@ -75,7 +73,6 @@ local pansear = {
   pos = { x = 5, y = 1 },
   config = { extra = {} },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_four_fingers', config = {} }
     info_queue[#info_queue + 1] = G.P_CENTERS.c_poke_firestone
     return { vars = {} }
@@ -100,7 +97,6 @@ local simisear = {
   pos = { x = 6, y = 1 },
   config = { extra = { destroy = false} },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_four_fingers', config = {} }
     info_queue[#info_queue + 1] = G.P_CENTERS.c_empress
     local active = G.GAME and G.GAME.current_round and G.GAME.current_round.hands_played == 0
@@ -149,7 +145,6 @@ local panpour = {
   pos = { x = 7, y = 1 },
   config = { extra = {} },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_pareidolia', config = {} }
     info_queue[#info_queue + 1] = G.P_CENTERS.c_poke_waterstone
     return { vars = {} }
@@ -174,7 +169,6 @@ local simipour = {
   pos = { x = 8, y = 1 },
   config = { extra = {} },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_pareidolia', config = {} }
     info_queue[#info_queue + 1] = G.P_CENTERS.m_bonus
     return { vars = {} }
@@ -330,7 +324,6 @@ local roggenrola = {
   pos = {x = 2, y = 2},
   config = {extra = {hazard_level = 1, mult_mod = 5, hazard_triggered = 0}, evo_rqmt = 10},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
@@ -380,7 +373,6 @@ local boldore = {
   pos = {x = 3, y = 2},
   config = {extra = {hazard_level = 1, mult_mod = 10}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
@@ -431,7 +423,6 @@ local gigalith = {
   pos = {x = 4, y = 2},
   config = {extra = {hazard_level = 1, mult_mod = 7, retriggers = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}

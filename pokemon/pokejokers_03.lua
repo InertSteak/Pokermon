@@ -787,7 +787,6 @@ local slowpoke={
   pos = {x = 0, y = 6}, 
   config = {extra = {Xmult = 2, last_counter = 0, num = 1, dem = 7, shell_used = 0}, evo_rqmt = 4},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local triggers_left = math.max(0, self.config.evo_rqmt - card.ability.extra.last_counter)
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'tauros')
     return {vars = {card.ability.extra.Xmult, triggers_left, num, dem}}
@@ -1158,7 +1157,6 @@ local seel={
   pos = {x = 7, y = 6}, 
   config = {extra = {num = 1, dem = 2, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'seel')
     return {vars = {num, dem, card.ability.extra.rounds}}
   end,

@@ -794,7 +794,6 @@ pokermon.apply_type_sticker = function(card, sticker_type)
         unlocked = true, 
         discovered = true,
         loc_vars = function(self, info_queue, center)
-          pokermon.type_tooltip(self, info_queue, center)
           return lv(self, info_queue, center)
         end,
         set_badges = function(self, card, badges)
@@ -808,7 +807,6 @@ pokermon.apply_type_sticker = function(card, sticker_type)
         unlocked = true,
         discovered = true,
         loc_vars = function(self, info_queue, center)
-          pokermon.type_tooltip(self, info_queue, center)
         end,
         set_badges = function(self, card, badges)
           if badge then badge(self, card, badges) end

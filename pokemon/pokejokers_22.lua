@@ -134,7 +134,6 @@ local bunnelby = {
 	--pos = {x = 26, y = 43},
 	config = {extra = {num= 1, dem = 2, triggers = 0}, evo_rqmt = 6},
 	loc_vars = function(self, info_queue, card)
-		pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'deplete'}
 		local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'bunnelby')
 	  return {vars = {num, dem, math.max(self.config.evo_rqmt - card.ability.extra.triggers, 0)}}
@@ -189,7 +188,6 @@ local diggersby = {
 	--pos = {x = 28, y = 43},
 	config = {extra = {num= 1, dem = 2, mult = 0, mult_mod = 2}},
 	loc_vars = function(self, info_queue, card)
-		pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'deplete'}
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'diggersby')
 	  return {vars = {num, dem, card.ability.extra.mult, card.ability.extra.mult_mod}}
