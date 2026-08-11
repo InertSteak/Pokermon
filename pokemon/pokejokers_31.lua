@@ -4,7 +4,6 @@ local ursaluna={
   pos = {x = 2, y = 8},
   config = {extra = {mult = 0,mult_mod = 2,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       if not center.edition or (center.edition and not center.edition.polychrome) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
@@ -291,7 +290,6 @@ local fidough={
   pos = {x = 8, y = 1},
   config = {extra = {chips = 0,chip_mod = 8, rank = "2", id = 2}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, localize(center.ability.extra.rank or "2", 'ranks')}}
   end,
   rarity = 1,
@@ -339,7 +337,6 @@ local dachsbun={
   pos = {x = 9, y = 1},
   config = {extra = {chips = 0,chip_mod = 10, rank = "2", id = 2}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, localize(center.ability.extra.rank or "2", 'ranks')}}
   end,
   rarity = "poke_safari",

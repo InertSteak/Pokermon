@@ -4,7 +4,6 @@ local snorunt={
   pos = {x = 2, y = 11},
   config = {extra = {debt = 15,rounds = 4}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.debt, center.ability.extra.rounds}}
   end,
   rarity = 1,
@@ -47,7 +46,6 @@ local glalie={
   pos = {x = 3, y = 11},
   config = {extra = {debt = 20}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.debt}}
   end,
   rarity = "poke_safari",
@@ -88,7 +86,6 @@ local clamperl={
   pos = {x = 0, y = 0},
   config = {extra = {h_size = 4, link_sold = 0}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding_other', vars = {"Ethereal Tag"}}
     info_queue[#info_queue+1] = {key = 'tag_ethereal', set = 'Tag'}
     return {vars = {center.ability.extra.h_size, }}
@@ -151,7 +148,6 @@ local huntail ={
   pos = {x = 0, y = 0},
   config = {extra = {h_size = 4, Xmult_mod = 0.1, Xmult = 1}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.h_size, center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari",
@@ -214,7 +210,6 @@ local gorebyss ={
   pos = {x = 0, y = 0},
   config = {extra = {h_size = 4, Xmult_mod = 0.15, Xmult = 1}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.h_size, center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari",
@@ -274,7 +269,6 @@ local relicanth={
   pos = {x = 0, y = 0},
   config = {extra = {rank = "4", chips = 40, money_mod = 4, Xmult_mod = 0.75,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_stone
       info_queue[#info_queue+1] = {set = 'Other', key = 'depleted'}
@@ -387,7 +381,6 @@ local luvdisc={
   pos = {x = 1, y = 12},
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_heartscale
       info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Heart Scale"}}
@@ -422,7 +415,6 @@ local bagon={
   pos = {x = 0, y = 0},
   config = {extra = {mult_mod = 3, h_size = 1, triggers = 0}, evo_rqmt = 5},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     local total = G.GAME.hands["Straight"].played * center.ability.extra.mult_mod
     return {vars = {center.ability.extra.mult_mod, center.ability.extra.h_size, math.max(0, self.config.evo_rqmt - center.ability.extra.triggers), total}}
   end,
@@ -463,7 +455,6 @@ local shelgon={
   pos = {x = 0, y = 0},
   config = {extra = {mult_mod = 3, h_size = 2, rounds = 8}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     local total = G.GAME.hands["Straight"].played * center.ability.extra.mult_mod
     return {vars = {center.ability.extra.mult_mod, center.ability.extra.h_size, center.ability.extra.rounds, total}}
   end,
@@ -504,7 +495,6 @@ local salamence={
   pos = {x = 0, y = 0},
   config = {extra = {mult_mod = 5, h_size = 2, h_size_temp = 1, divisor = 5}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     local total = G.GAME.hands["Straight"].played * center.ability.extra.mult_mod
     return {vars = {center.ability.extra.mult_mod, center.ability.extra.h_size, center.ability.extra.h_size_temp, center.ability.extra.divisor, total}}
   end,
@@ -542,7 +532,6 @@ local beldum={
   pos = {x = 5, y = 12},
   config = {extra = {chips = 0, chip_mod = 4, size = 4}, evo_rqmt = 50},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size, self.config.evo_rqmt}}
   end,
   rarity = 2, 
@@ -592,7 +581,6 @@ local metang={
   pos = {x = 6, y = 12},
   config = {extra = {chips = 0, chip_mod = 8, size = 4}, evo_rqmt = 200},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size, self.config.evo_rqmt}}
   end,
   rarity = "poke_safari", 
@@ -640,7 +628,6 @@ local metagross={
   pos = {x = 7, y = 12},
   config = {extra = {chips = 200,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips}}
   end,
   rarity = "poke_safari", 
@@ -1115,7 +1102,6 @@ local deoxys={
   pos = {x = 0, y = 0},
   config = {extra = {form = 4, Xmult_multi = 0.25, money_mod = 2, chip_mod = 40}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_meteorite
     info_queue[#info_queue+1] = {key = 'poke_dna_seal_seal', set = 'Other'}

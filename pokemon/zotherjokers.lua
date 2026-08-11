@@ -3,7 +3,6 @@ local pokedex={
   pos = {x = 0, y = 0},
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {}}
   end,
   rarity = 2, 
@@ -20,7 +19,6 @@ local rotomdex={
   artist = {"InertSteak", "Catzzadilla"},
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {G.GAME.poke_rotom_discount or 0}}
   end,
   rarity = 2, 
@@ -72,7 +70,6 @@ local everstone={
   pos = {x = 1, y = 0},
   config = {extra = {Xmult_multi = 1.75, Xmult_multi2 = 1.5}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
 		return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2}}
@@ -111,7 +108,6 @@ local tall_grass={
   pos = {x = 2, y = 0},
   config = {extra = {num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'tall_grass')
     return {vars = {num, dem }}
   end,
@@ -155,7 +151,6 @@ local jelly_donut={
   pos = {x = 3, y = 0},
   config = {extra = {rounds = 4,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rounds, }}
   end,
   rarity = 2,
@@ -204,7 +199,6 @@ local treasure_eatery={
   artist = "PrincessRoxie",
   config = {extra = {rounds = 4,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerother', vars = {"Type", colours = {pokermon.colours.pink}}}
     return {vars = {center.ability.extra.rounds, }}
   end,
@@ -281,7 +275,6 @@ local mystery_egg = {
   pos = {x = 5, y = 0},
   config = {extra = {key = nil, rounds = 3}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
@@ -495,7 +488,6 @@ local ruins_of_alph={
   artist = "MyDude_YT",
   config = {extra = {mult = 0, mult_mod = 2, merged = 0, forms = {}, quest1 = 5, quest2 = 10, quest3 = 20, quest4 = 28}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     local info = center.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'merge'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'rewards_ruins_of_alph', vars = {info.quest1, info.quest2, info.quest3, info.quest4}}
@@ -594,7 +586,6 @@ local unown_swarm={
     end},
   config = {extra = {mult = 28, Xmult_multi = 2.8}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult_multi, }}
   end,
   rarity = "poke_safari",
@@ -666,7 +657,6 @@ local professor={
   pos = {x = 0, y = 1},
   config = {extra = {rounds_total = 2, rounds_current = 0}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rounds_total, center.ability.extra.rounds_current}}
   end,
   rarity = 1,
@@ -727,7 +717,6 @@ local imposter_professor={
   pos = {x = 0, y = 1},
   config = {extra = {rounds_total = 2, rounds_current = 0, form = 0}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rounds_total, center.ability.extra.rounds_current}}
   end,
   rarity = 2,
@@ -808,7 +797,6 @@ local oologist={
   artist = "MyDude_YT",
   config = {extra = {rounds_total = 3, rounds_current = 0}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       if not center.edition or (center.edition and not center.edition.negative) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_negative
@@ -851,7 +839,6 @@ local daycare={
   pos = {x = 0, y = 0},
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {}}
   end,
   rarity = 3,
@@ -939,7 +926,6 @@ local rage_candy_bar={
   pos = {x = 0, y = 0},
   config = {extra = {hands = 3,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.hands, }}
   end,
   rarity = 2,
@@ -981,7 +967,6 @@ local repel={
   pos = {x = 0, y = 0}, 
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'tag_d_six', set = 'Tag'}
   end,
   rarity = 2, 

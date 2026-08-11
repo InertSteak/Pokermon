@@ -6,7 +6,6 @@ local deino={
   pos = {x = 13, y = 9},
   config = {extra = {Xmult = 1.5, hand_played = 0}, evo_rqmt = 8},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, math.max(0, self.config.evo_rqmt - center.ability.extra.hand_played)}}
   end,
   rarity = 2,
@@ -40,7 +39,6 @@ local zweilous={
   pos = {x = 0, y = 10},
   config = {extra = {Xmult = 2, hand_played = 0}, evo_rqmt = 10},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, math.max(0, self.config.evo_rqmt - center.ability.extra.hand_played)}}
   end,
   rarity = "poke_safari",
@@ -73,7 +71,6 @@ local hydreigon={
   pos = {x = 1, y = 10},
   config = {extra = {Xmult = 3.33, Xmult_mod = 0.33}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari",

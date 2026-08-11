@@ -4,7 +4,6 @@ local billion_lions = {
   soul_pos = {x = 6, y = 12},
   config = {extra= {Xmult = 1, Xmult_mod = 1, lions = 1000000000}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.lions}}
   end,
   rarity = 4,

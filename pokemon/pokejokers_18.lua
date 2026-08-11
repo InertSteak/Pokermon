@@ -217,7 +217,6 @@ local munna={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult_multi = 1, Xmult_mod = 0.05, scry = 2}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_mod, center.ability.extra.scry}}
   end,
   rarity = 3,
@@ -283,7 +282,6 @@ local musharna={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult_multi = 1, scry = 2, scry_added = 0}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.scry,}}
   end,
   rarity = "poke_safari",
@@ -488,7 +486,6 @@ local drilbur={
   pos = {x = 0, y = 0},
   config = {extra = {active = true, stones_destroyed = 0}, evo_rqmt = 4},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'dril_treasure'}
     return {vars = {math.max(0, self.config.evo_rqmt - center.ability.extra.stones_destroyed)}}
   end,
@@ -529,7 +526,6 @@ local excadrill={
   pos = {x = 0, y = 0},
   config = {extra = {mult_mod = 2},},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'exdril_treasure'}
     return {vars = {center.ability.extra.mult_mod, G.GAME.starting_deck_size,  
                     math.max(0, center.ability.extra.mult_mod * (G.playing_cards and (G.GAME.starting_deck_size - #G.playing_cards) or 0))}}
