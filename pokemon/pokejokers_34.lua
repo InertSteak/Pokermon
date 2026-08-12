@@ -10,7 +10,7 @@
 local gimmighoul={
   name = "gimmighoul",
   pos = {x = 12, y = 6},
-  config = {extra = {money = 3, money_goal = 999, money_seen = 0, previous_money = 0}},
+  config = {extra = {money = 3, money_goal = 999, money_seen = 0}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -30,61 +30,28 @@ local gimmighoul={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_gold') then
-      G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
-        G.E_MANAGER:add_event(Event({
-            func = function()
-                G.GAME.dollar_buffer = 0
-                return true
-            end
-        }))
       local earned = pokermon.ease_poke_dollars(card, "gimmi", card.ability.extra.money, true)
+      G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
       return {
         dollars = earned,
-        card = card
+        func = function()
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              G.GAME.dollar_buffer = 0
+              return true
+            end
+          }))
+        end
       }
     end
     if context.skipping_booster and G.shop_jokers and G.shop_jokers.cards then
-        local temp_card = {set = "Joker", area = G.shop_jokers, key = "j_poke_gimmighoulr"}
-        local new_card = SMODS.create_card(temp_card)
-        local edition = {negative = true}
-        new_card:set_edition(edition, true)
-        pokermon.add_shop_card(new_card, card)
-        new_card.cost = 0
+      local new_card = SMODS.create_card({set = "Joker", key = "j_poke_gimmighoulr", edition = 'e_negative'})
+      pokermon.add_shop_card(new_card, card, true)
+    end
+    if context.money_altered then
+      card.ability.extra.money_seen = card.ability.extra.money_seen + math.abs(context.amount)
     end
     return pokermon.scaling_evo(self, card, context, "j_poke_gholdengo", card.ability.extra.money_seen, card.ability.extra.money_goal)
-  end,
-  set_ability = function(self, card, initial, delay_sprites)
-    if initial and G.STAGE == G.STAGES.RUN then
-      card.ability.extra.previous_money = G.GAME.dollars
-    end
-  end,
-  update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN then
-      if not card.ability.extra.previous_money then card.ability.extra.previous_money = 0 end
-      if (SMODS.Mods["Talisman"] or {}).can_load then
-        local money_diff = math.abs(to_number(G.GAME.dollars) - to_number(card.ability.extra.previous_money))
-        if to_big(money_diff) > to_big(0) then
-          card.ability.extra.money_seen = card.ability.extra.money_seen + money_diff
-          card.ability.extra.previous_money = G.GAME.dollars
-        end
-        if to_big(card.ability.extra.money_seen) >= to_big(card.ability.extra.money_goal) and not card.ability.extra.juiced then
-          card.ability.extra.juiced = true
-          local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
-          juice_card_until(card, eval, true)
-        end
-      else
-        local money_diff = math.abs(G.GAME.dollars - card.ability.extra.previous_money)
-        if money_diff > 0 then
-          card.ability.extra.money_seen = card.ability.extra.money_seen + money_diff
-          card.ability.extra.previous_money = G.GAME.dollars
-        end
-        if card.ability.extra.money_seen >= card.ability.extra.money_goal and not card.ability.extra.juiced then
-          card.ability.extra.juiced = true
-          local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
-          juice_card_until(card, eval, true)
-        end
-      end
-    end
   end,
   attributes = {"enhancements", "economy", "condition_evo"},
 }
