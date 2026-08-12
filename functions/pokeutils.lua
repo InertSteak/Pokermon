@@ -140,25 +140,28 @@ pokermon.add_playing_card = function(t, no_joker_effect)
   return playing_card
 end
 
-pokermon.add_shop_card = function(add_card, card)
-    if G.GAME.shop.joker_max == 1 then
-      G.shop_jokers.config.card_limit = G.GAME.shop.joker_max + 1
-      G.shop_jokers.T.w = math.min((G.GAME.shop.joker_max + 1)*1.02*G.CARD_W,4.08*G.CARD_W)
-      G.shop:recalculate()
+pokermon.add_shop_card = function(add_card, card, is_free)
+  if G.GAME.shop.joker_max == 1 then
+    G.shop_jokers.config.card_limit = G.GAME.shop.joker_max + 1
+    G.shop_jokers.T.w = math.min((G.GAME.shop.joker_max + 1) * 1.02 * G.CARD_W, 4.08 * G.CARD_W)
+    G.shop:recalculate()
+  end
+  add_card.states.visible = false
+  G.shop_jokers:emplace(add_card)
+  if is_free then
+    add_card.ability.couponed = true
+  end
+  add_card:start_materialize()
+  add_card:set_cost()
+  create_shop_card_ui(add_card)
+
+  if (SMODS.Mods["Talisman"] or {}).can_load then
+    if Talisman.config_file.disable_anims then
+      add_card.states.visible = true
     end
-    add_card.states.visible = false
-    G.shop_jokers:emplace(add_card)
-    add_card:start_materialize()
-    add_card:set_cost()
-    create_shop_card_ui(add_card)
-    
-    if (SMODS.Mods["Talisman"] or {}).can_load then
-      if Talisman.config_file.disable_anims then 
-        add_card.states.visible = true
-      end
-    end
-    card:juice_up()
-    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_plus_shop'), colour = G.C.GREEN})
+  end
+  card:juice_up()
+  card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_plus_shop'), colour = G.C.GREEN})
 end
 
 pokermon.remove_card = function(target, card, trigger)
