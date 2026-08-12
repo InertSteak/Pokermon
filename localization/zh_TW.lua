@@ -706,7 +706,7 @@ return {
                     "成長{C:attention}#1#{}{C:inactive}[#2#]{}次後",
                     "將會變為{C:attention}花朵{}牌並給予{C:money}$#3#{}",
                 },
-            }
+            },
             m_poke_ludicolo = {
                 name = "樂天河童",
                 text = {
@@ -5526,7 +5526,7 @@ return {
             j_poke_brambleghast = {
               name = "怖納噬草",
               text = {
-                "種子成長速度{C:attention}+#4#{}"
+                "種子成長速度{C:attention}+#4#{}",
                 "你每持有的{C:money}$1{}會給予{C:chips}+#1#{}籌碼",
                 "{C:inactive}（目前將給予{C:chips}+#2#{C:inactive}籌碼）",
                 "{br:2}此為分隔線",
