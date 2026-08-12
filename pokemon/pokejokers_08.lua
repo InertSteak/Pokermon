@@ -4,7 +4,6 @@ local qwilfish = {
   pos = {x = 9, y = 5},
   config = {extra = {hazard_level = 1, chips = 0, chip_mod = 15}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
@@ -53,7 +52,6 @@ local scizor={
   pos = {x = 0, y = 6},
   config = {extra = {mult = 0, scizor_chips = 0, scizor_Xmult = 1, mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.e_foil
       info_queue[#info_queue+1] = G.P_CENTERS.e_holo
@@ -178,7 +176,6 @@ local mega_scizor={
   soul_pos = {x = 5, y = 2},
   config = {extra = {Xmult_multi = 4, mult = 0, scizor_chips = 0, scizor_Xmult = 1, mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_mega",
@@ -215,7 +212,6 @@ local shuckle={
   pos = {x = 1, y = 6},
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_berry_juice
     end
@@ -264,7 +260,6 @@ local heracross = {
   pos = {x = 2, y = 6},
   config = {extra = {Xmult = 2}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = 2,
@@ -301,7 +296,6 @@ local mega_heracross={
   soul_pos = {x = 7, y = 2},
   config = {extra = {retriggers = 2}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {}}
   end,
   rarity = "poke_mega",
@@ -356,7 +350,6 @@ local sneasel = {
   pos = {x = 3, y = 6},
   config = {extra = {money = 4}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_duskstone
     end
@@ -392,7 +385,6 @@ local teddiursa={
   pos = {x = 4, y = 6},
   config = {extra = {mult = 0,mult_mod = 2,},evo_rqmt = 12},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, self.config.evo_rqmt}}
   end,
   rarity = 1,
@@ -427,7 +419,6 @@ local ursaring={
   pos = {x = 5, y = 6},
   config = {extra = {mult = 0,mult_mod = 2,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
     end
@@ -475,7 +466,6 @@ local slugma={
   pos = {x = 6, y = 6},
   config = {extra = {chips = 0,chip_mod = 12, every = 3, loyalty_remaining = 3}, evo_rqmt = 60},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt, center.ability.extra.every + 1,
                     localize{type = 'variable', key = (center.ability.extra.loyalty_remaining == 0 and 'loyalty_active' or 'loyalty_inactive'), vars = {center.ability.extra.loyalty_remaining}}}}
   end,
@@ -530,7 +520,6 @@ local magcargo={
   pos = {x = 7, y = 6},
   config = {extra = {chips = 0,chip_mod = 15, every = 2, loyalty_remaining = 2, remove = false}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.every + 1,
                     localize{type = 'variable', key = (center.ability.extra.loyalty_remaining == 0 and 'loyalty_active' or 'loyalty_inactive'), vars = {center.ability.extra.loyalty_remaining}}}}
   end,
@@ -583,7 +572,6 @@ local swinub={
   pos = {x = 8, y = 6},
   config = {extra = {mult = 5,money = 3,num = 1, dem = 2,rounds = 5,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'swinub')
     return {vars = {center.ability.extra.mult, center.ability.extra.money, num, dem, center.ability.extra.rounds, }}
   end,
@@ -629,7 +617,6 @@ local piloswine={
   pos = {x = 9, y = 6},
   config = {extra = {mult = 10,money = 6,num = 1, dem = 2,scored = 0,}, evo_rqmt = 15},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'piloswine')
     return {vars = {center.ability.extra.mult, center.ability.extra.money, num, dem, math.max(0, self.config.evo_rqmt - center.ability.extra.scored)}}
   end,
@@ -678,7 +665,6 @@ local corsola={
   pos = {x = 0, y = 7},
   config = {extra = {mult = 0, mult_mod = 1}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
     end
@@ -736,7 +722,6 @@ local remoraid={
   pos = {x = 1, y = 7},
   config = {extra = {retriggers = 1,rounds = 5}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, center.ability.extra.rounds}}
   end,
   rarity = 2,
@@ -770,7 +755,6 @@ local octillery={
   pos = {x = 2, y = 7},
   config = {extra = {retriggers = 1, card_max = 8, cards = 0}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, center.ability.extra.card_max, center.ability.extra.card_max - center.ability.extra.cards}}
   end,
   rarity = "poke_safari",
@@ -818,7 +802,6 @@ local delibird={
   pos = {x = 3, y = 7},
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'deli_gift'}
     if pokermon_config.detailed_tooltips then
       if not center.edition or (center.edition and not center.edition.polychrome) then
@@ -880,7 +863,6 @@ local mantine={
   pos = {x = 4, y = 7},
   config = {extra = {chips = 0, chip_mod = 4,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,}}
   end,
   designer = "FlamingRok",
@@ -922,7 +904,6 @@ local skarmory = {
   pos = {x = 5, y = 7},
   config = {extra = {hazard_level = 1, Xmult_mod = 0.4, hazard_max = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
@@ -1043,7 +1024,6 @@ local houndour={
   pos = {x = 6, y = 7},
   config = {extra = {mult_mod = 2,rounds = 4, limit = 1}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult_mod, center.ability.extra.rounds, center.ability.extra.limit}}
   end,
   rarity = 2,
@@ -1079,7 +1059,6 @@ local houndoom={
   pos = {x = 7, y = 7},
   config = {extra = {mult_mod = 2, limit = 3}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult_mod, center.ability.extra.limit}}
   end,
   rarity = "poke_safari",
@@ -1116,7 +1095,6 @@ local mega_houndoom={
   soul_pos = {x = 9, y = 2},
   config = {extra = {Xmult = 1, Xmult_mod = 2, Xmult1 = 1, limit = 3}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.limit}}
   end,
   rarity = "poke_mega",
@@ -1166,7 +1144,6 @@ local kingdra={
   pos = {x = 8, y = 7},
   config = {extra = {mult = 0, mult_mod = 1, Xmult = 1, Xmult_mod = .05}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari", 
@@ -1213,7 +1190,6 @@ local phanpy={
   pos = {x = 9, y = 7},
   config = {extra = {Xmult = 1,Xmult_mod = 0.1,rounds = 5, Xmult2 = 1}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.rounds, }}
   end,
   rarity = 2,
@@ -1256,7 +1232,6 @@ local donphan={
   pos = {x = 0, y = 8},
   config = {extra = {Xmult = 1, Xmult_mod = 0.15, Xmult2 = 1}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod,}}
   end,
   rarity = 3,
@@ -1298,7 +1273,6 @@ local porygon2={
   pos = {x = 1, y = 8},
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_dubious_disc
     end
@@ -1357,7 +1331,6 @@ local stantler={
   pos = {x = 2, y = 8},
   config = {extra = {scry = 2, triggered = 0}, evo_rqmt = 12},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.scry, math.max(0, self.config.evo_rqmt - center.ability.extra.triggered)}}
   end,
   rarity = 1,
@@ -1518,7 +1491,6 @@ local tyrogue={
   blueprint_compat = true,
   perishable_compat = false,
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     end
@@ -1592,7 +1564,6 @@ local hitmontop={
   pos = {x = 5, y = 8},
   config = {extra = {Xmult = 1.5, Xmult_mod = .15}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, G.GAME.starting_deck_size, center.ability.extra.Xmult_mod}}
   end,
   rarity = 2, 
@@ -1624,7 +1595,6 @@ local smoochum ={
   pos = {x = 6, y = 8},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
       info_queue[#info_queue+1] = {key = 'tag_standard', set = 'Tag'}
@@ -1670,7 +1640,6 @@ local elekid ={
   pos = {x = 7, y = 8},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
       info_queue[#info_queue+1] = {key = 'tag_coupon', set = 'Tag'}
@@ -1716,7 +1685,6 @@ local magby={
   pos = {x = 8, y = 8},
   config = {extra = {Xmult_minus = 0.75, d_size = 1, rounds = 2,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     end

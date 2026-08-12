@@ -94,7 +94,6 @@ local gothita={
   pos = {x = 10, y = 5},
   config = {extra = {rounds = 4}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -131,7 +130,6 @@ local gothorita={
   config = {extra = {rounds = 4}},
   blueprint_compat = false,
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds}}
   end,
   rarity = "poke_safari", 
@@ -165,7 +163,6 @@ local gothitelle={
   pos = {x = 12, y = 5},
   config = {extra = {money = 2}}, 
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money}}
   end,
   rarity = "poke_safari", 
@@ -207,7 +204,6 @@ local vanillite={
   pos = {x = 4, y = 6}, 
   config = {extra = {chips = 60, chips_minus = 10, rounds = 3, triggered = false, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
     end
@@ -258,7 +254,6 @@ local vanillish={
   pos = {x = 5, y = 6}, 
   config = {extra = {chips = 100, chips_minus = 10, rounds = 3, triggered = false, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
     end
@@ -309,7 +304,6 @@ local vanilluxe={
   pos = {x = 6, y = 6}, 
   config = {extra = {chips = 140, chips_minus = 10, tags = 2}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chips_minus, center.ability.extra.tags}}
   end,
   rarity = 3, 
@@ -373,7 +367,6 @@ local frillish = {
   pos = {x = 0, y = 7},
   config = {extra = {chips = 0, chip_mod = 2}, evo_rqmt = 60},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt}}
   end,
   designer = "Hwang2760",
@@ -411,7 +404,6 @@ local jellicent = {
   pos = {x = 1, y = 7},
   config = {extra = {chips = 60, chip_mod = 4}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   designer = "Hwang2760",
@@ -456,7 +448,6 @@ local ferroseed={
   pos = {x = 5, y = 7},
   config = {extra = {rounds = 5, hazard_level = 1}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
@@ -496,7 +487,6 @@ local ferrothorn={
   pos = {x = 6, y = 7},
   config = {extra = {retriggers = 1, hazard_level = 1}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
@@ -588,7 +578,6 @@ local klang = {
 	--pos = {x = 28, y = 39},
 	config = {extra = {money = 1, drawn = 0, to_draw = 10, totalEarned = 0}, evo_rqmt = 10},
 	loc_vars = function(self, info_queue, card)
-		pokermon.type_tooltip(self, info_queue, card)
 		local abbr = card.ability.extra
 		return {vars = {abbr.money, abbr.to_draw, math.max(0, abbr.to_draw - abbr.drawn), math.max(self.config.evo_rqmt - abbr.totalEarned, 0)}}
 	end,

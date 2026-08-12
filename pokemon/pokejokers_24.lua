@@ -13,7 +13,6 @@ local sylveon={
   pos = {x = 8, y = 3},
   config = { extra = {} },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.e_foil

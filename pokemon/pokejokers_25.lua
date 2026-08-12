@@ -26,7 +26,6 @@ local grubbin={
   gen = 7,
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   calculate = function(self, card, context)
@@ -61,7 +60,6 @@ local charjabug={
   gen = 7,
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
     end
@@ -97,7 +95,6 @@ local vikavolt={
   gen = 7,
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     local count = #pokermon.find_pokemon_type("Lightning")
 		return {vars = {center.ability.extra.Xmult, math.max(1, 1 + center.ability.extra.Xmult * count)}}
   end,
@@ -126,7 +123,6 @@ local rockruff={
   pos = {x = 0, y = 0},
   config = {extra = {mult = 2, even_to_score = 20, odd_to_score = 20,}, evo_rqmt = 20},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.even_to_score, center.ability.extra.odd_to_score}}
   end,
   rarity = 1,
@@ -168,7 +164,6 @@ local lycanroc_day={
   pos = {x = 0, y = 0},
   config = {extra = {mult = 4, chip_mod = 40, hands = 1}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.chip_mod, center.ability.extra.hands}}
   end,
   rarity = "poke_safari",
@@ -213,7 +208,6 @@ local lycanroc_night={
   pos = {x = 0, y = 0},
   config = {extra = {mult = 5, hands = 1, discards = 1, h_size = 1}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.h_size}}
   end,
   rarity = "poke_safari",
@@ -247,7 +241,6 @@ local lycanroc_dusk={
   pos = {x = 0, y = 0},
   config = {extra = {mult = 4, retriggers = 1}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = "poke_safari",

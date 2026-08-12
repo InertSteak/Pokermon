@@ -12,7 +12,6 @@ local bidoof={
   pos = {x = 0, y = 0},
   config = {extra = {rerolls = 1, rerolls_to_evolve = 7}, evo_rqmt = 7},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rerolls, center.ability.extra.rerolls_to_evolve}}
   end,
   rarity = 1,
@@ -44,7 +43,6 @@ local bibarel={
   pos = {x = 0, y = 0},
   config = {extra = {rerolls = 1, increase = 1}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rerolls, center.ability.extra.increase, center.ability.extra.rerolls > 1 and localize('poke_reroll_plural') or localize('poke_reroll_singular')}}
   end,
   rarity = "poke_safari",
@@ -81,7 +79,6 @@ local kricketot={
   pos = {x = 0, y = 0},
   config = {extra = {money = 4,rounds = 4,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, center.ability.extra.rounds, }}
   end,
   rarity = 1,
@@ -115,7 +112,6 @@ local kricketune={
   pos = {x = 0, y = 0},
   config = {extra = {money = 4,num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'kricketune')
     return {vars = {center.ability.extra.money, num, dem}}
   end,
@@ -181,7 +177,6 @@ local budew={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
@@ -225,7 +220,6 @@ local roserade={
   pos = {x = 0, y = 0},
   config = {extra = {retriggers = 2,}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_flower
     return {vars = {center.ability.extra.retriggers, }}
   end,
@@ -263,7 +257,6 @@ local buizel={
   pos = {x = 3, y = 2}, 
   config = {extra = {chips = 30, rounds = 4}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -296,7 +289,6 @@ local floatzel={
   pos = {x = 4, y = 2}, 
   config = {extra = {chips = 45}},
   loc_vars = function(self, info_queue, center)
-    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2, 
