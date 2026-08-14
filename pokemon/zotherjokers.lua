@@ -119,27 +119,23 @@ local tall_grass={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and (#G.jokers.cards + G.GAME.joker_buffer) < G.jokers.config.card_limit then
-        local has_wild = false
-        for k, v in ipairs(context.scoring_hand) do
-          if v.ability.name == 'Wild Card' then
-            has_wild = true
-            break
-          end
-        end
-        
-        if has_wild or SMODS.pseudorandom_probability(card, 'tall_grass', card.ability.extra.num, card.ability.extra.dem, 'tall_grass') then
-          G.GAME.joker_buffer = G.GAME.joker_buffer + 1
-          G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+    if context.before and #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
+      local has_wild = pokermon.any(context.scoring_hand, function(c) return SMODS.has_enhancement(c, 'm_wild') end)
+
+      if has_wild or SMODS.pseudorandom_probability(card, 'tall_grass', card.ability.extra.num, card.ability.extra.dem, 'tall_grass') then
+        G.GAME.joker_buffer = G.GAME.joker_buffer + 1
+
+        G.E_MANAGER:add_event(Event({
+          trigger = 'after',
+          delay = 0.4,
+          func = function()
             G.GAME.joker_buffer = 0
             play_sound('timpani')
-            local _card = pokermon.create_random_poke_joker("tallgrass", nil, "common")
-            _card:add_to_deck()
-            G.jokers:emplace(_card)
-            return true end }))
-          delay(0.6)
-        end
+            SMODS.add_card({set = 'Joker', attributes = {'pokemon'}, rarity = 1, key_append = 'tallgrass'})
+            return true
+          end
+        }))
+        delay(0.6)
       end
     end
   end,

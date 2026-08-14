@@ -529,7 +529,6 @@ local golett={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
-  hazard_poke = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.hand then
       if SMODS.has_enhancement(context.other_card, "m_poke_hazard") or SMODS.pseudorandom_probability(card, 'golett', card.ability.extra.num, card.ability.extra.dem, 'golett') then
@@ -577,7 +576,6 @@ local golurk={
   ptype = "Psychic",
   atlas = "Pokedex5",
   gen = 5,
-  hazard_poke = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,

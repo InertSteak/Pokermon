@@ -211,7 +211,6 @@ local tarountula = {
   ptype = "Grass",
   atlas = "Pokedex9",
   gen = 9,
-  hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     return pokermon.level_evo(self, card, context, "j_poke_spidops")
@@ -245,7 +244,6 @@ local spidops = {
   ptype = "Grass",
   atlas = "Pokedex9",
   gen = 9,
-  hazard_poke = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.playing_card_added and not card.getting_sliced and context.cards and not context.blueprint then

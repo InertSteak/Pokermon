@@ -17,7 +17,6 @@ local cacnea = {
   ptype = "Grass",
   atlas = "Pokedex3",
   gen = 3,
-  hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.remove_playing_cards then
@@ -55,7 +54,6 @@ local cacturne = {
   ptype = "Grass",
   atlas = "Pokedex3",
   gen = 3,
-  hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.remove_playing_cards then
@@ -392,6 +390,7 @@ local baltoy={
   remove_from_deck = function(self, card, from_debuff)
     pokermon.change_hazard_level(-card.ability.extra.hazard_level)
   end,
+  attributes = {"hazards", "discard", "enhancements", "chips", "scaling", "scaling_evo"}
 }
 -- Claydol 344
 local claydol={
@@ -507,6 +506,7 @@ local claydol={
   remove_from_deck = function(self, card, from_debuff)
     pokermon.change_hazard_level(-card.ability.extra.hazard_level)
   end,
+  attributes = {"hazards", "discard", "enhancements", "chips", "scaling", "chance"}
 }
 -- Lileep 345
 local lileep={

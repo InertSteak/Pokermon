@@ -51,6 +51,37 @@ pokermon.get_type = function(card)
   return nil
 end
 
+pokermon.get_previous_stage = function(stage)
+  return (POKE_STAGES[stage] or {}).prev
+end
+
+pokermon.get_next_stage = function(stage)
+  return (POKE_STAGES[stage] or {}).next
+end
+
+pokermon.get_evo_overrides = function(name)
+  for _, evo_line in ipairs(POKE_EVO_OVERRIDES) do
+    for i, evo_stage in ipairs(evo_line) do
+      local pokemon_in_stage = type(evo_stage) == 'table'
+          and evo_stage or { evo_stage }
+
+      for _, pokemon in ipairs(pokemon_in_stage) do
+        if pokemon == name then
+          local overrides = {}
+          if i > 1 then
+            overrides.previous_evo = evo_line[i-1]
+          end
+          if i < #evo_line then
+            overrides.highest_evo = evo_line[#evo_line]
+          end
+          return overrides
+        end
+      end
+    end
+  end
+  return {}
+end
+
 pokermon.copy_scaled_values = function(card)
   local values = {mult = 0, chips = 0, Xmult = 0, Xmult_multi = 0, money = 0}
   if card.ability and card.ability.extra and type(card.ability.extra) == "table" then
@@ -1493,7 +1524,9 @@ pokermon.remove_from_pool = function(center)
   if center.set == 'Joker' then
     if not center.stage then return config.pokemon_only end
 
-    return (not config.hazards_on and center.hazard_poke)
+    local attributes = center.attributes or {}
+
+    return (not config.hazards_on and attributes['hazards'])
         or not pokermon.get_gen_allowed(center)
         or pokermon.family_present(center)
   end

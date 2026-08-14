@@ -5,15 +5,25 @@ pokermon.load_pokemon = function(item)
   if not item.config then
     item.config = {}
   end
+  if not item.attributes then
+    item.attributes = {}
+  end
   if not item.poke_custom_prefix then
     pokermon.sprites.load_atlas(item)
     pokermon.sprites.load_sprites(item)
   end
   if item.ptype then
+    table.insert(item.attributes, item.ptype:lower() .. '_type')
     if item.config and item.config.extra then
       item.config.extra.ptype = item.ptype
     elseif item.config then
       item.config.extra = {ptype = item.ptype}
+    end
+  end
+  if item.stage then
+    table.insert(item.attributes, 'stage_' .. item.stage:lower())
+    if item.stage ~= 'Other' then
+      table.insert(item.attributes, 'pokemon')
     end
   end
   item.set_badges = pokermon.set_type_badge
@@ -96,5 +106,6 @@ pokermon.Juice = function(item, custom_prefix, set)
 end
 
 pokermon.add_stage = function(stage, prev_stage, next_stage)
+  SMODS.Attribute {key = 'stage_' .. stage:lower() }
   POKE_STAGES[stage] = { prev = prev_stage, next = next_stage }
 end

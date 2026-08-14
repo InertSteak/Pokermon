@@ -12,19 +12,13 @@ local pokeball = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if #G.jokers.cards < G.jokers.config.card_limit or self.area == G.jokers then
-        return true
-    else
-        return false
-    end
+    return #G.jokers.cards < G.jokers.config.card_limit or self.area == G.jokers
   end,
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
-        local _card = pokermon.create_random_poke_joker("pokeball", "Basic")
-        _card:add_to_deck()
-        G.jokers:emplace(_card)
+        SMODS.add_card({ set = 'Joker', attributes = {'stage_basic'}, rarity = false, key_append = 'pokeball' })
         return true end }))
     delay(0.6)
   end
@@ -47,19 +41,13 @@ local greatball = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if #G.jokers.cards < G.jokers.config.card_limit or self.area == G.jokers then
-        return true
-    else
-        return false
-    end
+    return #G.jokers.cards < G.jokers.config.card_limit or self.area == G.jokers
   end,
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
-        local _card = pokermon.create_random_poke_joker("greatball", "One")
-        _card:add_to_deck()
-        G.jokers:emplace(_card)
+        SMODS.add_card({ set = 'Joker', attributes = {'stage_one'}, rarity = false, key_append = 'greatball' })
         return true end }))
     delay(0.6)
   end
@@ -82,18 +70,12 @@ local ultraball = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if #G.jokers.cards < G.jokers.config.card_limit or self.area == G.jokers then
-        return true
-    else
-        return false
-    end
+    return #G.jokers.cards < G.jokers.config.card_limit or self.area == G.jokers
   end,
   use = function(self, card, area, copier)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
-        local _card = pokermon.create_random_poke_joker("ultraball", "Two")
-        _card:add_to_deck()
-        G.jokers:emplace(_card)
+        SMODS.add_card({ set = 'Joker', attributes = {'stage_two'}, rarity = false, key_append = 'ultraball' })
         return true end }))
     delay(0.6)
   end
@@ -114,18 +96,12 @@ local masterball = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if #G.jokers.cards < G.jokers.config.card_limit or self.area == G.jokers then
-        return true
-    else
-        return false
-    end
+    return #G.jokers.cards < G.jokers.config.card_limit or self.area == G.jokers
   end,
   use = function(self, card, area, copier)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
-        local _card = pokermon.create_random_poke_joker("masterball", "Legendary")
-        _card:add_to_deck()
-        G.jokers:emplace(_card)
+        SMODS.add_card({ set = 'Joker', attributes = {'stage_legendary'}, allow_legendaries = true, key_append = 'masterball' })
         return true end }))
     delay(0.6)
   end
