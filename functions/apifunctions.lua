@@ -22,6 +22,9 @@ pokermon.load_pokemon = function(item)
   end
   if item.stage then
     table.insert(item.attributes, 'stage_' .. item.stage:lower())
+    if item.stage ~= 'Other' then
+      table.insert(item.attributes, 'pokemon')
+    end
   end
   item.set_badges = pokermon.set_type_badge
   if item.item_req then
