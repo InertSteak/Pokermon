@@ -390,6 +390,7 @@ local baltoy={
   remove_from_deck = function(self, card, from_debuff)
     pokermon.change_hazard_level(-card.ability.extra.hazard_level)
   end,
+  attributes = {"hazards", "discard", "enhancements", "chips", "scaling", "scaling_evo"}
 }
 -- Claydol 344
 local claydol={
@@ -505,6 +506,7 @@ local claydol={
   remove_from_deck = function(self, card, from_debuff)
     pokermon.change_hazard_level(-card.ability.extra.hazard_level)
   end,
+  attributes = {"hazards", "discard", "enhancements", "chips", "scaling", "chance"}
 }
 -- Lileep 345
 local lileep={
