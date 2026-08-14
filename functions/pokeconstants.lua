@@ -25,35 +25,46 @@ POKE_EVO_OVERRIDES = {
   { "kubfu", { "urshifu_single_strike", "urshifu_rapid_strike" } },
 }
 
--- Helper functions/getters for accessing constants
+SMODS.Attribute {key = "grass_type"}
+SMODS.Attribute {key = "fire_type"}
+SMODS.Attribute {key = "water_type"}
+SMODS.Attribute {key = "lightning_type"}
+SMODS.Attribute {key = "psychic_type"}
+SMODS.Attribute {key = "fighting_type"}
+SMODS.Attribute {key = "colorless_type"}
+SMODS.Attribute {key = "dark_type"}
+SMODS.Attribute {key = "metal_type"}
+SMODS.Attribute {key = "fairy_type"}
+SMODS.Attribute {key = "dragon_type"}
+SMODS.Attribute {key = "earth_type"}
 
-pokermon.get_previous_stage = function(stage)
-  return (POKE_STAGES[stage] or {}).prev
-end
+SMODS.Attribute {key = "stage_baby"}
+SMODS.Attribute {key = "stage_basic"}
+SMODS.Attribute {key = "stage_one"}
+SMODS.Attribute {key = "stage_two"}
+SMODS.Attribute {key = "stage_legendary"}
+SMODS.Attribute {key = "stage_mega"}
+SMODS.Attribute {key = "stage_other"}
+SMODS.Attribute {key = "stage_???"}
 
-pokermon.get_next_stage = function(stage)
-  return (POKE_STAGES[stage] or {}).next
-end
-
-pokermon.get_evo_overrides = function(name)
-  for _, evo_line in ipairs(POKE_EVO_OVERRIDES) do
-    for i, evo_stage in ipairs(evo_line) do
-      local pokemon_in_stage = type(evo_stage) == 'table'
-          and evo_stage or { evo_stage }
-
-      for _, pokemon in ipairs(pokemon_in_stage) do
-        if pokemon == name then
-          local overrides = {}
-          if i > 1 then
-            overrides.previous_evo = evo_line[i-1]
-          end
-          if i < #evo_line then
-            overrides.highest_evo = evo_line[#evo_line]
-          end
-          return overrides
-        end
-      end
-    end
-  end
-  return {}
-end
+SMODS.Attribute {key = "round_evo"}
+SMODS.Attribute {key = "scaling_evo"}
+SMODS.Attribute {key = "item_evo"}
+SMODS.Attribute {key = "type_evo"}
+SMODS.Attribute {key = "trigger_evo"}
+SMODS.Attribute {key = "condition_evo"}
+SMODS.Attribute {key = "starter"}
+SMODS.Attribute {key = "holding"}
+SMODS.Attribute {key = "item"}
+SMODS.Attribute {key = "types"}
+SMODS.Attribute {key = "volatile"}
+SMODS.Attribute {key = "energy"}
+SMODS.Attribute {key = "energy_count"}
+SMODS.Attribute {key = "energy_limit"}
+SMODS.Attribute {key = "ancient"}
+SMODS.Attribute {key = "foresight"}
+SMODS.Attribute {key = "baby"}
+SMODS.Attribute {key = "nature"}
+SMODS.Attribute {key = "hazards"}
+SMODS.Attribute {key = "applies"}
+SMODS.Attribute {key = "drain"}
