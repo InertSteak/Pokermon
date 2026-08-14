@@ -1493,7 +1493,9 @@ pokermon.remove_from_pool = function(center)
   if center.set == 'Joker' then
     if not center.stage then return config.pokemon_only end
 
-    return (not config.hazards_on and center.hazard_poke)
+    local attributes = center.attributes or {}
+
+    return (not config.hazards_on and attributes['hazards'])
         or not pokermon.get_gen_allowed(center)
         or pokermon.family_present(center)
   end

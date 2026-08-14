@@ -17,7 +17,6 @@ local qwilfish = {
   ptype = "Water",
   atlas = "Pokedex2",
   gen = 2,
-  hazard_poke = true,
   blueprint_compat = true,
   perishable_compat = false,
   calculate = function(self, card, context)
@@ -928,7 +927,6 @@ local skarmory = {
   ptype = "Metal",
   atlas = "Pokedex2",
   gen = 2,
-  hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then

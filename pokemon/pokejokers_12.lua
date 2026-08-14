@@ -17,7 +17,6 @@ local cacnea = {
   ptype = "Grass",
   atlas = "Pokedex3",
   gen = 3,
-  hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.remove_playing_cards then
@@ -55,7 +54,6 @@ local cacturne = {
   ptype = "Grass",
   atlas = "Pokedex3",
   gen = 3,
-  hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.remove_playing_cards then

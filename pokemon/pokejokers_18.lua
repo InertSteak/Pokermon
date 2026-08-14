@@ -337,7 +337,6 @@ local roggenrola = {
   ptype = "Earth",
   atlas = "Pokedex5",
   gen = 5,
-  hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_no_rank(context.other_card) then
@@ -390,7 +389,6 @@ local boldore = {
   atlas = "Pokedex5",
   gen = 5,
   item_req = "linkcable",
-  hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_no_rank(context.other_card) then
@@ -437,7 +435,6 @@ local gigalith = {
   atlas = "Pokedex5",
   gen = 5,
   blueprint_compat = true,
-  hazard_poke = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_no_rank(context.other_card) then
       if context.other_card.debuff then
