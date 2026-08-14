@@ -96,7 +96,7 @@ local stage_one_tag = {
 	end,
 	apply = function(self, tag, context)
     if context and context.type == "store_joker_create" then
-      local card = SMODS.create_card({set = 'Joker', attributes = {'stage_one'}, key_append = 'stage1tag'})
+      local card = SMODS.create_card({set = 'Joker', attributes = {'stage_one'}, rarity = false, key_append = 'stage1tag'})
       create_shop_card_ui(card, 'Joker', context.area)
       card.states.visible = false
       tag:yep('+', G.C.GREEN,function() 

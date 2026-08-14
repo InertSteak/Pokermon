@@ -18,7 +18,7 @@ local pokeball = {
     pokermon.set_spoon_item(card)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
-        SMODS.add_card({ set = 'Joker', attributes = {'stage_basic'}, key_append = 'pokeball' })
+        SMODS.add_card({ set = 'Joker', attributes = {'stage_basic'}, rarity = false, key_append = 'pokeball' })
         return true end }))
     delay(0.6)
   end
@@ -47,7 +47,7 @@ local greatball = {
     pokermon.set_spoon_item(card)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
-        SMODS.add_card({ set = 'Joker', attributes = {'stage_one'}, key_append = 'greatball' })
+        SMODS.add_card({ set = 'Joker', attributes = {'stage_one'}, rarity = false, key_append = 'greatball' })
         return true end }))
     delay(0.6)
   end
@@ -75,7 +75,7 @@ local ultraball = {
   use = function(self, card, area, copier)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
-        SMODS.add_card({ set = 'Joker', attributes = {'stage_two'}, key_append = 'ultraball' })
+        SMODS.add_card({ set = 'Joker', attributes = {'stage_two'}, rarity = false, key_append = 'ultraball' })
         return true end }))
     delay(0.6)
   end
@@ -101,7 +101,7 @@ local masterball = {
   use = function(self, card, area, copier)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
-        SMODS.add_card({ set = 'Joker', attributes = {'stage_legendary'}, key_append = 'masterball' })
+        SMODS.add_card({ set = 'Joker', attributes = {'stage_legendary'}, allow_legendaries = true, key_append = 'masterball' })
         return true end }))
     delay(0.6)
   end
