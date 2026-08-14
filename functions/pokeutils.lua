@@ -710,6 +710,13 @@ pokermon.has = function(table, element)
   return false
 end
 
+pokermon.any = function(table, func)
+  for _, value in pairs(table) do
+    if func(value) then return true end
+  end
+  return false
+end
+
 pokermon.table_append = function(t1, t2)
   for _, v in ipairs(t2) do
     table.insert(t1, v)
