@@ -1394,18 +1394,14 @@ local smeargle={
       -- Display the description of the copy, instead of the center
       local other_center = copy.config.center
       local other_vars = type(other_center.loc_vars) == 'function'
-        and other_center.key ~= 'j_poke_smeargle'
         and other_center:loc_vars({}, copy)
         or {}
-      local new_config = copy_table(copy.ability)
-      if other_vars.vars then
-        new_config.loc_vars_replacement = other_vars.vars
-      end
       info_queue[#info_queue+1] = {
         set = 'Joker',
         key = other_vars.key or other_center.key,
-        config = new_config,
-        vars = other_vars.vars or {}
+        config = copy.ability,
+        vars = other_vars.vars or {},
+        sketch_copy = true
       }
     end
 
@@ -1430,7 +1426,11 @@ local smeargle={
   blueprint_compat = true,
   eternal_compat = true,
   get_copy = function(self, card)
-    if card.sketched_joker and not card.sketched_joker.removed then return card.sketched_joker end
+    if card.sketched_joker and not card.sketched_joker.removed then
+      if card.sketched_joker.sketched_joker and not card.sketched_joker.sketched_joker.removed then
+        return self:get_copy(card.sketched_joker)
+      else return card.sketched_joker end
+    end
     if card.ability.extra.copy_val then
       -- If we don't have a reference, such as after reloading, we need to find it again
       for _, v in ipairs(G.jokers.cards) do

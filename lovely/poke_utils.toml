@@ -157,19 +157,19 @@ position = "at"
 payload = "colour = part.control.V and args.vars.colours and args.vars.colours[tonumber(part.control.V)] or not part.control.C and args.text_colour or loc_colour(part.control.C or nil, args.default_col),"
 match_indent = true
 
-#Tooltip loc_vars fix
+
+## Smeargle
+# Allow card tables to be used in joker info_queue for sketch
 [[patches]]
 [patches.pattern]
-target = "card.lua"
-pattern = "if vars_only then return loc_vars, main_start, main_end end"
-position = "before"
-payload = '''
-if vars_only and type(self.ability.loc_vars_replacement) == "table" then
-  loc_vars = self.ability.loc_vars_replacement
-end
-'''
+target = 'functions/common_events.lua'
+pattern = '''elseif _c.set == 'Joker' then'''
+position = 'before'
 match_indent = true
-
+payload = '''
+elseif _c.sketch_copy then
+    localize{type = 'descriptions', set = 'Joker', key = _c.key, nodes = desc_nodes, vars = specific_vars or _c.vars, specific_vars = {is_info_queue = true}, AUT = full_UI_table}
+'''
 
 ## Jirachi
 #Jirachi tag fix
