@@ -3848,8 +3848,8 @@ return {
             j_poke_minun = {
               name = "Minun",
               text = {
-                "All {C:attention}Jokers{} and {C:attention}consumables{} in",
-                "the shop cost {C:money}$#1#{} less",
+                "All cards and packs in",
+                "shop cost {C:money}$#1#{} less",
                 "{br:2}ERROR - CONTACT STEAK",
                 "Earn {C:money}$#2#{} at end of round",
                 "for each {C:attention}Plusle{} you have"
@@ -3862,7 +3862,7 @@ return {
                 "you use a {C:planet}Planet{} card",
                 "{br:2}ERROR - CONTACT STEAK",
                 "If you have another {X:poke_grass,C:white}Grass{}",
-                "Joker, gains {X:mult,C:white} X#4# {} Mult as well",
+                "Joker, gains {X:mult,C:white} X#4# {} Mult {C:attention}instead",
                 "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips, {X:mult,C:white} X#3# {C:inactive} Mult)"
               }
             },
@@ -4862,7 +4862,7 @@ return {
                   "{C:attention}Booster Pack{} is opened",
                   "{C:inactive}(Must have room){}",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "{C:attention}Booster Packs{} cost {C:money}$1{} less",
+                  "Packs cost {C:money}$1{} less",
                   "{C:inactive}(Transforms when using a {C:attention}Machine{C:inactive}){}"
                 }
             },
@@ -5970,10 +5970,12 @@ return {
                 name = "Kingambit",
                 text = {
                   "{X:red,C:white}X#1#{} Mult",
-                  "If played hand has the only",
-                  "{C:attention}King{} in your {C:attention}full deck{}, each",
-                  "played {C:attention}non-face{} card gives half",
-                  "this Joker's {X:mult,C:white}X{} Mult when scored",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Played {C:attention}non-face{} cards give {C:attention}half",
+                  "this {X:red,C:white}X{} Mult when scored if",
+                  "the only {C:attention}King{} in your {C:attention}full", 
+                  "{C:attention}deck{} is {C:attention}held{} in hand",
+                  "{C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult)",
                 }
             },
             j_poke_farigiraf = {

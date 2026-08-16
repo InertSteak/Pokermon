@@ -127,7 +127,7 @@ local shiftry={
 local taillow={
   name = "taillow",
   pos = {x = 0, y = 0},
-  config = {extra = {mult = 0,mult_mod = 4,rounds = 5,}},
+  config = {extra = {mult = 0,mult_mod = 4,rounds = 4,}},
   loc_vars = function(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.rounds, }}
   end,

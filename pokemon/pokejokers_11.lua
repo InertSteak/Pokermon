@@ -360,7 +360,7 @@ local minun={
     return {vars = {center.ability.extra.money_minus, center.ability.extra.money}}
   end,
   rarity = 1,
-  cost = 4,
+  cost = 3,
   gen = 3,
   stage = "Basic",
   ptype = "Lightning",
@@ -393,7 +393,7 @@ local minun={
 local volbeat={
   name = "volbeat",
   pos = {x = 0, y = 0},
-  config = {extra = {chips = 0, chip_mod = 6, Xmult_mod = 0.1, Xmult = 1}},
+  config = {extra = {chips = 0, chip_mod = 6, Xmult_mod = 0.08, Xmult = 1}},
   loc_vars = function(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
@@ -414,18 +414,20 @@ local volbeat={
       }
     end
     if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == 'Planet' then
-      SMODS.scale_card(card, {
-        ref_value = 'chips',
-        scalar_value = 'chip_mod',
-        message_key = 'a_chips',
-        message_colour = G.C.CHIPS
-      })
+
       if #pokermon.find_pokemon_type("Grass", card) > 0 then
         SMODS.scale_card(card, {
           ref_value = 'Xmult',
           scalar_value = 'Xmult_mod',
           message_key = 'a_xmult',
           message_colour = G.C.XMULT,
+        })
+      else
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_value = 'chip_mod',
+          message_key = 'a_chips',
+          message_colour = G.C.CHIPS
         })
       end
     end

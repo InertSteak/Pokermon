@@ -229,7 +229,7 @@ local kingambit={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 2,}},
   loc_vars = function(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, }}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult/2}}
   end,
   rarity = "poke_safari",
   cost = 11,
@@ -255,7 +255,7 @@ local kingambit={
       end
       if king_count == 1 then
         local has_king = nil
-        for k, v in pairs(context.full_hand) do
+        for k, v in ipairs(G.hand.cards) do
           if v:get_id() == 13 then 
             has_king = true
             break

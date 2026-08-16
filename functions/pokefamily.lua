@@ -138,6 +138,7 @@ local default_family_list = {
   { "shroomish", "breloom" },
   { "slakoth", "vigoroth", "slaking"},
   { "nincada", "ninjask", "shedinja" },
+  { "whismur", "loudred", "exploud" },
   { "makuhita", "hariyama"},
   { "aron", "lairon", "aggron" },
   { "meditite", "medicham"},
