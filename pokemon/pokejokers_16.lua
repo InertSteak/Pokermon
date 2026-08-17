@@ -742,6 +742,7 @@ local probopass={
   ptype = "Earth",
   atlas = "Pokedex4",
   gen = 4,
+  enhancement_gate = 'm_stone',
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
