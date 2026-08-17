@@ -113,6 +113,7 @@ local gholdengo={
   ptype = "Metal",
   atlas = "Pokedex9",
   gen = 9,
+  enhancement_gate = 'm_gold',
   perishable_compat = false,
   blueprint_compat = true,
   eternal_compat = true,
