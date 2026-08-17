@@ -313,11 +313,27 @@ local mystery_egg = {
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      local poke_key = pokermon.get_random_poke_key_options {
-        stage = { "Baby", "Basic" },
-        rarity = { "Common", "Uncommon", "Rare" },
-        key_append = 'egg'
+      local poke_key = SMODS.poll_object {
+        type = 'Joker',
+        attributes = {'stage_baby', 'stage_basic'},
+        union = true,
+        rarity = false,
+        key_append = 'egg',
+        -- This looks like nonsense because we're trying to preserve old behaviour
+        -- Ideally we should be picking a rarity first and then generating a key, but what can do you
+        filter = function(pool)
+          local vanilla_rarities = {["Common"] = 1, ["Uncommon"] = 2, ["Rare"] = 3, ["Legendary"] = 4}
+          for _, v in ipairs(pool) do
+            local center = G.P_CENTERS[v.key] or {}
+            local rarity = vanilla_rarities[center.rarity] or center.rarity
+            if not (rarity == 1 or rarity == 2 or rarity == 3) then
+              v.key = 'UNAVAILABLE'
+            end
+          end
+          return pool
+        end
       }
+
       local center = G.P_CENTERS[poke_key]
       -- common hatches in 2 turns
       -- uncommon hatches in 2 or 3 turns
@@ -333,7 +349,7 @@ local mystery_egg = {
         if pseudorandom('regg') > .50 then
           card.ability.extra.rounds = card.ability.extra.rounds + 1 
         end
-      elseif center.rarity == 3 then
+      else
          card.ability.extra.rounds = 3
       end
       card.ability.extra.key = center.key
