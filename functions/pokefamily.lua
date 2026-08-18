@@ -145,6 +145,7 @@ local default_family_list = {
   { "budew", "roselia", "roserade" },
   { "gulpin", "swalot"},
   { "carvanha", "sharpedo"},
+  { "shuppet", "banette"},
   { "duskull", "dusclops", "dusknoir" },
   {"clamperl", "huntail", "gorebyss"},
   { "baltoy", "claydol"},

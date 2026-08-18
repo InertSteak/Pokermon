@@ -4134,6 +4134,25 @@ return {
                     "{C:inactive,s:0.8}(Changes to {C:attention,s:0.8}Kecleon{C:inactive,s:0.8}'s type)"
                 },
             },
+            j_poke_shuppet = {
+              name = "Shuppet",
+              text = {
+                "Gains {C:mult}+#2#{} Mult when",
+                "a Joker is sold",
+                "during the {C:attention}Blind",
+                "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#3# Mult)",
+              }
+            },
+            j_poke_banette = {
+              name = "Banette",
+              text = {
+                "{C:attention}+#3#{} joker slot, {C:chips}-#4#{} hand",
+                "Gains {C:mult}+#2#{} Mult when",
+                "a Joker is sold",
+                "during the {C:attention}Blind",
+                "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+              }
+            },
             j_poke_duskull = {
               name = "Duskull",
               text = {

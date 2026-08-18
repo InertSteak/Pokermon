@@ -944,7 +944,91 @@ local kecleon = {
   attributes = {"types", "joker", "xmult"},
 }
 -- Shuppet 353
+local shuppet={
+  name = "shuppet",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0,mult_mod = 3,}, evo_rqmt = 18},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, self.config.evo_rqmt}}
+  end,
+  rarity = 2,
+  cost = 5,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex3",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      if card.ability.extra.mult > 0 then
+        return {
+          mult = card.ability.extra.mult
+        }
+      end
+    end
+    
+    if context.selling_card and context.card.ability.set == 'Joker' and G.GAME.facing_blind and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        message_colour = G.C.MULT,
+      })
+    end
+    return scaling_evo(self, card, context, "j_poke_banette", card.ability.extra.mult, self.config.evo_rqmt)
+  end,
+  attributes = {"hand_type", "mult", "scaling", "on_sell"},
+}
 -- Banette 354
+local banette={
+  name = "banette",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0,mult_mod = 3, card_limit = 1, hand_minus = 1}, evo_rqmt = 15},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.card_limit, center.ability.extra.hand_minus}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 3,
+  stage = "One",
+  ptype = "Psychic",
+  atlas = "Pokedex3",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      if card.ability.extra.mult > 0 then
+        return {
+          mult = card.ability.extra.mult
+        }
+      end
+    end
+    
+    if context.selling_card and context.card.ability.set == 'Joker' and G.GAME.facing_blind and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        message_colour = G.C.MULT,
+      })
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.jokers.config.card_limit = G.jokers.config.card_limit + card.ability.extra.card_limit
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hand_minus
+    if not from_debuff then
+      ease_hands_played(-card.ability.extra.hand_minus)
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.jokers.config.card_limit = G.jokers.config.card_limit - card.ability.extra.card_limit
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hand_minus
+    pokermon.ease_hands_played(card.ability.extra.hand_minus)
+  end,
+  attributes = {"hand_type", "mult", "scaling", "on_sell", "hands", "joker slots"},
+}
+
 -- Duskull 355
 local duskull={
   name = "duskull",
@@ -1250,5 +1334,6 @@ local wynaut={
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {cacnea, cacturne, swablu, altaria, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, kecleon, duskull, dusclops, tropius, chimecho, absol, wynaut},
+        list = {cacnea, cacturne, swablu, altaria, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, kecleon, duskull, dusclops, shuppet, banette,
+                tropius, chimecho, absol, wynaut},
 }
