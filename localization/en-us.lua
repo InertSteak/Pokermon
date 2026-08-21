@@ -7322,6 +7322,20 @@ return {
                 "the collection",
               }
             },
+            poke_energy_count_tooltip = {
+              name = "Energy Count",
+              text = {
+                "Displays a Joker's {C:poke_pink}Energy{}",
+                "count in it's description",
+              }
+            },
+            poke_sell_value_tooltip = {
+              name = "Sell Value",
+              text = {
+                "Displays a Joker's {C:money}sell value{}",
+                "in it's description",
+              }
+            },
             legacycontent_tooltip = {
               name = "Legacy Content",
               text = {

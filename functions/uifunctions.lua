@@ -496,3 +496,113 @@ G.FUNCS.poke_toggle_pokermon_skins = function()
     end
   end
 end
+
+should_draw_energy_ui = function(card)
+    local center = card.config and card.config.center
+    if not center then return false end
+    if center.set ~= "Joker" then
+        return false
+    end
+    if (not pokermon.energy.is_energizable(card)) and pokermon.energy.get_total_energy(card) == 0 then
+        return false
+    end
+    return pokermon_config.energy_count and 
+    card.ability and card.ability.set and card.ability.set == 'Joker' and
+    (card.area and card.area == G.jokers) and pokermon.energy.get_total_energy(card)
+end
+
+should_draw_energy_inactive_ui = function(card)
+    local center = card.config and card.config.center
+    if not center then return false end
+    if center.set ~= "Joker" then
+        return false
+    end
+    return pokermon_config.energy_count and not pokermon.energy.is_energizable(card) and 
+    card.ability and card.ability.set and card.ability.set == 'Joker' and
+    (card.area and card.area == G.jokers) and pokermon.energy.get_total_energy(card)
+end
+
+should_draw_sell_value_ui = function(card)
+    return pokermon_config.sell_value and 
+    card.ability and card.ability.set and card.ability.set == 'Joker'
+end
+
+
+generate_energy_ui = function(card)
+    return {
+        n = G.UIT.R,
+        config = {
+            align = "cm"
+        },
+        nodes = {
+        {
+            n = G.UIT.T,
+            config = {
+                text = "Energy: ",
+                colour = G.C.WHITE,
+                scale = 0.32
+            }
+        },
+        {
+            n = G.UIT.T,
+            config = {
+                text = pokermon.energy.get_total_energy(card),
+                colour = HEX("FF7ABF"),
+                scale = 0.32
+            }
+        },
+        {
+            n = G.UIT.T,
+            config = {
+                text = "/" .. (pokermon.energy.max + (G.GAME.poke_energy_plus or 0) + (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0)),
+                colour = G.C.WHITE,
+                scale = 0.32
+            }
+        }
+      }}
+end
+
+generate_energy_inactive_ui = function(card)
+    return {
+        n = G.UIT.R,
+        config = {
+            align = "cm"
+        },
+        nodes = {
+            {
+                n = G.UIT.T,
+                config = {
+                    text = not pokermon.energy.is_energizable(card) and " (Can't be energized)" or "",
+                    colour = G.C.UI.TEXT_INACTIVE,
+                    scale = 0.32
+                }
+            }
+        }
+    }
+end
+
+generate_sell_value_ui = function(card)
+    return {
+        n = G.UIT.R,
+        config = {
+            align = "cm"
+        },
+        nodes = { 
+        {
+            n = G.UIT.T,
+            config = {
+                text = "Sell Value: ",
+                colour = G.C.WHITE,
+                scale = 0.32
+            }
+        },
+        {
+            n = G.UIT.T,
+            config = {
+                text = "$" .. card.sell_cost,
+                colour = G.C.MONEY,
+                scale = 0.32
+            }
+        }
+      }}
+end
