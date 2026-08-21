@@ -458,6 +458,7 @@ local leafeon={
   ptype = "Grass",
   atlas = "Pokedex4",
   gen = 4,
+  enhancement_gate = "m_lucky",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.mod_probability and G.GAME.poke_lucky_triggers and G.GAME.poke_lucky_triggers > 0 and not context.blueprint then
@@ -485,6 +486,7 @@ local glaceon={
   ptype = "Water",
   atlas = "Pokedex4",
   gen = 4,
+  enhancement_gate = "m_glass",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.repetition and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_glass') then

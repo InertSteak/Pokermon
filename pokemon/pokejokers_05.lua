@@ -747,6 +747,7 @@ local vaporeon={
   ptype = "Water",
   atlas = "Pokedex1",
   gen = 1,
+  enhancement_gate = "m_bonus",
   perishable_compat = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -777,6 +778,7 @@ local jolteon={
   ptype = "Lightning",
   atlas = "Pokedex1",
   gen = 1,
+  enhancement_gate = "m_gold",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.discard and SMODS.has_enhancement(context.other_card, 'm_gold') then
@@ -822,6 +824,7 @@ local flareon={
   ptype = "Fire",
   atlas = "Pokedex1",
   gen = 1,
+  enhancement_gate = "m_mult",
   perishable_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.end_of_round then
