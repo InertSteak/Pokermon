@@ -7322,6 +7322,20 @@ return {
                 "the collection",
               }
             },
+            poke_energy_count_tooltip = {
+              name = "Energy Count",
+              text = {
+                "Displays a Joker's {C:poke_pink}Energy{}",
+                "count in it's description",
+              }
+            },
+            poke_sell_value_tooltip = {
+              name = "Sell Value",
+              text = {
+                "Displays a Joker's {C:money}sell value{}",
+                "in it's description",
+              }
+            },
             legacycontent_tooltip = {
               name = "Legacy Content",
               text = {
@@ -7716,6 +7730,8 @@ return {
             poke_settings_pokemon_gen_nine = "Gen 9 Allowed?",
             poke_settings_pokemon_hazards_on = "Hazards Allowed?",
             poke_settings_pokemon_precise_energy = "Use Precise Energy Scaling?",
+            poke_settings_pokemon_energy_count = "Show Energy Count on Jokers instead of on a tooltip?",
+            poke_settings_pokemon_sell_value = "Show Sell Value on Jokers?",
             poke_settings_pokemon_discovery = "! Discovery?",
             poke_settings_pokemon_altart = "Alt Art?",
             poke_settings_pokemon_aprilfools = "Joke Content?",

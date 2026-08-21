@@ -2,6 +2,8 @@ return {
   ["shiny_playing_cards"]=false,
   ["detailed_tooltips"]=true,
   ["precise_energy"]=true,
+  ["energy_count"]=false,
+  ["sell_value"]=false,
   ["pokeballs"]=true,
   ["no_evos"]=false,
   ["pokemon_only"]=true,
