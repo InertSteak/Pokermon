@@ -87,7 +87,7 @@ pattern = "desc_from_rows(AUT.main),"
 position = "after"
 match_indent = true
 payload = '''
-should_draw_energy_ui(card) and generate_energy_ui(card) or nil,
-should_draw_energy_inactive_ui(card) and generate_energy_inactive_ui(card) or nil,
-should_draw_sell_value_ui(card) and generate_sell_value_ui(card) or nil,
+pokermon.should_draw_energy_ui(card) and pokermon.generate_energy_ui(card) or nil,
+pokermon.should_draw_energy_inactive_ui(card) and pokermon.generate_energy_inactive_ui(card) or nil,
+pokermon.should_draw_sell_value_ui(card) and pokermon.generate_sell_value_ui(card) or nil,
 '''

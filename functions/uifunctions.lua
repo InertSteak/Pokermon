@@ -497,7 +497,7 @@ G.FUNCS.poke_toggle_pokermon_skins = function()
   end
 end
 
-should_draw_energy_ui = function(card)
+pokermon.should_draw_energy_ui = function(card)
     local center = card.config and card.config.center
     if not center then return false end
     if center.set ~= "Joker" then
@@ -511,7 +511,7 @@ should_draw_energy_ui = function(card)
     (card.area and card.area == G.jokers) and pokermon.energy.get_total_energy(card)
 end
 
-should_draw_energy_inactive_ui = function(card)
+pokermon.should_draw_energy_inactive_ui = function(card)
     local center = card.config and card.config.center
     if not center then return false end
     if center.set ~= "Joker" then
@@ -522,13 +522,13 @@ should_draw_energy_inactive_ui = function(card)
     (card.area and card.area == G.jokers) and pokermon.energy.get_total_energy(card)
 end
 
-should_draw_sell_value_ui = function(card)
+pokermon.should_draw_sell_value_ui = function(card)
     return pokermon_config.sell_value and 
     card.ability and card.ability.set and card.ability.set == 'Joker'
 end
 
 
-generate_energy_ui = function(card)
+pokermon.generate_energy_ui = function(card)
     return {
         n = G.UIT.R,
         config = {
@@ -562,7 +562,7 @@ generate_energy_ui = function(card)
       }}
 end
 
-generate_energy_inactive_ui = function(card)
+pokermon.generate_energy_inactive_ui = function(card)
     return {
         n = G.UIT.R,
         config = {
@@ -581,7 +581,7 @@ generate_energy_inactive_ui = function(card)
     }
 end
 
-generate_sell_value_ui = function(card)
+pokermon.generate_sell_value_ui = function(card)
     return {
         n = G.UIT.R,
         config = {
