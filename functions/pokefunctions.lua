@@ -728,6 +728,7 @@ pokermon.add_frac_tooltip = function(info_queue, card, frac_var, loc_key)
 end
 
 pokermon.add_energy_tooltip = function(info_queue, card)
+  if pokermon_config.energy_count then return end
   if card.ability and type(card.ability.extra) == 'table' and ( pokermon.energy.get_total_energy(card) ~= 0
       or card.ability.extra.e_limit_up and card.ability.extra.e_limit_up > 0 ) then
     local energy = pokermon.energy.get_total_energy(card)
