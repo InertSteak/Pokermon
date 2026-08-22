@@ -26,7 +26,9 @@ local misc_no_restart_toggles = {
   {ref_value = "detailed_tooltips", label = "poke_settings_pokemon_detailed_tooltips", tooltip = {set = 'Other', key = 'detailed_tooltips_tooltip'}},
   {ref_value = "previous_evo_stickers", label = "poke_settings_previous_evo_stickers", tooltip = {set = 'Other', key = 'previous_evo_stickers_tooltip'}},
   {ref_value = "order_jokers", label = "poke_settings_order_jokers", tooltip = {set = 'Other', key = 'order_jokers_tooltip'}},
-  {ref_value = "pokemon_only_collection", label = "poke_settings_pokemon_only_collection", tooltip = {set = 'Other', key = 'pokemon_only_collection_tooltip'}}
+  {ref_value = "pokemon_only_collection", label = "poke_settings_pokemon_only_collection", tooltip = {set = 'Other', key = 'pokemon_only_collection_tooltip'}},
+  {ref_value = "energy_count", label = "poke_settings_pokemon_energy_ui", tooltip = {set = 'Other', key = 'poke_energy_ui_tooltip'}},
+  {ref_value = "sell_value", label = "poke_settings_pokemon_sell_value_ui", tooltip = {set = 'Other', key = 'poke_sell_value_ui_tooltip'}},
 }
 
 local content_toggles = {
