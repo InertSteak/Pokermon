@@ -7322,18 +7322,18 @@ return {
                 "the collection",
               }
             },
-            poke_energy_count_tooltip = {
+            poke_energy_ui_tooltip = {
               name = "Energy Count",
               text = {
                 "Displays a Joker's {C:poke_pink}Energy{}",
-                "count in its description",
+                "count under its description",
               }
             },
-            poke_sell_value_tooltip = {
+            poke_sell_value_ui_tooltip = {
               name = "Sell Value",
               text = {
                 "Displays a Joker's {C:money}sell value{}",
-                "in its description",
+                "under its description",
               }
             },
             legacycontent_tooltip = {
@@ -7713,6 +7713,8 @@ return {
             poke_settings_previous_evo_stickers = "Previous Evo Stickers?",
             poke_settings_order_jokers = "Order Jokers by Dex No.?",
             poke_settings_pokemon_only_collection = "Only Pokermon Jokers in Collection?",
+            poke_settings_pokemon_energy_ui = "Display Energy Count on Jokers?",
+            poke_settings_pokemon_sell_value_ui = "Display Sell Value on Jokers?",
             poke_settings_jokers_only = "Jokers only?",
             poke_settings_no_evolutions = "No Evolutions?",
             poke_settings_pokeballs = "Allow Pokéballs?",
