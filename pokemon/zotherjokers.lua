@@ -312,7 +312,7 @@ local mystery_egg = {
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    if initial then
+    if initial and G.playing_cards and not pokermon.is_in_collection(card) then
       local poke_key = SMODS.poll_object {
         type = 'Joker',
         attributes = {'stage_baby', 'stage_basic'},
