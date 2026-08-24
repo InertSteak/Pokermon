@@ -1192,7 +1192,7 @@ local togetic={
 local natu = {
   name = "natu",
   pos = {x = 5, y = 2},
-  config = {levels = {}, extra = {level_amt = 1, rounds = 4}},
+  config = {levels = {}, extra = {rounds = 4}},
   loc_vars = function(self, info_queue, center)
     return {vars = {center.ability.extra.rounds}}
   end,
@@ -1206,36 +1206,13 @@ local natu = {
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.using_consumeable and context.consumeable and context.consumeable.ability then
-      if context.consumeable.ability.set == 'Planet' then
-        for hand, data in pairs(G.GAME.hands) do
-          if self.config.levels[hand] ~= data.level then
-            update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(hand, 'poker_hands'), chips = G.GAME.hands[hand].chips, mult = G.GAME.hands[hand].mult, level=G.GAME.hands[hand].level})
-            level_up_hand(card, hand, nil, card.ability.extra.level_amt)
-            update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
-          end
-        end
-      end
-    end
-    for hand, data in pairs(G.GAME.hands) do
-      if self.config.levels[hand] ~= data.level then
-        G.E_MANAGER:add_event(Event({
-          func = function()
-            for hand, data in pairs(G.GAME.hands) do
-              self.config.levels[hand] = data.level
-            end
-            return true
-          end
-        }))
-        break
-      end
+    if context.poker_hand_changed and context.card and context.card.ability.set == 'Planet' then
+      return {
+        level_up = true,
+        level_up_hand = context.scoring_name
+      }
     end
     return pokermon.level_evo(self, card, context, "j_poke_xatu")
-  end,
-  set_sprites = function(self, card, front)
-    for hand, data in pairs(G.GAME.hands) do
-      self.config.levels[hand] = data.level
-    end
   end,
   attributes = {"planet", "round_evo"},
 }
@@ -1243,9 +1220,9 @@ local natu = {
 local xatu = {
   name = "xatu",
   pos = {x = 6, y = 2},
-  config = {levels = {}, extra = {level_amt = 1}},
+  config = {levels = {}, extra = {}},
   loc_vars = function(self, info_queue, center)
-    return {vars = {center.ability.extra.level_amt}}
+    return {vars = {G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize("poke_none")}}
   end,
   rarity = "poke_safari",
   cost = 7,
@@ -1257,37 +1234,40 @@ local xatu = {
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.using_consumeable and context.consumeable and context.consumeable.ability then
-      if context.consumeable.ability.set == 'Planet' then
-        for hand, data in pairs(G.GAME.hands) do
-          if self.config.levels[hand] ~= data.level then
-            update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(hand, 'poker_hands'), chips = G.GAME.hands[hand].chips, mult = G.GAME.hands[hand].mult, level=G.GAME.hands[hand].level})
-            level_up_hand(context.blueprint_card or card, hand, nil, card.ability.extra.level_amt)
-            update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
-          end
-        end
-      end
+    if context.poker_hand_changed and context.card and context.card.ability.set == 'Planet' then
+      return {
+        level_up = true,
+        level_up_hand = context.scoring_name
+      }
     end
-    for hand, data in pairs(G.GAME.hands) do
-      if self.config.levels[hand] ~= data.level then
+
+    if context.open_booster and context.booster.kind == "Celestial" then
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
         G.E_MANAGER:add_event(Event({
-          func = function()
-            for hand, data in pairs(G.GAME.hands) do
-              self.config.levels[hand] = data.level
+            trigger = 'before',
+            delay = 0.0,
+            func = function()
+              if G.GAME.last_hand_played then
+                  local _planet = nil
+                  for _, planet_center in pairs(G.P_CENTER_POOLS.Planet) do
+                      if planet_center.config.hand_type == G.GAME.last_hand_played then
+                          _planet = planet_center.key
+                      end
+                  end
+                  if _planet then
+                    SMODS.add_card({ key = _planet })
+                  end
+                  G.GAME.consumeable_buffer = 0
+              end
+              return true
             end
-            return true
-          end
         }))
-        break
       end
     end
+    --]]
   end,
-  set_sprites = function(self, card, front)
-    for hand, data in pairs(G.GAME.hands) do
-      self.config.levels[hand] = data.level
-    end
-  end,
-  attributes = {"planet", "round_evo"},
+  attributes = {"planet"},
 }
 -- Mareep 179
 local mareep={

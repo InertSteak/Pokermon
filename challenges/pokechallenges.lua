@@ -508,8 +508,74 @@ local mystery_dungeon = {
   text_colour = HEX("FFCB01"),
 }
 
+local imposter_syndrome = {
+    object_type = "Challenge",
+    key = "imposter_syndrome",
+    rules = {
+        custom = {
+          {id = 'poke_noncolorless'},
+          {id = 'poke_add_ditto'},
+        },
+    },
+    jokers = {
+      { id = 'j_poke_ditto'},
+    },
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+          {id = 'bl_poke_star', type = 'blind'},
+          {id = 'bl_poke_iridescent_hacker', type = 'blind'},
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
+}
+
+local mean_look = {
+    object_type = "Challenge",
+    key = "mean_look",
+    rules = {
+        custom = {
+          {id = 'poke_foresight_plus', value = 7},
+          {id = 'poke_unforeseen_hand'},
+        },
+        modifiers = {
+          {id = "discards", value = 4}
+        },
+    },
+    jokers = {
+    },
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+    apply = function (self)
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + G.GAME.modifiers.poke_foresight_plus
+          return true
+        end
+      }))
+    end,
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
+}
+
 return {name = "Challenges", 
-        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon}
+        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon, imposter_syndrome, mean_look}
 }
 
 

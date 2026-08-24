@@ -39,41 +39,6 @@ position = "after"
 payload = "if G.GAME.poke_lapras_skip then G.shop.alignment.offset.y = -5.3 end"
 match_indent = true
 
-
-## Xatu
-# (Can this be a take_ownership thing?????)
-# Resize Booster Pack UI for new options & Xatu - Resize Pack for All Planets
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = "booster_obj = self.config.center"
-position = "after"
-payload = '''
-if self.ability.name:find('Celestial') and next(SMODS.find_card("j_poke_xatu")) then
-    self.ability.extra = #pokermon.get_available_planet_cards()
-elseif G.GAME.poke_extra_picks and G.GAME.poke_extra_picks > 0 then
-    self.ability.extra = self.ability.extra + G.GAME.poke_extra_picks
-end
-'''
-match_indent = true
-
-# Xatu Make All Planets Appear
-[[patches]]
-[patches.pattern]
-target = '=[SMODS _ "src/game_object.lua"]'
-pattern = "if G.GAME.used_vouchers.v_telescope and i == 1 then"
-position = "at"
-payload = '''
-if next(SMODS.find_card("j_poke_xatu")) then
-    local _planets = pokermon.get_available_planet_cards()
-    local _planet = _planets[i].key
-    _card = {set = "Planet", area = G.pack_cards, skip_materialize = true, soulable = true, key = _planet, key_append = "pl1"}
-elseif G.GAME.used_vouchers.v_telescope and i == 1 then
-'''
-match_indent = true
-overwrite = true
-
-
 ## Misdreavus
 # Check for over-drained chips (in UI creation)
 [[patches]]

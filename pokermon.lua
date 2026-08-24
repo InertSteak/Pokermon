@@ -329,6 +329,41 @@ function SMODS.current_mod.calculate(self, context)
   if context.modify_weights then
     pokermon.modify_pool(context.pool)
   end
+  
+  --Imposter Syndrome challenge
+  if G.GAME.modifiers.poke_noncolorless and context.debuff_card and context.debuff_card.area == G.jokers and not pokermon.is_type(context.debuff_card, "Colorless") then
+    return {
+        debuff = true
+    }
+  end
+  
+  if G.GAME.modifiers.poke_add_ditto and context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss then
+    if (#G.jokers.cards + G.GAME.joker_buffer) < G.jokers.config.card_limit then
+      G.GAME.joker_buffer = G.GAME.joker_buffer + 1
+      G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.2,
+        func = function()
+          G.GAME.joker_buffer = 0
+          play_sound('timpani')
+          SMODS.add_card({set = 'Joker', key = 'j_poke_ditto', no_edition = true})
+          return true
+        end
+      }))
+    end
+  end
+  
+  --Mean Look challenge
+  if context.debuff_hand and G.GAME.modifiers.poke_unforeseen_hand then
+    local text,disp_text,poker_hands = G.FUNCS.get_poker_hand_info(G.poke_scry_view.cards)
+    
+    if next(poker_hands[context.scoring_name]) then
+      return {
+        debuff = true,
+        debuff_text = localize{type = 'variable', key = 'poke_unforeseen_debuff', vars = {context.scoring_name}}
+      }
+    end
+  end
 end
 
 local old_end = end_round

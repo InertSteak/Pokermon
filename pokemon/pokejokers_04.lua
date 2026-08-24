@@ -1180,7 +1180,7 @@ local horsea={
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 2, 
-  cost = 3, 
+  cost = 6, 
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex1",
