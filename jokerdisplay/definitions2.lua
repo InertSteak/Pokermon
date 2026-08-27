@@ -613,10 +613,6 @@ jd_def["j_poke_sudowoodo"] = {
 --	Politoed
 jd_def["j_poke_politoed"] = {
     text = {
-        { text = "+",                              colour = G.C.MULT },
-        {ref_table = "card.joker_display_values", ref_value = "mult", colour = G.C.MULT},
-    },
-    text = {
         { text = "(" },
         { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.GREY, 0.35},
         { text = ")" }
@@ -1085,7 +1081,7 @@ jd_def["j_poke_snubbull"] = {
   calc_function = function(card)
     local xmult = card.ability.extra.Xmult_multi
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-    face_cards = {}
+    local face_cards = {}
     if text ~= 'Unknown' then
       for _, scoring_card in pairs(scoring_hand) do
           if scoring_card:is_face() then
@@ -1115,7 +1111,7 @@ jd_def["j_poke_granbull"] = {
   calc_function = function(card)
     local xmult = card.ability.extra.Xmult_multi
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-    face_cards = {}
+    local face_cards = {}
     if text ~= 'Unknown' then
       for _, scoring_card in pairs(scoring_hand) do
           if scoring_card:is_face() then

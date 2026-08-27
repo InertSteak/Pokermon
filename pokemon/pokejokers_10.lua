@@ -196,7 +196,7 @@ local swellow={
       for i = 1, 2 do
         local top = G.deck.cards[#G.deck.cards - i + 1]
         if top then
-          SMODS.change_base(top, nil, "Ace")
+          assert(SMODS.change_base(top, nil, "Ace"))
         end
       end
       card.ability.extra.active = nil

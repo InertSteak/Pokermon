@@ -316,7 +316,6 @@ local plusle={
   pos = {x = 0, y = 0},
   config = {extra = {mult_mod = 2, Xmult = 2.5}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
     local count = 0
     for _, cardarea in pairs(SMODS.get_card_areas("jokers")) do
       count = count + #pokermon.filter(cardarea.cards, function(v) return v.ability.set == 'Joker' or v.ability.consumeable end)
@@ -356,7 +355,6 @@ local minun={
   pos = {x = 0, y = 0},
   config = {extra = {money_minus = 1, money = 10}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money_minus, center.ability.extra.money}}
   end,
   rarity = 1,

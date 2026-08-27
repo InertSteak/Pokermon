@@ -313,7 +313,7 @@ local moonstone = {
     if #G.hand.highlighted >= self.config.min_highlighted then
       if SMODS.pseudorandom_probability(card, 'moonstone', self.config.num, self.config.dem, 'moonstone') then
         local hand = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-        SMODS.upgrade_poker_hands{hands = hand, from = card}
+        SMODS.upgrade_poker_hands({hands = {hand}, from = card})
       else
         pokermon.nope(card)
       end
@@ -779,7 +779,7 @@ local kingsrock = {
           trigger = 'after',
           delay = 0.2,
           func = function()
-              SMODS.change_base(conv_card, nil, "King")
+              assert(SMODS.change_base(conv_card, nil, "King"))
               return true
           end
       }))

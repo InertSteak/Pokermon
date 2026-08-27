@@ -1,4 +1,4 @@
-init = function()
+local init = function()
   local backapply_orig = Back.apply_to_run
   function Back.apply_to_run(self)
     backapply_orig(self)

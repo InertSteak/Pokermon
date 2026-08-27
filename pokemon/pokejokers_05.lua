@@ -829,7 +829,7 @@ local flareon={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.end_of_round then
       local mult_cards = {}
-      local last_mult, second_to_last_mult = nil
+      local last_mult, second_to_last_mult
       local area = context.scoring_hand
       for i=1, #area do
         if SMODS.has_enhancement(area[i], 'm_mult') then
