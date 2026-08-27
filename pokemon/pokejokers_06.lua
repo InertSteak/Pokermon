@@ -1256,7 +1256,7 @@ local xatu = {
                       end
                   end
                   if _planet then
-                    SMODS.add_card({ key = _planet })
+                    SMODS.add_card({ set = 'Planet', key = _planet })
                   end
                   G.GAME.consumeable_buffer = 0
               end
