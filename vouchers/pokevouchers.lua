@@ -64,7 +64,7 @@ local energyresearch = { --+1 max energy limit
   end
 }
 
-local goodrod = { --+1 card choice in pocket packs
+local goodrod = { --+1 card in each booster pack 
 	key = "goodrod",
 	atlas = "AtlasVouchersBasic",
   order = 35,
@@ -79,22 +79,14 @@ local goodrod = { --+1 card choice in pocket packs
 		return { vars = {} }
 	end,
   redeem = function(self)
-    if not G.GAME.poke_extra_picks then
-      G.GAME.poke_extra_picks = 1
-    else
-      G.GAME.poke_extra_picks = G.GAME.poke_extra_picks + 1
-    end
+    G.GAME.modifiers.booster_size_mod = (G.GAME.modifiers.booster_size_mod or 0) + 1
   end,
   unredeem = function(self)
-    if not G.GAME.poke_extra_picks then
-      G.GAME.poke_extra_picks = 0
-    else
-      G.GAME.poke_extra_picks = G.GAME.poke_extra_picks - 1
-    end
+    G.GAME.modifiers.booster_size_mod = (G.GAME.modifiers.booster_size_mod or 1) - 1
   end
 }
 
-local superrod = { --+1 card choice in pocket packs
+local superrod = { --enable save button in every booster pack 
 	key = "superrod",
 	atlas = "AtlasVouchersBasic",
   order = 36,
