@@ -779,7 +779,7 @@ local kingsrock = {
           trigger = 'after',
           delay = 0.2,
           func = function()
-              SMODS.change_base(conv_card, nil, "King")
+              assert(SMODS.change_base(conv_card, nil, "King"))
               return true
           end
       }))

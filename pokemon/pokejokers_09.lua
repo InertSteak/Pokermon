@@ -130,7 +130,7 @@ local raikou={
             trigger = 'after',
             delay = 0.2,
             func = function()
-                SMODS.change_base(conv_cards[i], nil, rank)
+                assert(SMODS.change_base(conv_cards[i], nil, rank))
                 return true
             end
           }))
@@ -1424,7 +1424,7 @@ local beautifly={
         end
         if has_nature and SMODS.pseudorandom_probability(card, 'beautifly', card.ability.extra.num, card.ability.extra.dem, 'beautifly') then
           local instant = (context.scoring_name ~= 'Flush')
-          SMODS.upgrade_poker_hands{hands = 'Flush', from = context.blueprint_card or card, instant = instant}
+          SMODS.upgrade_poker_hands({hands = {'Flush'}, from = context.blueprint_card or card, instant = instant})
           if instant then 
             return {
               message = localize('k_upgrade_ex')
