@@ -250,25 +250,23 @@ pokermon.vary_rank = function(card, decrease, seed, immediate)
   -- if it doesn't have a rank/suit within SMODS, don't do anything
   if not card.base or not card.base.value or not card.base.suit or not SMODS.Ranks[card.base.value] then return end
 
-  local next_rank = nil
-  if decrease == nil then
-    next_rank = pseudorandom_element(SMODS.Ranks, pseudoseed(seed or 'random_rank')).key
-  elseif decrease then
-    if #SMODS.Ranks[card.base.value].prev > 0 then
-      next_rank = pseudorandom_element(SMODS.Ranks[card.base.value].prev, pseudoseed(seed or 'decrease_rank'))
-    end
-  else
-    if #SMODS.Ranks[card.base.value].next > 0 then
-      next_rank = pseudorandom_element(SMODS.Ranks[card.base.value].next, pseudoseed(seed or 'increase_rank'))
+  local change_rank = function(_card, _decrease, _seed)
+    if _decrease == nil then
+      -- randomize rank
+      local new_rank = pseudorandom_element(SMODS.Ranks, pseudoseed(_seed or 'random_rank')).key
+      assert(SMODS.change_base(_card, nil, new_rank))
+    else
+      local amount = _decrease and -1 or 1
+      assert(SMODS.modify_rank(_card, amount))
     end
   end
 
   if immediate then
-    SMODS.change_base(card, nil, next_rank)
+    change_rank(card, decrease, seed)
   else
     G.E_MANAGER:add_event(Event({
       func = function()
-        SMODS.change_base(card, nil, next_rank)
+        change_rank(card, decrease, seed)
         return true
       end
     }))
