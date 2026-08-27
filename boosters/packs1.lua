@@ -82,7 +82,7 @@ local pack1 = {
   discovered = true,
 	create_card = create_pocket_card,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
+		return { vars = { card.config.center.config.choose + (G.GAME.modifiers.booster_choice_mod or 0), card.ability.extra - 1 + (G.GAME.modifiers.booster_size_mod or 0), 1 } }
 	end,
 	group_key = "k_poke_pocket_pack",
 }
@@ -102,7 +102,7 @@ local pack2 = {
   discovered = true,
 	create_card = create_pocket_card,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
+		return { vars = { card.config.center.config.choose + (G.GAME.modifiers.booster_choice_mod or 0), card.ability.extra - 1 + (G.GAME.modifiers.booster_size_mod or 0), 1 } }
 	end,
 	group_key = "k_poke_pocket_pack",
 }
@@ -122,7 +122,7 @@ local pack3 = {
   discovered = true,
 	create_card = create_pocket_card,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
+		return { vars = { card.config.center.config.choose + (G.GAME.modifiers.booster_choice_mod or 0), card.ability.extra - 1 + (G.GAME.modifiers.booster_size_mod or 0), 1 } }
 	end,
 	group_key = "k_poke_pocket_pack",
 }
@@ -142,7 +142,7 @@ local pack4 = {
   discovered = true,
 	create_card = create_pocket_card,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
+		return { vars = { card.config.center.config.choose + (G.GAME.modifiers.booster_choice_mod or 0), card.ability.extra - 1 + (G.GAME.modifiers.booster_size_mod or 0), 1 } }
 	end,
 	group_key = "k_poke_pocket_pack",
 }
@@ -162,7 +162,7 @@ local pack5 = {
   discovered = true,
 	create_card = create_pocket_card,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
+		return { vars = { card.config.center.config.choose + (G.GAME.modifiers.booster_choice_mod or 0), card.ability.extra - 1 + (G.GAME.modifiers.booster_size_mod or 0), 1 } }
 	end,
 	group_key = "k_poke_pocket_pack",
 }
@@ -182,7 +182,7 @@ local pack6 = {
   discovered = true,
 	create_card = create_pocket_card,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
+		return { vars = { card.config.center.config.choose + (G.GAME.modifiers.booster_choice_mod or 0), card.ability.extra - 1 + (G.GAME.modifiers.booster_size_mod or 0), 1 } }
 	end,
 	group_key = "k_poke_pocket_pack",
 }
@@ -202,7 +202,7 @@ local pack7 = {
   discovered = true,
 	create_card = create_pocket_card,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
+		return { vars = { card.config.center.config.choose + (G.GAME.modifiers.booster_choice_mod or 0), card.ability.extra - 1 + (G.GAME.modifiers.booster_size_mod or 0), 1 } }
 	end,
 	group_key = "k_poke_pocket_pack",
 }
@@ -222,7 +222,7 @@ local pack8 = {
   discovered = true,
 	create_card = create_pocket_card,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
+		return { vars = { card.config.center.config.choose + (G.GAME.modifiers.booster_choice_mod or 0), card.ability.extra - 1 + (G.GAME.modifiers.booster_size_mod or 0), 1 } }
 	end,
 	group_key = "k_poke_pocket_pack",
 }
