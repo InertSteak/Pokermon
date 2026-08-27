@@ -559,7 +559,7 @@ local klink = {
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards 
       if card.ability.extra.drawn >= card.ability.extra.to_draw then
-				local earned = ease_poke_dollars(card, "klink", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
+				local earned = pokermon.ease_poke_dollars(card, "klink", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
         card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
 				card.ability.extra.totalEarned = card.ability.extra.totalEarned + earned
         return {
@@ -568,7 +568,7 @@ local klink = {
         }
       end
     end
-		return scaling_evo (self, card, context, "j_poke_klang", card.ability.extra.totalEarned, self.config.evo_rqmt)
+		return pokermon.scaling_evo (self, card, context, "j_poke_klang", card.ability.extra.totalEarned, self.config.evo_rqmt)
 	end,
 }
 -- Klang 600

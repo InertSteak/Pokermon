@@ -8,8 +8,8 @@ local type_sticker_template =
 
 local type_stickers = {}
 
-for i = 1, #poketype_list do
-  local poke_type = string.lower(poketype_list[i])
+for i = 1, #POKE_TYPES do
+  local poke_type = string.lower(POKE_TYPES[i])
   local type_sticker = copy_table(type_sticker_template)
   type_sticker.key = poke_type..'_sticker'
   type_sticker.badge_colour = pokermon.colours[poke_type]
