@@ -1,4 +1,4 @@
-init = function()
+local init = function()
   local backapply_orig = Back.apply_to_run
   function Back.apply_to_run(self)
     backapply_orig(self)
@@ -160,7 +160,7 @@ end
       if SMODS.pseudorandom_probability(back, 'luminate', self.config.num, self.config.dem, 'luminate') then
         local temp_card = {set = "poke_item", area = G.shop_jokers, key = "c_poke_teraorb"}
         local add_card = SMODS.create_card(temp_card)
-        add_shop_card(add_card, card)
+        add_shop_card(add_card)
       end
     end
   end,

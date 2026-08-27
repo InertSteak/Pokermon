@@ -476,14 +476,6 @@ pokermon.stabilize_chip_drain = function(card)
   card.ability.perma_bonus = math.max(card.ability.perma_bonus, -card.ability.bonus)
 end
 
-tdmsg = function(tablename)
-  if tablename and type(tablename) == "table" then
-    sendDebugMessage(inspect(tablename))
-  else
-    sendDebugMessage("Not a table, Function: tdmsg")
-  end
-end
-
 pokermon.add_hazards = function(ratio, flat, area)
   local hazards = {}
   flat = flat or 0
@@ -545,7 +537,7 @@ end
 
 pokermon.is_same_suit = function(hand)
   local ret = {}
-  local suits = SMODS.Suit.obj_buffer
+  local suits = SMODS.Suit.obj_buffer or {}
   for j = 1, #suits do
     local suit = suits[j]
     local flush_count = 0

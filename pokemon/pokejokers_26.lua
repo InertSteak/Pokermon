@@ -125,7 +125,6 @@ local drampa = {
   name = "drampa",
   config = { extra = { boosters = 1 } },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.boosters } }
   end,
   rarity = 3,
@@ -155,7 +154,6 @@ local mega_drampa = {
   name = "mega_drampa",
   config = { extra = { boosters = 1, booster_choice_mod = 1 } },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.boosters, card.ability.extra.booster_choice_mod } }
   end,
   rarity = "poke_mega",

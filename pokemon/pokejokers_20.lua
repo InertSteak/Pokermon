@@ -541,7 +541,6 @@ local klink = {
 	--pos = {x = 26, y = 39},
 	config = {extra = {money = 1, drawn = 0, to_draw = 12, totalEarned = 0}, evo_rqmt = 8},
 	loc_vars = function(self, info_queue, card)
-		type_tooltip(self, info_queue, card)
 		local abbr = card.ability.extra
 	  return {vars = {abbr.money, abbr.to_draw, math.max(0, abbr.to_draw - abbr.drawn), math.max(self.config.evo_rqmt - abbr.totalEarned, 0)}}
 	end,

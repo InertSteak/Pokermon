@@ -407,10 +407,12 @@ G.FUNCS.pokermon_sprite_resource = function()
   local lines = localize('poke_artist_credits_sprite_resource_content')
   local content_nodes = {}
 
-  for _, text in ipairs(lines) do
-    table.insert(content_nodes, { n = G.UIT.R, config = { align = "cm" }, nodes = {
-      { n = G.UIT.T, config = { text = text, scale = 0.6, colour = G.C.UI.TEXT_LIGHT } }
-    }})
+  if type(lines) == 'table' then
+    for _, text in ipairs(lines) do
+      table.insert(content_nodes, { n = G.UIT.R, config = { align = "cm" }, nodes = {
+        { n = G.UIT.T, config = { text = text, scale = 0.6, colour = G.C.UI.TEXT_LIGHT } }
+      }})
+    end
   end
 
   local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_" .. G.ACTIVE_MOD_UI.id or 'exit_overlay_menu', contents = {
@@ -730,7 +732,7 @@ G.FUNCS.poke_reserve_card = function(e) -- only works for consumeables
           G.consumeables:emplace(c1)
           G.GAME.pack_choices = G.GAME.pack_choices - 1
           if G.GAME.pack_choices <= 0 then
-            G.FUNCS.end_consumeable(nil, delay_fac)
+            G.FUNCS.end_consumeable(nil, 1)
           end
           return true
         end
@@ -752,7 +754,7 @@ G.FUNCS.poke_reserve_card_to_joker_slot = function(e) -- only works for consumea
           G.jokers:emplace(c1)
           G.GAME.pack_choices = G.GAME.pack_choices - 1
           if G.GAME.pack_choices <= 0 then
-            G.FUNCS.end_consumeable(nil, delay_fac)
+            G.FUNCS.end_consumeable(nil, 1)
           end
           return true
         end

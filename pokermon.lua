@@ -39,7 +39,7 @@ if (SMODS.Mods["JokerDisplay"] or {}).can_load then
   for _, file in ipairs(jokerdisplays) do
     sendDebugMessage ("The file is: "..file)
     local helper, load_error = SMODS.load_file("jokerdisplay/"..file)
-    if load_error then
+    if not helper then
       sendDebugMessage ("The error is: "..load_error)
     else
       helper()
