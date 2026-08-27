@@ -454,9 +454,11 @@ pokermon.get_highest_evo = function(card)
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
 
   -- if there's an override then return early
-  if next(pokermon.get_evo_overrides(name)) and pokermon.get_evo_overrides(name).highest_evo then
-    local evos = pokermon.get_evo_overrides(name).highest_evo
-    return (#evos == 1 and evos[1]) or pseudorandom_element(evos, pseudoseed('highest'))
+  local evo_overrides = pokermon.get_evo_overrides(name).highest_evo
+  if evo_overrides then
+    return type(evo_overrides) == 'table'
+        and pseudorandom_element(evo_overrides, pseudoseed('highest'))
+        or evo_overrides
   end
   -- if already at highest stage, return early
   if POKE_STAGES[card.config.center.stage].next == nil then return end
