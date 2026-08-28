@@ -3660,6 +3660,24 @@ return {
                 "{C:inactive}(Currently {X:mult,C:white} X#2#{C:inactive} Mult)",
               }
             }, 
+            j_poke_surskit = {
+              name = "Surskit",
+              text = {
+                "Allows {C:attention}Straights{} to be made",
+                "with {C:attention}duplicate ranks",
+                "{C:inactive}(ex: {C:attention}10 9 9 8 7{C:inactive})",
+                "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#1#{C:inactive,s:0.8} Straights){}"
+              }
+            }, 
+            j_poke_masquerain = {
+              name = "Masquerain",
+              text = {
+                "{C:purple}+#1# Foresight",
+                "Allows {C:attention}Straights{} to be made",
+                "with {C:attention}duplicate ranks",
+                "{C:inactive}(ex: {C:attention}10 9 9 8 7{C:inactive})"
+              }
+            }, 
             j_poke_shroomish = {
                 name = "Shroomish",
                 text = {
