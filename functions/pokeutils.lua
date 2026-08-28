@@ -643,9 +643,31 @@ end
 SMODS.PokerHandPart:take_ownership('_straight',
   {
     func = function(hand)
-      local min
+      local min = 5
+      local _5 = nil
+      local _4 = nil
+      local _3 = nil
+      local _2 = nil
+      
       if (next(SMODS.find_card('j_poke_aipom')) or (#hand == 3 and next(SMODS.find_card('j_poke_ambipom')))) then min = 3 end
-      return get_straight(hand, min or SMODS.four_fingers('straight'), SMODS.shortcut(), SMODS.wrap_around_straight())
+      if (next(SMODS.find_card('j_poke_surskit')) or next(SMODS.find_card('j_poke_masquerain'))) then
+          _5 = get_X_same(5,hand)
+          _4 = get_X_same(4,hand)
+          _3 = get_X_same(3,hand)
+          _2 = get_X_same(2,hand)
+          
+          min = min - #_2
+          
+          min = min - (#_3 * 2)
+          
+          min = min - (#_4 * 3)
+          
+          min = min - (#_5 * 4)
+          
+          min = math.max(2, min)
+      end
+      min = math.min(min, SMODS.four_fingers('straight'))
+      return get_straight(hand, min, SMODS.shortcut(), SMODS.wrap_around_straight())
     end
   },
   true

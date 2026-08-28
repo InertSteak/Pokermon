@@ -478,7 +478,56 @@ local gardevoir={
   attributes = {"mult", "xmult", "energy_count", "joker", "passive", "holding", "generation", "spectral"},
 }
 -- Surskit 283
+local surskit={
+  name = "surskit",
+  pos = {x = 0, y = 0},
+  config = {extra = {straights_played = 0}, evo_rqmt = 8},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {math.max(0, self.config.evo_rqmt - center.ability.extra.straights_played)}}
+  end,
+  rarity = 2,
+  cost = 6,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      if context.scoring_hand and context.scoring_name == "Straight" and not context.blueprint then
+        card.ability.extra.straights_played = card.ability.extra.straights_played + 1
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_masquerain", card.ability.extra.straights_played, self.config.evo_rqmt)
+  end,
+}
 -- Masquerain 284
+local masquerain={
+  name = "masquerain",
+  pos = {x = 0, y = 0},
+  config = {extra = {scry = 4}},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
+    return {vars = {center.ability.extra.scry, center.ability.extra.money}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 3,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
+  end,
+}
 -- Shroomish 285
 local shroomish={
   name = "shroomish",
@@ -1038,6 +1087,6 @@ local skitty={
   attributes = {"copying", "types", "item_evo"},
 }
 return {name = "Pokemon Jokers 271-300", 
-        list = {seedot, nuzleaf, shiftry, taillow, swellow, wingull, pelipper, ralts, kirlia, gardevoir, shroomish, breloom, slakoth, vigoroth, slaking, nincada, ninjask, shedinja, 
-                makuhita, hariyama, azurill, nosepass, skitty},
+        list = {seedot, nuzleaf, shiftry, taillow, swellow, wingull, pelipper, ralts, kirlia, gardevoir, surskit, masquerain, shroomish, breloom, slakoth, vigoroth, slaking, 
+                nincada, ninjask, shedinja,  makuhita, hariyama, azurill, nosepass, skitty},
 }
