@@ -4167,7 +4167,7 @@ return {
             j_poke_banette = {
               name = "Banette",
               text = {
-                "{C:attention}+#3#{} joker slot, {C:chips}-#4#{} hand",
+                "{C:attention}+#3#{} Joker slot, {C:chips}-#4#{} hand",
                 "Gains {C:mult}+#2#{} Mult when",
                 "a Joker is sold",
                 "during the {C:attention}Blind",
