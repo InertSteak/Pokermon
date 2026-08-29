@@ -131,9 +131,8 @@ return {
             bl_poke_mirror = {
                 name = "The Mirror",
                 text = {
-                    "Rightmost Joker",
-                    "transforms into a {c:attention}Ditto",
-                    "when {C:attention}Blind{} selected",
+                    "Transforms rightmost",
+                    "Joker into a {c:attention}Ditto",
                 }, 
             },
             bl_poke_rocket = {

@@ -8,40 +8,18 @@ local mirror = {
   artist = "InertSteak",
   boss_colour = HEX("C57BE6"),
   debuff = {},
-  config = {trans_key = "j_joker", reset_eternal = false},
+  config = {},
   discovered = true,
   calculate = function(self, blind, context)
-    if context.setting_blind and not blind.disabled then
+    if context.first_hand_drawn and not blind.disabled then
       if #G.jokers.cards > 0 then
         local target = G.jokers.cards[#G.jokers.cards]
         if not target.getting_sliced then
           if target.ability.eternal then
-            blind.effect.reset_eternal = true
             target:set_eternal(false)
           end
-          target.ability.from_mirror = true
-          blind.effect.trans_key = target.config.center_key
           pokermon.evolve(target, 'j_poke_ditto', nil, localize("poke_transform_success"), true)
         end
-      end
-    end
-    if context.blind_disabled then
-      local target = nil
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i].ability.from_mirror then
-          target = G.jokers.cards[i]
-        end
-      end
-      if target then
-        pokermon.evolve(target, blind.effect.trans_key, nil, localize("poke_transform_success"), true)
-        if blind.effect.reset_eternal then
-          target.ability.eternal = true
-        end
-      end
-    end
-    if context.end_of_round and not context.repetition and not context.individual then
-      for i = 1, #G.jokers.cards do
-        G.jokers.cards[i].ability.from_mirror = nil
       end
     end
   end,
