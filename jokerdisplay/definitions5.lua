@@ -544,8 +544,8 @@ jd_def["j_poke_axew"] = {
     { text = ")" },
   },
   calc_function = function(card)
-    card.joker_display_values.localized_text = localize(card.ability.extra.targets[1], 'poker_hands')
-    card.joker_display_values.localized_text_2 = localize(card.ability.extra.targets[2], 'poker_hands')
+    card.joker_display_values.localized_text = localize(card.ability.extra.targets[1][1], 'poker_hands')
+    card.joker_display_values.localized_text_2 = localize(card.ability.extra.targets[2][1], 'poker_hands')
   end
 }
 
@@ -564,8 +564,8 @@ jd_def["j_poke_fraxure"] = {
     { text = ")" },
   },
   calc_function = function(card)
-    card.joker_display_values.localized_text = localize(card.ability.extra.targets[1], 'poker_hands')
-    card.joker_display_values.localized_text_2 = localize(card.ability.extra.targets[2], 'poker_hands')
+    card.joker_display_values.localized_text = localize(card.ability.extra.targets[1][1], 'poker_hands')
+    card.joker_display_values.localized_text_2 = localize(card.ability.extra.targets[2][1], 'poker_hands')
   end
 }
 
@@ -584,8 +584,8 @@ jd_def["j_poke_haxorus"] = {
     { text = ")" },
   },
   calc_function = function(card)
-    card.joker_display_values.localized_text = localize(card.ability.extra.targets[1], 'poker_hands')
-    card.joker_display_values.localized_text_2 = localize(card.ability.extra.targets[2], 'poker_hands')
+    card.joker_display_values.localized_text = localize(card.ability.extra.targets[1][1], 'poker_hands')
+    card.joker_display_values.localized_text_2 = localize(card.ability.extra.targets[2][1], 'poker_hands')
   end
 }
 
