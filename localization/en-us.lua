@@ -7559,7 +7559,8 @@ return {
             --]]
             --Since these are normally discovered by default these will probably not matter
             --But they COULD matter? Right? Right??????
-            undiscovered_energy = {
+            --#UndiscoveredConsumablesLivesMatters
+            undiscovered_poke_energy = {
                 name = "Not Discovered",
                 text = {
                     "Purchase or use",
@@ -7568,7 +7569,7 @@ return {
                     "learn what it does"
                 }
             },
-            undiscovered_item = {
+            undiscovered_poke_item = {
                 name = "Not Discovered",
                 text = {
                     "Purchase or use",
