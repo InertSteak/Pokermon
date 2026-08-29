@@ -5474,6 +5474,14 @@ return {
                     "your {C:attention}deck{} to your hand",
                 } 
             },
+            j_poke_carbink = {
+              name = "Carbink",
+              text = {
+                "{C:hazard}+#1#{} hazard layer",
+                "{C:attention}Hazard{} Cards are also",
+                "considered {C:attention}Gold{} cards",
+              }
+            },
             j_poke_pumpkaboo_small = {
                 name = 'Pumpkaboo (Small)',
                 text = {
