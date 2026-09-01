@@ -992,7 +992,16 @@ end
 
 pokermon.get_target_card_suit = function(seed, use_deck, default, limit_suits)
   local suit = default or 'Spades'
-  local allowed_suits = limit_suits or SMODS.Suits
+  local allowed_suits = {}
+  
+  if limit_suits then 
+    allowed_suits = limit_suits 
+  else
+    for _, k in pairs(SMODS.Suits) do
+      table.insert(allowed_suits, k.original_key)
+    end 
+  end
+  
   local valid_cards = {}
   if not G.playing_cards then
     return {{suit = suit}}
