@@ -525,7 +525,7 @@ local celebi = {
 local treecko={
   name = "treecko",
   pos = {x = 0, y = 0},
-  config = {extra = {money_mod = 1, triggers = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1}, evo_rqmt = 16},
+  config = {extra = {money_mod = 1, triggers = 0, targets = {{value = "Ace", id = 14}, {value = "King", id = 13}, {value = "Queen", id = 12}}, h_size = 1}, evo_rqmt = 16},
   loc_vars = function(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
@@ -589,7 +589,7 @@ local treecko={
 local grovyle={
   name = "grovyle",
   pos = {x = 1, y = 0},
-  config = {extra = {money_mod = 1, triggers = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1}, evo_rqmt = 16},
+  config = {extra = {money_mod = 1, triggers = 0, targets = {{value = "Ace", id = 14}, {value = "King", id = 13}, {value = "Queen", id = 12}}, h_size = 1}, evo_rqmt = 16},
   loc_vars = function(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
@@ -658,7 +658,7 @@ local grovyle={
 local sceptile={
   name = "sceptile",
   pos = {x = 2, y = 0},
-  config = {extra = {money_mod = 2, money_increase = 1, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1}},
+  config = {extra = {money_mod = 2, money_increase = 1, money_earned = 0, targets = {{value = "Ace", id = 14}, {value = "King", id = 13}, {value = "Queen", id = 12}}, h_size = 1}},
   loc_vars = function(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
@@ -718,7 +718,7 @@ local sceptile={
 local torchic={
   name = "torchic",
   pos = {x = 3, y = 0},
-  config = {extra = {mult_mod = 5, triggers = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, d_size = 1}, evo_rqmt = 16},
+  config = {extra = {mult_mod = 5, triggers = 0, targets = {{value = "Ace", id = 14}, {value = "King", id = 13}, {value = "Queen", id = 12}}, d_size = 1}, evo_rqmt = 16},
   loc_vars = function(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
@@ -776,7 +776,7 @@ local torchic={
 local combusken={
   name = "combusken",
   pos = {x = 4, y = 0},
-  config = {extra = {mult_mod = 8, triggers = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, d_size = 1}, evo_rqmt = 16},
+  config = {extra = {mult_mod = 8, triggers = 0, targets = {{value = "Ace", id = 14}, {value = "King", id = 13}, {value = "Queen", id = 12}}, d_size = 1}, evo_rqmt = 16},
   loc_vars = function(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
@@ -834,7 +834,7 @@ local blaziken={
   name = "blaziken",
   pos = {x = 5, y = 0},
   config = {extra = {mult_mod = 10, Xmult_multi = 1.5, cards_discarded = 0, discard_target = 5, 
-            targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, d_size = 1}},
+            targets = {{value = "Ace", id = 14}, {value = "King", id = 13}, {value = "Queen", id = 12}}, d_size = 1}},
   loc_vars = function(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
@@ -913,7 +913,7 @@ local blaziken={
 local mudkip={
   name = "mudkip",
   pos = {x = 6, y = 0},
-  config = {extra = {chip_mod = 30, triggers = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, hands = 1}, evo_rqmt = 16},
+  config = {extra = {chip_mod = 30, triggers = 0, targets = {{value = "Ace", id = 14}, {value = "King", id = 13}, {value = "Queen", id = 12}}, hands = 1}, evo_rqmt = 16},
   loc_vars = function(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
@@ -973,7 +973,7 @@ local mudkip={
 local marshtomp={
   name = "marshtomp",
   pos = {x = 7, y = 0},
-  config = {extra = {chip_mod = 50, triggers = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, hands = 1}, evo_rqmt = 16},
+  config = {extra = {chip_mod = 50, triggers = 0, targets = {{value = "Ace", id = 14}, {value = "King", id = 13}, {value = "Queen", id = 12}}, hands = 1}, evo_rqmt = 16},
   loc_vars = function(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
@@ -1033,7 +1033,7 @@ local marshtomp={
 local swampert={
   name = "swampert",
   pos = {x = 8, y = 0},
-  config = {extra = {chip_mod = 60, nature_target = 5, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, hands = 1}},
+  config = {extra = {chip_mod = 60, nature_target = 5, targets = {{value = "Ace", id = 14}, {value = "King", id = 13}, {value = "Queen", id = 12}}, hands = 1}},
   loc_vars = function(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}

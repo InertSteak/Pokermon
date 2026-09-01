@@ -881,7 +881,7 @@ local torkoal={
 local spinda={
   name = "spinda",
   pos = {x = 0, y = 0},
-  config = {extra = {enhancements = {"m_bonus", "m_mult", "m_wild"}, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}}},
+  config = {extra = {enhancements = {"m_bonus", "m_mult", "m_wild"}, targets = {{value = "Ace", id = 14}, {value = "King", id = 13}, {value = "Queen", id = 12}}}},
   loc_vars = function(self, info_queue, center)
     local card_vars = {}
     for i = 1, #center.ability.extra.enhancements do

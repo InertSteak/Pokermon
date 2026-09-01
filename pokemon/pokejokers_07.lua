@@ -933,7 +933,7 @@ local unown={
   name = "unown",
   pos = {x = 9, y = 4},
   soul_pos = {x = 0, y = 0},
-  config = {extra = {mult = 6, form = "A", targets = {{value = "Ace", id = "14"}}}},
+  config = {extra = {mult = 6, form = "A", targets = {{value = "Ace", id = 14}}}},
   loc_vars = function(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
