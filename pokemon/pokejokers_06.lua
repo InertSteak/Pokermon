@@ -1206,7 +1206,7 @@ local natu = {
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.poker_hand_changed and context.card and context.card.ability.set == 'Planet' then
+    if context.poker_hand_changed and context.card and context.card.ability and context.card.ability.set == 'Planet' then
       return {
         level_up = true,
         level_up_hand = context.scoring_name
@@ -1234,7 +1234,7 @@ local xatu = {
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.poker_hand_changed and context.card and context.card.ability.set == 'Planet' then
+    if context.poker_hand_changed and context.card and context.card.ability and context.card.ability.set == 'Planet' then
       return {
         level_up = true,
         level_up_hand = context.scoring_name
