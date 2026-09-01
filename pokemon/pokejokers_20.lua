@@ -467,7 +467,7 @@ local ferroseed={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.check_enhancement then
-      if SMODS.has_enhancement(context.other_card, 'm_wild') or SMODS.has_enhancement(context.other_card, 'm_poke_hazard') then
+      if pokermon.has_enhancement(context.other_card, 'm_wild') or pokermon.has_enhancement(context.other_card, 'm_poke_hazard') then
           return {m_steel = true}
       end
     end
@@ -506,7 +506,7 @@ local ferrothorn={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.check_enhancement then
-      if SMODS.has_enhancement(context.other_card, 'm_wild') or SMODS.has_enhancement(context.other_card, 'm_poke_hazard') then
+      if pokermon.has_enhancement(context.other_card, 'm_wild') or pokermon.has_enhancement(context.other_card, 'm_poke_hazard') then
           return {m_steel = true}
       end
     end

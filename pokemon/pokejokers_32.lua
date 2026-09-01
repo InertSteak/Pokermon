@@ -492,7 +492,7 @@ local tinkaton={
       }
     end
     if context.check_enhancement then
-      if SMODS.has_enhancement(context.other_card, 'm_steel') then
+      if pokermon.has_enhancement(context.other_card, 'm_steel') then
           return {m_glass = true}
       end
     end

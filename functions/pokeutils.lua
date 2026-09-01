@@ -1053,3 +1053,12 @@ pokermon.get_first_of_each_suit = function(cards)
 
   return claimed_suits
 end
+
+--Wrapper function for SMODS.has_enhancement to cover both rescursive and non rescursive cases
+pokermon.has_enhancement = function(card, enhancement, recursive)
+  if recursive then
+    return SMODS.has_enhancement(card, enhancement)
+  else
+    return card.config.center.key == enhancement
+  end
+end

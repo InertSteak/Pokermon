@@ -80,7 +80,7 @@ local shaymin_sky={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.check_enhancement then
-      if SMODS.has_enhancement(context.other_card, 'm_poke_flower') then
+      if pokermon.has_enhancement(context.other_card, 'm_poke_flower') then
           return {m_wild = true}
       end
     end

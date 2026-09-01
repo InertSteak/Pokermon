@@ -1374,7 +1374,7 @@ local steelix={
     end
     
     if context.check_enhancement then
-      if SMODS.has_enhancement(context.other_card, 'm_stone') then
+      if pokermon.has_enhancement(context.other_card, 'm_stone') then
           return {m_steel = true}
       end
     end
@@ -1406,7 +1406,7 @@ local mega_steelix={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.check_enhancement then
-      if SMODS.has_enhancement(context.other_card, 'm_stone') then
+      if pokermon.has_enhancement(context.other_card, 'm_stone') then
           return {m_steel = true, m_poke_hazard = true}
       end
     end
