@@ -663,7 +663,7 @@ local wailmer={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_wailord")
+    return pokermon.level_evo(self, card, context, "j_poke_wailord")
   end,
 }
 -- Wailord 321

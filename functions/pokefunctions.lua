@@ -94,17 +94,6 @@ pokermon.copy_scaled_values = function(card)
   return values
 end
 
----@deprecated use pokermon.do_evolution_anim instead
-pokermon.fake_evolve = function(card, evolve_message, set_sprites)
-  local on_complete = function()
-    if set_sprites then
-      card:set_sprites(card.config.center)
-    end
-  end
-
-  pokermon.do_evolution_anim(card, on_complete, evolve_message)
-end
-
 pokermon.do_evolution_anim = function(card, on_complete, evo_message)
   G.E_MANAGER:add_event(Event({
     func = function()
@@ -616,12 +605,12 @@ pokermon.get_evo_item_keys = function(card)
     local item_key, evo_item_prefix
     if type(card.config.center.item_req) == "table" then
       for i = 1, #card.config.center.item_req do
-        evo_item_prefix = pokermon.has(native_evo_items, card.config.center.item_req[i]) and 'poke' or prefix
+        evo_item_prefix = pokermon.has(POKE_NATIVE_EVO_ITEMS, card.config.center.item_req[i]) and 'poke' or prefix
         item_key = 'c_'..(evo_item_prefix)..'_'..card.config.center.item_req[i]
         table.insert(keys, item_key)
       end
     else
-      evo_item_prefix = pokermon.has(native_evo_items, card.config.center.item_req) and 'poke' or prefix
+      evo_item_prefix = pokermon.has(POKE_NATIVE_EVO_ITEMS, card.config.center.item_req) and 'poke' or prefix
       item_key = 'c_'..(evo_item_prefix)..'_'..card.config.center.item_req
       table.insert(keys, item_key)
     end
@@ -776,9 +765,6 @@ pokermon.add_joker_tooltips = function(self, info_queue, card)
   end
 end
 
----@deprecated functionality has been made baseline
-pokermon.type_tooltip = function(self, info_queue, center) end
-
 pokermon.set_type_badge = function(self, card, badges)
   local ptype = pokermon.get_type(card)
   if ptype then
@@ -805,11 +791,11 @@ pokermon.apply_type_sticker = function(card, sticker_type)
     apply_type = sticker_type
     card.ability[string.lower(apply_type).."_sticker"] = true
   else
-    apply_type = pseudorandom_element(poketype_list, pseudoseed("tera"))
+    apply_type = pseudorandom_element(POKE_TYPES, pseudoseed("tera"))
     card.ability[string.lower(apply_type).."_sticker"] = true
   end
   
-  for l, v in pairs(poketype_list) do
+  for l, v in pairs(POKE_TYPES) do
     if string.lower(v) ~= string.lower(apply_type) then
       card.ability[string.lower(v).."_sticker"] = false
     end

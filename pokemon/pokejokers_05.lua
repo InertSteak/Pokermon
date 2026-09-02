@@ -693,7 +693,7 @@ local eevee={
     local can_evolve = 0
     if G.jokers and G.jokers.cards then
       for k, v in ipairs(G.jokers.cards) do
-        if v.config.center.stage and get_highest_evo(v) then
+        if v.config.center.stage and pokermon.get_highest_evo(v) then
           can_evolve = can_evolve + 1
         end
       end
@@ -715,7 +715,7 @@ local eevee={
       if context.joker_main then
         local can_evolve = 0
         for k, v in ipairs(G.jokers.cards) do
-          if v.config.center.stage and get_highest_evo(v) then
+          if v.config.center.stage and pokermon.get_highest_evo(v) then
             can_evolve = can_evolve + 1
           end
         end

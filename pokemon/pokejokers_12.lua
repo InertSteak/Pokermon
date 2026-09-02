@@ -937,7 +937,7 @@ local kecleon = {
       if pokermon.get_type(card) ~= other_type then
         self:set_type(card, other_type)
       end
-    elseif not is_type(card, 'Colorless') then
+    elseif not pokermon.is_type(card, 'Colorless') then
       self:set_type(card, 'Colorless')
     end
   end,
@@ -976,7 +976,7 @@ local shuppet={
         message_colour = G.C.MULT,
       })
     end
-    return scaling_evo(self, card, context, "j_poke_banette", card.ability.extra.mult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_banette", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   attributes = {"hand_type", "mult", "scaling", "on_sell"},
 }
