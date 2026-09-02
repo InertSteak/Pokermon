@@ -131,9 +131,8 @@ return {
             bl_poke_mirror = {
                 name = "The Mirror",
                 text = {
-                    "Rightmost Joker",
-                    "transforms into a {c:attention}Ditto",
-                    "when {C:attention}Blind{} selected",
+                    "Transforms rightmost",
+                    "Joker into a {c:attention}Ditto",
                 }, 
             },
             bl_poke_rocket = {
@@ -4167,7 +4166,7 @@ return {
             j_poke_banette = {
               name = "Banette",
               text = {
-                "{C:attention}+#3#{} joker slot, {C:chips}-#4#{} hand",
+                "{C:attention}+#3#{} Joker slot, {C:chips}-#4#{} hand",
                 "Gains {C:mult}+#2#{} Mult when",
                 "a Joker is sold",
                 "during the {C:attention}Blind",
@@ -7559,7 +7558,8 @@ return {
             --]]
             --Since these are normally discovered by default these will probably not matter
             --But they COULD matter? Right? Right??????
-            undiscovered_energy = {
+            --#UndiscoveredConsumablesLivesMatters
+            undiscovered_poke_energy = {
                 name = "Not Discovered",
                 text = {
                     "Purchase or use",
@@ -7568,7 +7568,7 @@ return {
                     "learn what it does"
                 }
             },
-            undiscovered_item = {
+            undiscovered_poke_item = {
                 name = "Not Discovered",
                 text = {
                     "Purchase or use",

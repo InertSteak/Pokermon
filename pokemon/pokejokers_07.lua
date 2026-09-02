@@ -933,7 +933,7 @@ local unown={
   name = "unown",
   pos = {x = 9, y = 4},
   soul_pos = {x = 0, y = 0},
-  config = {extra = {mult = 6, form = "A", targets = {{value = "Ace", id = "14"}}}},
+  config = {extra = {mult = 6, form = "A", targets = {{value = "Ace", id = 14}}}},
   loc_vars = function(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
@@ -1374,7 +1374,7 @@ local steelix={
     end
     
     if context.check_enhancement then
-      if SMODS.has_enhancement(context.other_card, 'm_stone') then
+      if pokermon.has_enhancement(context.other_card, 'm_stone') then
           return {m_steel = true}
       end
     end
@@ -1406,7 +1406,7 @@ local mega_steelix={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.check_enhancement then
-      if SMODS.has_enhancement(context.other_card, 'm_stone') then
+      if pokermon.has_enhancement(context.other_card, 'm_stone') then
           return {m_steel = true, m_poke_hazard = true}
       end
     end

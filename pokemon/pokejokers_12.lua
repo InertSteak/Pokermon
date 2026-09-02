@@ -177,7 +177,7 @@ local altaria={
 local corphish={
   name = "corphish",
   pos = {x = 0, y = 0},
-  config = {extra = {mult = 0, mult_mod = 1, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}}, evo_rqmt = 10},
+  config = {extra = {mult = 0, mult_mod = 1, targets = {{value = "Ace", id = 14}, {value = "King", id = 13}, {value = "Queen", id = 12}}}, evo_rqmt = 10},
   loc_vars = function(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
@@ -238,7 +238,7 @@ local corphish={
 local crawdaunt={
   name = "crawdaunt",
   pos = {x = 0, y = 0},
-  config = {extra = {mult = 0, mult_mod = 1, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}}},
+  config = {extra = {mult = 0, mult_mod = 1, targets = {{value = "Ace", id = 14}, {value = "King", id = 13}, {value = "Queen", id = 12}}}},
   loc_vars = function(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
