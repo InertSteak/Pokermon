@@ -645,6 +645,9 @@ local unown_swarm={
       card.front_card = front_card
     end
   end,
+  in_pool = function(self)
+    return false
+  end,
   attributes = {"joker", "xmult", "mult"},
 }
 
