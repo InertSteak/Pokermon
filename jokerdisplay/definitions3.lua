@@ -2061,7 +2061,7 @@ jd_def["j_poke_jirachi_invis"] = {
   calc_function = function(card)
     local energized_jokers = 0
     for k, v in ipairs(G.jokers.cards) do
-      if get_total_energy(v) >= 1 then
+      if pokermon.energy.get_total_energy(v) >= 1 then
         energized_jokers = energized_jokers + 1
       end
     end

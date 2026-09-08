@@ -275,7 +275,7 @@ end
 
 pokermon.energy.get_matching_energy = function(card, allow_bird)
   if not pokermon.get_type(card) or (pokermon.get_type(card) == "Bird" and not allow_bird) then return end
-  local etype = pokermon.get_type(card) and string.lower(pokermon.get_type(card))
+  local etype = string.lower(pokermon.get_type(card) or '')
   local e_key = "c_poke_"..etype..(etype == 'dark' and 'ness' or '')..'_energy'
   if G.P_CENTERS[e_key] then return "c_poke_"..etype..(etype == 'dark' and 'ness' or '')..'_energy' end
 end
