@@ -415,3 +415,9 @@ function SMODS.current_mod.menu_cards()
     remove_original = true,
   }
 end
+
+local get_poker_hand_info = G.FUNCS.get_poker_hand_info
+function G.FUNCS.get_poker_hand_info(_cards)
+  return get_poker_hand_info(pokermon.filter(_cards, function(c) return not c.poke_zangoose_card end))
+end
+

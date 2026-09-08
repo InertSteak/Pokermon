@@ -585,14 +585,7 @@ local ruins_of_alph={
 local unown_swarm={
   name = "unown_swarm",
   pos = {x = 0, y = 0},
-  soul_pos = {x = 0, y = 0,
-    draw = function(card, scale_mod, rotate_mod)
-      -- AAAAA
-      card.VT.w = card.T.w
-      card.children.floating_sprite:draw_shader('dissolve', 0, nil, nil, card.children.center, scale_mod, rotate_mod, nil, 0.1 + 0.03*math.sin(1.8*G.TIMERS.REAL), nil, 0.6)
-      card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
-      card.VT.w = card.T.w * 1.174
-    end},
+  soul_pos = {x = 0, y = 0},
   config = {extra = {mult = 28, Xmult_multi = 2.8}},
   loc_vars = function(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult_multi, }}
@@ -602,6 +595,8 @@ local unown_swarm={
   stage = "Other",
   ptype = "Psychic",
   atlas = "j_poke_unown_swarm",
+  soul_atlas = "j_poke_unown_swarm_soul",
+  display_size = {w = 290 / 3, h = 285 / 3},
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -624,18 +619,10 @@ local unown_swarm={
   end,
   set_sprites = function(self, card, front)
     if self.discovered or card.bypass_discovery_center then
-      card.children.center:reset()
-      if card.children.floating_sprite then
-        card.children.floating_sprite.atlas = G.ANIMATION_ATLAS[card.children.center.atlas.name .. "_soul"]
-        card.children.floating_sprite:reset()
-      end
+      card.children.center:set_alignment({offset = {x = 0.1737, y = 0}}) -- (37 / 3) / 71
     end
   end,
   update = function(self, card, dt)
-    card.children.center.VT.x = card.T.x - (G.CARD_H - G.CARD_W) / 2
-    card.children.floating_sprite.VT.x = card.children.center.VT.x
-    card.VT.w = card.T.w * 1.174
-
 	if card.front_card then
 	  card.front_card.children.center.VT.x = card.children.center.VT.x + 0.35
 	  card.front_card.children.center.VT.y = card.children.center.VT.y
@@ -657,6 +644,9 @@ local unown_swarm={
       front_card:hard_set_T(card.T.x, card.T.y, card.T.w, card.T.h)
       card.front_card = front_card
     end
+  end,
+  in_pool = function(self)
+    return false
   end,
   attributes = {"joker", "xmult", "mult"},
 }

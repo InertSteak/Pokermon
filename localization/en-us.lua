@@ -4039,6 +4039,23 @@ return {
                 "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
               }
             },
+            j_poke_zangoose = {
+              name = "Zangoose",
+              text = {
+                "When hand is played, add",
+                "{C:attention}#1#{} random held cards",
+                "to {C:attention}poker hand",
+                "{C:inactive,s:0.8}(Does not change {C:attention,s:0.8}poker hand{C:inactive,s:0.8})",
+              }
+            },
+            j_poke_seviper = {
+              name = "Seviper",
+              text = {
+                "If played or discarded hand",
+                "has exactly {C:attention}#1#{} cards, gain",
+                "{C:attention}+#2#{} hand size this round"
+              }
+            },
             j_poke_corphish = {
                 name = "Corphish",
                 text = {
@@ -7918,6 +7935,7 @@ return {
             poke_head_smash_ex = "Head Smash!",
             poke_teeter_dance_ex = "Teeter Dance!",
             poke_wish_ex = "Wish!",
+            poke_crush_claw_ex = "Crush Claw!",
             
             poke_attack_forme = "Attack",
             poke_defense_forme = "Defense",

@@ -168,7 +168,73 @@ local altaria={
   attributes = {"rank", "nine", "chips", "economy", "scaling", "types", "joker"},
 }
 -- Zangoose 335
+local zangoose={
+  name = "zangoose",
+  pos = {x = 0, y = 0},
+  config = {extra = {amount = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.amount}}
+  end,
+  rarity = 3,
+  cost = 7,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.press_play then
+      -- We end up playing cards twice if we don't filter
+      local hand_cards = pokermon.filter(G.hand.cards, function(c) return not c.poke_zangoose_card and not c.highlighted end)
+      pseudoshuffle(hand_cards, 'zangoose')
+      local amount_to_add = math.min(card.ability.extra.amount, #hand_cards)
+
+      if amount_to_add > 0 then
+        SMODS.calculate_effect({message = localize('poke_crush_claw_ex')}, card)
+      end
+
+      for i = 1, amount_to_add do
+        local other_card = hand_cards[i]
+        draw_card(G.hand, G.play, i*100/amount_to_add, 'up', nil, other_card)
+        other_card.poke_zangoose_card = true
+      end
+    end
+
+    if context.modify_scoring_hand and context.other_card.poke_zangoose_card then
+      context.other_card.poke_zangoose_card = nil
+      return {add_to_hand = true}
+    end
+  end,
+}
 -- Seviper 336
+local seviper={
+  name = "seviper",
+  pos = {x = 0, y = 0},
+  config = {extra = {req_size = 3, h_size = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.req_size, center.ability.extra.h_size}}
+  end,
+  rarity = 3,
+  cost = 7,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if (context.pre_discard or context.before) and #context.full_hand == card.ability.extra.req_size then
+      card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={card.ability.extra.h_size}}})
+      G.hand:change_size(card.ability.extra.h_size)
+      G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
+    end
+  end,
+}
 -- Lunatone 337
 -- Solrock 338
 -- Barboach 339
@@ -1334,6 +1400,6 @@ local wynaut={
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {cacnea, cacturne, swablu, altaria, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, kecleon, duskull, dusclops, shuppet, banette,
-                tropius, chimecho, absol, wynaut},
+        list = {cacnea, cacturne, swablu, altaria, zangoose, seviper, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, kecleon, duskull, dusclops, 
+                shuppet, banette, tropius, chimecho, absol, wynaut},
 }
