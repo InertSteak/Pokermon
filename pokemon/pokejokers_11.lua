@@ -939,7 +939,7 @@ local spinda={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      pokermon.create_held_item("c_wheel_of_fortune")
+      pokermon.create_consumeable("c_wheel_of_fortune")
     end
   end,
   attributes = {"holding", "modify_card", "nature", "rank", "enhancements"},

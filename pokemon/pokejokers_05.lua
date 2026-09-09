@@ -1325,7 +1325,7 @@ local snorlax={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      pokermon.create_held_item("c_poke_leftovers")
+      pokermon.create_consumeable("c_poke_leftovers")
     end
   end,
   attributes = {"holding", "xmult", "scaling"},

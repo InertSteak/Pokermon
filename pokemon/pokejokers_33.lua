@@ -152,7 +152,7 @@ local farigiraf={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      pokermon.create_held_item("c_cryptid")
+      pokermon.create_consumeable("c_cryptid")
     end
   end,
   attributes = {"holding", "face", "xmult", "hand_type"},

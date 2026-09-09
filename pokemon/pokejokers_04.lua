@@ -346,7 +346,7 @@ local hypno={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      pokermon.create_held_item('c_trance')
+      pokermon.create_consumeable('c_trance')
     end
   end,
   attributes = {"xmult", "planet", "holding"},
@@ -633,7 +633,7 @@ local cubone={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      pokermon.create_held_item("c_poke_thickclub")
+      pokermon.create_consumeable("c_poke_thickclub")
     end
   end,
   attributes = {"mult", "holding", "condition_evo"},

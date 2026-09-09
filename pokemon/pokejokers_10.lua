@@ -472,7 +472,7 @@ local gardevoir={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      pokermon.create_held_item("c_black_hole")
+      pokermon.create_consumeable("c_black_hole")
     end
   end,
   attributes = {"mult", "xmult", "energy_count", "joker", "passive", "holding", "generation", "spectral"},

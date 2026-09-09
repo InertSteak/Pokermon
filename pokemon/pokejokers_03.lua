@@ -1040,7 +1040,7 @@ local farfetchd={
   gen = 1,
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then pokermon.create_held_item('c_poke_leek') end
+    if not from_debuff then pokermon.create_consumeable('c_poke_leek') end
   end,
   calculate = function(self, card, context)
     if context.using_consumeable then
