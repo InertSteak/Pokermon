@@ -195,6 +195,7 @@ local gourgeist = {
     if context.discard then
       if context.other_card['gourgeist_trigger'..card.unique_val]  then
         pokermon.create_consumeable({ set = 'Spectral' }, true, card)
+        context.other_card['gourgeist_trigger'..card.unique_val] = nil
       elseif context.other_card:get_id() == 11 and not context.other_card.debuff and not context.blueprint then
         return {
           message = localize('poke_boo_ex'),
