@@ -190,6 +190,11 @@ if (SMODS.Mods["CardSleeves"] or {}).can_load then
   load_directory("sleeves", CardSleeves.Sleeve)
 end
 
+--Load SilkTouch Compatability
+if (SMODS.Mods["SilkTouch"] or {}).can_load then
+  assert(SMODS.load_file("silktouch/silktouch.lua"))()
+end
+
 --Load challenges file
 load_directory("challenges", SMODS.Challenge)
 
