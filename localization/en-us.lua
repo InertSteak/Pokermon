@@ -3274,7 +3274,7 @@ return {
                   "{C:attention}+#3#{} discard selection limit",
                   "{br:2}ERROR - CONTACT STEAK",
                   "Gains {X:mult,C:white} X#2# {} Mult whenever",
-                  "cards are discarded",
+                  "cards are discarded,",
                   "resets at end of round",
                   "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
                 }
@@ -3805,6 +3805,15 @@ return {
                   "to the right",
                   "with {C:poke_pink}+#2#{} Energy",
                   "{C:inactive,s:0.8}(Type changes every round){}",
+                }
+            },
+            j_poke_sableye = {
+                name = "Sableye",
+                text = {
+                  "Gains {X:red,C:white}X#1#{} Mult when you",
+                  "{C:attention}deplete{} a {C:attention}unique enhancement{},",
+                  "resets at end of round",
+                  "{C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult)"
                 }
             },
             j_poke_aron = {

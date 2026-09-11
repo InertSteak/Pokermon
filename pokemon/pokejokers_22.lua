@@ -147,7 +147,6 @@ local bunnelby = {
 	perishable_compat = true,
 	blueprint_compat = true,
 	eternal_compat = true,
-	
 	calculate = function(self, card, context)
     if context.hand_drawn and SMODS.drawn_cards then 
      if G.deck and G.deck.cards then

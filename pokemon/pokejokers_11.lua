@@ -59,6 +59,58 @@ local delcatty={
   attributes = {"copying", "types", "energy_count"},
 }
 -- Sableye 302
+local sableye={
+  name = "sableye",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 1, Xmult1 = 1, Xmult_mod = 0.5, enhancements = {}}},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'deplete'}
+    return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
+  end,
+  rarity = 3,
+  cost = 7,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main and card.ability.extra.Xmult > 1 then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
+    end
+    if context.hand_drawn and not context.blueprint then
+      for i, drawnCard in ipairs(context.hand_drawn) do
+        if drawnCard.config.center ~= G.P_CENTERS.c_base then
+          for x, y in pairs(SMODS.get_enhancements(drawnCard)) do
+            if not card.ability.extra.enhancements[x] then
+              local find_func = function(deck_card) return SMODS.has_enhancement(deck_card, x) end
+              if pokermon.get_depleted(find_func) then 
+                card.ability.extra.enhancements[x] = true 
+                SMODS.scale_card(card, {
+                  ref_value = 'Xmult',
+                  scalar_value = 'Xmult_mod',
+                  message_colour = G.C.XMULT,
+                })
+              end
+            end
+          end
+        end
+      end
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult1
+      card.ability.extra.enhancements = {}
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
+    end
+  end,
+}
 -- Mawile 303
 -- Aron 304
 local aron = {
@@ -949,5 +1001,6 @@ local spinda={
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  list = {delcatty, aron, lairon, aggron, meditite, medicham, plusle, minun, volbeat, illumise, roselia, carvanha, sharpedo, wailmer, wailord, numel, camerupt, mega_camerupt, torkoal, spinda},
+  list = {delcatty, sableye, aron, lairon, aggron, meditite, medicham, plusle, minun, volbeat, illumise, roselia, carvanha, sharpedo, wailmer, wailord, numel, camerupt, mega_camerupt, 
+          torkoal, spinda},
 }
