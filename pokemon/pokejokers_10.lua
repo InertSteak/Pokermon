@@ -500,7 +500,7 @@ local surskit={
         card.ability.extra.straights_played = card.ability.extra.straights_played + 1
       end
     end
-    return scaling_evo(self, card, context, "j_poke_masquerain", card.ability.extra.straights_played, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_masquerain", card.ability.extra.straights_played, self.config.evo_rqmt)
   end,
 }
 -- Masquerain 284
