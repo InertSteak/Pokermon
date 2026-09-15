@@ -321,7 +321,7 @@ local randomizer = {
     key = "randomizer",
     rules = {
         custom = {
-            { id = 'apply_randomizer' },
+            { id = 'poke_apply_randomizer' },
         },
     },
     jokers = {
