@@ -4,7 +4,6 @@ return {
   ["precise_energy"]=true,
   ["energy_count"]=false,
   ["sell_value"]=false,
-  ["pokeballs"]=true,
   ["no_evos"]=false,
   ["pokemon_only"]=true,
   ["pokemon_splash"]=true,

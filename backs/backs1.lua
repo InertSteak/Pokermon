@@ -240,11 +240,7 @@ local diceydeck = {
   end,
 }
 
-local dList = {luminousdeck, telekineticdeck, ampeddeck, futuredeck, stadiumdeck, megadeck, vendingdeck, diceydeck}
-
-if pokermon_config.pokeballs then
-  table.insert(dList, 1, pokemondeck)
-end
+local dList = {pokemondeck, luminousdeck, telekineticdeck, ampeddeck, futuredeck, stadiumdeck, megadeck, vendingdeck, diceydeck}
 
 if pokermon_config.pokemon_legacy then
   table.insert(dList, obituarydeck)

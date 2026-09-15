@@ -15,8 +15,7 @@ local leftovers = {
   unlocked = true,
   discovered = true,
   hidden = true,
-  soul_set = "poke_item",
-  soul_rate = .025,
+  weight = 3,
   can_use = function(self, card)
     if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
        or G.STATE == G.STATES.STANDARD_PACK then 
@@ -83,11 +82,9 @@ local heavyboots = {
   atlas = "AtlasConsumablesBasic",
   artist = {{name = "Emma", layer = "soul"}, {name = "Catzzadilla", layer = "center"}},
   cost = 4,
+  weight = 2,
   unlocked = true,
   discovered = true,
-  hidden = true,
-  soul_set = "poke_item",
-  soul_rate = .01,
   can_use = function(self, card)
     if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
        or G.STATE == G.STATES.STANDARD_PACK then 
@@ -156,8 +153,7 @@ local teraorb = {
   soul_pos = { x = 3, y = 9 },
   atlas = "AtlasConsumablesBasic",
   cost = 3,
-  soul_set = "poke_item",
-  soul_rate = .045,
+  weight = 5,
   unlocked = true,
   discovered = true,
   get_next_type = function(self, card)
@@ -235,11 +231,9 @@ local thickclub = {
   soul_pos = { x = 8, y = 5 },
   atlas = "AtlasConsumablesBasic",
   cost = 3,
+  weight = 1,
   unlocked = true,
   discovered = true,
-  hidden = true,
-  soul_set = "poke_item",
-  soul_rate = .025,
   can_use = function(self, card)
     if card.area == G.shop_jokers then return false end
     if G.hand.highlighted and #G.hand.highlighted ~= 1 then return false end
