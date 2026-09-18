@@ -190,3 +190,14 @@ pattern = "if area == G.consumeables then"
 position = "at"
 payload = "if area == G.consumeables or area == G.jokers then"
 match_indent = true
+
+# Fix for crash when starting a run
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = "if G.P_CENTERS[k][key] then return true end"
+position = "at"
+payload = '''
+if G.P_CENTERS[k] and G.P_CENTERS[k][key] then return true end
+'''
+match_indent = true
