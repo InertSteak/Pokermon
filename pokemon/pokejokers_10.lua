@@ -1,5 +1,105 @@
 -- Lombre 271
+local lombre={
+  name = "lombre",
+  pos = {x = 0, y = 0},
+  config = {extra = {money = 2,}},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {center.ability.extra.money, G.GAME.poke_beat or 2}}
+  end,
+  rarity = "poke_safari",
+  cost = 6,
+  gen = 3,
+  item_req = "waterstone",
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main and #context.full_hand == (G.GAME.poke_beat or 2) then
+        local earned = pokermon.ease_poke_dollars(card, "lotad", card.ability.extra.money, true)
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+        return {
+          dollars = earned,
+          func = function()
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                G.GAME.dollar_buffer = 0
+                return true
+              end
+            }))
+          end
+        }
+    end
+    return pokermon.item_evo(self, card, context, "j_poke_ludicolo")
+  end,
+  attributes = {"economy"},
+}
 -- Ludicolo 272
+local ludicolo={
+  name = "ludicolo",
+  pos = {x = 0, y = 0},
+  config = {extra = {energy_limit = 1}},
+  loc_txt = {
+    name = "Ludicolo",
+    text = {
+      "{C:poke_pink}+#1#{} Energy Limit",
+      "Create an {C:poke_pink}Energy{} card if",
+      "played hand has exactly",
+      "{C:attention}#2#{} cards, changes card",
+      "amount after scoring",
+      "{C:inactive}(Must have room)"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    return {vars = {center.ability.extra.energy_limit, G.GAME.poke_beat or 2}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 3,
+  stage = "Two",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main and #context.full_hand == (G.GAME.poke_beat or 2) then
+      return {
+        extra = {focus = card, message = localize('poke_plus_energy'), colour = pokermon.colours.pink, func = function()
+          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+            G.E_MANAGER:add_event(Event({
+              trigger = 'before',
+              delay = 0.0,
+              func = function()
+                SMODS.add_card{set = 'poke_energy'}
+                G.GAME.consumeable_buffer = 0
+                return true
+              end
+            }))
+          end
+        end}
+      }
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not G.GAME.poke_energy_plus then
+      G.GAME.poke_energy_plus = card.ability.extra.energy_limit
+    else
+      G.GAME.poke_energy_plus = G.GAME.poke_energy_plus + card.ability.extra.energy_limit
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not G.GAME.poke_energy_plus then
+      G.GAME.poke_energy_plus = 0
+    else
+      G.GAME.poke_energy_plus = G.GAME.poke_energy_plus - card.ability.extra.energy_limit
+    end
+  end,
+  attributes = {"generation", "energy", "energy_limit"},
+}
 -- Seedot 273
 local seedot={
   name = "seedot",
@@ -1087,6 +1187,6 @@ local skitty={
   attributes = {"copying", "types", "item_evo"},
 }
 return {name = "Pokemon Jokers 271-300", 
-        list = {seedot, nuzleaf, shiftry, taillow, swellow, wingull, pelipper, ralts, kirlia, gardevoir, surskit, masquerain, shroomish, breloom, slakoth, vigoroth, slaking, 
+        list = {lombre, ludicolo, seedot, nuzleaf, shiftry, taillow, swellow, wingull, pelipper, ralts, kirlia, gardevoir, surskit, masquerain, shroomish, breloom, slakoth, vigoroth, slaking, 
                 nincada, ninjask, shedinja,  makuhita, hariyama, azurill, nosepass, skitty},
 }

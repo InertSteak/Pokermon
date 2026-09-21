@@ -274,9 +274,10 @@ function SMODS.current_mod.reset_game_globals(run_start)
 end
 
 function SMODS.current_mod.calculate(self, context)
-  -- Poliwag line suit
+  -- Poliwag/Lotad line
   if context.after then
     pokermon.change_poli_suit()
+    pokermon.change_beat()
   end
   -- Vending deck
   if G.GAME.modifiers.poke_vending == true then

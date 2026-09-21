@@ -1284,6 +1284,18 @@ pokermon.change_poli_suit = function()
   end
 end
 
+pokermon.change_beat= function()
+  if G.GAME.poke_beat then
+    if G.GAME.poke_beat == 2 then
+      G.GAME.poke_beat = 4
+    else
+      G.GAME.poke_beat  = 2
+    end
+  else
+    G.GAME.poke_beat = 4
+  end
+end
+
 pokermon.reset_rank = function(name)
   G.GAME.current_round[name] = {rank = 'Ace'}
   local valid_cards = {}

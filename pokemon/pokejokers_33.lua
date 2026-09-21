@@ -56,7 +56,75 @@ local wugtrio={
 -- Glimmet 969
 -- Glimmora 970
 -- Greavard 971
+local greavard={
+  name = "greavard",
+  pos = {x = 0, y = 0},
+  config = {extra = {retriggers = 1,rounds = 5,}},
+  loc_vars = function(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'depleted'}
+    end
+    return {vars = {center.ability.extra.retriggers, center.ability.extra.rounds, }}
+  end,
+  rarity = 2,
+  cost = 5,
+  gen = 9,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.repetition and not context.end_of_round and context.cardarea == G.play then
+      if (pokermon.get_depleted(function(deck_card) return deck_card:get_id() == context.other_card:get_id() end)) or SMODS.has_no_rank(context.other_card) then
+        return {
+          repetitions = card.ability.extra.retriggers,
+        }
+      end
+    end
+    return pokermon.level_evo(self, card, context, "j_poke_houndstone")
+  end,
+}
 -- Houndstone 972
+local houndstone={
+  name = "houndstone",
+  pos = {x = 0, y = 0},
+  config = {extra = {retriggers = 1, limit = 2}},
+  loc_vars = function(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'depleted'}
+    end
+    return {vars = {center.ability.extra.retriggers, center.ability.extra.limit}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 9,
+  stage = "One",
+  ptype = "Psychic",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.repetition and not context.end_of_round and context.cardarea == G.play then
+      if (pokermon.get_depleted(function(deck_card) return deck_card:get_id() == context.other_card:get_id() end)) or SMODS.has_no_rank(context.other_card) then
+        return {
+          repetitions = card.ability.extra.retriggers,
+        }
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+		SMODS.change_discard_limit(card.ability.extra.limit)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+		SMODS.change_discard_limit(-card.ability.extra.limit)
+		if not G.GAME.before_play_buffer then
+			G.hand:unhighlight_all()
+		end
+  end,
+}
 -- Flamigo 973
 -- Cetoddle 974
 -- Cetitan 975
@@ -283,5 +351,5 @@ local kingambit={
 -- Sandy Shocks 989
 -- Iron Treads 990
 return {name = "Pokemon Jokers 961-990", 
-        list = {wugtrio, annihilape, farigiraf, dudunsparce, kingambit},
+        list = {wugtrio, greavard, houndstone, annihilape, farigiraf, dudunsparce, kingambit},
 }

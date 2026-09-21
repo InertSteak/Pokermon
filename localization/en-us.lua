@@ -3557,6 +3557,37 @@ return {
                   "are {C:attention}Nature{} cards"
                 }
             },
+            j_poke_lotad = {
+                name = "Lotad",
+                text = {
+                  "Earn {C:money}$#1#{} or {C:money}$#2#{} if",
+                  "played hand has exactly",
+                  "{C:attention}#4#{} cards, changes card",
+                  "amount after scoring",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_lombre = {
+                name = "Lombre",
+                text = {
+                  "Earn {C:money}$#1#{} if played hand",
+                  "has exactly {C:attention}#2#{} cards,",
+                  "changes card amount",
+                  "after scoring",
+                  "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Water Stone{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_ludicolo = {
+                name = "Ludicolo",
+                text = {
+                  "{C:poke_pink}+#1#{} Energy Limit",
+                  "Create an {C:poke_pink}Energy{} card if",
+                  "played hand has exactly",
+                  "{C:attention}#2#{} cards, changes card",
+                  "amount after scoring",
+                  "{C:inactive}(Must have room)"
+                }
+            },
             j_poke_seedot = {
               name = "Seedot",
               text = {
@@ -4768,9 +4799,9 @@ return {
             j_poke_rhyperior = {
                 name = 'Rhyperior',
                 text = {
-                    "Each played {C:attention}Stone{} card ",
+                    "Each played {C:attention}Stone{} card",
                     "permanently gains {C:chips}+#1#{} Chips",
-                    "and retrigger when scored",
+                    "and retriggers when scored",
                     "{br:3}ERROR - CONTACT STEAK",
                     "{C:attention}Stone{} cards retrigger an",
                     "additional time for every",
@@ -6004,6 +6035,24 @@ return {
                     "{C:chips}+#2#{} Chips if played hand",
                     "contains a scoring {C:attention}5{}, {C:attention}6{}, or {C:attention}7{}",
                 } 
+            },
+            j_poke_greavard = {
+                name = "Greavard",
+                text = {
+                  "Retrigger all played cards",
+                  "with a {C:attention}depleted rank",
+                  "or with {C:attention}no rank",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_houndstone = {
+                name = "Houndstone",
+                text = {
+                  "{C:attention}+#2#{} discard selection limit",
+                  "Retrigger all played cards",
+                  "with a {C:attention}depleted rank",
+                  "or with {C:attention}no rank",
+                }
             },
             j_poke_annihilape = {
                 name = 'Annihilape',

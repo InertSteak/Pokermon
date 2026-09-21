@@ -1553,8 +1553,51 @@ local dustox={
   attributes = {"chips", "nature", "suit", "xmult"},
 }
 -- Lotad 270
+local lotad={
+  name = "lotad",
+  pos = {x = 0, y = 0},
+  config = {extra = {money = 1, rounds = 4,}},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {center.ability.extra.money, center.ability.extra.money + 1, center.ability.extra.rounds, G.GAME.poke_beat or 2}}
+  end,
+  rarity = 1,
+  cost = 4,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main and #context.full_hand == (G.GAME.poke_beat or 2) then
+        local more
+        if pseudorandom('lotad') < .50 then
+          more = 0
+        else
+          more = 1
+        end
+
+        local earned = pokermon.ease_poke_dollars(card, "lotad", card.ability.extra.money + more, true)
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+        return {
+          dollars = earned,
+          func = function()
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                G.GAME.dollar_buffer = 0
+                return true
+              end
+            }))
+          end
+        }
+    end
+    return pokermon.level_evo(self, card, context, "j_poke_lombre")
+  end,
+  attributes = {"economy"},
+}
 return {name = "Pokemon Jokers 240-270", 
         list = {miltank, blissey, raikou, entei, suicune, larvitar, pupitar, tyranitar, mega_tyranitar, lugia, ho_oh, celebi, 
                 treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, poochyena, mightyena, 
-                zigzagoon, linoone, wurmple, silcoon, beautifly, cascoon, dustox},
+                zigzagoon, linoone, wurmple, silcoon, beautifly, cascoon, dustox, lotad},
 }
