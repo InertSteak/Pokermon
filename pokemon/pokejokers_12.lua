@@ -207,6 +207,7 @@ local zangoose={
       return {add_to_hand = true}
     end
   end,
+  attributes = {"hands"}
 }
 -- Seviper 336
 local seviper={
@@ -232,6 +233,7 @@ local seviper={
       G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
     end
   end,
+  attributes = {"hands", "discard", "hand_size"}
 }
 -- Lunatone 337
 -- Solrock 338
@@ -1243,6 +1245,7 @@ local tropius={
       card.ability.extra.active = true
     end
   end,
+  attributes = {"xmult", "scaling", "joker", "generation"}
 }
 -- Chimecho 358
 local chimecho={

@@ -570,6 +570,7 @@ local klink = {
     end
 		return pokermon.scaling_evo (self, card, context, "j_poke_klang", card.ability.extra.totalEarned, self.config.evo_rqmt)
 	end,
+  attributes = {"draw", "economy", "trigger_evo"}
 }
 -- Klang 600
 local klang = {
@@ -606,6 +607,7 @@ local klang = {
     end
 		return pokermon.scaling_evo (self, card, context, "j_poke_klinklang", card.ability.extra.totalEarned, self.config.evo_rqmt)
 	end,
+  attributes = {"draw", "economy", "trigger_evo"}
 }
 return {name = "Pokemon Jokers 570-600", 
         list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, frillish, jellicent, ferroseed, ferrothorn, klink, klang},

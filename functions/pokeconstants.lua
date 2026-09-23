@@ -70,3 +70,5 @@ SMODS.Attribute {key = "nature"}
 SMODS.Attribute {key = "hazards"}
 SMODS.Attribute {key = "applies"}
 SMODS.Attribute {key = "drain"}
+SMODS.Attribute {key = "deplete"}
+SMODS.Attribute {key = "draw"}

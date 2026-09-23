@@ -50,6 +50,7 @@ local klinklang = {
       }
     end
 	end,
+  attributes = {"draw", "economy", "xmult", "scaling", "reset"}
 }
 -- Tynamo 602
 -- Eelektrik 603
@@ -398,6 +399,7 @@ local axew={
     if visible_hands[1] then card.ability.extra.targets[1][1] = visible_hands[1].key end
     if visible_hands[2] then card.ability.extra.targets[2][1] = visible_hands[2].key end
   end,
+  attributes = {"nature", "hand_type", "condition_evo"}
 }
 -- Fraxure 611
 local fraxure={
@@ -450,6 +452,7 @@ local fraxure={
     if visible_hands[1] then card.ability.extra.targets[1][1] = visible_hands[1].key end
     if visible_hands[2] then card.ability.extra.targets[2][1] = visible_hands[2].key end
   end,
+  attributes = {"nature", "hand_type", "condition_evo"}
 }
 -- Haxorus 612
 local haxorus={
@@ -496,6 +499,7 @@ local haxorus={
     if visible_hands[1] then card.ability.extra.targets[1][1] = visible_hands[1].key end
     if visible_hands[2] then card.ability.extra.targets[2][1] = visible_hands[2].key end
   end,
+  attributes = {"nature", "hand_type"}
 }
 -- Cubchoo 613
 -- Beartic 614
