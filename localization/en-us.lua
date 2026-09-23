@@ -221,7 +221,7 @@ return {
                     "{C:attention}Evolution Card{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "Enhances {C:attention}#1#{} selected cards",
-                    "to {C:attention}Wild{} cards and",
+                    "to {C:attention}Wild Cards{} and",
                     "{C:attention}randomizes{} their ranks",
                 },
             },
@@ -230,11 +230,9 @@ return {
                 text = {
                     "{C:attention}Evolution Card{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Enhances {C:attention}#1#{} selected card",
-                    "into a {C:attention}Bonus{} card",
-                    "If already a {C:attention}Bonus{} card",
-                    "{C:attention}Doubles{} its total Chips",
-                    "{C:inactive}(Up to {C:chips}+#2#{C:inactive} Chips per increase)",
+                    "Enhances up to {C:attention}#1#{} selected",
+                    "cards with the same {C:attention}rank{}",
+                    "to {C:attention}Bonus Cards{}",
                 },
             },
             c_poke_thunderstone = {
@@ -243,7 +241,7 @@ return {
                     "{C:attention}Evolution Card{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "Destroys {C:attention}1{} selected card,",
-                    "adds {C:attention}2 Gold{} cards with",
+                    "adds {C:attention}2 Gold Cards{} with",
                     "the same rank to deck",
                     "and draws {C:attention}1{} to hand",
                 },
@@ -253,8 +251,9 @@ return {
                 text = {
                     "{C:attention}Evolution Card{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Enhances {C:attention}#1#{} selected cards to {C:attention}Mult{} cards",
-                    "then destroys {C:attention}1{} at random",
+                    "Enhances {C:attention}#1#{} selected cards",
+                    "to {C:attention}Mult Cards{} then",
+                    "destroys {C:attention}1{} at random",
                 },
             },
             c_poke_leafstone = {
@@ -262,9 +261,9 @@ return {
                 text = {
                     "{C:attention}Evolution Card{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "{C:green}#1# in #2#{} chance for",
-                    "each card in hand to",
-                    "be enhanced to a {C:attention}Lucky{} card",
+                    "{C:green}#1# in #2#{} chance for each",
+                    "card in hand to be",
+                    "enhanced to a {C:attention}Lucky Card",
                 },
             },
             c_poke_linkcable = {
@@ -273,8 +272,10 @@ return {
                     "{C:attention}Evolution Card{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "Select {C:attention}#1#{} cards,",
-                    "{C:attention}Increase{} the rank of the {C:attention}left{} card",
-                    "{C:attention}Decrease{} the rank of the {C:attention}right{} card",
+                    "{C:attention}Increase{} the rank",
+                    "of the {C:attention}left{} card",
+                    "{C:attention}Decrease{} the rank",
+                    "of the {C:attention}right{} card"
                 },
             },
             c_poke_leftovers = {
@@ -282,8 +283,9 @@ return {
                 text = {
                     "{C:attention}Reusable{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Adds {C:money}$#2#{} of sell value to",
-                    "leftmost or selected Joker",
+                    "Adds {C:money}$#2#{} of sell",
+                    "value to leftmost or",
+                    "selected Joker",
                     "{C:inactive}(Useable once per round)",
                 }
             },
@@ -295,7 +297,8 @@ return {
                     "{C:green}#1# in #2#{} chance to add",
                     "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or",
                     "{C:dark_edition}Polychrome{} to self,",
-                    "remove {C:attention}Edition{} at end of round",
+                    "removes {C:attention}Edition{}",
+                    "at end of round",
                     "{C:inactive}(Useable once per round)",
                 }
             },
@@ -304,8 +307,9 @@ return {
                 text = {
                     "{C:attention}Reusable{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Permanently adds {C:chips}+#2#{} Chips",
-                    "to {C:attention}#1#{} selected card",
+                    "Permanently adds",
+                    "{C:chips}+#2#{} Chips to",
+                    "{C:attention}#1#{} selected card",
                     "{C:inactive}(Useable once per round)",
                 }
             },
@@ -314,8 +318,9 @@ return {
                 text = {
                     "{C:attention}Reusable{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "{C:attention}Hazard{} card {C:green,E:1,S:1.1}probabilities{} become", 
-                    "{C:attention}0{} until end of round",
+                    "{C:attention}Hazard Card {C:green,E:1,S:1.1}probabilities{}",
+                    "become {C:attention}0{} until", 
+                    "end of round",
                     "{C:inactive}(Useable once per round)",
                 }
             },
@@ -374,7 +379,7 @@ return {
                     "{C:attention}Evolution Card{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:attention}Enhances{} all cards",
-                    "{C:attention}held{} in hand randomly",
+                    "{C:attention}held{} in hand {S:1.1,C:purple,E:2}randomly",
                 }
             },
             c_poke_icestone = {
@@ -382,10 +387,11 @@ return {
                 text = {
                     "{C:attention}Evolution Card{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Enhances {C:attention}#1#{} selected cards",
-                    "to {C:attention}Glass Cards{}",
-                    "{C:green}#2# in #3#{} chance for each",
-                    "selected card to {C:attention}shatter{}",
+                    "Enhances {C:attention}#1#{} selected",
+                    "cards to {C:attention}Glass Cards{}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "{C:green}#2# in #3#{} chance for",
+                    "each to {C:attention}shatter{}",
                 }
             },
             c_poke_shinystone = {
@@ -448,16 +454,18 @@ return {
                 text = {
                     "{C:attention}Evolution Card{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Enhances {C:attention}1{} selected card into a",
-                    "{C:attention}Stone{} card with {C:chips}+#2#{} extra Chips",
-                    "for each {X:poke_earth,C:white}Earth{} Joker you have"
+                    "Enhances {C:attention}1{} selected card",
+                    "to a {C:attention}Stone Card{} with",
+                    "{C:chips}+#2#{} extra Chips for each",
+                    "{X:poke_earth,C:white}Earth{} Joker you have"
                 }
             },
             c_poke_miracleseed = {
                 name = "Miracle Seed",
                 text = {
                     "Enhances {C:attention}1{} selected",
-                    "card into a {C:attention}Seed{} card"
+                    "card into a",
+                    "{C:attention}Seed Card"
                 }
             },
             c_poke_heartscale = {
@@ -1437,7 +1445,7 @@ return {
             j_poke_machop = {
                 name = "Machop",
                 text = {
-                    "{C:chips}+#1#{} hands",
+                    "{C:chips}+#1#{} hand",
                     "{C:mult}-#2# discards{}",
                     "{C:mult}+#4#{} Mult",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",

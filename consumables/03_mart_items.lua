@@ -128,7 +128,7 @@ local waterstone = {
   name = "waterstone",
   key = "waterstone",
   set = "poke_item",
-  config = {max_highlighted = 1, max_chips = 50},
+  config = {max_highlighted = 3, min_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_bonus
@@ -144,27 +144,47 @@ local waterstone = {
     if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
-    if G.hand.highlighted and #G.hand.highlighted == 1 then
-      return true
+    if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted and #G.hand.highlighted <= self.config.max_highlighted then
+      local same_id = nil
+      local all_same = true
+      for i = 1, #G.hand.highlighted do
+        if (SMODS.has_no_rank(G.hand.highlighted[i])) or (same_id and G.hand.highlighted[i]:get_id() ~= same_id) then
+          all_same = false
+          break
+        elseif not same_id then
+          same_id = G.hand.highlighted[i]:get_id()
+        end
+      end
+      return all_same
     end
     return false
   end,
   use = function(self, card, area, copier)
+    local same_id = nil
+    local all_same = true
     pokermon.set_spoon_item(card)
-    if G.hand.highlighted and #G.hand.highlighted == 1 then
-      local conv_card = G.hand.highlighted[1]
-      pokermon.juice_flip(card)
-      if conv_card.ability.name == 'Bonus' then
-        local bonus = math.min(self.config.max_chips, pokermon.total_chips(conv_card))
-        conv_card.ability.perma_bonus = conv_card.ability.perma_bonus or 0
-        conv_card.ability.perma_bonus = conv_card.ability.perma_bonus + bonus
-      else
-        conv_card:set_ability(G.P_CENTERS.m_bonus, nil, true)
+    if G.hand.highlighted then
+      for i = 1, #G.hand.highlighted do
+        if (SMODS.has_no_rank(G.hand.highlighted[i])) or (same_id and G.hand.highlighted[i]:get_id() ~= same_id) then
+          all_same = false
+          break
+        elseif not same_id then
+          same_id = G.hand.highlighted[i]:get_id()
+        end
       end
-      pokermon.juice_flip(card, true)
-      delay(0.5)
-      pokermon.unhighlight_cards()
-      pokermon.evo_item_use_total(self, card, area, copier)
+      
+      if (#G.hand.highlighted >= self.config.min_highlighted and #G.hand.highlighted <= self.config.max_highlighted) and all_same then
+        pokermon.juice_flip(card)
+        for i = 1, #G.hand.highlighted do
+          G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_bonus, nil, true)
+        end
+        pokermon.juice_flip(card, true)
+        delay(0.5)
+        pokermon.unhighlight_cards()
+        pokermon.evo_item_use_total(self, card, area, copier)
+      else
+        pokermon.highlighted_evo_item(self, card, area, copier)
+      end
     else
       pokermon.highlighted_evo_item(self, card, area, copier)
     end
