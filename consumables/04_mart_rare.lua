@@ -14,7 +14,6 @@ local leftovers = {
   cost = 3,
   unlocked = true,
   discovered = true,
-  hidden = true,
   weight = 3,
   can_use = function(self, card)
     if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
