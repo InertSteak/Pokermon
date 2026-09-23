@@ -180,6 +180,7 @@ local bunnelby = {
    end
 	return pokermon.scaling_evo (self, card, context, "j_poke_diggersby", card.ability.extra.triggers, self.config.evo_rqmt)
 	end,
+  attributes = {"deplete", "rank", "tarot", "generation", "chance", "trigger_evo"}
 }
 -- Diggersby 660
 local diggersby = {
@@ -242,6 +243,7 @@ local diggersby = {
 		}
 	 end
 	end,
+  attributes = {"deplete", "rank", "tarot", "generation", "chance", "mult", "scaling"}
 }
 
 return {name = "Pokemon Jokers 631-660", 

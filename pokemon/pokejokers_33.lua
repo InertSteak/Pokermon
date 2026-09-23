@@ -85,6 +85,7 @@ local greavard={
     end
     return pokermon.level_evo(self, card, context, "j_poke_houndstone")
   end,
+  attributes = {"deplete", "rank", "retrigger", "level_evo"}
 }
 -- Houndstone 972
 local houndstone={
@@ -124,6 +125,7 @@ local houndstone={
 			G.hand:unhighlight_all()
 		end
   end,
+  attributes = {"deplete", "rank", "retrigger", "discard"}
 }
 -- Flamigo 973
 -- Cetoddle 974

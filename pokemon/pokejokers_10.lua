@@ -602,6 +602,7 @@ local surskit={
     end
     return pokermon.scaling_evo(self, card, context, "j_poke_masquerain", card.ability.extra.straights_played, self.config.evo_rqmt)
   end,
+  attributes = {"passive", "hand_type", "condition_evo"}
 }
 -- Masquerain 284
 local masquerain={
@@ -627,6 +628,7 @@ local masquerain={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
   end,
+  attributes = {"passive", "hand_type", "foresight"}
 }
 -- Shroomish 285
 local shroomish={

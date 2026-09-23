@@ -110,6 +110,7 @@ local sableye={
       }
     end
   end,
+  attributes = {"xmult", "scaling", "reset", "deplete", "enhancements"},
 }
 -- Mawile 303
 -- Aron 304
@@ -400,6 +401,7 @@ local plusle={
       }
     end
   end,
+  attributes = {"mult", "joker", "consumable", "xmult"},
 }
 -- Minun 312
 local minun={
@@ -438,6 +440,7 @@ local minun={
       end
       return true end }))
   end,
+  attributes = {"shop", "economy", "sell_value", "passive"},
 }
 -- Volbeat 313
 local volbeat={
@@ -717,6 +720,7 @@ local wailmer={
     end
     return pokermon.level_evo(self, card, context, "j_poke_wailord")
   end,
+  attributes = {"chips", "clubs", "level_evo"}
 }
 -- Wailord 321
 local wailord={
@@ -758,6 +762,7 @@ local wailord={
       end
     end
   end,
+  attributes = {"chips", "clubs", "booster"}
 }
 -- Numel 322
 local numel={
@@ -926,6 +931,7 @@ local torkoal={
       end
     end
   end,
+  attributes = {"retrigger", "enhancements", "discard"},
 }
 -- Spoink 325
 -- Grumpig 326

@@ -306,6 +306,7 @@ local rellor = {
 		end
 		return pokermon.scaling_evo(self, card, context, "j_poke_rabsca", card.ability.extra.items_used, self.config.evo_rqmt)
 	end,
+  attributes = {"mult", "item", "condition_evo"}
 }
 -- Rabsca 954
 local rabsca = {
@@ -355,6 +356,7 @@ local rabsca = {
 			}
 		end
 	end,
+  attributes = {"mult", "item", "tarot", "generation", "chance"}
 }
 -- Flittle 955
 -- Espathra 956
