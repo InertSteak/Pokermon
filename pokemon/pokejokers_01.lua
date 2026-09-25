@@ -504,7 +504,7 @@ local mega_blastoise = {
   name = "mega_blastoise",
   pos = {x = 6, y = 0},
   soul_pos = { x = 7, y = 0},
-  config = {extra = {chips = 0, chip_mod = 128, hands = 3, rounds = 1}},
+  config = {extra = {chips = 0, chip_mod = 128, hands = 4}},
   loc_vars = function(self, info_queue, center)
 		return {vars = {center.ability.extra.chip_mod, center.ability.extra.hands}}
   end,
