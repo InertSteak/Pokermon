@@ -1121,7 +1121,7 @@ end
 pokermon.total_chips = function(card)
   local total_chips = (card.ability.bonus) + (card.ability.perma_bonus or 0)
   if card.ability.effect ~= 'Stone Card' and not card.config.center.replace_base_card then
-    total_chips = total_chips + (card.base.nominal)
+    total_chips = total_chips + card.base.nominal - (card.ability.nominal_drain or 0)
   end
   if card.edition then
     total_chips = total_chips + (card.edition.chips or 0)
@@ -1455,7 +1455,11 @@ pokermon.drain_chips = function(card, amount)
 
   local base_drain = math.min(nominal_chips - 1, amount)
 
-  card.ability.nominal_drain = (card.ability.nominal_drain or 0) + base_drain
+  if card.ability.effect ~= 'Stone Card' and not card.config.center.replace_base_card then
+    card.ability.nominal_drain = (card.ability.nominal_drain or 0) + base_drain
+  else
+    base_drain = 0
+  end
 
   local bonus_drain = math.min(bonus_chips, amount - base_drain)
 
