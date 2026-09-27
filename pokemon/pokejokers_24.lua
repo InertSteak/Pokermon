@@ -65,6 +65,7 @@ local pumpkaboo = {
   loc_vars = function(self, info_queue, card)
     local extra = card.ability.extra or self.config.extra
     local key = extra.form and ({'small', 'average', 'large', 'super'})[extra.form + 1]
+    if not key then key = 'average' end
 
     local display_jacks = math.max(0, extra.jack_target - extra.jacks_discarded)
     return {
@@ -143,6 +144,7 @@ local gourgeist = {
   loc_vars = function(self, info_queue, card)
     local extra = card.ability.extra or self.config.extra
     local key = extra.form and ({'small', 'average', 'large', 'super'})[extra.form + 1]
+    if not key then key = 'average' end
 
     local display_jacks = math.max(0, extra.jack_target - extra.jacks_discarded)
     return {
