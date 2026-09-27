@@ -24,6 +24,19 @@ local item = {
   default = "c_poke_pokeball"
 }
 
+local tm = {
+  key = "poke_tm",
+  primary_colour = HEX("FFC880"),
+  secondary_colour = HEX("FFA429"),
+  loc_txt =  	{
+ 		name = 'TM', -- used on card type badges
+ 		collection = 'TM Cards', -- label for the button to access the collection
+ 	},
+  collection_row = {6, 6},
+  shop_rate = 0,
+  default = "c_poke_pokeball"
+}
+
 return {name = "Pokemon Consumable Types",
-        list = {energy, item}
+        list = {energy, item, tm}
 }

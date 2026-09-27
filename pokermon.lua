@@ -12,17 +12,27 @@ SMODS.current_mod.optional_features = { quantum_enhancements = true, object_weig
 --This can probably have a better integration or just be removed altogether since everything is discovered anyways
 -- -Jevonn
 SMODS.UndiscoveredSprite({
-	key = "Energy",
+	key = "poke_energy",
 	atlas = "unergy",
 	path = "unergy.png",
 	pos = { x = 0, y = 0 },
 	px = 71,
 	py = 95,
 }):register()
+
 SMODS.UndiscoveredSprite({
-	key = "Item",
+	key = "poke_item",
 	atlas = "unitem",
 	path = "unitem.png",
+	pos = { x = 0, y = 0 },
+	px = 71,
+	py = 95,
+}):register()
+
+SMODS.UndiscoveredSprite({
+	key = "poke_tm",
+	atlas = "untm",
+	path = "untm.png",
 	pos = { x = 0, y = 0 },
 	px = 71,
 	py = 95,
@@ -151,7 +161,6 @@ load_directory("seals", SMODS.Seal, true)
 
 --Load stickers
 load_directory("stickers", function (item)
-  item.hide_badge = true
   SMODS.Sticker(item)
 end, true)
 

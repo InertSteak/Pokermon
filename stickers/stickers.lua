@@ -3,7 +3,8 @@ local type_sticker_template =
   prefix_config = {key = false},
   rate = 0.0,
   atlas = "AtlasStickersBasic",
-  no_collection = true
+  no_collection = true,
+  hide_badge = true
 }
 
 local type_stickers = {}
@@ -25,6 +26,7 @@ local bird_sticker = {
   atlas = "AtlasStickersBasic",
   pos = { x = 4, y = 1 },
   no_collection = true,
+  hide_badge = true,
 }
 
 table.insert(type_stickers, bird_sticker)

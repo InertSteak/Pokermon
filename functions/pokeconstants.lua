@@ -25,6 +25,10 @@ POKE_EVO_OVERRIDES = {
   { "kubfu", { "urshifu_single_strike", "urshifu_rapid_strike" } },
 }
 
+POKE_TMS = {
+  "earthquake",
+}
+
 SMODS.Attribute {key = "pokemon"}
 
 SMODS.Attribute {key = "grass_type"}

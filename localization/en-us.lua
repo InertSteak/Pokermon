@@ -705,6 +705,15 @@ return {
                 },
             },
         },
+        poke_tm = {
+          c_poke_earthquake_tm = {
+              name = "Earthquake",
+              text = {
+                "{C:attention}Teach{} {X:poke_earth,C:white}Earth{}",
+                "{C:chips}+#1#{} Chips"
+              },
+          },
+        },
         Edition = {
             e_poke_shiny = {
                 name = "Shiny",
@@ -6894,6 +6903,15 @@ return {
                   "values of a Joker"
                 }
             },
+            teach_tm = {
+                name = "Teach",
+                text = {
+                  "Applies {C:attention}TM{} ability to",
+                  "a Joker of the given",
+                  "{C:poke_pink}Type{}, overwrites any",
+                  "previous {C:attention}TM{} ability"
+                }
+            },
             eitem = {
                 name = "Evolution Card",
                 text = {
@@ -7440,10 +7458,11 @@ return {
               }
             },
             legacycontent_tooltip = {
-              name = "Legacy Content",
+              name = "Anything Goes",
               text = {
                 "Enable content that",
-                "has been removed"
+                "is not meant to",
+                "be balanced"
               }
             },
             jokecontent_tooltip = {
@@ -7563,6 +7582,13 @@ return {
                 "exactly {C:attention}1{} card, creates",
                 "a {C:attention}Sealless{} copy",
               }
+            },
+            
+            poke_earthquake_sticker = {
+              name = "Earthquake",
+              text = {
+                  "{C:chips}+#1#{} Chips"
+              } 
             },
             
             --[[
@@ -7841,7 +7867,7 @@ return {
             poke_settings_pokemon_discovery = "! Discovery?",
             poke_settings_pokemon_altart = "Alt Art?",
             poke_settings_pokemon_aprilfools = "Joke Content?",
-            poke_settings_pokemon_legacy = "Legacy Content?",
+            poke_settings_pokemon_legacy = "Anything Goes?",
             poke_settings_enable_animations = "Enable Animations?",
             poke_settings_pokemon_master = "Pokemon Master Mode?",
             poke_settings_pokemon_spritesheet = "Default Sprite Sheet (Resets Individual)",
@@ -8059,6 +8085,8 @@ return {
 
             k_poke_safari = "Safari",
             k_poke_mega = "Mega",
+            
+            poke_earthquake_sticker = "Earthquake",
         },
         quips = {
           poke_lose_quip1 = {"Maybe Pokémon contests", "are more your speed...",},
