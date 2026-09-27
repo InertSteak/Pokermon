@@ -951,8 +951,7 @@ SMODS.Sound({
   key = "voltorb_flip_music",
   path = "voltorb_flip_music.ogg",
   select_music_track = function()
-    -- add a condition that it's series A
-    if pokermon_config.pokemon_aprilfools and next(SMODS.find_card("j_poke_voltorb",true)) then
+    if pokermon_config.pokemon_aprilfools and next(SMODS.find_card("j_poke_voltorb",true)) and string.find(G.P_CENTERS["j_poke_voltorb"].atlas, "AtlasJokersSeriesAVoltorb") then
       return 999999999
     end
   end,
@@ -965,17 +964,21 @@ SMODS.Sound({
   key = "miror_b_music",
   path = "miror_b_music.ogg",
 	select_music_track = function()
-    if G.hand then
-      for _, v in ipairs(G.hand.cards) do
-        if v.config.center.key == "m_poke_ludicolo" then return 9999999999 end
-      end
-    end
+        if G.hand then
+            for _, v in ipairs(G.hand.cards) do
+                if v.config.center.key == "m_poke_ludicolo" then return 9999999999 end
+            end
+        end
 
-    if G.play then
-      for _, v in ipairs(G.play.cards) do
-        if v.config.center.key == "m_poke_ludicolo" then return 9999999999 end
-      end
-    end
+        if G.play then
+            for _, v in ipairs(G.play.cards) do
+                if v.config.center.key == "m_poke_ludicolo" then return 9999999999 end
+            end
+        end
+
+        if pokermon_config.pokemon_aprilfools and SMODS.find_card("j_poke_ludicolo") then
+            return 999999999
+        end
 	end,
   sync = false,
   pitch = 1,
