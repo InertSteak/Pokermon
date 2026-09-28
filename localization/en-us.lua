@@ -7598,7 +7598,7 @@ return {
             },
             
             poke_earthquake_sticker = {
-              name = "Earthquake",
+              name = "TM: Earthquake",
               text = {
                 "{X:mult,C:white} X#1# {} Mult if all {C:attention}held",
                 "cards are {C:attention}Stone"
@@ -7606,7 +7606,7 @@ return {
             },
             
             poke_psychic_sticker = {
-              name = "Psychic",
+              name = "TM: Psychic",
               text = {
                 "{C:purple}+#1# Foresight",
               } 
@@ -8115,8 +8115,8 @@ return {
             k_poke_safari = "Safari",
             k_poke_mega = "Mega",
             
-            poke_earthquake_sticker = "Earthquake",
-            poke_psychic_sticker = "Psychic"
+            poke_earthquake_sticker = "TM: Earthquake",
+            poke_psychic_sticker = "TM: Psychic"
         },
         quips = {
           poke_lose_quip1 = {"Maybe Pokémon contests", "are more your speed...",},
