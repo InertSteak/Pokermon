@@ -482,7 +482,29 @@ local starterq_pack = {
 	group_key = "k_poke_starterq_pack",
 }
 
-local pack_list = {pack1, pack2, pack5, pack6, pack3, pack7, pack4, pack8, wish_pack, starter_pack, starterq_pack}
+local pack_tm = {
+  name = "TM Pack",
+	key = "tmpack_normal_1",
+	kind = "poke_tm",
+	atlas = "AtlasBoosterpacksBasic",
+	pos = { x = 0, y = 0 },
+	config = { extra = 2, choose = 1 },
+	cost = 8,
+	order = 1,
+	weight = 0.1,
+  unlocked = true,
+  discovered = true,
+	create_card = function(self, card)
+    local new_card = SMODS.create_card({set = "poke_tm", area = G.pack_cards, skip_materialize = true})
+    return new_card
+  end,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.config.center.config.choose + (G.GAME.modifiers.booster_choice_mod or 0), card.ability.extra - 1 + (G.GAME.modifiers.booster_size_mod or 0), 1 } }
+	end,
+	group_key = "k_poke_tm_pack",
+}
+
+local pack_list = {pack1, pack2, pack5, pack6, pack3, pack7, pack4, pack8, wish_pack, starter_pack, starterq_pack, pack_tm}
 
 for k, v in pairs(pack_list) do
   if not v.ease_background_colour then

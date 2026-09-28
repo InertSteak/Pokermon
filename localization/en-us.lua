@@ -709,8 +709,21 @@ return {
           c_poke_earthquake_tm = {
               name = "Earthquake",
               text = {
-                "{C:attention}Teach{} {X:poke_earth,C:white}Earth{}",
-                "{C:chips}+#1#{} Chips"
+                "{C:attention}Teach{} {X:poke_earth,C:white}Earth{}, {X:poke_fighting,C:white}Fighting{},",
+                "or {X:poke_metal,C:white}Metal{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{X:mult,C:white} X#1# {} Mult if all {C:attention}held",
+                "cards are {C:attention}Stone"
+              },
+          },
+          
+          c_poke_psychic_tm = {
+              name = "Psychic",
+              text = {
+                "{C:attention}Teach{} {X:poke_psychic,C:white}Psychic{}, {X:poke_dark,C:white}Dark{},",
+                "or {X:poke_fairy,C:white}Fairy{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{C:purple}+#1# Foresight"
               },
           },
         },
@@ -6907,7 +6920,7 @@ return {
                 name = "Teach",
                 text = {
                   "Applies {C:attention}TM{} ability to",
-                  "a Joker of the given",
+                  "a Joker of a listed",
                   "{C:poke_pink}Type{}, overwrites any",
                   "previous {C:attention}TM{} ability"
                 }
@@ -7587,7 +7600,15 @@ return {
             poke_earthquake_sticker = {
               name = "Earthquake",
               text = {
-                  "{C:chips}+#1#{} Chips"
+                "{X:mult,C:white} X#1# {} Mult if all {C:attention}held",
+                "cards are {C:attention}Stone"
+              } 
+            },
+            
+            poke_psychic_sticker = {
+              name = "Psychic",
+              text = {
+                "{C:purple}+#1# Foresight",
               } 
             },
             
@@ -7770,6 +7791,13 @@ return {
                     "from among {C:attention}#2#{} Cards"
                 },
             },
+            p_poke_tmpack_normal_1 = {
+                name = "TM Pack",
+                text = {
+                    "Choose {C:attention}#1# TM{} from",
+                    "among {C:attention}#2#{} Cards"
+                },
+            },
             poke_hazards = {
                 name = "Hazards",
                 text = {
@@ -7817,6 +7845,7 @@ return {
             k_poke_wish_pack = "Wish Pack",
             k_poke_starter_pack = "Starter Pack",
             k_poke_starterq_pack = "Starter Pack...?",
+            k_poke_tm_pack = "TM Pack",
             k_poke_gives = "Gives",
             k_poke_ignores = "Ignores",
             k_poke_limit = "Limit",
@@ -8087,6 +8116,7 @@ return {
             k_poke_mega = "Mega",
             
             poke_earthquake_sticker = "Earthquake",
+            poke_psychic_sticker = "Psychic"
         },
         quips = {
           poke_lose_quip1 = {"Maybe Pokémon contests", "are more your speed...",},

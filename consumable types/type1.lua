@@ -34,7 +34,7 @@ local tm = {
  	},
   collection_row = {6, 6},
   shop_rate = 0,
-  default = "c_poke_pokeball"
+  default = "c_poke_earthquake_tm"
 }
 
 return {name = "Pokemon Consumable Types",

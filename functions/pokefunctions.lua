@@ -1442,7 +1442,7 @@ pokermon.get_ancient_amount = function(hand, id, append_to_card)
 end
 
 pokermon.can_save_consumable = function(card)
-  return (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Pocket"))
+  return (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and (SMODS.OPENED_BOOSTER.label:find("Pocket") or SMODS.OPENED_BOOSTER.label:find("TM Pack")))
       or (G.GAME.poke_save_all and not (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Wish")))
       or (card.config.center.saveable)
 end

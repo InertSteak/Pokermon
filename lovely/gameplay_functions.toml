@@ -42,7 +42,7 @@ end
 '''
 match_indent = true
 
-# Booster functionality
+# Booster/TM functionality
 [[patches]]
 [patches.pattern]
 target = "card.lua"
@@ -63,6 +63,10 @@ position = "after"
 payload = '''
 if self.edition and self.edition.poke_shiny then
   SMODS.change_booster_limit(-1)
+end
+
+if self.ability.poke_has_tm then
+  self:remove_sticker(self.ability.poke_has_tm)
 end
 '''
 match_indent = true
