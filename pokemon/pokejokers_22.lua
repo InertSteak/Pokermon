@@ -148,37 +148,40 @@ local bunnelby = {
 	blueprint_compat = true,
 	eternal_compat = true,
 	calculate = function(self, card, context)
-    if context.hand_drawn and SMODS.drawn_cards then 
-     if G.deck and G.deck.cards then
-			for i, drawnCard in ipairs(SMODS.drawn_cards) do
-        local findFunc = function(v) return drawnCard:get_id() == v:get_id() end
-				if not SMODS.has_no_rank(drawnCard) and not next(pokermon.find_playing_card(findFunc)) then
-          if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
-						if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-              if not context.blueprint then
-                card.ability.extra.triggers = card.ability.extra.triggers + 1
+    if context.hand_drawn then 
+      local ids = {}
+      for i, drawnCard in ipairs(context.hand_drawn) do
+        if not SMODS.has_no_rank(drawnCard) then
+          local findFunc = function(v) return drawnCard:get_id() == v:get_id() end
+          if not ids[drawnCard:get_id()] and pokermon.get_depleted(findFunc) then
+            ids[drawnCard:get_id()] = true
+            
+            if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
+              if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                if not context.blueprint then
+                  card.ability.extra.triggers = card.ability.extra.triggers + 1
+                end
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    func = (function()
+                        SMODS.add_card {
+                            set = 'Tarot',
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end)
+                }))
+            
+                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
               end
-              G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-              G.E_MANAGER:add_event(Event({
-                  func = (function()
-                      SMODS.add_card {
-                          set = 'Tarot',
-                      }
-                      G.GAME.consumeable_buffer = 0
-                      return true
-                  end)
-              }))
-          
-              card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
-						end
-          else
-            pokermon.nope(context.blueprint_card or card)
-					end
-				end
-			end
-     end
-   end
-	return pokermon.scaling_evo (self, card, context, "j_poke_diggersby", card.ability.extra.triggers, self.config.evo_rqmt)
+            else
+              pokermon.nope(context.blueprint_card or card)
+            end
+          end
+        end
+      end
+    end
+    return pokermon.scaling_evo (self, card, context, "j_poke_diggersby", card.ability.extra.triggers, self.config.evo_rqmt)
 	end,
   attributes = {"deplete", "rank", "tarot", "generation", "chance", "trigger_evo"}
 }
@@ -202,46 +205,50 @@ local diggersby = {
 	blueprint_compat = true,
 	eternal_compat = true,
 	calculate = function(self, card, context)
-    if context.hand_drawn and SMODS.drawn_cards then 
-     if G.deck and G.deck.cards then
-			for i, drawnCard in ipairs(SMODS.drawn_cards) do 
-        local findFunc = function(v) return drawnCard:get_id() == v:get_id() end
-				if not SMODS.has_no_rank(drawnCard) and not next(pokermon.find_playing_card(findFunc)) then 
-          if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
-            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-              G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-              G.E_MANAGER:add_event(Event({
-                  func = (function()
-                      SMODS.add_card {
-                          set = 'Tarot',
-                      }
-                      G.GAME.consumeable_buffer = 0
-                      return true
-                  end)
-              }))
+    if context.hand_drawn then 
+      local ids = {}
+      for i, drawnCard in ipairs(context.hand_drawn) do
+        if not SMODS.has_no_rank(drawnCard) then
+          local findFunc = function(v) return drawnCard:get_id() == v:get_id() end
+          if not ids[drawnCard:get_id()] and pokermon.get_depleted(findFunc) then
+            ids[drawnCard:get_id()] = true
             
-              card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
-            end
+            if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
+              if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    func = (function()
+                        SMODS.add_card {
+                            set = 'Tarot',
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end)
+                }))
             
-            if not context.blueprint then
-              SMODS.scale_card(card, {
-                ref_value = 'mult',
-                scalar_value = 'mult_mod',
-                message_colour = G.C.MULT,
-              })
+                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
+              end
+              
+              if not context.blueprint then
+                SMODS.scale_card(card, {
+                  ref_value = 'mult',
+                  scalar_value = 'mult_mod',
+                  message_colour = G.C.MULT,
+                })
+              end
+            else
+              pokermon.nope(context.blueprint_card or card)
             end
-          else
-            pokermon.nope(context.blueprint_card or card)
           end
         end
-			end
-     end
-   end
-	 if context.joker_main and card.ability.extra.mult > 0 then
-		return {
-			mult = card.ability.extra.mult
-		}
-	 end
+      end
+    end
+    
+    if context.joker_main and card.ability.extra.mult > 0 then
+     return {
+       mult = card.ability.extra.mult
+     }
+    end
 	end,
   attributes = {"deplete", "rank", "tarot", "generation", "chance", "mult", "scaling"}
 }
