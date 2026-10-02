@@ -777,8 +777,8 @@ return {
                 "{C:attention}Teach{} {X:poke_colorless,C:white}Colorless{}, {X:poke_fairy,C:white}Fairy{},",
                 "or {X:poke_psychic,C:white}Psychic{}",
                 "{br:2}ERROR - CONTACT STEAK",
-                "Played {C:attention}Lucky{} cards",
-                "have a {C:green}#1# in #2#{} chance to",
+                "Played {C:attention}Lucky{} cards have",
+                "a {C:green}#1# in #2#{} chance to",
                 "create a {C:attention}consumeable",
                 "when scored"
               },
@@ -7709,8 +7709,8 @@ return {
             poke_metronome_sticker = {
               name = "TM: Metronome",
               text = {
-                "Played {C:attention}Lucky{} cards",
-                "have a {C:green}#1# in #2#{} chance to",
+                "Played {C:attention}Lucky{} cards have",
+                "a {C:green}#1# in #2#{} chance to",
                 "create a {C:attention}consumeable",
                 "when scored"
               } 
