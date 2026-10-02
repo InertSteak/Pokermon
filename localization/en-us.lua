@@ -712,8 +712,9 @@ return {
                 "{C:attention}Teach{} {X:poke_earth,C:white}Earth{}, {X:poke_fighting,C:white}Fighting{},",
                 "or {X:poke_metal,C:white}Metal{}",
                 "{br:2}ERROR - CONTACT STEAK",
-                "{X:mult,C:white} X#1# {} Mult if all {C:attention}held",
-                "cards are {C:attention}Stone"
+                "Retrigger {C:attention}first{}",
+                "scoring {C:attention}Stone{} card ",
+                "{C:attention}#1#{} additional time",
               },
           },
           
@@ -724,6 +725,62 @@ return {
                 "or {X:poke_fairy,C:white}Fairy{}",
                 "{br:2}ERROR - CONTACT STEAK",
                 "{C:purple}+#1# Foresight"
+              },
+          },
+          c_poke_surf_tm = {
+              name = "Surf",
+              text = {
+                "{C:attention}Teach{} {X:poke_water,C:white}Water{}, {X:poke_colorless,C:white}Colorless{},",
+                "or {X:poke_dragon,C:white}Dragon{},",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Played {C:attention}Bonus{} cards",
+                "give {C:chips}+#1#{} Chips",
+                "when scored"
+              },
+          },
+          c_poke_flamethrower_tm = {
+              name = "Flamethrower",
+              text = {
+                "{C:attention}Teach{} {X:poke_fire,C:white}Fire{}, {X:poke_dark,C:white}Dark{},",
+                "or {X:poke_dragon,C:white}Dragon{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Played {C:attention}Mult{} cards",
+                "give {C:mult}+#1#{} Mult",
+                "when scored"
+              },
+          },
+          c_poke_thunderbolt_tm = {
+              name = "Thunderbolt",
+              text = {
+                "{C:attention}Teach{} {X:poke_lightning,C:black}Lightning{}, {X:poke_psychic,C:white}Psychic{},",
+                "or {X:poke_colorless,C:white}Colorless{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Held {C:attention}Gold{} cards",
+                "earn {C:money}$#1#{} at",
+                "end of round"
+              },
+          },
+          c_poke_seedbomb_tm = {
+              name = "Seed Bomb",
+              text = {
+                "{C:attention}Teach{} {X:poke_grass,C:white}Grass{}, {X:poke_fighting,C:white}Fighting{},",
+                "or {X:poke_colorless,C:white}Colorless{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Played {C:attention}Seed{} cards",
+                "give {X:mult,C:white} X#1# {} Mult",
+                "when scored"
+              },
+          },
+          c_poke_metronome_tm = {
+              name = "Metronome",
+              text = {
+                "{C:attention}Teach{} {X:poke_colorless,C:white}Colorless{}, {X:poke_fairy,C:white}Fairy{},",
+                "or {X:poke_psychic,C:white}Psychic{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Played {C:attention}Lucky{} cards",
+                "have a {C:green}#1# in #2#{} chance to",
+                "create a {C:attention}consumeable",
+                "when scored"
               },
           },
         },
@@ -7600,8 +7657,9 @@ return {
             poke_earthquake_sticker = {
               name = "TM: Earthquake",
               text = {
-                "{X:mult,C:white} X#1# {} Mult if all {C:attention}held",
-                "cards are {C:attention}Stone"
+                "Retrigger {C:attention}first{}",
+                "scoring {C:attention}Stone{} card ",
+                "{C:attention}#1#{} additional time",
               } 
             },
             
@@ -7609,6 +7667,52 @@ return {
               name = "TM: Psychic",
               text = {
                 "{C:purple}+#1# Foresight",
+              } 
+            },
+            
+            poke_surf_sticker = {
+              name = "TM: Surf",
+              text = {
+                "Played {C:attention}Bonus{} cards",
+                "give {C:chips}+#1#{} Chips",
+                "when scored"
+              } 
+            },
+            
+            poke_flamethrower_sticker = {
+              name = "TM: Flamethrower",
+              text = {
+                "Played {C:attention}Mult{} cards",
+                "give {C:mult}+#1#{} Mult",
+                "when scored"
+              } 
+            },
+            
+            poke_thunderbolt_sticker = {
+              name = "TM: Thunderbolt",
+              text = {
+                "Held {C:attention}Gold{} cards",
+                "earn {C:money}$#1#{} at",
+                "end of round"
+              } 
+            },
+            
+            poke_seedbomb_sticker = {
+              name = "TM: Seed Bomb",
+              text = {
+                "Played {C:attention}Seed{} cards",
+                "give {X:mult,C:white} X#1# {} Mult",
+                "when scored"
+              } 
+            },
+            
+            poke_metronome_sticker = {
+              name = "TM: Metronome",
+              text = {
+                "Played {C:attention}Lucky{} cards",
+                "have a {C:green}#1# in #2#{} chance to",
+                "create a {C:attention}consumeable",
+                "when scored"
               } 
             },
             
@@ -8116,7 +8220,12 @@ return {
             k_poke_mega = "Mega",
             
             poke_earthquake_sticker = "TM: Earthquake",
-            poke_psychic_sticker = "TM: Psychic"
+            poke_psychic_sticker = "TM: Psychic",
+            poke_surf_sticker = "TM: Surf",
+            poke_flamethrower_sticker = "TM: Flamethrower",
+            poke_thunderbolt_sticker = "TM: Thunderbolt",
+            poke_seedbomb_sticker = "TM: Seed Bomb",
+            poke_metronome_sticker = "TM: Metronome",
         },
         quips = {
           poke_lose_quip1 = {"Maybe Pokémon contests", "are more your speed...",},

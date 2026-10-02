@@ -26,7 +26,7 @@ POKE_EVO_OVERRIDES = {
 }
 
 POKE_TMS = {
-  "earthquake", "psychic",
+  "earthquake", "psychic", "surf", "flamethrower", "thunderbolt", "seedbomb"
 }
 
 SMODS.Attribute {key = "pokemon"}
