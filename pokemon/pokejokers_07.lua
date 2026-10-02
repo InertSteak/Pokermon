@@ -729,7 +729,7 @@ local espeon={
   gen = 2,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.joker_main and #G.deck.cards > 0 and G.deck.cards[#G.deck.cards]:is_suit(G.GAME.current_round.espeon_suit) then
+    if context.joker_main and #G.deck.cards > 0 and G.deck.cards[#G.deck.cards]:is_suit(G.GAME.current_round.espeon_suit, nil, true) then
       return {
         xmult = card.ability.extra.Xmult
 			}

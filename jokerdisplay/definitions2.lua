@@ -744,7 +744,7 @@ jd_def["j_poke_espeon"] = {
         },
     },
     calc_function = function(card)
-      if #G.deck.cards > 0 and G.deck.cards[#G.deck.cards]:is_suit(G.GAME.current_round.espeon_suit) then
+      if #G.deck.cards > 0 and G.deck.cards[#G.deck.cards]:is_suit(G.GAME.current_round.espeon_suit, nil, true) then
         card.joker_display_values.Xmult = card.ability.extra.Xmult
       else
         card.joker_display_values.Xmult = 1
