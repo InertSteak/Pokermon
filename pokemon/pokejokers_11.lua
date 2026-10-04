@@ -113,6 +113,55 @@ local sableye={
   attributes = {"xmult", "scaling", "reset", "deplete", "enhancements"},
 }
 -- Mawile 303
+local mawile={
+  name = "mawile",
+  pos = {x = 0, y = 0},
+  config = { extra = { copy = 1 } },
+  loc_vars = function(self, info_queue, card)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    end
+      return { vars = { card.ability.extra.copy } }
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Metal",
+  atlas = "Pokedex3",
+  designer = "Gem",
+  gen = 3,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+        if context.before and #context.full_hand == 1 and G.GAME.current_round.hands_played == 0 then
+            G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+              local copy = copy_card(context.full_hand[1], nil, nil, G.playing_card)
+              copy:set_ability(G.P_CENTERS.m_steel, nil, true)
+              pokermon.add_card(copy, card)
+            return {
+                message = localize('k_copied_ex'),
+                colour = G.C.CHIPS,
+                func = function() -- This is for timing purposes, it runs after the message
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            SMODS.calculate_context({ playing_card_added = true, cards = { card_copied } })
+                            return true
+                        end
+                    }))
+                end
+            }
+        end
+        if context.final_scoring_step and #context.full_hand == 1 and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+             context.full_hand[1].mawile_remove = card
+             card:juice_up()
+        end
+        if context.destroy_card and context.destroy_card.mawile_remove == card and not context.blueprint then
+        context.destroy_card.to_be_removed_by = nil
+        return {
+          remove = true
+        }
+      end
+   end,
+}
 -- Aron 304
 local aron = {
   name = "aron",
@@ -1007,6 +1056,6 @@ local spinda={
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  list = {delcatty, sableye, aron, lairon, aggron, meditite, medicham, plusle, minun, volbeat, illumise, roselia, carvanha, sharpedo, wailmer, wailord, numel, camerupt, mega_camerupt, 
+  list = {delcatty, sableye, mawile, aron, lairon, aggron, meditite, medicham, plusle, minun, volbeat, illumise, roselia, carvanha, sharpedo, wailmer, wailord, numel, camerupt, mega_camerupt, 
           torkoal, spinda},
 }
