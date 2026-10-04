@@ -143,6 +143,7 @@ local default_family_list = {
   { "makuhita", "hariyama"},
   { "aron", "lairon", "aggron" },
   { "meditite", "medicham"},
+  { "electrike", "manectric", "mega_manectric" },
   { "budew", "roselia", "roserade" },
   { "gulpin", "swalot"},
   { "carvanha", "sharpedo"},
