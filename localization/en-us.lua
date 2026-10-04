@@ -3903,6 +3903,35 @@ return {
                 "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
               }
             },
+            j_poke_electrike = {
+                name = "Electrike",
+                text = {
+                  "{C:attention}Nature: {C:inactive}({C:attention}#2#, #3#, #4#{C:inactive}){}",
+                  "All played {C:attention}Nature{} cards become",
+                  "{C:attention}Gold{} cards when scored",
+                  "{C:inactive}(Evolves after {C:attention}#1#{C:inactive} rounds)",
+                }
+            },
+            j_poke_manectric = {
+                name = "Manectric",
+                text = {
+                  "{C:attention}Nature: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
+                  "All played {C:attention}Nature{} cards become",
+                  "{C:attention}Gold{} cards when scored",
+                  "{br:4}ERROR - CONTACT STEAK",
+                  "If already {C:attention}Gold{}, earn {C:money}$#3#{}",
+                  "instead, plus {C:money}$#2#{} extra",
+                  "per other {X:poke_lightning, C:black}Lightning{} Joker",
+                }
+            },
+            j_poke_mega_manectric = {
+                name = "Mega Manectric",
+                text = {
+                  "{C:attention}Nature: {C:inactive}({C:attention}#2#, #3#, #4#{C:inactive}){}",
+                  "If scoring {C:attention}Nature{} card is",
+                  "{C:attention}Gold{}, give {X:mult,C:white}X#1#",
+                }
+            },
             j_poke_plusle = {
               name = "Plusle",
               text = {
