@@ -3121,7 +3121,7 @@ return {
             poke_credits_graphics = "Графический дизайн: ",
             poke_credits_quality_assurance_main = "QA Лид: ",
             poke_credits_developer = "Разработчики: ",
-            poke_credits_designer = "Помощники в дизайне: ",
+            poke_credits_design_assistant = "Помощники в дизайне: ",
             poke_credits_community_manager = "Менеджеры сообщества: ",
             poke_credits_promotion_producer = "Промоушен продюсер: ",
             poke_credits_localization = "Локализация: ",

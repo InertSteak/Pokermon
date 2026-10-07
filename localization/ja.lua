@@ -4963,7 +4963,7 @@ return {
             poke_credits_graphics = "グラフィック ディレクター： ",
             poke_credits_quality_assurance_main = "品質保証リーダー: ",
             poke_credits_developer = "開発元: ",
-			poke_credits_designer = "デザイン補佐: ",
+			poke_credits_design_assistant = "デザイン補佐: ",
             poke_credits_community_manager = "コミュニティマネージャー: ",
             poke_credits_promotion_producer = "プロモプロデューサー: ",
             poke_credits_localization = "多言語化: ",
