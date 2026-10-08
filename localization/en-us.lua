@@ -3855,6 +3855,14 @@ return {
                   "{C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult)"
                 }
             },
+            j_poke_mawile = {
+                name = "Mawile",
+                text = {
+                    "If first hand of round has",
+                    "only {C:attention}1{} card, destroy it and",
+                    "add a {C:attention}Steel{} copy to hand",
+                }
+            },
             j_poke_aron = {
                 name = 'Aron',
                 text = {
