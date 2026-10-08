@@ -516,7 +516,7 @@ local cryogonal = {
   end,
   designer = "Gem, CBMX",
   rarity = 3,
-  cost = 8,
+  cost = 9,
   stage = "Basic",
   ptype = "Water",
   atlas = "Pokedex5",
