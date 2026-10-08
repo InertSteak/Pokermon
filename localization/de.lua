@@ -3471,7 +3471,7 @@ return {
             poke_credits_graphics = "Grafisches Design: ",
             poke_credits_quality_assurance_main = "QA: ",
             poke_credits_developer = "Entwickler: ",
-            poke_credits_designer = "Design Assistenten: ",
+            poke_credits_design_assistant = "Design Assistenten: ",
             poke_credits_community_manager = "Community Manager: ",
             poke_credits_promotion_producer = "Promotion Producer: ",
             poke_credits_localization = "Lokalisierung: ",
