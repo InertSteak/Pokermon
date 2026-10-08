@@ -1,0 +1,10 @@
+{
+    "name": "Pokermon",
+    "version_number": "3.9.1",
+    "website_url": "https://github.com/InertSteak/Pokermon",
+    "description": "A full content Balatro mod where every joker is a Pokemon.",
+    "dependencies": [
+        "Steamodded-Steamodded-26.829.0",
+        "Thunderstore-lovely-0.9.0"
+    ]
+}
