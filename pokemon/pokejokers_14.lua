@@ -21,7 +21,7 @@ local bidoof={
   ptype = "Colorless",
   atlas = "Pokedex4",
   perishable_compat = true,
-  blueprint_compat = true,
+  blueprint_compat = false,
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.reroll_shop and not context.blueprint and card.ability.extra.rerolls_to_evolve > 0 then
@@ -52,7 +52,7 @@ local bibarel={
   ptype = "Colorless",
   atlas = "Pokedex4",
   perishable_compat = true,
-  blueprint_compat = true,
+  blueprint_compat = false,
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss and not card.debuff then
