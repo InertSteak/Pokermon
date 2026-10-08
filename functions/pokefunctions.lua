@@ -240,14 +240,15 @@ pokermon.backend_evolve = function(card, to_key, energize_amount)
 
   pokermon.apply_kept_values(card, new_card, values_to_keep, custom_values_to_keep)
 
+  if card.children.floating_sprite then
+    card.children.floating_sprite:remove()
+    card.children.floating_sprite = nil
+  end
   if new_card.soul_pos then
-    card.children.floating_sprite = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, SMODS.get_atlas(new_card.atlas or "Joker"), new_card.soul_pos)
+    card.children.floating_sprite = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, new_card.atlas or 'centers', new_card.soul_pos)
     card.children.floating_sprite.role.draw_major = card
     card.children.floating_sprite.states.hover.can = false
     card.children.floating_sprite.states.click.can = false
-  elseif card.children.floating_sprite then
-    card.children.floating_sprite:remove()
-    card.children.floating_sprite = nil
   end
 
   if not card.edition then
