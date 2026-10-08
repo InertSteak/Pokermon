@@ -3903,6 +3903,25 @@ return {
                 "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
               }
             },
+            j_poke_electrike = {
+              name = "Electrike",
+              text = {
+                "Played {C:attention}Gold{} cards",
+                "earn {C:money}$#1#{} when scored",
+                "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#2#{C:inactive,s:0.8} Gold cards)"
+              }
+            },
+            j_poke_manectric = {
+              name = "Manectric",
+              text = {
+                "Played {C:attention}Gold{} cards",
+                "earn {C:money}$#1#{} when scored",
+                "{br:2}ERROR - CONTACT STEAK",
+                "First played {C:attention}Gold{}",
+                "card is returned to",
+                "hand after scoring"
+              }
+            },
             j_poke_plusle = {
               name = "Plusle",
               text = {
@@ -6112,7 +6131,8 @@ return {
             j_poke_gimmighoul = {
                 name = "Gimmighoul (Chest)",
                 text = {
-                  "Played {C:attention}Gold{} cards earn {C:money}$#1#{} when scored",
+                  "Played {C:attention}Gold{} cards give", 
+                  "{C:mult}+#1#{} Mult when scored",
                   "{br:3}ERROR - CONTACT STEAK",
                   "Skip a {C:attention}Booster Pack{} for...?",
                   "{C:inactive,s:0.8}(Evolves after earning or spending {C:money,s:0.8}$#2#{C:inactive,s:0.8}/$#3#)"

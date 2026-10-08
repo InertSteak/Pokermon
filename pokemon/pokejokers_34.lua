@@ -10,12 +10,12 @@
 local gimmighoul={
   name = "gimmighoul",
   pos = {x = 12, y = 6},
-  config = {extra = {money = 3, money_goal = 999, money_seen = 0}},
+  config = {extra = {mult_mod = 8, money_goal = 999, money_seen = 0}},
   loc_vars = function(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_gold
     end
-    return {vars = {center.ability.extra.money, center.ability.extra.money_seen, center.ability.extra.money_goal}}
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.money_seen, center.ability.extra.money_goal}}
   end,
   rarity = 3,
   cost = 7,
@@ -29,18 +29,8 @@ local gimmighoul={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_gold') then
-      local earned = pokermon.ease_poke_dollars(card, "gimmi", card.ability.extra.money, true)
-      G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
       return {
-        dollars = earned,
-        func = function()
-          G.E_MANAGER:add_event(Event({
-            func = function()
-              G.GAME.dollar_buffer = 0
-              return true
-            end
-          }))
-        end
+        mult = card.ability.extra.mult_mod
       }
     end
     if context.skipping_booster and G.shop_jokers and G.shop_jokers.cards then
