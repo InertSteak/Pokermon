@@ -5445,6 +5445,14 @@ return {
                   "{C:attention}tripled{} for {C:attention}Nature{} hands",
                 }
             },
+            j_poke_cryogonal = {
+                name = "Cryogonal",
+                text = {
+                    "All played {C:attention}face{} cards",
+                    "become {C:attention}Glass{} cards",
+                    "when scored",
+                },
+            },
             j_poke_golett = {
                 name = "Golett",
                 text = {

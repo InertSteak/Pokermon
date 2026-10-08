@@ -504,6 +504,50 @@ local haxorus={
 -- Cubchoo 613
 -- Beartic 614
 -- Cryogonal 615
+local cryogonal = {
+  name = "cryogonal",
+  pos = {x = 0, y = 0},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    end
+    return {vars = {}}
+  end,
+  designer = "Gem, CBMX",
+  rarity = 3,
+  cost = 9,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex5",
+  gen = 5,
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.before and not context.blueprint then
+      local faces = 0
+      for _, scored_card in ipairs(context.scoring_hand) do
+        if scored_card:is_face() then
+              faces = faces + 1
+              scored_card:set_ability('m_glass', nil, true)
+              G.E_MANAGER:add_event(Event({
+                  func = function()
+                      scored_card:juice_up()
+                      return true
+                  end
+              }))
+        end
+      end
+      if faces > 0 then
+          return {
+              message = localize('Gem_glass'),
+              colour = G.C.MONEY
+          }
+     end
+    end
+  end,
+}
 -- Shelmet 616
 -- Accelgor 617
 -- Stunfisk 618
@@ -715,5 +759,5 @@ local bisharp={
 -- Vullaby 629
 -- Mandibuzz 630
 return {name = "Pokemon Jokers 601-630", 
-        list = {klinklang, elgyem, beheeyem, litwick, lampent, chandelure, axew, fraxure, haxorus, golett, golurk, pawniard, bisharp},
+        list = {klinklang, elgyem, beheeyem, litwick, lampent, chandelure, axew, fraxure, haxorus, cryogonal, golett, golurk, pawniard, bisharp},
 }
