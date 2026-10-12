@@ -822,7 +822,7 @@ return {
                     "Gains {C:mult}+#2#{} Mult if",
                     "hand is played when",
                     "{C:attention}#3#{} discards remaining",
-                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +16 Mult)",
+                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#1#{C:inactive,s:0.8} / +16 Mult)",
                 } 
             },
             j_poke_charmeleon = {
@@ -832,7 +832,7 @@ return {
                     "Gains {C:mult}+#2#{} Mult if",
                     "hand is played when",
                     "{C:attention}#3#{} discards remaining",
-                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +36 Mult)",
+                    "{C:inactive,s:0.8}(Evolves at {C:mult}+#1#{C:inactive,s:0.8} / +36 Mult)",
                 }
             },
             j_poke_charizard = {
@@ -862,7 +862,7 @@ return {
                     "Gains {C:chips}+#4#{} Chips for each",
                     "remaining {C:attention}hand{} when",
                     "hand is played",
-                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#3# Chips)",
+                    "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#1#{C:inactive,s:0.8} / +#3# Chips)",
                 } 
             },
             j_poke_wartortle = {
@@ -872,7 +872,7 @@ return {
                     "Gains {C:chips}+#4#{} Chips for each",
                     "remaining {C:attention}hand{} when",
                     "hand is played",
-                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#3# Chips)",
+                    "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#1#{C:inactive,s:0.8} / +#3# Chips)",
                 } 
             },
             j_poke_blastoise = {
@@ -1204,7 +1204,7 @@ return {
                     "contains a scoring {C:attention}Enhanced{} card,",
                     "removes card {C:attention}Enhancement{} from",
                     "first scoring {C:attention}Enhanced{} card",
-                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#3# Mult)",
+                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#1#{C:inactive,s:0.8} / +#3# Mult)",
                 }
             },
             j_poke_golbat = {
@@ -1248,7 +1248,7 @@ return {
                 text = {
                     "Gains {C:mult}+#2#{} Mult if played",
                     "hand contains a {C:attention}Two Pair{}",
-                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +8 Mult)",
+                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#1#{C:inactive,s:0.8} / +8 Mult)",
                 }  
             },
             j_poke_parasect = {
@@ -1551,7 +1551,7 @@ return {
                 text = {
                     "Gains {C:chips}+#2#{} Chips if played", 
                     "hand contains a {C:attention}Straight{}",
-                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +60 Chips)",
+                    "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#1#{C:inactive,s:0.8} / +60 Chips)",
                 } 
             }, 
             j_poke_rapidash = {
@@ -1951,7 +1951,7 @@ return {
                     "Gains {C:mult}+#2#{} Mult",
                     "for each {C:attention}6{}",
                     "in poker hand",
-                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +12 Mult)",
+                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#1#{C:inactive,s:0.8} / +12 Mult)",
                 } 
             },
             j_poke_seadra = {
@@ -2285,7 +2285,7 @@ return {
                     "Gains {C:mult}+#2#{} Mult if",
                     "played hand contains",
                     "{C:attention}#3#{} or fewer cards",
-                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#4# Mult)",
+                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#1#{C:inactive,s:0.8} / +#4# Mult)",
                 } 
             },
             j_poke_dragonair = {
@@ -2294,7 +2294,7 @@ return {
                     "Gains {C:mult}+#2#{} Mult if",
                     "played hand contains",
                     "{C:attention}#3#{} or fewer cards",
-                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#4# Mult)",
+                    "{C:inactive,s:0.8}(Evolves at {C:mult}+#1#{C:inactive,s:0.8} / +#4# Mult)",
                 } 
             },
             j_poke_dragonite = {
@@ -2470,7 +2470,7 @@ return {
                     "hand played that isn't",
                     "the last played hand",
                     "{C:inactive}(Last hand: {C:attention}#3#{C:inactive})",
-                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +15 Mult)",
+                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#1#{C:inactive,s:0.8} / +15 Mult)",
                 }
             },
             j_poke_furret = {
@@ -2505,7 +2505,7 @@ return {
                   "{C:mult}+#1#{} Mult for every {C:attention}5{} cards",
                   "remaining in deck",
                   "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
-                  "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_ledian = {
@@ -2547,7 +2547,7 @@ return {
                 text = {
                   "Gives {C:chips}+#1#{} Chips and earns {C:money}$#2#{}",
                   "if played hand contains a {C:attention}Pair",
-                  "{C:inactive}(Evolves after {C:attention}#3#{C:inactive} rounds)",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_lanturn = {
@@ -2632,7 +2632,7 @@ return {
                   "{br:3}ERROR - CONTACT STEAK",
                   "Loses {X:mult,C:white}X#3#{} Mult when one or more",
                   "{C:attention}playing cards{} are {C:attention}destroyed",
-                  "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / X#4# Mult)",
+                  "{C:inactive,s:0.8}(Evolves at {X:mult,C:white,s:0.8}X#1#{C:inactive,s:0.8} / X#4# Mult)",
                 }
             },
             j_poke_flaaffy = {
@@ -2643,7 +2643,7 @@ return {
                   "{br:3}ERROR - CONTACT STEAK",
                   "Loses {X:mult,C:white}X#3#{} Mult when one or more",
                   "{C:attention}playing cards{} are {C:attention}destroyed",
-                  "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / X#4# Mult)",
+                  "{C:inactive,s:0.8}(Evolves at {X:mult,C:white,s:0.8}X#1#{C:inactive,s:0.8} / X#4# Mult)",
                 }
             },
             j_poke_ampharos = {
@@ -2783,7 +2783,7 @@ return {
                   "{C:mult}-#3#{} Mult for each {C:attention}face{}",
                   "card remaining in {C:attention}deck",
                   "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
-                  "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_quagsire = {
@@ -3016,7 +3016,7 @@ return {
               text = {
                 "Gains {C:mult}+#2#{} Mult when any",
                 "{C:attention}Booster Pack{} is skipped",
-                "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / #3# Mult)",
+                "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#1#{C:inactive,s:0.8} / #3# Mult)",
               }
             },
             j_poke_ursaring = {
@@ -3036,7 +3036,7 @@ return {
                 "card {C:attention}held{} in hand after scoring",
                 "every {C:attention}#4#{} hands played",
                 "{C:inactive}(#5#){}",
-                "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / #3# Chips)",
+                "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#1#{C:inactive,s:0.8} / #3# Chips)",
               }
             },
             j_poke_magcargo = {
@@ -3105,7 +3105,7 @@ return {
               text = {
                 "Retrigger all cards",
                 "in first played hand",
-                "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
               }
             },
             j_poke_octillery = {
@@ -3797,7 +3797,7 @@ return {
                 text = {
                   "When {C:attention}Blind{} is selected,",
                   "gain {C:chips}+#1#{} hand",
-                  "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_hariyama = {
@@ -3869,7 +3869,7 @@ return {
                     "Gain {X:mult,C:white}X#2#{} Mult for each",
                     "{C:attention}Steel{} card in {C:attention}poker hand{},",
                     "then destroy them",
-                    "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X2{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves at {X:mult,C:white,s:0.8}X#1#{C:inactive,s:0.8} / {X:inactive,C:white,s:0.8}X2{C:inactive,s:0.8} Mult)",
                 }
             },
             j_poke_lairon = {
@@ -3878,7 +3878,7 @@ return {
                     "Gain {X:mult,C:white}X#2#{} Mult for each",
                     "{C:attention}Steel{} and {C:attention}Stone{} card in",
                     "{C:attention}poker hand{}, then destroy them",
-                    "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X4{C:inactive} Mult)"
+                    "{C:inactive,s:0.8}(Evolves at {X:mult,C:white,s:0.8}X#1#{C:inactive,s:0.8} / {X:inactive,C:white,s:0.8}X4{C:inactive,s:0.8} Mult)"
                 }
             },
             j_poke_aggron = {
@@ -4020,7 +4020,7 @@ return {
                   "{br:2}ERROR - CONTACT STEAK",
                   "{C:chips}+#1#{} Chips for each remaining",
                   "{C:clubs}#3#{} in {C:attention}deck",
-                  "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips){}",
+                  "{C:inactive,s:0.8}(Currently {C:chips,s:0.8}+#2#{C:inactive,s:0.8} Chips){}",
                 }
             },
             j_poke_numel = {
@@ -4029,7 +4029,7 @@ return {
                   "{X:red,C:white}X#1#{} Mult every",
                   "{C:attention}#3#{} cards scored",
                   "{C:inactive}#4# remaining{}",
-                  "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_camerupt = {
@@ -4077,7 +4077,7 @@ return {
                 "{C:poke_hazard}+#1#{} hazard layer",
                 "Earn {C:money}$#2#{} when a",
                 "card is destroyed",
-                "{C:inactive}(Evolves after {C:attention}#3#{C:inactive} rounds)",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
               }
             },
             j_poke_cacturne = {
@@ -4098,7 +4098,7 @@ return {
                 "When you draw a {C:attention}9",
                 "during the {C:attention}Blind{}",
                 "gain {C:chips}+#2#{} Chips",
-                "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#3# Chips)",
+                "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#1#{C:inactive,s:0.8} / +#3# Chips)",
               }
             },
             j_poke_altaria = {
@@ -4139,7 +4139,7 @@ return {
                     "Gains {C:mult}+#2#{} Mult if",
                     "played hand contains",
                     "an unscored {C:attention}Nature{} card",
-                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#3# Mult)",
+                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#1#{C:inactive,s:0.8} / +#3# Mult)",
                 } 
             },
             j_poke_crawdaunt = {
@@ -4157,7 +4157,7 @@ return {
               name = "Baltoy",
               text = {
                 "discarded {C:attention}Hazard{} card",
-                "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / #3# Chips",
+                "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#1#{C:inactive,s:0.8} / #3# Chips",
               }
             },
             j_poke_claydol = {
@@ -4252,7 +4252,7 @@ return {
                 "Gains {C:mult}+#2#{} Mult when",
                 "a Joker is sold",
                 "during the {C:attention}Blind",
-                "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#3# Mult)",
+                "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#1#{C:inactive,s:0.8} / +#3# Mult)",
               }
             },
             j_poke_banette = {
@@ -4270,7 +4270,7 @@ return {
               text = {
                 "Retrigger first {C:attention}4{} scored cards",
                 "in {C:attention}final hand{} of round",
-                "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
               }
             },
             j_poke_dusclops = {
@@ -4283,7 +4283,7 @@ return {
                 "in final hand, destroy it",
                 "and create a {C:spectral}Spectral{} card",
                 "{C:inactive}(Must have room){}",
-                "{C:inactive}(Evolves with a {C:attention}Linking Cord{C:inactive})",
+                "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})",
               }
             },
             j_poke_tropius = {
@@ -4439,7 +4439,7 @@ return {
                     "is a {C:attention}Four of a Kind{}",
                     "Gains {C:chips}+#2#{} Chips if poker hand",
                     "contains an {C:attention}Ace",
-                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#4# Chips)",
+                    "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#1#{C:inactive,s:0.8} / +#4# Chips)",
                 } 
             },
             j_poke_metang = {
@@ -4449,7 +4449,7 @@ return {
                     "is a {C:attention}Four of a Kind{}",
                     "Gains {C:chips}+#2#{} Chips if poker hand",
                     "contains {C:attention}2+{} {C:attention}Aces",
-                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#4# Chips)",
+                    "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#1#{C:inactive,s:0.8} / +#4# Chips)",
                 } 
             },
             j_poke_metagross = {
@@ -4653,7 +4653,7 @@ return {
                 "{C:mult}+#1#{} Mult for",
                 "each {C:attention}unscored{} card",
                 "in played hand",
-                "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
               }
             },
             j_poke_lopunny = {
@@ -5310,7 +5310,7 @@ return {
 				text = {
                     "Gains {C:chips}+#2#{} Chips for each",
                     "discarded {C:attention}face{} card",
-                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#3# Chips)",
+                    "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#1#{C:inactive,s:0.8} / +#3# Chips)",
                 } 
             },
             j_poke_jellicent = {
@@ -5485,7 +5485,7 @@ return {
                 text = {
                   "Gains {X:red,C:white}X#2#{} Mult when a",
                   "{C:attention}face{} card is destroyed",
-                  "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X#3#{C:inactive} Mult)",
+                  "{C:inactive,s:0.8}(Evolves at {X:mult,C:white,s:0.8}X#1#{C:inactive,s:0.8} / {X:inactive,C:white,s:0.8}X#3#{C:inactive,s:0.8} Mult)",
                 }
             },
             j_poke_bisharp = {
@@ -5841,7 +5841,7 @@ return {
                     "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
                     "Gain {C:chips}+#3#{} Chips when a",
                     "{C:attention}Hazard Card{} is drawn",
-                    "{C:inactive}(Evolves at {C:chips}+#4#{C:inactive} / +#5# Chips)",
+                    "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#4#{C:inactive,s:0.8} / +#5# Chips)",
                 }
             },
             j_poke_overqwil = {
