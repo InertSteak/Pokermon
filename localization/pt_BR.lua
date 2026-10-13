@@ -5531,7 +5531,7 @@ return {
             poke_credits_graphics = "Design Gráfico: ",
             poke_credits_quality_assurance_main = "QA: ",
             poke_credits_developer = "Desenvolvedores: ",
-            poke_credits_designer = "Assistentes de Design: ",
+            poke_credits_design_assistant = "Assistentes de Design: ",
             poke_credits_community_manager = "Gerentes de Comunidade: ",
             poke_credits_special_thanks = "Agradecimentos Especiais: ",
             poke_credits_localization = "Localização: ",

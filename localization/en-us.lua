@@ -7893,7 +7893,7 @@ return {
             poke_credits_graphics = "Graphic Design: ",
             poke_credits_quality_assurance_main = "QA: ",
             poke_credits_developer = "Developers: ",
-            poke_credits_designer = "Design Assistants: ",
+            poke_credits_design_assistant = "Design Assistants: ",
             poke_credits_community_manager = "Community Managers: ",
             poke_credits_special_thanks = "Special Thanks: ",
             poke_credits_localization = "Localization: ",

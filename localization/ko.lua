@@ -6265,7 +6265,7 @@ return {
             poke_credits_graphics = "그래픽 디자인: ",
             poke_credits_quality_assurance_main = "QA: ",
             poke_credits_developer = "개발자: ",
-            poke_credits_designer = "디자인 보조: ",
+            poke_credits_design_assistant = "디자인 보조: ",
             poke_credits_community_manager = "커뮤니티 매니저: ",
             poke_credits_special_thanks = "특별히 감사한 분들: ",
             poke_credits_localization = "현지화: ",
