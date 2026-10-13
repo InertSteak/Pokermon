@@ -9,6 +9,95 @@
 -- Phione 489
 -- Manaphy 490
 -- Darkrai 491
+local darkrai = {
+  name = "darkrai",
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, card)
+      type_tooltip(self, info_queue, card)
+      info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_poke_nightmare'}
+
+  end,
+  designer = "Sonfive",
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Dark",
+  gen = 4,
+  blueprint_compat = false,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_poke_nightmare')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+    end
+  end,
+  calculate = function(self, card, context)
+      if not context.blueprint then
+          local darkrai_count = #SMODS.find_card("j_sonfive_darkrai")
+
+          -- Initialize Darkrai's snapshot
+          if not card.ability.extra.darkrai_applied_energy then
+              card.ability.extra.darkrai_applied_energy = {}
+          end
+
+          -- Step 1: Calculate desired energy per type
+          for _, ptype in pairs(POKE_TYPES) do
+              local energy_key = 'c_poke_'..string.lower(ptype)..(ptype == 'Dark' and 'ness' or '')..'_energy'
+              local energy_type_count = #SMODS.find_card(energy_key) * darkrai_count
+              card.ability.extra.darkrai_applied_energy[ptype] = energy_type_count
+
+              -- Step 2: Apply to jokers
+              for _, joker in ipairs(G.jokers.cards) do
+                local extra = joker.ability and joker.ability.extra
+                if type(extra) == "table" then
+                    joker.ability.extra = joker.ability.extra or {}
+                    if not joker.ability.extra.darkrai_applied then
+                        joker.ability.extra.darkrai_applied = {}
+                    end
+                    local to_apply = card.ability.extra.darkrai_applied_energy[ptype]
+                    local last_applied = joker.ability.extra.darkrai_applied[ptype] or 0
+
+                    if is_type(joker, ptype) then
+                        -- Joker matches this type → sync energies
+                        if to_apply ~= last_applied then
+                            local diff = to_apply - last_applied
+                            energize(joker, ptype, nil, true, diff)
+                            joker.ability.extra.darkrai_applied[ptype] = to_apply
+                        end
+                    else
+                        -- Joker no longer this type → remove old Darkrai-applied energy
+                        if last_applied > 0 then
+                            energize(joker, ptype, false, true, -last_applied)
+                            joker.ability.extra.darkrai_applied[ptype] = 0
+                        end
+                    end
+                end
+            end
+          end
+      end
+  end,
+
+  remove_from_deck = function(self, card, from_debuff)
+    for _, card in ipairs(G.jokers.cards) do
+        local extra = card.ability and card.ability.extra
+        if type(extra) == "table" then
+            card.ability.extra = card.ability.extra or {}
+            local applied = card.ability.extra.darkrai_applied or {}
+
+            for _, ptype in pairs(POKE_TYPES) do
+                local last_applied = applied[ptype] or 0
+                if last_applied > 0 then
+                    energize(card, ptype, false, true, -last_applied)
+                    applied[ptype] = 0
+                end
+            end
+        end
+        -- Clear Darkrai's own stored snapshot
+        card.ability.extra.darkrai_applied_energy = {}
+    end
+  end,
+}
 -- Shaymin 492
 local shaymin={
   name = "shaymin",
