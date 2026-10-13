@@ -657,7 +657,7 @@ local porygonz={
           trigger = 'immediate',
           delay = 0.0,
           func = (function()
-                  SMODS.add_card{set = 'poke_energy'}
+                  SMODS.add_card{set = 'poke_energy', key = energy_key}
                   G.GAME.consumeable_buffer = 0
               return true
           end)}))
