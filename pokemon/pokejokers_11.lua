@@ -812,10 +812,8 @@ local sharpedo={
             return true
           end
         }))
-        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local spectral = SMODS.add_card{set = 'Spectral'}
-          SMODS.calculate_effect({ message = localize('k_plus_spectral') }, spectral)
-        end
+    
+        pokermon.create_consumeable({set = "Spectral"}, true)
       end
     end
     if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then

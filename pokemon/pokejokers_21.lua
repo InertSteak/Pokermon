@@ -105,12 +105,7 @@ local elgyem={
         end
       end
       
-      local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, _planet)
-      local edition = {negative = true}
-      _card:set_edition(edition, true)
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
+      pokermon.create_consumeable({key = _planet, edition = 'e_negative'}, true)
     end
     return pokermon.scaling_evo(self, card, context, "j_poke_beheeyem", card.ability.extra.current_planet_count, self.config.evo_rqmt)
   end,
@@ -185,12 +180,7 @@ local beheeyem={
         end
       end
       
-      local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, _planet)
-      local edition = {negative = true}
-      _card:set_edition(edition, true)
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
+      pokermon.create_consumeable({key = _planet, edition = 'e_negative'}, true)
     end
     if context.open_booster and not context.blueprint then
       local added = false

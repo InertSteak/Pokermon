@@ -1513,7 +1513,9 @@ pokermon.create_consumeable = function(args, in_event, message_card)
     }
     card.states.visible = nil
     if in_event then
-      G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+      if args.edition ~= 'e_negative' then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+      end
       G.E_MANAGER:add_event(Event({
         func = (function()
           SMODS.add_to_deck(card, args)
