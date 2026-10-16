@@ -105,6 +105,12 @@ local seed = {
     -- If we don't have a level, just assume we're at max from becoming a flower card
     local level = (card and card.ability and type(card.ability.extra) == 'table' and card.ability.extra.level or level_max)
         + (card.poke_visual_growth_mod or 0)
+        
+    -- if there is no card.ability and no self.ability, it means the card is in a pack, so set level to zero
+    if not self.ability and not card.ability then
+      level = 0
+    end
+    
     local x_pos = math.min(level_max, level) + 1
     card.children.center:set_sprite_pos({x = x_pos, y = 0})
   end
