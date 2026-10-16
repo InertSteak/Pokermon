@@ -901,10 +901,9 @@ local crobat={
       return {
         message = localize("poke_screech_ex"),
         colour = G.C.BLACK,
-        mult_mod = card.ability.extra.mult,
-        chip_mod = card.ability.extra.chips,
-        Xmult_mod = card.ability.extra.Xmult,
-        sound = card.ability.extra.Xmult > 1 and 'multhit2'
+        mult = card.ability.extra.mult,
+        chips = card.ability.extra.chips,
+        xmult = card.ability.extra.Xmult,
       }
     end
   end,
