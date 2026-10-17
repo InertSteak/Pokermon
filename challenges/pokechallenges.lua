@@ -48,6 +48,9 @@ local nuzlocke = {
             {id = 'j_poke_mewtwo'},
             {id = 'j_poke_scyther'},
             {id = 'j_poke_scizor'},
+            {id = 'j_poke_vanillite'},
+            {id = 'j_poke_vanillish'},
+            {id = 'j_poke_vanilluxe'},
             {id = 'j_poke_jelly_donut'},
         },
         banned_tags = {
