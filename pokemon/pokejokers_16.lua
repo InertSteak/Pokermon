@@ -334,7 +334,7 @@ local magmortar={
       local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    if context.pre_discard and not context.blueprint then
+    if context.pre_discard and not context.blueprint and not context.hook then
       SMODS.scale_card(card, {
         ref_value = 'Xmult',
         scalar_value = 'Xmult_mod'
