@@ -201,3 +201,20 @@ payload = '''
 if G.P_CENTERS[k] and G.P_CENTERS[k][key] then return true end
 '''
 match_indent = true
+
+# Fix phantom cards for draw_cards/discard_cards
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "function draw_card(from, to, percent, dir, sort, card, delay, mute, stay_flipped, vol, discarded_only)"
+position = "after"
+match_indent = true
+payload = "    if card then card.poke_drawn_to = to end"
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "if card and card.playing_card then SMODS.drawn_cards[#SMODS.drawn_cards+1] = card end"
+position = "after"
+match_indent = true
+payload = "if card then card.poke_drawn_to = nil end"

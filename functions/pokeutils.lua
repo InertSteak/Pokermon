@@ -1062,3 +1062,80 @@ pokermon.has_enhancement = function(card, enhancement, recursive)
     return card.config.center.key == enhancement
   end
 end
+
+function pokermon.draw_cards(cards)
+  if type(cards.is) == 'function' and cards:is(Card) then cards = { cards } end
+
+  cards = pokermon.filter(cards, function(c) return not c.poke_drawn_to or c.poke_drawn_to == G.deck end)
+  if #cards == 0 then return end
+
+  local count = #cards
+  local flags = SMODS.calculate_context({ drawing_cards = true, amount = count }) or {}
+  count = math.min(#G.deck.cards, flags.cards_to_draw or flags.modify or count)
+  SMODS.drawn_cards = {}
+  for i = 1, count do
+    local card = cards[i]
+    draw_card(G.deck, G.hand, i * 100 / count, 'up', true, card)
+  end
+  G.E_MANAGER:add_event(Event({
+    trigger = 'before',
+    delay = 0.4,
+    func = function()
+      if #SMODS.drawn_cards > 0 then
+        SMODS.calculate_context({
+          first_hand_drawn = not G.GAME.current_round.any_hand_drawn and G.GAME.facing_blind or nil,
+          hand_drawn = G.GAME.facing_blind and SMODS.drawn_cards or nil,
+          other_drawn = not G.GAME.facing_blind and SMODS.drawn_cards or nil
+        })
+        SMODS.drawn_cards = {}
+        if G.GAME.facing_blind then G.GAME.current_round.any_hand_drawn = true end
+      end
+      return true
+    end
+  }))
+end
+
+function pokermon.discard_cards(cards)
+  if type(cards.is) == 'function' and cards:is(Card) then cards = { cards } end
+
+  cards = pokermon.filter(cards, function(c) return c.poke_drawn_to ~= G.discard end)
+  if #cards == 0 then return end
+
+  SMODS.calculate_context({ pre_discard = true, full_hand = cards, hook = true })
+  local count = #cards
+  local discarded_cards = {}
+  local destroyed_cards = {}
+  for i = 1, count do
+    local card = cards[i]
+    card:calculate_seal({ discard = true })
+    local removed = false
+    local effects = {}
+    SMODS.calculate_context({ discard = true, other_card = card, full_hand = cards, ignore_other_debuff = true }, effects)
+    SMODS.trigger_effects(effects)
+    for _, eval in pairs(effects) do
+      if type(eval) == 'table' then
+        for key, eval2 in pairs(eval) do
+          if key == 'remove' or (type(eval2) == 'table' and eval2.remove) then removed = true end
+        end
+      end
+    end
+    table.insert(discarded_cards, card)
+    if removed then
+      destroyed_cards[#destroyed_cards+1] = card
+      if SMODS.shatters(card) then
+        card:shatter()
+      else
+        card:start_dissolve()
+      end
+    else
+      card.ability.discarded = true
+      draw_card(card.poke_drawn_to or card.area, G.discard, i * 100 / count, 'down', false, card, 0.07)
+    end
+  end
+
+  if destroyed_cards[1] then
+    SMODS.calculate_context({ remove_playing_cards = true, removed = destroyed_cards })
+  end
+
+  G.GAME.round_scores.cards_discarded.amt = G.GAME.round_scores.cards_discarded.amt + count
+end
