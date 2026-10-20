@@ -160,6 +160,7 @@ local default_family_list = {
   { "buneary", "lopunny", "mega_lopunny" },
   { "bronzor", "bronzong"},
   { "riolu", "lucario", "mega_lucario" },
+	{ "hippopotas", "hippowdon"},
   { "rotom", "rotomh", "rotomw", "rotomf", "rotomfan", "rotomm" },
   { "shaymin", "shaymin_sky" },
   { "munna", "musharna"},
