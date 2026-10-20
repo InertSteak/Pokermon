@@ -4813,6 +4813,23 @@ return {
                  "{C:attention}editions{} held",
               }
             },
+						j_poke_hippopotas = {
+							name = 'Hippopotas',
+							text = {
+								"Played {C:spades}#3#{} cards give {C:mult}+#1#{} Mult",
+								"per {C:attention}depleted rank{} when scored",
+								"{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+								"{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#4# {C:spades,s:0.8}#5#{C:inactive,s:0.8})",
+							}
+						},		
+						j_poke_hippowdon = {
+							name = 'Hippowdon',
+							text = {
+								"Played {C:spades}#3#{} cards give {X:mult,C:white}X#1#{} Mult",
+								"per {C:attention}depleted card{} when scored",
+								"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+							}
+						},
             j_poke_mantyke = {
                 name = "Mantyke",
                 text = {
