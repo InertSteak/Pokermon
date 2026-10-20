@@ -521,13 +521,13 @@ local electrode={
 local exeggcute={
   name = "exeggcute", 
   pos = {x = 10, y = 7}, 
-  config = {extra = {mult = 2, suit = "Hearts", mult2 = 6, num = 1, dem = 4}},
+  config = {extra = {mult_mod = 3, suit = "Hearts", scry = 2}},
   loc_vars = function(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
         info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
+        info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
     end
-    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'exeggcute')
-    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.mult2, num, dem}}
+    return {vars = {center.ability.extra.mult_mod, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.scry}}
   end,
   rarity = 1, 
   cost = 4,
@@ -538,30 +538,33 @@ local exeggcute={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
+    if context.individual and (context.cardarea == G.play or context.cardarea == G.poke_scry_view) and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        local Mult = card.ability.extra.mult
-        if SMODS.pseudorandom_probability(card, 'exeggcute', card.ability.extra.num, card.ability.extra.dem, 'exeggcute') then
-          Mult = card.ability.extra.mult2
-        end
         return {
-          mult = Mult ,
-          card = card
+          mult = card.ability.extra.mult_mod,
         }
       end
     end
     return pokermon.item_evo(self, card, context, "j_poke_exeggutor")
   end,
-  attributes = {"mult", "suit", "hearts", "chance", "item_evo"},
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
+  end,
+  attributes = {"mult", "suit", "hearts", "chance", "item_evo", "foresight"},
 }
 -- Exeggutor 103
 local exeggutor={
   name = "exeggutor", 
   pos = {x = 11, y = 7}, 
-  config = {extra = {mult_mod = 2, Xmult_multi = 1.4, suit = "Hearts", num = 1, dem = 2}},
+  config = {extra = {mult_mod = 4, Xmult_multi = 1.2, suit = "Hearts", scry = 3}},
   loc_vars = function(self, info_queue, center)
-    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'exeggutor')
-    return {vars = {center.ability.extra.mult_mod, center.ability.extra.Xmult_multi, localize(center.ability.extra.suit, 'suits_singular'), num, dem}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
+    end
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.Xmult_multi, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.scry}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -571,16 +574,14 @@ local exeggutor={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
+    if context.individual and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        if SMODS.pseudorandom_probability(card, 'exeggutor', card.ability.extra.num, card.ability.extra.dem, 'exeggutor') then
+        if context.cardarea == G.poke_scry_view then
           return {
             message = localize("poke_solar_ex"),
-            colour = G.C.XMULT,
-            x_mult = card.ability.extra.Xmult_multi,
-            card = card
+            xmult = card.ability.extra.Xmult_multi,
           }
-        else
+        elseif context.cardarea == G.play then
           return {
             colour = G.C.MULT,
             mult = card.ability.extra.mult_mod,
@@ -590,7 +591,13 @@ local exeggutor={
       end
     end
   end,
-  attributes = {"mult", "xmult", "suit", "hearts", "chance"},
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
+  end,
+  attributes = {"mult", "xmult", "suit", "hearts"},
 }
 -- Cubone 104
 local cubone={

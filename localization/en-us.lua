@@ -1810,20 +1810,24 @@ return {
             j_poke_exeggcute = {
                 name = 'Exeggcute',      
                 text = {
+                    "{C:purple}+#3# Foresight",
                     "Played {C:hearts}#2#{} cards give",
                     "{C:mult}+#1#{} Mult when scored",
-                    "{C:green}#4# in #5#{} chance for",
-                    "{C:mult}+#3#{} Mult instead",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "{C:attention}Foreseen{} {C:hearts}#2#{} cards",
+                    "give {C:mult}+#1#{} Mult",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Leaf Stone{C:inactive,s:0.8})"
                 } 
             },
             j_poke_exeggutor = {
                 name = 'Exeggutor',      
                 text = {
+                    "{C:purple}+#4# Foresight",
                     "Played {C:hearts}#3#{} cards give",
                     "{C:mult}+#1#{} Mult when scored",
-                    "{C:green}#4# in #5#{} chance for",
-                    "{X:mult,C:white}X#2#{} Mult instead",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "{C:attention}Foreseen{} {C:hearts}#3#{} cards",
+                    "give {X:mult,C:white}X#2#{} Mult",
                 } 
             },
             j_poke_cubone = {
@@ -4130,6 +4134,23 @@ return {
                 "has exactly {C:attention}#1#{} cards, gain",
                 "{C:attention}+#2#{} hand size this round"
               }
+            },
+            j_poke_lunatone= {
+                name = 'Lunatone',      
+                text = {
+                    "Each {C:clubs}#2#{} or {C:attention}Stone{} card",
+                    "held in hand has a",
+                    "{C:green}#3# in #4#{} chance",
+                    "to give {C:money}$#1#{}",
+                } 
+            },
+            j_poke_solrock = {
+                name = 'Solrock',      
+                text = {
+                    "{C:green}#3# in #4#{} chance for played",
+                    "{C:hearts}#2#{} and {C:attention}Stone{} cards to",
+                    "give {X:mult,C:white}X#1#{} Mult when scored",
+                } 
             },
             j_poke_corphish = {
                 name = "Corphish",

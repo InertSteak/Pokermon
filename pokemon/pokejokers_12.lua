@@ -238,7 +238,88 @@ local seviper={
   attributes = {"hands", "discard", "hand_size"}
 }
 -- Lunatone 337
+local lunatone={
+  name = "lunatone", 
+  pos = {x = 11, y = 7}, 
+  config = {extra = {money_mod = 2, suit = "Clubs", num = 1, dem = 2}},
+  loc_vars = function(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    end
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'solrock')
+    return {vars = {center.ability.extra.money_mod, localize(center.ability.extra.suit, 'suits_singular'), num, dem}}
+  end,
+  rarity = 2, 
+  cost = 7, 
+  stage = "Basic", 
+  ptype = "Earth",
+  atlas = "Pokedex3",
+  gen = 3,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.hand and not context.end_of_round then
+      if (context.other_card:is_suit(card.ability.extra.suit) or SMODS.has_enhancement(context.other_card, 'm_stone')) and 
+        SMODS.pseudorandom_probability(card, 'lunatone', card.ability.extra.num, card.ability.extra.dem, 'lunatone') then
+        if context.other_card.debuff then
+          return {
+              message = localize('k_debuffed'),
+              colour = G.C.RED
+          }
+        else
+          local earned = pokermon.ease_poke_dollars(card, "lunatone", card.ability.extra.money_mod, true)
+          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+          return {
+              dollars = earned,
+              func = function() -- This is for timing purposes, it runs after the dollar manipulation
+                  G.E_MANAGER:add_event(Event({
+                      func = function()
+                          G.GAME.dollar_buffer = 0
+                          return true
+                      end
+                  }))
+              end
+          }
+        end
+      end
+    end
+  end,
+  attributes = {"passive", "suit", "economy", "chance"},
+}
 -- Solrock 338
+local solrock={
+  name = "solrock", 
+  pos = {x = 11, y = 7}, 
+  config = {extra = {Xmult_multi = 1.4, suit = "Hearts", num = 1, dem = 2}},
+  loc_vars = function(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    end
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'solrock')
+    return {vars = {center.ability.extra.Xmult_multi, localize(center.ability.extra.suit, 'suits_singular'), num, dem}}
+  end,
+  rarity = 2, 
+  cost = 7, 
+  stage = "Basic", 
+  ptype = "Earth",
+  atlas = "Pokedex3",
+  gen = 3,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and (context.other_card:is_suit(card.ability.extra.suit) or SMODS.has_enhancement(context.other_card, 'm_stone')) then
+      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        if SMODS.pseudorandom_probability(card, 'solrock', card.ability.extra.num, card.ability.extra.dem, 'solrock') then
+          return {
+            message = localize("poke_solar_ex"),
+            colour = G.C.XMULT,
+            x_mult = card.ability.extra.Xmult_multi,
+            card = card
+          }
+        end
+      end
+    end
+  end,
+  attributes = {"xmult", "suit", "hearts", "chance"},
+}
 -- Barboach 339
 -- Whiscash 340
 -- Corphish 341
@@ -1403,6 +1484,6 @@ local wynaut={
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {cacnea, cacturne, swablu, altaria, zangoose, seviper, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, kecleon, duskull, dusclops, 
-                shuppet, banette, tropius, chimecho, absol, wynaut},
+        list = {cacnea, cacturne, swablu, altaria, zangoose, seviper, solrock, lunatone, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, 
+                feebas, milotic, kecleon, duskull, dusclops, shuppet, banette, tropius, chimecho, absol, wynaut},
 }
