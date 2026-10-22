@@ -44,6 +44,7 @@ for i = 1, #joker_basic_atlases do
   end
 end
 
+--[[
 SMODS.Atlas({
     key = "AtlasJokersSeriesBNatdex",
     path = "Series B/AtlasJokersSeriesBNatdex.png",
@@ -57,6 +58,7 @@ SMODS.Atlas({
     px = 71,
     py = 95
 })
+]]
 
 SMODS.Atlas({
     key = "AtlasBoosterpacksBasic",
