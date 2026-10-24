@@ -175,8 +175,8 @@ local zangoose={
   loc_vars = function(self, info_queue, center)
     return {vars = {center.ability.extra.amount}}
   end,
-  rarity = 3,
-  cost = 7,
+  rarity = 2,
+  cost = 6,
   gen = 3,
   stage = "Basic",
   ptype = "Colorless",
@@ -1267,7 +1267,7 @@ local tropius={
     info_queue[#info_queue+1] = G.P_CENTERS.j_cavendish
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, }}
   end,
-  rarity = 2,
+  rarity = 3,
   cost = 4,
   gen = 3,
   stage = "Basic",

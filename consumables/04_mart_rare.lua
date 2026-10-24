@@ -230,7 +230,6 @@ local thickclub = {
   soul_pos = { x = 8, y = 5 },
   atlas = "AtlasConsumablesBasic",
   cost = 3,
-  weight = 1,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -276,7 +275,7 @@ local thickclub = {
     return true
   end,
   in_pool = function(self)
-    return true
+    return false
   end
 }
 
