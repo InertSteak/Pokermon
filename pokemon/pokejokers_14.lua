@@ -169,8 +169,131 @@ local kricketune={
   attributes = {"economy", "suit", "chance", "tarot", "generation"}
 }
 -- Shinx 403
+local shinx={
+  name = "shinx",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 1, rounds = 4, scry = 2, suit = "Diamonds"}},
+  loc_vars = function(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+        info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
+    end
+    
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.rounds, center.ability.extra.scry}}
+  end,
+  rarity = 1,
+  cost = 5,
+  gen = 4,
+  stage = "Basic",
+  ptype = "Lightning",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
+      if G.poke_scry_view and G.poke_scry_view.cards and #G.poke_scry_view.cards > 0 then
+        return {
+          mult = card.ability.extra.mult_mod * #G.poke_scry_view.cards,
+          card = card
+        }
+      end
+    end
+    return pokermon.level_evo(self, card, context, "j_poke_luxio")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
+  end,
+  attributes = {"mult", "suit", "diamonds", "foresight"},
+}
 -- Luxio 404
+local luxio={
+  name = "luxio",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 1, rounds = 4, scry = 3, suit = "Diamonds"}},
+  loc_vars = function(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+        info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
+    end
+    
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.rounds, center.ability.extra.scry}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 4,
+  stage = "One",
+  ptype = "Lightning",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
+      if G.poke_scry_view and G.poke_scry_view.cards and #G.poke_scry_view.cards > 0 then
+        return {
+          mult = card.ability.extra.mult_mod * #G.poke_scry_view.cards,
+          card = card
+        }
+      end
+    end
+    return pokermon.level_evo(self, card, context, "j_poke_luxray")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
+  end,
+  attributes = {"mult", "suit", "diamonds", "foresight"},
+}
 -- Luxray 405
+local luxray={
+  name = "luxray",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 1, scry = 4, suit = "Diamonds", Xmult_multi = 1.4}},
+  loc_vars = function(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
+    end
+    
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.scry, center.ability.extra.Xmult_multi}}
+  end,
+  rarity = "poke_safari",
+  cost = 9,
+  gen = 4,
+  stage = "Two",
+  ptype = "Lightning",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
+      if G.poke_scry_view and G.poke_scry_view.cards and #G.poke_scry_view.cards > 0 then
+        local text,disp_text,poker_hands = G.FUNCS.get_poker_hand_info(G.poke_scry_view.cards)
+        
+        if next(poker_hands['Flush']) then
+          return {
+            xmult = card.ability.extra.Xmult_multi,
+          }
+        else
+          return {
+            mult = card.ability.extra.mult_mod * #G.poke_scry_view.cards,
+          }
+        end
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
+  end,
+  attributes = {"mult", "suit", "diamonds", "foresight"},
+}
 -- Budew 406
 local budew={
   name = "budew",
@@ -316,5 +439,5 @@ local floatzel={
 }
 -- Cherubi 420
 return {name = "Pokemon Jokers 391-420", 
-        list = {bidoof, bibarel, kricketot, kricketune, budew, roserade, buizel, floatzel},
+        list = {bidoof, bibarel, kricketot, kricketune, shinx, luxio, luxray, budew, roserade, buizel, floatzel},
 }

@@ -4624,6 +4624,38 @@ return {
                 "a {C:tarot}Tarot{} card as well"
               }
             },
+            j_poke_shinx = {
+              name = "Shinx",
+              text = {
+                "{C:purple}+#3# Foresight",
+                "Played {C:diamonds}Diamond{} cards give",
+                "{C:mult}+#1#{} Mult for each {C:attention}Foreseen",
+                "card when scored",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+              }
+            },
+            j_poke_luxio = {
+              name = "Luxio",
+              text = {
+                "{C:purple}+#3# Foresight",
+                "Played {C:diamonds}Diamond{} cards give",
+                "{C:mult}+#1#{} Mult for each {C:attention}Foreseen",
+                "card when scored",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+              }
+            },
+            j_poke_luxray = {
+              name = "Luxray",
+              text = {
+                "{C:purple}+#2# Foresight",
+                "Played {C:diamonds}Diamond{} cards give",
+                "{C:mult}+#1#{} Mult for each {C:attention}Foreseen",
+                "card when scored",
+                "{br:2}ERROR - CONTACT STEAK",
+                "They give {X:mult,C:white} X#3# {} Mult instead",
+                "if you {C:attention}Foresee{} a {C:attention}Flush"
+              }
+            },
             j_poke_budew = {
                 name = 'Budew',
                 text = {
@@ -5746,6 +5778,28 @@ return {
                 "with {C:attention}even{} rank and the",
                 "{C:attention}first{} card with {C:attention}odd{} rank",
                 "in poker hand"
+              }
+            },
+            j_poke_sandygast = {
+              name = "Sandygast",
+              text = {
+                "{C:spades}Spade{} cards permanently",
+                "lose up to {C:chips}#2#{} Chips when",
+                "discarded. Gain lost chips",
+                "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#1#{C:inactive,s:0.8} / +#3# Chips)",
+              }
+            },
+            j_poke_palossand = {
+              name = "Palossand",
+              text = {
+                "Played {C:spades}Spade{} cards with {C:chips}4",
+                "or less total chips give",
+                "{X:mult,C:white} X#3# {} Mult when scored",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{C:spades}Spade{} cards permanently",
+                "lose up to {C:chips}#2#{} Chips when",
+                "discarded. Gain lost chips",
+                "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
               }
             },
             j_poke_mimikyu = {

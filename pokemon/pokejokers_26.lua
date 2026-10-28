@@ -17,7 +17,103 @@
 -- Wimpod 767
 -- Golisopod 768
 -- Sandygast 769
+local sandygast={
+  name = "sandygast",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 0,chip_mod = 2, suit = "Spades"}, evo_rqmt = 42},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt}}
+  end,
+  rarity = 2,
+  cost = 6,
+  gen = 7,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex7",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips,
+      }
+    end
+    
+    if context.discard and context.other_card:is_suit(card.ability.extra.suit) then
+      local drained_chips = pokermon.drain_chips(context.other_card, card.ability.extra.chip_mod)
+      
+      if drained_chips > 0 then
+        return {
+          message = localize('k_eroded_ex'),
+          colour = G.C.CHIPS,
+          card = context.other_card,
+          func = function()
+            SMODS.scale_card(card, {
+              ref_value = 'chips',
+              operation = function(ref_table, ref_value, initial)
+                ref_table[ref_value] = initial + drained_chips
+              end,
+            })
+          end,
+        }
+      end
+    end
+    return pokermon.scaling_evo(self, card, context, "j_poke_palossand", card.ability.extra.chips, self.config.evo_rqmt)
+  end,
+  attributes = {"suit", "modify_card", "scaling", "chips"},
+}
 -- Palossand 770
+local palossand={
+  name = "palossand",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 0, chip_mod = 2, suit = "Spades", Xmult_multi = 1.3}},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.Xmult_multi}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 7,
+  stage = "One",
+  ptype = "Psychic",
+  atlas = "Pokedex7",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips,
+      }
+    end
+    
+    if context.discard and context.other_card:is_suit(card.ability.extra.suit) then
+      local drained_chips = pokermon.drain_chips(context.other_card, card.ability.extra.chip_mod)
+      
+      if drained_chips > 0 then
+        return {
+          message = localize('k_eroded_ex'),
+          colour = G.C.CHIPS,
+          func = function()
+            SMODS.scale_card(card, {
+              ref_value = 'chips',
+              operation = function(ref_table, ref_value, initial)
+                ref_table[ref_value] = initial + drained_chips
+              end,
+            })
+          end,
+        }
+      end
+    end
+    
+    if context.individual and context.cardarea == G.play and not context.end_of_round and pokermon.total_chips(context.other_card) <= 4 then
+      return {
+        x_mult = card.ability.extra.Xmult_multi
+      }
+    end
+  end,
+  attributes = {"suit", "modify_card", "scaling", "chips"},
+}
 -- Pyukumuku 771
 -- Type: Null 772
 -- Silvally 773
@@ -176,5 +272,5 @@ local mega_drampa = {
 }
 
 return {name = "Pokemon Jokers 751-780", 
-        list = {mimikyu, drampa, mega_drampa},
+        list = {sandygast, palossand, mimikyu, drampa, mega_drampa},
 }
