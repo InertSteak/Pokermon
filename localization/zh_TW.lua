@@ -7213,7 +7213,7 @@ return {
             poke_credits_graphics = "圖形設計：",
             poke_credits_quality_assurance_main = "品質保證：",
             poke_credits_developer = "開發者：",
-            poke_credits_designer = "設計輔助：",
+            poke_credits_design_assistant = "設計輔助：",
             poke_credits_community_manager = "社群經理：",
             poke_credits_promotion_producer = "推廣員：",
             poke_credits_localization = "翻譯員：",

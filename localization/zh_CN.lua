@@ -7219,7 +7219,7 @@ return {
             poke_credits_graphics = "图形设计：",
             poke_credits_quality_assurance_main = "品质保证：",
             poke_credits_developer = "开发者：",
-            poke_credits_designer = "设计助理：",
+            poke_credits_design_assistant = "设计助理：",
             poke_credits_community_manager = "社群经理：",
             poke_credits_special_thanks = "特别鸣谢：",
             poke_credits_localization = "本地化：",
