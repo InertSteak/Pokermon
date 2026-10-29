@@ -106,7 +106,8 @@ local palossand={
       end
     end
     
-    if context.individual and context.cardarea == G.play and not context.end_of_round and pokermon.total_chips(context.other_card) <= 4 then
+    if context.individual and context.cardarea == G.play and not context.end_of_round and pokermon.total_chips(context.other_card) <= 4 
+    and context.other_card:is_suit(card.ability.extra.suit) then
       return {
         x_mult = card.ability.extra.Xmult_multi
       }
