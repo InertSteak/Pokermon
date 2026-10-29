@@ -1484,6 +1484,6 @@ local wynaut={
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {cacnea, cacturne, swablu, altaria, zangoose, seviper, solrock, lunatone, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, 
-                feebas, milotic, kecleon, duskull, dusclops, shuppet, banette, tropius, chimecho, absol, wynaut},
+        list = {cacnea, cacturne, swablu, altaria, zangoose, seviper, lunatone, solrock, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, 
+                feebas, milotic, kecleon, shuppet, banette, duskull, dusclops, tropius, chimecho, absol, wynaut},
 }
