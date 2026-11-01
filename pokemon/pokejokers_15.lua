@@ -175,6 +175,7 @@ local mismagius = {
   pos = {x = 0, y = 3},
   config = {extra = {chip_mod = 5, chips = 0, chips2 = 20, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'mismagius')
     return {vars = {card.ability.extra.chip_mod, card.ability.extra.chips, num, dem, card.ability.extra.chips2, }}
   end,

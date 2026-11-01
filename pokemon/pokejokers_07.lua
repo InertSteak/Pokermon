@@ -886,6 +886,7 @@ local misdreavus = {
   pos = {x = 8, y = 4},
   config = {extra = {chip_mod = 5, chips = 0}},
   loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
     return {vars = {card.ability.extra.chip_mod, card.ability.extra.chips, }}
   end,
   rarity = 2,

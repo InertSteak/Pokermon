@@ -430,12 +430,11 @@ return {
                 text = {
                     "{C:attention}Evolution Card{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Earn {C:money}$#1#{} for each {C:attention}Drainable{} ",
-                    "Joker, then {C:attention}Drain {C:money}$1{} from them",
-                    "{br:2}ERROR - CONTACT STEAK",
-                    "After {C:attention}#2#{} {C:inactive}[#3#]{} Rounds, earn",
-                    "{C:money}$#1#{} for each Joker instead",
-                    "{C:inactive}(Currently {C:money}$#4#{C:inactive}/$#5# Max)"
+                    "Earn {C:money}$#1#{} for each Joker",
+                    "Removes {C:money}$#2#{} of sell value",
+                    "from them if able unless",
+                    "used during {C:attention}Boss Blind",
+                    "{C:inactive}(Currently {C:money}$#3#{C:inactive}/$#4# Max)"
                 }
             },
             c_poke_dawnstone = {
@@ -2850,9 +2849,8 @@ return {
             j_poke_misdreavus = {
                 name = 'Misdreavus',
                 text = {
-                    "Played {C:attention}face{} cards permanently",
-                    "lose up to {C:chips}#1#{} Chips when scored",
-                    "Gain lost Chips",
+                    "{C:attention}Drain{} {C:chips}#1#{} Chips from played",
+                    "{C:attention}face cards{} when they score",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
                 }
@@ -4652,8 +4650,9 @@ return {
                 "{C:mult}+#1#{} Mult for each {C:attention}Foreseen",
                 "card when scored",
                 "{br:2}ERROR - CONTACT STEAK",
-                "They give {X:mult,C:white} X#3# {} Mult instead",
-                "if you {C:attention}Foresee{} a {C:attention}Flush"
+                "Played {C:diamonds}Diamond{} cards give {X:mult,C:white} X#3# {}",
+                "Mult instead if {C:attention}Foreseen{}",
+                "hand contains a {C:attention}Flush"
               }
             },
             j_poke_budew = {
@@ -4735,9 +4734,8 @@ return {
             j_poke_mismagius = {
                 name = 'Mismagius',
                 text = {
-                    "Played {C:attention}face{} cards permanently",
-                    "lose up to {C:chips}#1#{} Chips when scored",
-                    "Gain lost Chips",
+                    "{C:attention}Drain{} {C:chips}#1#{} Chips from played",
+                    "{C:attention}face cards{} when they score",
                     "{br:3}ERROR - CONTACT STEAK",
                     "{C:green}#3# in #4#{} chance for them to",
                     "permanently gain {C:chips}#5#{} Chips instead",
@@ -5451,16 +5449,18 @@ return {
                     "{C:attention}Tripled{} if this Joker has",
                     "{C:money}$#5#{} or more sell value",
                     "{br:3.5}ERROR - CONTACT STEAK",
-                    "{C:attention}Drain {C:money}$#1#{} from adjacent",
-                    "Jokers at end of round",
+                    "{C:attention}Drain {C:money}$#1#{} of sell value",
+                    "from {C:attention}adjacent{} Jokers",
+                    "at end of round",
                     "{C:inactive,s:0.8}(Evolves at {C:money,s:0.8}$#3#{C:inactive,s:0.8} / $#2# Sell Value)"
                 }
             },
             j_poke_lampent = {
               name = "Lampent",
               text = {
-                "{C:attention}Drain {C:money}$#1#{} from all other",
-                "Jokers at end of round",
+                "{C:attention}Drain {C:money}$#1#{} of sell value",
+                "from all other Jokers",
+                "at end of round",
                 "{br:3.5}ERROR - CONTACT STEAK",
                 "Adds this Joker's",
                 "sell value to Mult",
@@ -5783,9 +5783,8 @@ return {
             j_poke_sandygast = {
               name = "Sandygast",
               text = {
-                "{C:spades}Spade{} cards permanently",
-                "lose up to {C:chips}#2#{} Chips when",
-                "discarded. Gain lost chips",
+                "{C:attention}Drain{} {C:chips}#2#{} Chips from",
+                "discarded {C:spades}Spade{} cards",
                 "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#1#{C:inactive,s:0.8} / +#3# Chips)",
               }
             },
@@ -5796,9 +5795,8 @@ return {
                 "or less total chips give",
                 "{X:mult,C:white} X#3# {} Mult when scored",
                 "{br:2}ERROR - CONTACT STEAK",
-                "{C:spades}Spade{} cards permanently",
-                "lose up to {C:chips}#2#{} Chips when",
-                "discarded. Gain lost chips",
+                "{C:attention}Drain{} {C:chips}#2#{} Chips from",
+                "discarded {C:spades}Spade{} cards",
                 "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
               }
             },
@@ -6053,8 +6051,8 @@ return {
               name = "Ceruledge",
               text = {
                 "Gains {X:mult,C:white} X#2# {} Mult after scoring",
-                "played hand and drains {C:money}$#3#{}",
-                "from another random Joker",
+                "played hand and drains {C:money}$#3#{} of sell",
+                "value from another random Joker",
                 "{C:inactive,s:0.8}(Resets at end of round)",
                 "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
               }
@@ -7345,10 +7343,9 @@ return {
             poke_drain = {
               name = "Drain",
               text = {
-                "Remove sell value from",
-                "a Joker and add it to self",
-                "if Joker has greater than",
-                "{C:money}$1{} sell value"
+                "Remove and add",
+                "permanently to self",
+                "{C:inactive}(Value can't go below 1)"
               }
             },
             poke_drain_item = {

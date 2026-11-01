@@ -22,6 +22,7 @@ local sandygast={
   pos = {x = 0, y = 0},
   config = {extra = {chips = 0,chip_mod = 2, suit = "Spades"}, evo_rqmt = 42},
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt}}
   end,
   rarity = 2,
@@ -69,6 +70,7 @@ local palossand={
   pos = {x = 0, y = 0},
   config = {extra = {chips = 0, chip_mod = 2, suit = "Spades", Xmult_multi = 1.3}},
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",

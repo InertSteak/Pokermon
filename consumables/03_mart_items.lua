@@ -447,19 +447,13 @@ local duskstone = {
   name = "duskstone",
   key = "duskstone",
   set = "poke_item",
-  config = {extra = {money = 4, max = 30, round_target = 3, rounds = 0}},
+  config = {extra = {money = 4, money_remove = 1, max = 30}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain_item'}
     local card_info = center and center.ability.extra or self.config.extra
     local jokers = (G.jokers and G.jokers.cards) and #G.jokers.cards or 0
-    local joker_count = 0
-    for i = 1, jokers do
-      if G.jokers.cards[i].sell_cost > 1 or ((card_info.round_target - card_info.rounds) <= 0) then
-        joker_count = joker_count + 1
-      end
-    end
-    return {vars = {card_info.money, card_info.round_target, math.max(0, card_info.round_target - card_info.rounds), math.min(card_info.max, card_info.money * joker_count), card_info.max,}}
+    
+    return {vars = {card_info.money, card_info.money_remove, math.min(card_info.max, jokers * card_info.money), card_info.max,}}
   end,
   pos = { x = 3, y = 4 },
   atlas = "AtlasConsumablesBasic",
@@ -473,30 +467,25 @@ local duskstone = {
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
     local joker_count = 0
-    for i = 1, #G.jokers.cards do
-      if G.jokers.cards[i].sell_cost > 1 or ((card.ability.extra.round_target - card.ability.extra.rounds) <= 0) then
-        joker_count = joker_count + 1
-        if not ((card.ability.extra.round_target - card.ability.extra.rounds) <= 0) then
-          pokermon.drain_value(card, G.jokers.cards[i], 1, true)
-        end
+    local drain = true
+    if G.GAME.blind and G.GAME.blind:get_type() == 'Boss' then 
+      drain = false
+    end
+    
+    if drain then
+      for i = 1, #G.jokers.cards do
+        pokermon.drain_value(card, G.jokers.cards[i], 1, true)
       end
     end
-    local money = math.min(card.ability.extra.max, card.ability.extra.money * joker_count)
+    
+    local money = math.min(card.ability.extra.max, card.ability.extra.money * #G.jokers.cards)
     ease_dollars(money)
     pokermon.evo_item_use_total(self, card, area, copier)
   end,
   calculate = function(self, card, context)
-    if context.setting_blind and not context.blueprint then
-      card.ability.extra.rounds = card.ability.extra.rounds + 1
-    end
-  end,
-  update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN then
-      if ((card.ability.extra.round_target - card.ability.extra.rounds) <= 0) and not card.ability.extra.juiced then
-        card.ability.extra.juiced = true
-        local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
-        juice_card_until(card, eval, true)
-      end
+    if context.first_hand_drawn and G.GAME.blind and G.GAME.blind:get_type() == 'Boss' then
+      local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
     end
   end,
   in_pool = function(self)
