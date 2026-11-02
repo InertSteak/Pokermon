@@ -340,8 +340,9 @@ return {
                 text = {
                     "{C:attention}Type Changer:{} {X:poke_metal,C:white}Metal{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Creates a {C:attention}Steel{} copy of",
-                    "{C:attention}1{} selected card",
+                    "Creates a copy of",
+                    "{C:attention}1{} selected card, then",
+                    "it becomes {C:attention}Steel"
                 },
             },
             c_poke_dragonscale = {
@@ -1334,8 +1335,9 @@ return {
                     "exactly {C:attention}1 face{} card",
                     "it becomes a {C:attention}Gold{} card",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Earn {C:money}$#1#{} when a",
-                    "card becomes {C:attention}Gold{}",
+                    "Earn {C:money}$#1#{} when a card",
+                    "becomes {C:attention}Gold{} or when",
+                    "a {C:attention}Gold{} card is copied"
                 } 
             },
             j_poke_mankey = {
