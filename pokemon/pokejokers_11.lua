@@ -926,22 +926,26 @@ local numel={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and card.ability.extra.active then
-        card.ability.extra.cards_scored = 0
-      end
-      if context.joker_main and card.ability.extra.active then
-        card.ability.extra.active = false
-        return {
-          Xmult = card.ability.extra.Xmult
-        }
-      end
-      if context.after and card.ability.extra.cards_scored >= card.ability.extra.score_goal then
+    if context.before and card.ability.extra.active and not context.blueprint then
+      card.ability.extra.cards_scored = 0
+    end
+    
+    if context.joker_main and card.ability.extra.active then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
+    end
+    
+    if context.after then    
+      if card.ability.extra.cards_scored >= card.ability.extra.score_goal and not card.ability.extra.active and not context.blueprint then
         card.ability.extra.active = true
         local eval = function(card) return card.ability.extra.active and not G.RESET_JIGGLES end
         juice_card_until(card, eval, true)
+      elseif card.ability.extra.active and not context.blueprint then
+        card.ability.extra.active = false
       end
     end
+    
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.blueprint then
       card.ability.extra.cards_scored = card.ability.extra.cards_scored + 1
     end
@@ -971,22 +975,26 @@ local camerupt={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and card.ability.extra.active then
-        card.ability.extra.cards_scored = 0
-      end
-      if context.joker_main and card.ability.extra.active then
-        card.ability.extra.active = false
-        return {
-          Xmult = card.ability.extra.Xmult
-        }
-      end
-      if context.after and card.ability.extra.cards_scored >= card.ability.extra.score_goal then
+    if context.before and card.ability.extra.active and not context.blueprint then
+      card.ability.extra.cards_scored = 0
+    end
+    
+    if context.joker_main and card.ability.extra.active then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
+    end
+    
+    if context.after then    
+      if card.ability.extra.cards_scored >= card.ability.extra.score_goal and not card.ability.extra.active and not context.blueprint then
         card.ability.extra.active = true
         local eval = function(card) return card.ability.extra.active and not G.RESET_JIGGLES end
         juice_card_until(card, eval, true)
+      elseif card.ability.extra.active and not context.blueprint then
+        card.ability.extra.active = false
       end
     end
+    
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.blueprint then
       card.ability.extra.cards_scored = card.ability.extra.cards_scored + 1
       if SMODS.has_enhancement(context.other_card, 'm_mult') then
