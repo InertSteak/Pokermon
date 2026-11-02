@@ -1285,6 +1285,7 @@ local dunsparce={
       card.ability.extra.rerolled = true
       local eval = function(card) return not card.REMOVED end
       juice_card_until(card, eval, true)
+      save_run()
     end
     if context.ending_shop and not context.blueprint and card.ability.extra.rerolled then
       G.E_MANAGER:add_event(Event({
