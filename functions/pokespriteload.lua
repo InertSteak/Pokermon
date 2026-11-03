@@ -638,7 +638,7 @@ PokemonSprites = {
 {name = "cresselia", base = {pos = {x = 14, y = 32}, soul_pos = {x = 15, y = 32}},},
 {name = "phione", base = {pos = {x = 16, y = 32}, soul_pos = {x = 17, y = 32}},},
 {name = "manaphy", base = {pos = {x = 18, y = 32}, soul_pos = {x = 19, y = 32}},},
-{name = "darkrai", base = {pos = {x = 20, y = 32}, soul_pos = {x = 21, y = 32}},}, alts = {AtlasJokersSeriesA = {artist = 'Sonfive'}}},
+{name = "darkrai", base = {pos = {x = 20, y = 32}, soul_pos = {x = 21, y = 32}},}, alts = {AtlasJokersSeriesA = {artist = 'Sonfive'}},
 {name = "mega_darkrai", base = {pos = {x = 2, y = 8}, soul_pos = {x = 3, y = 8}},gen_atlas = 4},
 {name = "shaymin", base = {pos = {x = 0, y = 4}, soul_pos = {x = 1, y = 4}},gen_atlas = 4},
 {name = "shaymin_sky", base = {pos = {x = 2, y = 4}, soul_pos = {x = 3, y = 4}},gen_atlas = 4},
