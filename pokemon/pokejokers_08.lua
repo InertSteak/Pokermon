@@ -157,11 +157,9 @@ local scizor={
     if context.joker_main and (card.ability.extra.mult > 0 or card.ability.extra.scizor_chips > 0 or card.ability.extra.scizor_Xmult > 1) then
       return {
         message = localize("poke_x_scissor_ex"),
-        colour = pokermon.colours.metal,
-        mult_mod = card.ability.extra.mult,
-        chip_mod = card.ability.extra.scizor_chips,
-        Xmult_mod = card.ability.extra.scizor_Xmult,
-        sound = card.ability.extra.scizor_Xmult > 1 and 'multhit2'
+        mult = card.ability.extra.mult,
+        chips = card.ability.extra.scizor_chips,
+        xmult = card.ability.extra.scizor_Xmult,
       }
     end
   end,

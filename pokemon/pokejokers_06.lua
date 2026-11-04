@@ -296,10 +296,8 @@ local typhlosion = {
     if context.joker_main and G.GAME.current_round.discards_left > 0 then
       return {
         message = localize("poke_fire_blast_ex"),
-        colour = G.C.MULT,
-        mult_mod = card.ability.extra.mult * G.GAME.current_round.discards_left,
-        Xmult_mod = 1 + (card.ability.extra.Xmult * G.GAME.current_round.discards_left),
-        sound = 'multhit2'
+        mult = card.ability.extra.mult * G.GAME.current_round.discards_left,
+        xmult = 1 + (card.ability.extra.Xmult * G.GAME.current_round.discards_left),
       }
     end
   end,

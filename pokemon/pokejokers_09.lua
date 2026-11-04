@@ -1530,9 +1530,8 @@ local dustox={
         if all_nature then
           return {
             message = localize('poke_bug_buzz_ex'),
-            chip_mod = card.ability.extra.chips,
-            Xmult_mod = card.ability.extra.Xmult,
-            sound = 'multhit2'
+            chips = card.ability.extra.chips,
+            xmult = card.ability.extra.Xmult,
           }
         else
           return {

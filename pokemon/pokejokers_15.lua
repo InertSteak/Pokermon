@@ -97,9 +97,8 @@ local lopunny={
           if score_xmult then
             return {
               message = localize("poke_highjumpkick_ex"),
-              mult_mod = mult,
-              Xmult_mod = card.ability.extra.Xmult,
-              sound = 'multhit2'
+              mult = mult,
+              xmult = card.ability.extra.Xmult,
             }
           else
             return {

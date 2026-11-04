@@ -28,9 +28,8 @@ local wugtrio={
         if score_mult and score_chips then
           return {
             message = localize('poke_dig_ex'),
-            chip_mod = card.ability.extra.chips,
-            Xmult_mod = card.ability.extra.Xmult,
-            sound = 'multhit2'
+            chips = card.ability.extra.chips,
+            xmult = card.ability.extra.Xmult,
           }
         elseif score_chips then
           return {
@@ -38,7 +37,7 @@ local wugtrio={
           }
         elseif score_mult then
           return {
-            Xmult = card.ability.extra.Xmult,
+            xmult = card.ability.extra.Xmult,
           }
         end
       end

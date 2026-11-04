@@ -295,9 +295,8 @@ local charizard={
       if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
         return {
           message = "Fire Blast!",
-          mult_mod = card.ability.extra.mult,
-          Xmult_mod = card.ability.extra.Xmult,
-          sound = 'multhit2'
+          mult = card.ability.extra.mult,
+          xmult = card.ability.extra.Xmult,
         }
       else
         return {

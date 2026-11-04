@@ -925,9 +925,8 @@ local armaldo={
         local total_xmult = self:get_total_Xmult(card)
         return {
           message = localize("poke_x_scissor_ex"),
-          mult_mod = card.ability.extra.mult,
-          Xmult_mod = total_xmult,
-          sound = total_xmult > 1 and 'multhit2' or nil
+          mult = card.ability.extra.mult,
+          xmult = total_xmult,
         }
       else
         return {
