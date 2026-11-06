@@ -1437,8 +1437,6 @@ local smeargle={
           return v
         end
       end
-      -- If we can't find it (usually because we've sold/destroyed it) don't try again 
-      card.ability.extra.copy_val = nil
     end
   end,
   calculate = function(self, card, context)
