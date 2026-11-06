@@ -482,7 +482,7 @@ local slugma={
           (card.ability.extra.every + 1)
       if not context.blueprint then
         if card.ability.extra.loyalty_remaining == 0 then
-            local eval = function(card) return card.ability.extra.loyalty_remaining == 0 and not G.RESET_JIGGLES end
+            local eval = function(card) return card.ability.extra.loyalty_remaining == 0 end
             juice_card_until(card, eval, true)
         end
         
@@ -535,7 +535,7 @@ local magcargo={
           (card.ability.extra.every + 1)
       if not context.blueprint then
         if card.ability.extra.loyalty_remaining == 0 then
-            local eval = function(card) return card.ability.extra.loyalty_remaining == 0 and not G.RESET_JIGGLES end
+            local eval = function(card) return card.ability.extra.loyalty_remaining == 0 end
             juice_card_until(card, eval, true)
         end
         
