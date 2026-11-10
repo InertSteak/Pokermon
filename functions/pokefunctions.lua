@@ -1557,3 +1557,7 @@ pokermon.modify_pool = function(pool)
     end
   end
 end
+
+pokermon.is_desert = function(card)
+  return SMODS.has_enhancement(card, 'm_stone') or SMODS.has_enhancement(card, 'm_steel') or card:is_suit("Diamonds")
+end

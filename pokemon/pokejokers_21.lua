@@ -531,7 +531,7 @@ local cryogonal = {
       end
       if faces > 0 then
           return {
-              message = localize('Gem_glass'),
+              message = localize('poke_glass_ex'),
               colour = G.C.MONEY
           }
      end

@@ -4075,6 +4075,35 @@ return {
                 "{C:attention}Nature Enhancement{} when scored",
               }
             },
+            j_poke_trapinch = {
+              name = "Trapinch",
+              text = {
+                "If {C:attention}poker hand{} has {C:attention}#1#+",
+                "{C:attention}Desert{} cards, destroy a",
+                "random held {C:attention}non-Desert{} card",
+                "{C:inactive,s:0.8}(Evolves with a {C:poke_dragon,s:0.8}Dragon{C:inactive,s:0.8} sticker)"
+              }
+            },
+            j_poke_vibrava = {
+              name = "Vibrava",
+              text = {
+                "If {C:attention}poker hand{} has {C:attention}#1#+ Desert",
+                "cards, held cards give {C:chips}+#2#{}",
+                "Chips plus their total Chips",
+                "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#3#{C:inactive,s:0.8} Desert cards)"
+              }
+            },
+            j_poke_flygon = {
+              name = "Flygon",
+              text = {
+                "If {C:attention}poker hand{} has {C:attention}#1#+ Desert",
+                "cards, held cards give {C:chips}+#2#{}",
+                "Chips plus their total Chips",
+                "{br:3}ERROR - CONTACT STEAK",
+                "Retrigger all {C:attention}Desert{} card",
+                "{C:attention}held in hand{} abilities",
+              }
+            },
             j_poke_cacnea = {
               name = "Cacnea",
               text = {
@@ -6997,6 +7026,13 @@ return {
                     "card remaining in deck",
                 }
             },
+            desert_card = {
+                name = "Desert Card",
+                text = {
+                    "A {C:attention}Stone{}, {C:attention}Steel{} or",
+                    "{C:diamonds}Diamond{} card",
+                }
+            },
             energize = {
                 name = "Energize",
                 text = {
@@ -8141,7 +8177,9 @@ return {
             poke_m_gold = "Gold",
             poke_m_lucky = "Lucky",
             poke_m_poke_seed = "Seed",
-
+            
+            poke_glass_ex = "Glass!",
+            
             poke_ludicolo_ex = "Ludicolo!",
             
         },

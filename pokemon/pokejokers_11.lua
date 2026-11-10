@@ -1153,11 +1153,174 @@ local spinda={
   attributes = {"holding", "modify_card", "nature", "rank", "enhancements"},
 }
 -- Trapinch 328
+local trapinch={
+  name = "trapinch",
+  pos = {x = 0, y = 0},
+  config = {extra = {desert_count = 5}},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'desert_card'}
+    return {vars = {center.ability.extra.desert_count}}
+  end,
+  rarity = 2,
+  cost = 6,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Earth",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.after and #context.scoring_hand >= card.ability.extra.desert_count then
+      local deserts = 0
+      for i = 1, #context.scoring_hand do
+        if pokermon.is_desert(context.scoring_hand[i]) then
+          deserts = deserts + 1
+        end
+      end
+      
+      if deserts >= 5 then
+        local remove_targets = {}
+        for j = 1, #G.hand.cards do
+          if not pokermon.is_desert(G.hand.cards[j]) then
+            remove_targets[#remove_targets + 1] = G.hand.cards[j]
+          end
+        end
+        if #remove_targets > 0 then
+          local remove_target = pseudorandom_element(remove_targets, pseudoseed('trapinch'))
+          pokermon.remove_card(remove_target, card)
+        end
+      end
+    end
+    return pokermon.type_evo(self, card, context, "j_poke_vibrava", "dragon")
+  end,
+}
 -- Vibrava 329
+local vibrava={
+  name = "vibrava",
+  pos = {x = 0, y = 0},
+  config = {extra = {desert_count = 5, chip_mod = 40, deserts_scored = 0}, evo_rqmt = 25},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'desert_card'}
+    return {vars = {center.ability.extra.desert_count, center.ability.extra.chip_mod, math.max(0, self.config.evo_rqmt - center.ability.extra.deserts_scored)}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 3,
+  stage = "One",
+  ptype = "Dragon",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.before and #context.scoring_hand >= card.ability.extra.desert_count then
+      local deserts = 0
+      for i = 1, #context.scoring_hand do
+        if pokermon.is_desert(context.scoring_hand[i]) then
+          deserts = deserts + 1
+        end
+      end
+      
+      if deserts >= 5 then
+        card.ability.extra.active = true
+      end
+    end
+    
+    if context.after and card.ability.extra.active and not context.blueprint then
+      card.ability.extra.active = nil
+    end
+    
+    if context.individual and not context.end_of_round and (context.cardarea == G.play or context.cardarea == G.hand) then
+      if context.cardarea == G.play and pokermon.is_desert(context.other_card) and not context.blueprint then
+        card.ability.extra.deserts_scored = card.ability.extra.deserts_scored + 1
+      end
+      
+      if context.cardarea == G.hand then
+        if context.other_card.debuff then
+          return {
+            message = localize("k_debuffed"),
+            colour = G.C.RED,
+            card = card,
+          }
+        else
+          return {
+            chips = card.ability.extra.chip_mod + pokermon.total_chips(context.other_card),
+          }
+        end
+      end
+    end
+    
+    return pokermon.scaling_evo(self, card, context, "j_poke_flygon", card.ability.extra.deserts_scored, self.config.evo_rqmt)
+  end,
+}
 -- Flygon 330
+local flygon={
+  name = "flygon",
+  pos = {x = 0, y = 0},
+  config = {extra = {desert_count = 5, chip_mod = 40, deserts_scored = 0, retriggers = 1}, evo_rqmt = 25},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'desert_card'}
+    return {vars = {center.ability.extra.desert_count, center.ability.extra.chip_mod, math.max(0, self.config.evo_rqmt - center.ability.extra.deserts_scored)}}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  gen = 3,
+  stage = "Two",
+  ptype = "Dragon",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.before and #context.scoring_hand >= card.ability.extra.desert_count then
+      local deserts = 0
+      for i = 1, #context.scoring_hand do
+        if pokermon.is_desert(context.scoring_hand[i]) then
+          deserts = deserts + 1
+        end
+      end
+      
+      if deserts >= 5 then
+        card.ability.extra.active = true
+      end
+    end
+    
+    if context.after and card.ability.extra.active and not context.blueprint then
+      card.ability.extra.active = nil
+    end
+    
+    if context.individual and not context.end_of_round and context.cardarea == G.hand then
+      if context.cardarea == G.play and pokermon.is_desert(context.other_card) and not context.blueprint then
+        card.ability.extra.deserts_scored = card.ability.extra.deserts_scored + 1
+      end
+      
+      if context.cardarea == G.hand then
+        if context.other_card.debuff then
+          return {
+            message = localize("k_debuffed"),
+            colour = G.C.RED,
+            card = card,
+          }
+        else
+          return {
+            chips = card.ability.extra.chip_mod + pokermon.total_chips(context.other_card),
+          }
+        end
+      end
+    end
+    
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and pokermon.is_desert(context.other_card) then
+        return {
+            repetitions = card.ability.extra.retriggers
+        }
+    end
+  end,
+}
+
 return {
   name = "Pokemon Jokers 301-330",
 
   list = {delcatty, sableye, mawile, aron, lairon, aggron, meditite, medicham, electrike, manectric, plusle, minun, volbeat, illumise, roselia, carvanha, sharpedo, 
-          wailmer, wailord, numel, camerupt, mega_camerupt, torkoal, spinda},
+          wailmer, wailord, numel, camerupt, mega_camerupt, torkoal, spinda, trapinch, vibrava, flygon},
 }
