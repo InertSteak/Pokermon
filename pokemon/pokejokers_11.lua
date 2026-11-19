@@ -710,7 +710,104 @@ local roselia={
   attributes = {"rank", "ace", "three", "five", "seven", "nine", "retrigger", "enhancements", "item_evo"},
 }
 -- Gulpin 316
+local gulpin={
+  name = "gulpin",
+  pos = {x = 0, y = 0},
+  config = {extra = {card_limit = 1, item_count = 0}, evo_rqmt = 3},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {center.ability.extra.card_limit, center.ability.extra.item_count, self.config.evo_rqmt}}
+  end,
+  rarity = 1,
+  cost = 4,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    return pokermon.scaling_evo(self, card, context, "j_poke_swalot", card.ability.extra.item_count, self.config.evo_rqmt)
+  end,
+  update = function(self, card, dt)
+    if G.STAGE == G.STAGES.RUN then
+      local count = 0
+      for i = 1, #G.consumeables.cards do
+        if G.consumeables.cards[i].ability.set == 'poke_item' then
+          count = count + 1
+        end
+      end
+      card.ability.extra.item_count = count
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    local limit = card.ability.extra.card_limit
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            G.consumeables.config.card_limit = G.consumeables.config.card_limit + limit
+            return true
+        end
+    }))
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    local limit = card.ability.extra.card_limit
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            G.consumeables.config.card_limit = G.consumeables.config.card_limit - limit
+            return true
+        end
+    }))
+  end,
+}
 -- Swalot 317
+local swalot={
+  name = "swalot",
+  pos = {x = 0, y = 0},
+  config = {extra = {card_limit = 1, d_plus = 1}},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {center.ability.extra.card_limit, center.ability.extra.d_plus}}
+  end,
+  rarity = "poke_safari",
+  cost = 6,
+  gen = 3,
+  stage = "One",
+  ptype = "Dark",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      local count = 0
+      for i = 1, #G.consumeables.cards do
+        if G.consumeables.cards[i].ability.set == 'poke_item' then
+          count = count + 1
+        end
+      end
+      local discards = card.ability.extra.d_plus * count
+      ease_discard(discards)
+      card:juice_up()
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    local limit = card.ability.extra.card_limit
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            G.consumeables.config.card_limit = G.consumeables.config.card_limit + limit
+            return true
+        end
+    }))
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    local limit = card.ability.extra.card_limit
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            G.consumeables.config.card_limit = G.consumeables.config.card_limit - limit
+            return true
+        end
+    }))
+  end,
+}
 -- Carvanha 318
 local carvanha={
   name = "carvanha",
@@ -1321,6 +1418,6 @@ local flygon={
 return {
   name = "Pokemon Jokers 301-330",
 
-  list = {delcatty, sableye, mawile, aron, lairon, aggron, meditite, medicham, electrike, manectric, plusle, minun, volbeat, illumise, roselia, carvanha, sharpedo, 
+  list = {delcatty, sableye, mawile, aron, lairon, aggron, meditite, medicham, electrike, manectric, plusle, minun, volbeat, illumise, roselia, gulpin, swalot, carvanha, sharpedo, 
           wailmer, wailord, numel, camerupt, mega_camerupt, torkoal, spinda, trapinch, vibrava, flygon},
 }

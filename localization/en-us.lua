@@ -3984,6 +3984,22 @@ return {
                   "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Shiny Stone{C:inactive,s:0.8})"
                 }
             },
+            j_poke_gulpin = {
+                name = "Gulpin",
+                text = {
+                  "{C:attention}+#1#{} consumable slots",
+                  "{C:inactive,s:0.8}(Evolves when holding {C:poke_item,s:0.8}#2#{C:inactive,s:0.8}/#3# Item cards){}"
+                }
+            },
+            j_poke_swalot = {
+                name = "Swalot",
+                text = {
+                  "{C:attention}+#1#{} consumable slots",
+                  "When {C:attention}Blind{} is selected, gain",
+                  "{C:red}+#1#{} discards this round for",
+                  "each held {C:poke_item}Item{} card",
+                }
+            },
             j_poke_carvanha = {
               name = "Carvanha",
               text = {
