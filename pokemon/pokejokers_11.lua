@@ -1333,7 +1333,7 @@ local vibrava={
         card.ability.extra.deserts_scored = card.ability.extra.deserts_scored + 1
       end
       
-      if context.cardarea == G.hand then
+      if context.cardarea == G.hand and card.ability.extra.active then
         if context.other_card.debuff then
           return {
             message = localize("k_debuffed"),
@@ -1387,23 +1387,17 @@ local flygon={
       card.ability.extra.active = nil
     end
     
-    if context.individual and not context.end_of_round and context.cardarea == G.hand then
-      if context.cardarea == G.play and pokermon.is_desert(context.other_card) and not context.blueprint then
-        card.ability.extra.deserts_scored = card.ability.extra.deserts_scored + 1
-      end
-      
-      if context.cardarea == G.hand then
-        if context.other_card.debuff then
-          return {
-            message = localize("k_debuffed"),
-            colour = G.C.RED,
-            card = card,
-          }
-        else
-          return {
-            chips = card.ability.extra.chip_mod + pokermon.total_chips(context.other_card),
-          }
-        end
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and card.ability.extra.active then
+      if context.other_card.debuff then
+        return {
+          message = localize("k_debuffed"),
+          colour = G.C.RED,
+          card = card,
+        }
+      else
+        return {
+          chips = card.ability.extra.chip_mod + pokermon.total_chips(context.other_card),
+        }
       end
     end
     
