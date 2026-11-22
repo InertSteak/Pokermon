@@ -1172,9 +1172,8 @@ local kingdra={
     if context.joker_main and (card.ability.extra.mult > 0 or card.ability.extra.Xmult > 1) then
       return {
         message = localize("poke_twister_ex"),
-        mult_mod = card.ability.extra.mult,
-        Xmult_mod = card.ability.extra.Xmult,
-        sound = card.ability.extra.Xmult > 1 and 'multhit2'
+        mult = card.ability.extra.mult,
+        xmult = card.ability.extra.Xmult
       }
     end
   end,
