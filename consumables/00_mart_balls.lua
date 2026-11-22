@@ -99,7 +99,7 @@ local masterball = {
   use = function(self, card, area, copier)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
-        SMODS.add_card({ set = 'Joker', attributes = {'stage_legendary'}, allow_legendaries = true, key_append = 'masterball' })
+        SMODS.add_card({ set = 'Joker', attributes = {'stage_legendary'}, rarity = false, allow_legendaries = true, key_append = 'masterball' })
         return true end }))
     delay(0.6)
   end
