@@ -141,11 +141,9 @@ pokermon.add_playing_card = function(t, no_joker_effect)
 end
 
 pokermon.add_shop_card = function(add_card, card, is_free)
-  if G.GAME.shop.joker_max == 1 then
-    G.shop_jokers.config.card_limit = G.GAME.shop.joker_max + 1
-    G.shop_jokers.T.w = math.min((G.GAME.shop.joker_max + 1) * 1.02 * G.CARD_W, 4.08 * G.CARD_W)
-    G.shop:recalculate()
-  end
+  G.shop_jokers.config.card_limit = G.GAME.shop.joker_max + 1
+  G.shop_jokers.T.w = math.min((G.GAME.shop.joker_max + 1) * 1.02 * G.CARD_W, 4.08 * G.CARD_W)
+  G.shop:recalculate()
   add_card.states.visible = false
   G.shop_jokers:emplace(add_card)
   if is_free then
