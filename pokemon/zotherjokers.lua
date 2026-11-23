@@ -611,9 +611,8 @@ local unown_swarm={
       })) 
       return {
         message = localize('poke_hidden_power_ex'),
-        Xmult_mod = card.ability.extra.Xmult_multi,
-        mult_mod = card.ability.extra.mult,
-        sound = 'multhit2'
+        xmult = card.ability.extra.Xmult_multi,
+        mult = card.ability.extra.mult
       }
     end
   end,
