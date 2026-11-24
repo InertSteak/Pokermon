@@ -1318,7 +1318,7 @@ local shellder={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.play and #context.scoring_hand == 5 then
+    if context.repetition and context.cardarea == G.play and #context.scoring_hand >= 5 then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         if SMODS.pseudorandom_probability(card, 'shellder', card.ability.extra.num, card.ability.extra.dem, 'shellder') then
           return {

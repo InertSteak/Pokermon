@@ -1697,7 +1697,7 @@ return {
             j_poke_shellder = {
                 name = 'Shellder',      
                 text = {
-                    "If hand has {C:attention}5{} scoring cards,",
+                    "If hand has {C:attention}5+{} scoring cards,",
                     "each have a {C:green}#1# in #2#{} chance to",
                     "retrigger {C:attention}#3#{} additional time",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Water Stone{C:inactive,s:0.8})"
@@ -1706,7 +1706,7 @@ return {
             j_poke_cloyster = {
                 name = 'Cloyster',      
                 text = {
-                    "If hand has {C:attention}5{} scoring cards,",
+                    "If hand has {C:attention}5+{} scoring cards,",
                     "each have a {C:green}#1# in #2#{} chance to",
                     "retrigger {C:attention}#3#{} additional time",
                 } 
