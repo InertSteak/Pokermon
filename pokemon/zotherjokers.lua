@@ -807,10 +807,10 @@ local oologist={
   stage = "Other",
   atlas = "others",
   perishable_compat = true,
-  blueprint_compat = false,
+  blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.selling_self and (card.ability.extra.rounds_current >= card.ability.extra.rounds_total) and not context.blueprint then
+    if context.selling_self and (card.ability.extra.rounds_current >= card.ability.extra.rounds_total) then
       for i = 1, math.floor(card.ability.extra.rounds_current/card.ability.extra.rounds_total) do
         SMODS.add_card{set = "Joker", key = "j_poke_mystery_egg", edition = "e_negative"}
       end
