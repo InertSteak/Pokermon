@@ -1360,7 +1360,106 @@ jd_def["j_poke_altaria"] = {
 --	Zangoose
 --	Seviper
 --	Lunatone
+jd_def['j_poke_lunatone'] = {
+  text = {
+    { ref_table = "card.joker_display_values", ref_value = "count",   retrigger_type = "mult" },
+    { text = "x",                              scale = 0.35 },
+    { text = "$",                              colour = G.C.GOLD },
+    { ref_table = "card.ability.extra",        ref_value = "money_mod", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text_suit" },
+    { text = " / " },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text_enh" },
+    { text = ")" }
+  },
+  extra = {
+    {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "odds" },
+      { text = ")" },
+    }
+  },
+  extra_config = { colour = G.C.GREEN, scale = 0.3 },
+  calc_function = function(card)
+    local playing_hand = next(G.play.cards)
+    local count = 0
+    for _, playing_card in ipairs(G.hand.cards) do
+      if playing_hand or not playing_card.highlighted then
+        if playing_card:is_suit("Clubs") or pokermon.has_enhancement(playing_card, 'm_stone') then
+          count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+        end
+      end
+    end
+    card.joker_display_values.count = count
+
+    local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'lunatone')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, den } }
+
+    card.joker_display_values.localized_text_suit = localize("Clubs", 'suits_plural')
+    card.joker_display_values.localized_text_enh = localize({ type = "name_text", set = "Enhanced", key = "m_stone" })
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    local suit_node = reminder_text and reminder_text.children and reminder_text.children[2]
+    local enh_node = reminder_text and reminder_text.children and reminder_text.children[4]
+    if suit_node then suit_node.config.colour = lighten(G.C.SUITS["Clubs"], 0.35) end
+    if enh_node then enh_node.config.colour = lighten(G.C.FILTER, 0.35) end
+  end
+}
+
 --	Solrock
+jd_def["j_poke_solrock"] = {
+  text = {
+    { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult" },
+    { text = "x",                              scale = 0.35 },
+    {
+        border_nodes = {
+            { text = "X" },
+            { ref_table = "card.ability.extra", ref_value = "Xmult_multi" }
+        }
+    }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text_suit" },
+    { text = " / " },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text_enh" },
+    { text = ")" }
+  },
+  extra = {
+    {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "odds" },
+      { text = ")" },
+    }
+  },
+  extra_config = { colour = G.C.GREEN, scale = 0.3 },
+  calc_function = function(card)
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local count = 0
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:is_suit("Hearts") or pokermon.has_enhancement(scoring_card, 'm_stone') then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+        end
+      end
+    end
+    card.joker_display_values.count = count
+
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'solrock')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
+
+    card.joker_display_values.localized_text_suit = localize("Hearts", 'suits_plural')
+    card.joker_display_values.localized_text_enh = localize({ type = "name_text", set = "Enhanced", key = "m_stone" })
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    local suit_node = reminder_text and reminder_text.children and reminder_text.children[2]
+    local enh_node = reminder_text and reminder_text.children and reminder_text.children[4]
+    if suit_node then suit_node.config.colour = lighten(G.C.SUITS["Hearts"], 0.35) end
+    if enh_node then enh_node.config.colour = lighten(G.C.FILTER, 0.35) end
+  end
+}
 --	Barboach
 --	Whiscash
 --	Corphish
