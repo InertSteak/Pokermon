@@ -898,7 +898,7 @@ return {
                     "{C:chips}+#2#{} hands, Applies {C:attention}Splash{}",
                     "Each played card",
                     "gives {C:chips}+#1#{} Chips and",
-                    "{C:attention}-#3#{} hand when scored",
+                    "{C:chips}-#3#{} hand when scored",
                 } 
             },
             j_poke_caterpie = {
