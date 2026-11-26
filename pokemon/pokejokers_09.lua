@@ -199,9 +199,9 @@ local suicune={
   name = "suicune",
   pos = {x = 5, y = 9},
   soul_pos = {x = 6, y = 9},
-  config = {extra = {chips_max = 50}},
+  config = {extra = {chip_mod = 10}},
   loc_vars = function(self, info_queue, center)
-    return {vars = {center.ability.extra.chips_max}}
+    return {vars = {center.ability.extra.chip_mod}}
   end,
   rarity = 4,
   cost = 20,
@@ -213,19 +213,16 @@ local suicune={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        for k, v in pairs(context.scoring_hand) do
+    if context.individual and context.cardarea == G.play and not context.end_of_round and not SMODS.has_no_rank(context.other_card) then
+      local match_id = context.other_card:get_id()
+      for k, v in pairs(G.playing_cards) do
+        if v:get_id() == match_id then
           v.ability.perma_bonus = v.ability.perma_bonus or 0
-          v.ability.perma_bonus = v.ability.perma_bonus + math.min(card.ability.extra.chips_max, pokermon.total_chips(v))
+          v.ability.perma_bonus = v.ability.perma_bonus + card.ability.extra.chip_mod
         end
-        
-        return {
-          extra = {message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
-          colour = G.C.CHIPS,
-          card = card
-        }
       end
+      
+      card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.CHIPS})
     end
   end,
   attributes = {"chips", "modify_card", "perma_bonus"},

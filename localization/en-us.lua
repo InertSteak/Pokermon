@@ -813,6 +813,9 @@ return {
                 name = "Mega Venusaur",
                 text = {
                     "{C:attention}+#1#{} hand size",
+                    "Each {C:attention}#3#{} held in hand",
+                    "gives {X:mult,C:white} X#2# {} Mult",
+                    "{C:inactive,s:0.8}(Rank changes every round){}",
                 }
             },
             j_poke_charmander = {
@@ -846,13 +849,18 @@ return {
             j_poke_mega_charizard_x = {
                 name = "Mega Charizard X",
                 text = {
-                    "{X:mult,C:white} X#1# {} Mult when {C:attention}#2#{} discards remaining",
+                    "Played cards give",
+                    "{X:mult,C:white} X#1# {} Mult when scored",
+                    "if {C:attention}#2#{} discards remain"
                 } 
             },
             j_poke_mega_charizard_y = {
                 name = "Mega Charizard Y",
                 text = {
-                    "{C:red}+#1#{} discards",
+                    "{C:red}+#1#{} discards, {C:attention}Holding{} {C:spectral}Deja Vu",
+                    "When you discard a",
+                    "{C:red}Red Seal{} card, create",
+                    "a {C:tarot}Tarot{} card"
                 } 
             },
             j_poke_squirtle = {
@@ -887,7 +895,10 @@ return {
             j_poke_mega_blastoise = {
                 name = "Mega Blastoise",
                 text = {
-                    "{C:chips}+#2#{} hands",
+                    "{C:chips}+#2#{} hands, Applies {C:attention}Splash{}",
+                    "Each played card",
+                    "gives {C:chips}+#1#{} Chips and",
+                    "{C:attention}-#3#{} hand when scored",
                 } 
             },
             j_poke_caterpie = {
@@ -1503,7 +1514,7 @@ return {
                   "Played cards with {C:attention}even{} rank",
                   "retrigger {C:attention}#1#{} additional time",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Played cards with a {C:attention}Purple Seal{}",
+                  "Played cards with a {C:purple}Purple Seal{}",
                   "retrigger {C:attention}#1#{} additional time",
                 } 
             },
@@ -3328,10 +3339,10 @@ return {
             j_poke_suicune = {
                 name = "Suicune",
                 text = {
-                  "Permanently {C:attention}doubles{} the",
-                  "total Chips of each scoring",
-                  "card in played hand",
-                  "{C:inactive}(Up to {C:chips}+#1#{C:inactive} Chips per increase)",
+                  "Played cards permanently add",
+                  "{C:chips}+#1#{} Chips to every card in",
+                  "your {C:attention}full deck{} with the",
+                  "same {C:attention}rank{} when scored"
                 }
             },
             j_poke_larvitar = {

@@ -154,7 +154,7 @@ jd_def["j_poke_mega_charizard_x"] = {
 text_config = { colour = G.C.WHITE },
 calc_function = function(card)
     if G.GAME and G.GAME.current_round and G.GAME.current_round.discards_left <= card.ability.extra.d_remaining then 
-        card.joker_display_values.Xmult = card.ability.extra.Xmult
+        card.joker_display_values.Xmult = card.ability.extra.Xmult_multi
     else
         card.joker_display_values.Xmult = 1
     end

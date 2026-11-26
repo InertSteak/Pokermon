@@ -171,9 +171,9 @@ local mega_venusaur = {
   name = "mega_venusaur",
   pos = { x = 0, y = 0 },
   soul_pos = { x = 1, y = 0 },
-  config = { extra = { h_size = 4, rounds = 1 } },
+  config = { extra = { h_size = 1, Xmult_multi = 2} },
   loc_vars = function(self, info_queue, center)
-    return { vars = { center.ability.extra.h_size } }
+    return { vars = { center.ability.extra.h_size, center.ability.extra.Xmult_multi, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks') } }
   end,
   rarity = "poke_mega",
   cost = 12,
@@ -182,13 +182,28 @@ local mega_venusaur = {
   atlas = "Megas",
   gen = 1,
   blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.hand and not context.end_of_round
+        and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
+      if context.other_card.debuff then
+        return {
+          message = localize("k_debuffed"),
+          colour = G.C.RED,
+        }
+      else
+        return {
+          xmult = card.ability.extra.Xmult_multi
+        }
+      end
+    end
+  end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
   end,
-  attributes = {"starter", "hand_size", "passive"},
+  attributes = {"starter", "hand_size", "xmult"},
 }
 -- Charmander 004
 local charmander={
@@ -321,9 +336,9 @@ local mega_charizard_x = {
   name = "mega_charizard_x", 
   pos = {x = 2, y = 0},
   soul_pos = { x = 3, y = 0},
-  config = {extra = {Xmult = 5, d_remaining = 0, mult = 36}},
+  config = {extra = {Xmult_multi = 1.5, d_remaining = 0}},
   loc_vars = function(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.d_remaining}}
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.d_remaining}}
   end,
   rarity = "poke_mega", 
   cost = 12, 
@@ -333,11 +348,10 @@ local mega_charizard_x = {
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
+    if context.individual and not context.end_of_round then
       if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
         return {
-          message = "Fire Blast!",
-          Xmult_mod = card.ability.extra.Xmult
+          xmult = card.ability.extra.Xmult_multi
         }
       end
     end
@@ -349,8 +363,13 @@ local mega_charizard_y = {
   name = "mega_charizard_y", 
   pos = {x = 4, y = 0},
   soul_pos = { x = 5, y = 0},
-  config = {extra = {rounds = 1, d_size = 5, mult = 36}},
+  config = {extra = {d_size = 1}},
   loc_vars = function(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Deja Vu"}}
+      info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_deja_vu'}
+      info_queue[#info_queue+1] = {key = 'red_seal', set = 'Other'}
+    end
     return {vars = {center.ability.extra.d_size}}
   end,
   rarity = "poke_mega", 
@@ -360,7 +379,26 @@ local mega_charizard_y = {
   atlas = "Megas",
   gen = 1,
   blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.discard and context.other_card.seal and context.other_card.seal == "Red" then
+      G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+      G.E_MANAGER:add_event(Event({
+          trigger = 'before',
+          delay = 0.0,
+          func = function()
+              SMODS.add_card({ set = 'Tarot' })
+              G.GAME.consumeable_buffer = 0
+              return true
+          end
+      }))
+      return { message = localize('k_plus_tarot'), colour = G.C.PURPLE }
+    end
+  end,
   add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      pokermon.create_consumeable({ key = 'c_deja_vu' })
+    end
+    
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
     ease_discard(card.ability.extra.d_size)
   end,
@@ -503,9 +541,12 @@ local mega_blastoise = {
   name = "mega_blastoise",
   pos = {x = 6, y = 0},
   soul_pos = { x = 7, y = 0},
-  config = {extra = {chips = 0, chip_mod = 128, hands = 4}},
+  config = {extra = {chip_mod = 75, hands = 20, hand_minus = 1}},
   loc_vars = function(self, info_queue, center)
-		return {vars = {center.ability.extra.chip_mod, center.ability.extra.hands}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash', config={}}
+    end
+		return {vars = {center.ability.extra.chip_mod, center.ability.extra.hands, center.ability.extra.hand_minus}}
   end,
   rarity = "poke_mega",
   cost = 12,
@@ -513,7 +554,23 @@ local mega_blastoise = {
   ptype = "Water",
   atlas = "Megas",
   gen = 1,
-  blueprint_compat = false,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and not context.end_of_round then
+      
+      pokermon.ease_hands_played(-card.ability.extra.hand_minus)
+      
+      return {
+        chips = card.ability.extra.chip_mod
+      }
+    end
+    
+    if context.modify_scoring_hand and not context.blueprint then
+      return {
+          add_to_hand = true
+      }
+    end
+  end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
     if not from_debuff then
@@ -524,7 +581,7 @@ local mega_blastoise = {
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
     pokermon.ease_hands_played(-card.ability.extra.hands)
   end,
-  attributes = {"starter", "hands", "passive"},
+  attributes = {"starter", "hands", "passive", "chips"},
 }
 -- Caterpie 010
 local caterpie={
